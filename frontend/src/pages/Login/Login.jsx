@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import "./Login.css";
 
 import logo from "../../assets/img/icon.png";
@@ -266,7 +267,7 @@ function Login() {
 
                         <div className="crear-cuenta">
                             <span>¿No tenés una cuenta?</span>
-                            <a href="#">Crear cuenta</a>
+                            <Link to="/register">Crear cuenta</Link>
                         </div>
 
                     </div>
