@@ -1,0 +1,435 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+:root {
+
+    /* ----- COLORES PRINCIPALES ---- */
+
+    --verde: #279B97;
+    --verde-medio: #108D82;
+    --verde-hover: #007C74;
+
+
+    /* ------- FONDOS ---------- */
+
+    --fondo: #FAFBFC;
+    --blanco: #FFFFFF;
+
+    --celeste: #DDEEEBFC;
+
+
+    /* ------- TEXTOS ----------*/
+
+    --texto-principal: #08363C;
+    --texto-secundario: #5C6470;
+    --texto-verde: #0D5F59;
+
+    --texto-icono: #5D6871C5;
+
+
+    /* ----- BORDES Y SEPARADORES ------*/
+
+    --borde-input: #D9E2E8;
+    --separador: #8B8E8E99;
+
+
+    /* ------ SOMBRAS ------ */
+
+    --sombra-formulario: rgba(42, 53, 50, 0.267);
+
+
+    /* ------ GRADIENTE DEL FONDO ------*/
+
+    --gradiente-fondo: #FAFBFC;
+    --gradiente-fondo-medio: rgba(250, 251, 252, 0.8);
+    --gradiente-fondo-suave: rgba(250, 251, 252, 0.3);
+    --transparente: transparent;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: "Open sans", sans-serif;
+    color: var(--texto-principal);
+    background: var(--fondo);
+}
+
+svg {
+    width: 22px;
+    height: 22px;
+}
+
+
+/* ===========================
+        PANEL GENERAL
+=========================== */
+
+.contenedor{
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image:
+        linear-gradient(
+            to right,
+            var(--gradiente-fondo) 0%,
+            var(--gradiente-fondo-medio) 20%,
+            var(--gradiente-fondo-suave) 40%,
+            var(--transparente) 60%
+        ),
+        url("../../assets/img/fondo.png");
+    border-radius: 100% 0px 0px;
+
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+
+    min-height: 100vh;
+    padding: 28px 60px;
+
+    gap: 30px;
+}
+
+/* ===========================
+        PANEL IZQUIERDO
+=========================== */
+
+.panel-izquierdo{
+    display: flex;
+    align-items: center;
+}
+
+.contenido-izquierdo{
+    max-width: 390px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+.contenedor svg {
+    color: var(--verde);
+}
+
+/* ---------- Marca ---------- */
+
+.encabezado{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.marca{
+    display: flex;
+    align-items: center;
+
+    text-decoration: none;
+    color: inherit;
+    margin-bottom: 7px;
+}
+
+.marca img{
+    transform: translateX(-5px);
+    width: 65px;
+}
+
+.marca h1{
+    font-family: "Montserrat", sans-serif;
+    transform: translateY(12px);
+    font-size: 55px;
+    font-weight: 600;
+}
+
+.encabezado p{
+    color: var(--texto-secundario);
+    font-size: 15px;
+}
+
+/* ---------- Bienvenida ---------- */
+
+.bienvenida {
+    margin-bottom: 15px;
+}
+
+.bienvenida h1{
+    font-family: "Montserrat", sans-serif;
+    font-size: 32px;
+    font-weight: 650;
+    margin-bottom: 10px;
+}
+
+.bienvenida p{
+    color: var(--texto-secundario);
+    font-size: 15px;
+}
+
+/* ---------- Características ---------- */
+
+.caracteristicas{
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    max-width: 280px;
+    margin-bottom: 15px;
+}
+
+.caracteristica{
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.icono-caracteristica{
+    width: 50px;
+    height: 50px;
+
+    border-radius: 50px;
+    background: var(--celeste);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+}
+
+.icono-caracteristica img{
+    width: 24px;
+}
+
+.texto-caracteristica h2{
+    font-size: .95rem;
+    margin-bottom: 4px;
+}
+
+.texto-caracteristica p{
+    font-size: .84rem;
+    color: var(--texto-secundario);
+    line-height: 1.45;
+}
+
+/* ---------- Badge ---------- */
+
+.badge{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    width: fit-content;
+
+    padding: 10px 16px;
+
+    border-radius: 50px;
+
+    background: var(--celeste);
+
+    font-size: .82rem;
+    color: var(--texto-verde);
+}
+
+/* ===========================
+        PANEL DERECHO
+=========================== */
+
+.panel-derecho {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.formulario{
+    width: 100%;
+    max-width: 400px;
+
+    background: var(--blanco);
+    border-radius: 18px;
+
+    padding: 40px;
+
+    box-shadow: 0 14px 35px var(--sombra-formulario);
+}
+
+/* ---------- Encabezado ---------- */
+
+.icono-login{
+    width: 52px;
+    height: 52px;
+
+    border-radius: 50%;
+    background: var(--celeste);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 18px;
+}
+
+.encabezado-formulario h2{
+    font-size: 1.7rem;
+    margin-bottom: 6px;
+}
+
+.encabezado-formulario p{
+    color: var(--texto-secundario);
+    margin-bottom: 28px;
+}
+
+/* ---------- Formulario ---------- */
+
+form{
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.campo{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.campo label{
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.input-contenedor{
+    display: flex;
+    align-items: center;
+
+    border: 1px solid var(--borde-input);
+    border-radius: 10px;
+
+    padding: 0 12px;
+}
+
+.input-contenedor input{
+    flex: 1;
+
+    border: none;
+    outline: none;
+
+    padding: 13px 10px;
+
+    font-size: 13px;
+    background: transparent;
+}
+
+.input-icono svg{
+    width: 15px;
+    height: 15px;
+}
+
+.mostrar-password {
+    border: none;
+    cursor: pointer;
+}
+
+.mostrar-password svg {
+    width: 18px;
+    height: 18px;
+}
+
+.input-icono svg,
+.mostrar-password svg {
+    color: var(--texto-icono);
+}
+
+/* ---------- Opciones formulario ---------- */
+
+.opciones-formulario{
+    font-size: 13px;
+}
+
+.checkbox{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.checkbox input{
+    accent-color: var(--verde-medio);
+}
+
+.link{
+    color: var(--verde-medio);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* ---------- Botón ingresar ---------- */
+
+.boton-ingresar{
+    border: none;
+    border-radius: 10px;
+
+    padding: 14px;
+
+    background: var(--verde-medio);
+    color: var(--blanco);
+
+    font-size: .95rem;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.boton-ingresar:hover{
+    background: var(--verde-hover);
+}
+
+/* ---------- Registro ---------- */
+
+.registro{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-top: 22px;
+
+    font-size: 13px;
+    color: var(--texto-secundario);
+}
+
+.registro a{
+    color: var(--verde-medio);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+/* ---------- Separador ---------- */
+
+.separador {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.separador p {
+    color: var(--separador);
+    font-size: 14px;
+}
+
+/* ------------------------------- */
+
+@media (max-width: 900px) {
+
+    .contenedor {
+        grid-template-columns: 1fr;
+        padding: 30px;
+        gap: 40px;
+    }
+
+    .panel-izquierdo {
+        justify-content: center;
+    }
+
+    .panel-derecho {
+        justify-content: center;
+        padding-right: 0;
+    }
+
+}
