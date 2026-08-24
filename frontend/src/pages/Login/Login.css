@@ -13,7 +13,6 @@
 
     --fondo: #FAFBFC;
     --blanco: #FFFFFF;
-
     --celeste: #DDEEEBFC;
 
 
@@ -22,7 +21,6 @@
     --texto-principal: #08363C;
     --texto-secundario: #5C6470;
     --texto-verde: #0D5F59;
-
     --texto-icono: #5D6871C5;
 
 
@@ -43,15 +41,16 @@
     --gradiente-fondo-medio: rgba(250, 251, 252, 0.8);
     --gradiente-fondo-suave: rgba(250, 251, 252, 0.3);
     --transparente: transparent;
+
 }
 
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body{
+body {
     font-family: "Open sans", sans-serif;
     color: var(--texto-principal);
     background: var(--fondo);
@@ -67,7 +66,7 @@ svg {
         PANEL GENERAL
 =========================== */
 
-.contenedor{
+.login .contenedor {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -80,93 +79,94 @@ svg {
             var(--transparente) 60%
         ),
         url("../../assets/img/fondo.png");
-    border-radius: 100% 0px 0px;
 
+    border-radius: 100% 0px 0px;
     display: grid;
     grid-template-columns: 1.1fr 0.9fr;
-
     min-height: 100vh;
     padding: 28px 60px;
-
     gap: 30px;
 }
+
 
 /* ===========================
         PANEL IZQUIERDO
 =========================== */
 
-.panel-izquierdo{
+.login .panel-izquierdo {
     display: flex;
     align-items: center;
 }
 
-.contenido-izquierdo{
+.login .contenido-izquierdo {
     max-width: 390px;
     display: flex;
     flex-direction: column;
     gap: 28px;
 }
 
-.contenedor svg {
+.login .contenedor svg {
     color: var(--verde);
 }
 
+
 /* ---------- Marca ---------- */
 
-.encabezado{
+.login .encabezado {
     display: flex;
     flex-direction: column;
     gap: 10px;
     margin-bottom: 20px;
 }
 
-.marca{
+.login .marca {
     display: flex;
     align-items: center;
-
     text-decoration: none;
     color: inherit;
     margin-bottom: 7px;
 }
 
-.marca img{
+.login .marca img {
     transform: translateX(-5px);
     width: 65px;
 }
 
-.marca h1{
+.login .marca h1 {
     font-family: "Montserrat", sans-serif;
     transform: translateY(12px);
     font-size: 55px;
     font-weight: 600;
 }
 
-.encabezado p{
+.login .encabezado p {
     color: var(--texto-secundario);
     font-size: 15px;
 }
 
+
 /* ---------- Bienvenida ---------- */
 
-.bienvenida {
+.login .bienvenida {
     margin-bottom: 15px;
 }
 
-.bienvenida h1{
+.login .bienvenida h1 {
     font-family: "Montserrat", sans-serif;
     font-size: 32px;
     font-weight: 650;
     margin-bottom: 10px;
 }
 
-.bienvenida p{
+.login .bienvenida p {
     color: var(--texto-secundario);
     font-size: 15px;
 }
 
+
 /* ---------- Características ---------- */
 
-.caracteristicas{
+.login .caracteristicas {
     display: flex;
     flex-direction: column;
     gap: 28px;
@@ -174,260 +174,245 @@ svg {
     margin-bottom: 15px;
 }
 
-.caracteristica{
+.login .caracteristica {
     display: flex;
     align-items: flex-start;
     gap: 16px;
 }
 
-.icono-caracteristica{
+.login .icono-caracteristica {
     width: 50px;
     height: 50px;
-
     border-radius: 50px;
     background: var(--celeste);
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     flex-shrink: 0;
 }
 
-.icono-caracteristica img{
+.login .icono-caracteristica img {
     width: 24px;
 }
 
-.texto-caracteristica h2{
-    font-size: .95rem;
+.login .texto-caracteristica h2 {
+    font-size: 15px;
     margin-bottom: 4px;
 }
 
-.texto-caracteristica p{
-    font-size: .84rem;
+.login .texto-caracteristica p {
+    font-size: 13px;
     color: var(--texto-secundario);
     line-height: 1.45;
 }
 
+
 /* ---------- Badge ---------- */
 
-.badge{
+.login .badge {
     display: flex;
     align-items: center;
     gap: 8px;
-
     width: fit-content;
-
     padding: 10px 16px;
-
     border-radius: 50px;
-
     background: var(--celeste);
-
-    font-size: .82rem;
+    font-size: 13px;
     color: var(--texto-verde);
 }
+
 
 /* ===========================
         PANEL DERECHO
 =========================== */
 
-.panel-derecho {
+.login .panel-derecho {
     display: flex;
     justify-content: flex-end;
     align-items: center;
 }
 
-.formulario{
+.login .formulario {
     width: 100%;
     max-width: 400px;
-
     background: var(--blanco);
     border-radius: 18px;
-
     padding: 40px;
-
     box-shadow: 0 14px 35px var(--sombra-formulario);
 }
 
+
 /* ---------- Encabezado ---------- */
 
-.icono-login{
+.login .icono-login {
     width: 52px;
     height: 52px;
-
     border-radius: 50%;
     background: var(--celeste);
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     margin-bottom: 18px;
 }
 
-.encabezado-formulario h2{
-    font-size: 1.7rem;
+.login .encabezado-formulario h2 {
+    font-size: 27px;
     margin-bottom: 6px;
 }
 
-.encabezado-formulario p{
+.login .encabezado-formulario p {
     color: var(--texto-secundario);
     margin-bottom: 28px;
 }
 
+
 /* ---------- Formulario ---------- */
 
-form{
+.login form {
     display: flex;
     flex-direction: column;
     gap: 18px;
 }
 
-.campo{
+.login .campo {
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
 
-.campo label{
+.login .campo label {
     font-size: 14px;
     font-weight: 600;
 }
 
-.input-contenedor{
+.login .input-contenedor {
     display: flex;
     align-items: center;
-
     border: 1px solid var(--borde-input);
     border-radius: 10px;
-
     padding: 0 12px;
 }
 
-.input-contenedor input{
+.login .input-contenedor input {
     flex: 1;
-
     border: none;
     outline: none;
-
     padding: 13px 10px;
-
     font-size: 13px;
     background: transparent;
 }
 
-.input-icono svg{
+.login .input-icono svg {
     width: 15px;
     height: 15px;
 }
 
-.mostrar-password {
+.login .mostrar-password {
     border: none;
     cursor: pointer;
 }
 
-.mostrar-password svg {
+.login .mostrar-password svg {
     width: 18px;
     height: 18px;
 }
 
-.input-icono svg,
-.mostrar-password svg {
+.login .input-icono svg,
+.login .mostrar-password svg {
     color: var(--texto-icono);
 }
 
+
 /* ---------- Opciones formulario ---------- */
 
-.opciones-formulario{
+.login .opciones-formulario {
     font-size: 13px;
 }
 
-.checkbox{
+.login .checkbox {
     display: flex;
     align-items: center;
     gap: 8px;
 }
 
-.checkbox input{
+.login .checkbox input {
     accent-color: var(--verde-medio);
 }
 
-.link{
+.login .link {
     color: var(--verde-medio);
     text-decoration: none;
     font-weight: 600;
 }
 
+
 /* ---------- Botón ingresar ---------- */
 
-.boton-ingresar{
+.login .boton-ingresar {
     border: none;
     border-radius: 10px;
-
     padding: 14px;
-
     background: var(--verde-medio);
     color: var(--blanco);
-
-    font-size: .95rem;
+    font-size: 16px;
     font-weight: 600;
-
     cursor: pointer;
     transition: 0.2s;
 }
 
-.boton-ingresar:hover{
+.login .boton-ingresar:hover {
     background: var(--verde-hover);
 }
 
+
 /* ---------- Registro ---------- */
 
-.registro{
+.login .registro {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 12px;
     margin-top: 22px;
-
     font-size: 13px;
     color: var(--texto-secundario);
 }
 
-.registro a{
+.login .registro a {
     color: var(--verde-medio);
     font-weight: 600;
     text-decoration: none;
 }
 
+
 /* ---------- Separador ---------- */
 
-.separador {
+.login .separador {
     display: flex;
     align-items: center;
     gap: 14px;
 }
 
-.separador p {
+.login .separador p {
     color: var(--separador);
     font-size: 14px;
 }
+
 
 /* ------------------------------- */
 
 @media (max-width: 900px) {
 
-    .contenedor {
+    .login .contenedor {
         grid-template-columns: 1fr;
         padding: 30px;
         gap: 40px;
     }
 
-    .panel-izquierdo {
+    .login .panel-izquierdo {
         justify-content: center;
     }
 
-    .panel-derecho {
+    .login .panel-derecho {
         justify-content: center;
         padding-right: 0;
     }

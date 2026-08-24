@@ -13,7 +13,6 @@
 
     --fondo: #FAFBFC;
     --blanco: #FFFFFF;
-
     --celeste: #c5dedafc;
     --celeste-fondo: #d9eae7;
 
@@ -23,7 +22,6 @@
     --texto-principal: #08363C;
     --texto-secundario: #5C6470;
     --texto-verde: #0D5F59;
-
     --texto-icono: #5D6871C5;
 
 
@@ -44,15 +42,16 @@
     --gradiente-fondo-medio: rgba(250, 251, 252, 0.8);
     --gradiente-fondo-suave: rgba(250, 251, 252, 0.3);
     --transparente: transparent;
+
 }
 
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body{
+body {
     font-family: "Open Sans", sans-serif;
     color: var(--texto-principal);
     background: var(--fondo);
@@ -68,7 +67,7 @@ svg {
         PANEL GENERAL
 =========================== */
 
-.contenedor{
+.register .contenedor {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -81,93 +80,94 @@ svg {
             var(--transparente) 40%
         ),
         url("../../assets/img/fondo.png");
-    border-radius: 100% 0 0;
 
+    border-radius: 100% 0 0;
     display: grid;
     grid-template-columns: 1.1fr 0.9fr;
-
     min-height: 100vh;
     padding: 28px 60px;
-
     gap: 30px;
 }
+
 
 /* ===========================
         PANEL IZQUIERDO
 =========================== */
 
-.panel-izquierdo{
+.register .panel-izquierdo {
     display: flex;
     align-items: flex-start;
 }
 
-.contenido-izquierdo{
+.register .contenido-izquierdo {
     max-width: 390px;
     display: flex;
     flex-direction: column;
     gap: 28px;
 }
 
-.contenedor svg {
+.register .contenedor svg {
     color: var(--verde);
 }
 
+
 /* ---------- Marca ---------- */
 
-.encabezado{
+.register .encabezado {
     display: flex;
     flex-direction: column;
     gap: 10px;
     margin-bottom: 20px;
 }
 
-.marca{
+.register .marca {
     display: flex;
     align-items: center;
-
     text-decoration: none;
     color: inherit;
     margin-bottom: 7px;
 }
 
-.marca img{
+.register .marca img {
     transform: translateX(-5px);
     width: 65px;
 }
 
-.marca h1{
+.register .marca h1 {
     font-family: "Montserrat", sans-serif;
     transform: translateY(12px);
     font-size: 55px;
     font-weight: 600;
 }
 
-.encabezado p{
+.register .encabezado p {
     color: var(--texto-secundario);
     font-size: 15px;
 }
 
+
 /* ---------- Bienvenida ---------- */
 
-.bienvenida-comunidad {
+.register .bienvenida-comunidad {
     margin-bottom: 15px;
 }
 
-.bienvenida-comunidad h1{
+.register .bienvenida-comunidad h1 {
     font-family: "Montserrat", sans-serif;
     font-size: 32px;
     font-weight: 600;
     margin-bottom: 10px;
 }
 
-.bienvenida-comunidad p{
+.register .bienvenida-comunidad p {
     color: var(--texto-secundario);
     font-size: 15px;
 }
 
+
 /* ---------- Características ---------- */
 
-.mensaje-inicial {
+.register .mensaje-inicial {
     background-color: var(--celeste-fondo);
     display: flex;
     gap: 28px;
@@ -178,247 +178,237 @@ svg {
     color: var(--texto-secundario);
 }
 
-.mensaje-inicial strong{
+.register .mensaje-inicial strong {
     color: var(--texto-verde);
     font-weight: 600;
 }
 
-.icono-mensaje {
+.register .icono-mensaje {
     width: 50px;
     height: 50px;
     border-radius: 50px;
     background: var(--celeste);
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     flex-shrink: 0;
 }
+
 
 /* ===========================
         PANEL DERECHO
 =========================== */
 
-.panel-derecho {
+.register .panel-derecho {
     display: flex;
     justify-content: flex-end;
     align-items: center;
 }
 
-.formulario{
+.register .formulario {
     width: 100%;
     max-width: 500px;
-
     background: var(--blanco);
     border-radius: 18px;
-
     padding: 40px;
-
     box-shadow: 0 14px 35px var(--sombra-formulario);
 }
 
+
 /* ---------- Encabezado ---------- */
 
-.icono-register{
+.register .icono-register {
     width: 52px;
     height: 52px;
-
     border-radius: 50%;
     background: var(--celeste);
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     margin-bottom: 18px;
 }
 
-.encabezado-formulario h2{
+.register .encabezado-formulario h2 {
     font-size: 27px;
     margin-bottom: 6px;
 }
 
-.encabezado-formulario p{
+.register .encabezado-formulario p {
     color: var(--texto-secundario);
     margin-bottom: 28px;
 }
 
+
 /* ---------- Formulario ---------- */
 
-form{
+.register form {
     display: flex;
     flex-direction: column;
     gap: 18px;
 }
 
-.campo{
+.register .campo {
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
 
-.campo label{
+.register .campo label {
     font-size: 14px;
     font-weight: 600;
 }
 
-.input-contenedor{
+.register .input-contenedor {
     display: flex;
     align-items: center;
-
     border: 1px solid var(--borde-input);
     border-radius: 10px;
-
     padding: 0 12px;
 }
 
-.input-contenedor input{
+.register .input-contenedor input {
     flex: 1;
-
     border: none;
     outline: none;
-
     padding: 13px 10px;
-
     font-size: 13px;
     background: transparent;
 }
 
-.input-icono svg{
+.register .input-icono svg {
     width: 15px;
     height: 15px;
 }
 
-.mostrar-password {
+.register .mostrar-password {
     border: none;
     cursor: pointer;
 }
 
-.mostrar-password svg {
+.register .mostrar-password svg {
     width: 18px;
     height: 18px;
 }
 
-.input-icono svg,
-.mostrar-password svg {
+.register .input-icono svg,
+.register .mostrar-password svg {
     color: var(--texto-icono);
 }
 
-.campos-telefono-dni {
+.register .campos-telefono-dni {
     display: flex;
     gap: 10px;
 }
 
-.campos-telefono-dni .campo {
+.register .campos-telefono-dni .campo {
     width: 205px;
 }
 
+
 /* ---------- Opciones formulario ---------- */
 
-.opciones-formulario{
+.register .opciones-formulario {
     font-size: 13px;
 }
 
-.checkbox{
+.register .checkbox {
     display: flex;
     align-items: center;
     gap: 8px;
 }
 
-.checkbox strong{
+.register .checkbox strong {
     color: var(--texto-verde);
     font-weight: 600;
 }
 
-.checkbox input{
+.register .checkbox input {
     accent-color: var(--verde-medio);
 }
 
-.link{
+.register .link {
     color: var(--verde-medio);
     text-decoration: none;
     font-weight: 600;
 }
 
+
 /* ---------- Botón ingresar ---------- */
 
-.boton-ingresar{
+.register .boton-ingresar {
     border: none;
     border-radius: 10px;
-
     padding: 14px;
-
     background: var(--verde-medio);
     color: var(--blanco);
-
     font-size: 13px;
     font-weight: 600;
-
     cursor: pointer;
     transition: 0.2s;
 }
 
-.boton-ingresar:hover{
+.register .boton-ingresar:hover {
     background: var(--verde-hover);
 }
 
+
 /* ---------- Registro ---------- */
 
-.acceso{
+.register .acceso {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 12px;
     margin-top: 22px;
-
     font-size: 13px;
     color: var(--texto-secundario);
 }
 
-.acceso a{
+.register .acceso a {
     color: var(--verde-medio);
     font-weight: 600;
     text-decoration: none;
 }
 
+
 /* ---------- Separador ---------- */
 
-.separador {
+.register .separador {
     display: flex;
     align-items: center;
     gap: 14px;
 }
 
-.separador p {
+.register .separador p {
     color: var(--separador);
     font-size: 14px;
 }
+
 
 /* ------------------------------- */
 
 @media (max-width: 900px) {
 
-    .contenedor {
+    .register .contenedor {
         grid-template-columns: 1fr;
         padding: 30px;
         gap: 40px;
     }
 
-    .panel-izquierdo {
+    .register .panel-izquierdo {
         justify-content: center;
     }
 
-    .panel-derecho {
+    .register .panel-derecho {
         justify-content: center;
         padding-right: 0;
     }
-    
-    .campos-telefono-dni {
+
+    .register .campos-telefono-dni {
         flex-direction: column;
     }
 
-    .campos-telefono-dni .campo {
+    .register .campos-telefono-dni .campo {
         width: 100%;
     }
 
