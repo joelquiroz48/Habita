@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Register.css";
 
 import logo from "../../assets/img/icon.png";
@@ -12,10 +12,51 @@ function Register() {
     }, []);
 
     const [mostrarContrasena, setMostrarContrasena] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
-    const manejarSubmit = (e) => {
+    const manejarSubmit = async (e) => {
         e.preventDefault();
-        console.log("Formulario enviado");
+        setError(null);
+        setLoading(true);
+        const form = e.currentTarget;
+        const fd = new FormData(form);
+        const username = fd.get('username');
+        const dni = fd.get('dni');
+        const telefono = fd.get('telefono');
+        const email = fd.get('email');
+        const password = fd.get('password');
+        const confirm = fd.get('confirm-password');
+
+        if (password !== confirm) {
+            setError('Las contraseñas no coinciden');
+            setLoading(false);
+            return;
+        }
+
+        try {
+            const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+            const res = await fetch(`${apiUrl.replace(/\/$/, '')}/api/auth/register`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password, user_metadata: { nombre: username, dni, telefono } }),
+            });
+
+            const body = await res.json().catch(() => ({}));
+            if (!res.ok) {
+                setError(body.detail || body.msg || 'Error en el registro');
+                setLoading(false);
+                return;
+            }
+
+            setLoading(false);
+            // redirect to login
+            navigate('/');
+        } catch (err) {
+            setError('Error de red');
+            setLoading(false);
+        }
     };
 
     return (
@@ -299,9 +340,11 @@ function Register() {
 
 
                             {/* -------- Botón ingresar -------- */}
-                            <button type="submit" className="boton-ingresar">
-                                Crear cuenta
+                            <button type="submit" className="boton-ingresar" disabled={loading}>
+                                {loading ? 'Creando...' : 'Crear cuenta'}
                             </button>
+
+                            {error && <p style={{ color: 'var(--texto-verde)', marginTop: 12 }}>{error}</p>}
 
                         </form>
 

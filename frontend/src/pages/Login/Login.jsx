@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Login.css";
 
 import logo from "../../assets/img/icon.png";
@@ -12,10 +12,46 @@ function Login() {
     }, []);
 
     const [mostrarContrasena, setMostrarContrasena] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
-    const manejarSubmit = (e) => {
+    const manejarSubmit = async (e) => {
         e.preventDefault();
-        console.log("Formulario enviado");
+        setError(null);
+        setLoading(true);
+        const form = e.currentTarget;
+        const formData = new FormData(form);
+        const email = formData.get('email');
+        const password = formData.get('password');
+
+        try {
+            const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+            const res = await fetch(`${apiUrl.replace(/\/$/, '')}/api/auth/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password }),
+            });
+
+            const body = await res.json().catch(() => ({}));
+            if (!res.ok) {
+                setError(body.detail || body.msg || 'Error en el login');
+                setLoading(false);
+                return;
+            }
+
+            // store token (simple approach)
+            if (body.access_token) {
+                localStorage.setItem('access_token', body.access_token);
+            }
+
+            setLoading(false);
+            // redirect to home or dashboard
+            navigate('/');
+        } catch (err) {
+            setError('Error de red');
+            setLoading(false);
+        }
     };
 
     return (
@@ -248,9 +284,11 @@ function Login() {
 
 
                             {/* -------- Botón ingresar -------- */}
-                            <button type="submit" className="boton-ingresar">
-                                Iniciar sesión
+                            <button type="submit" className="boton-ingresar" disabled={loading}>
+                                {loading ? 'Ingresando...' : 'Iniciar sesión'}
                             </button>
+
+                            {error && <p style={{ color: 'var(--texto-verde)', marginTop: 12 }}>{error}</p>}
 
                         </form>
 
