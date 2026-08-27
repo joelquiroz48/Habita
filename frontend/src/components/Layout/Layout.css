@@ -1,0 +1,241 @@
+/* =========================
+            LAYOUT
+   ========================= */
+
+.layout {
+    min-height: 100vh;
+    font-family: "Montserrat", sans-serif;
+    color: var(--texto-principal);
+}
+
+.layout .layout-principal {
+    width: 100%;
+}
+
+.layout .contenido-layout {
+    display: flex;
+    min-height: calc(100vh - 60px);
+}
+
+
+/* =========================
+            HEADER
+   ========================= */
+
+.layout header {
+    display: flex;
+    align-items: center;
+    height: 60px;
+    padding: 0 20px;
+    gap: 85px;
+    background-color: var(--blanco);
+}
+
+
+/* ----- Logo + botón ----- */
+
+.layout .header-navegacion {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.layout .logo {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    text-decoration: none;
+}
+
+.layout .logo img {
+    width: 30px;
+}
+
+.layout .logo h1 {
+    font-size: 20px;
+    color: var(--texto-principal);
+    transform: translateY(6px);
+}
+
+
+/* ----- Botón sidebar ----- */
+
+.layout .boton-sidebar {
+    display: none;
+    border: none;
+    background: none;
+    padding: 5px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+
+/* =========================
+          INFO HEADER
+   ========================= */
+
+.layout .header-info {
+    min-width: 0;
+    overflow: hidden;
+}
+
+.layout .header-info h1,
+.layout .header-info p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.layout .header-info h1 {
+    font-size: 17px;
+}
+
+.layout .header-info p {
+    font-size: 12px;
+}
+
+
+/* =========================
+        USUARIO HEADER
+   ========================= */
+
+.layout .header-usuario {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}
+
+.layout .header-usuario img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.layout .header-notificaciones {
+    padding: 15px;
+}
+
+.layout .menu-usuario {
+    position: relative;
+    padding: 10px;
+    cursor: pointer;
+}
+
+
+/* ----- Menú desplegable ----- */
+
+.layout .menu-perfil {
+    position: absolute;
+    top: 45px;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    min-width: 160px;
+    padding: 8px;
+    background-color: var(--blanco);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+}
+
+.layout .menu-perfil a {
+    display: block;
+    padding: 8px 12px;
+    color: var(--texto-principal);
+    text-decoration: none;
+    white-space: nowrap;
+    border-radius: 6px;
+}
+
+.layout .menu-perfil a:hover {
+    color: var(--texto-nav);
+    background-color: var(--hover-nav);
+}
+
+
+/* =========================
+            SIDEBAR
+   ========================= */
+
+.layout .sidebar {
+    width: 200px;
+    flex-shrink: 0;
+    min-height: calc(100vh - 60px);
+    background-color: var(--blanco);
+}
+
+
+/* ----- Navegación ----- */
+
+.layout .sidebar-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.layout .sidebar-nav li {
+    margin: 10px;
+}
+
+.layout .sidebar-nav li a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 13px;
+    color: var(--texto-secundario);
+    text-decoration: none;
+    font-size: 13px;
+    border-radius: 10px;
+    transition: 0.2s;
+}
+
+.layout .sidebar-nav li a:hover {
+    background-color: var(--hover-nav);
+    color: var(--texto-nav);
+}
+
+
+/* =========================
+             MAIN
+   ========================= */
+
+.layout main {
+    flex: 1;
+    min-width: 0;
+    padding: 20px;
+    background-color: var(--fondo);
+}
+
+/* ------------------------------- */
+
+@media (max-width: 900px) {
+
+    .layout header {
+        gap: 30px;
+    }
+
+    .layout .boton-sidebar {
+        display: block;
+    }
+
+    .layout .sidebar {
+        position: absolute;
+        width: 0;
+        min-height: calc(100vh - 60px);
+        overflow: hidden;
+        transition: width 0.2s ease;
+    }
+
+    .layout .sidebar.mostrar {
+        width: 200px;
+    }
+
+    .layout .sidebar-nav {
+        display: none;
+    }
+
+    .layout .sidebar.mostrar .sidebar-nav {
+        display: block;
+    }
+}
