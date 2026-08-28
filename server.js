@@ -12,11 +12,13 @@ const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY});
 // Ruta POST para recibir los mensajes
 app.post('/api/chat',async (req,res) => {
     try{
+        console.log(req.body);
         const {mensaje} = req.body;
-        const response = await ai.models.generateConstent({
-            model: 'gemini-2.5-flash',
-            constents: mensaje,
+        const response = await ai.models.generateContent({
+            model: 'gemini-3.6-flash',
+            contents: mensaje,
         });
+        console.log('Cuerpo recibido en el servidor:', req.body);
 
         res.json({ respuesta: response.text});
     } catch (error) {
