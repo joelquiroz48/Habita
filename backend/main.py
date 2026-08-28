@@ -138,11 +138,13 @@ def crear_preferencia(payload: CrearPreferenciaIn):
             "failure": "http://localhost:5173/pagos/error",
             "pending": "http://localhost:5173/pagos/pendiente",
         },
-        "auto_return": "approved",
+        #"auto_return": "approved",
         "notification_url": f"{PUBLIC_BASE_URL}/api/pagos/webhook",
     }
 
     resultado = sdk.preference().create(preference_data)
+    if resultado["status"] not in (200, 201):
+        raise HTTPException(status_code=500, detail=resultado["response"])
     preferencia = resultado["response"]
 
     return {
