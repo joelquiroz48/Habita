@@ -15,7 +15,7 @@ app.post('/api/chat',async (req,res) => {
         console.log(req.body);
         const {mensaje} = req.body;
         const response = await ai.models.generateContent({
-            model: 'gemini-3.6-flash',
+            model: 'gemini-3.5-flash-lite',
             contents: mensaje,
         });
         console.log('Cuerpo recibido en el servidor:', req.body);

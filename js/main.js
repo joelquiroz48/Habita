@@ -23,13 +23,15 @@ function detenerAnimacionCargando() {
     clearInterval(intervaloAnimacion);
 }
 
-async function enviarMensaje(){
+async function enviarMensaje() {
     const texto = inputMensaje.value.trim();
-    if (texto == '') return;
+    if (texto === '') return;
+
     const nuevoMensaje = document.createElement('div');
     nuevoMensaje.classList.add('msj-usr');
     nuevoMensaje.textContent = texto;
     ventanaChat.appendChild(nuevoMensaje);
+
     inputMensaje.value = '';
     ventanaChat.scrollTop = ventanaChat.scrollHeight;
 
@@ -49,16 +51,19 @@ async function enviarMensaje(){
         const datos = await respuestaServidor.json();
 
         detenerAnimacionCargando();
-        msjCargando.textContent = datos.respuesta || 'Hubo un error al obtener la respuesta.';
+
+        if (datos.respuesta) {
+            msjCargando.innerHTML = marked.parse(datos.respuesta);
+        } else {
+            msjCargando.textContent = datos.error || 'Hubo un error al obtener la respuesta.';
+        }
 
     } catch (error) {
         detenerAnimacionCargando();
         msjCargando.textContent = 'Error de conexión con el servidor.';
     }
-
     ventanaChat.scrollTop = ventanaChat.scrollHeight;
 }
-
 botonEnviar.addEventListener('click', enviarMensaje);
 inputMensaje.addEventListener('keydown', (event) => {
     if (event.key === 'Enter') enviarMensaje();
