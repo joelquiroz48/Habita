@@ -76,3 +76,24 @@ inputMensaje.addEventListener('keydown', function(event){
     }
 });
 
+
+//----------- Animaciones de pantalla del chat -----------
+
+const pantallaChat = document.querySelector('.ia-pantalla-chat');
+const botonIniciarChat = document.querySelector('.btn-iniciar-chat');
+const botonCerrarChat = document.querySelector('.x-cerrar-chat');
+const imgIa = document.querySelector('.contenedor-ia .img-ia');
+const ImgGloboDialogo = document.querySelector('.globo-dialogo-ia');
+
+botonIniciarChat.addEventListener('click',() => {
+    pantallaChat.classList.remove('oculto');
+    imgIa.src = 'img/habita-asistente-2.png';
+    ImgGloboDialogo.classList.remove('oculto');
+})
+
+botonCerrarChat.addEventListener('click', () => {
+    pantallaChat.classList.add('oculto');
+    imgIa.src = 'img/habita-asistente.png';
+    ImgGloboDialogo.classList.add('oculto');
+
+})
