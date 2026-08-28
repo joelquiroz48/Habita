@@ -8,6 +8,7 @@ app.use(cors());
 app.use(express.json());
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY});
+const instruccionesSistema = require('./chat-info/instrucciones-sistema.js')
 
 // Ruta POST para recibir los mensajes
 app.post('/api/chat',async (req,res) => {
@@ -17,6 +18,9 @@ app.post('/api/chat',async (req,res) => {
         const response = await ai.models.generateContent({
             model: 'gemini-3.5-flash-lite',
             contents: mensaje,
+            config: {
+                systemInstruction: instruccionesSistema
+            }
         });
         console.log('Cuerpo recibido en el servidor:', req.body);
 
@@ -36,3 +40,4 @@ const PORT = 3000;
 app.listen(PORT, () => {
     console.log('Servidor corriendo en http://localhost:${PORT}');
 });
+
