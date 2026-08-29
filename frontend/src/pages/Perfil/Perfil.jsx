@@ -1,7 +1,7 @@
 import { useEffect } from "react";
-import "./MiPerfil.css";
+import "./Perfil.css";
 
-function MiPerfil() {
+function Perfil() {
 
     useEffect(() => {
         document.title = "Habita | Mi perfil";
@@ -10,11 +10,11 @@ function MiPerfil() {
     return (
         <>
             <section className="bienvenida">
-                <h2>¡Hola, usuario!!!</h2>
+                <h2>¡Hola, usuario!</h2>
                 <p>Este es tu perfil.</p>
             </section>
         </>
     );
 }
 
-export default MiPerfil;
+export default Perfil;
