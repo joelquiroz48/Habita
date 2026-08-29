@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Register.css";
+import { supabase } from "../../supabase";
 
 import logo from "../../assets/img/icon.png";
 import {User, UserRoundPlus, IdCard, Phone, LockKeyhole, Mail, Eye, EyeOff } from "lucide-react";
@@ -36,25 +37,49 @@ function Register() {
         }
 
         try {
-            const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
-            const res = await fetch(`${apiUrl.replace(/\/$/, '')}/api/auth/register`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, password, user_metadata: { nombre: username, dni, telefono } }),
-            });
+            //1. crear usuario en SupaBase auth
+            const { data: authData, error: authError} =
+                await supabase.auth.signUp({
+                    Email,
+                    password
+                });
+            if (authError) {
+                setError(authError.message);
+                setLoading(false);
+                return;
+            }
 
-            const body = await res.json().catch(() => ({}));
-            if (!res.ok) {
-                setError(body.detail || body.msg || 'Error en el registro');
+            const user = authData.user;
+
+            if (!user) {
+                setError("No se pudo crear el usuario");
+                setLoading(false);
+                return;
+            }
+            // 2. Crear prefil en public.usuario
+            const { error: perfilError} = await supabase
+                .from("usuario")
+                .insert({
+                    id: user.id,
+                    nombre: username,
+                    dni: dni,
+                    telefono: telefono,
+                    tipo: "RESIDENTE"
+                });
+            if (perfilError){
+                setError("La cuenta se creo, pero hubo error guardando el perfil");
+                console.error(perfilError);
                 setLoading(false);
                 return;
             }
 
             setLoading(false);
-            // redirect to login
-            navigate('/');
+
+            //3. volver al login
+            navigate("/");
         } catch (err) {
-            setError('Error de red');
+            console.error(err);
+            setError("Ocurrio un error inesperado");
             setLoading(false);
         }
     };
