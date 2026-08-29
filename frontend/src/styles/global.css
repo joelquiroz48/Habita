@@ -28,7 +28,9 @@
     /* ----- BORDES Y SEPARADORES ------ */
 
     --borde-input: #D9E2E8;
-    --separador: #8B8E8E99;
+    --borde-tarjeta: #d2d4d4e1;
+    --borde-secundario: #d8d8d8;
+    --separador: #b8b8b899;
 
     /* ------ SOMBRAS ------ */
 
@@ -40,6 +42,36 @@
     --gradiente-fondo-medio: rgba(250, 251, 252, 0.8);
     --gradiente-fondo-suave: rgba(250, 251, 252, 0.3);
     --transparente: transparent;
+
+    /* Fondos */
+    --fondo-icono-resumen: #e9f5f3;
+    --fondo-icono-panel: #edf5f5;
+
+    --fondo-badge-pendiente: #e6f5ef;
+    --fondo-confirmada: #e8f5ee;
+    --fondo-pendiente: #e8f4fb;
+
+    --fondo-aviso-verde: #eaf6ef;
+    --fondo-aviso-amarillo: #fff5e6;
+    --fondo-aviso-azul: #eaf5fc;
+
+    --fondo-documento-pdf: #fff0f0;
+    --fondo-documento-doc: #eaf4fc;
+    --fondo-documento-money: #eaf7ed;
+
+    /* Colores de estado */
+    --color-vencimiento: #e87524;
+    --color-pendiente: #16856f;
+    
+    --color-aviso-verde: #399665;
+    --color-aviso-amarillo: #ee9d25;
+    --color-aviso-azul: #328bc2;
+
+    --color-documento-pdf: #e54848;
+    --color-documento-doc: #3587bd;
+    --color-documento-money: #269b61;
+    --color-evento: #23958c;
+
 }
 
 * {
