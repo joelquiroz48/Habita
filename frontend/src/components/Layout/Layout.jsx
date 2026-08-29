@@ -1,16 +1,50 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "./Layout.css";
 import iconPerfil from "../../assets/img/foto-perfil.png";
 import iconLogo from "../../assets/img/icon.png";
 
 import {ChevronDown, Menu, Bell, House, Wallet, Calendar, Megaphone, Folder, MessageCircleMore } from "lucide-react";
 
+const informacionHeader = {
+    "/inicio": {
+        titulo: "Bienvenido, usuario",
+        descripcion: "Resumen de tu comunidad",
+    },
+    "/expensas": {
+        titulo: "Mis expensas",
+        descripcion: "Consultá, pagá y descargá tus expensas",
+    },
+    "/reservas": {
+        titulo: "Reservas",
+        descripcion: "Reservá y gestioná los espacios comunes de tu comunidad",
+    },
+    "/avisos": {
+        titulo: "Avisos",
+        descripcion: "Mantenete informado sobre todo lo que sucede en tu comunidad",
+    },
+    "/documentos": {
+        titulo: "Documentos",
+        descripcion: "Accedé a los documentos importantes de tu consorcio",
+    },
+    "/perfil": {
+        titulo: "Mi perfil",
+        descripcion: "Consultá y actualizá tus datos personales",
+    },
+    "/configuracion": {
+        titulo: "Configuración",
+        descripcion: "Personalizá las opciones de tu cuenta",
+    },
+};
 
 function Layout({ children }) {
 
     const [sidebarAbierto, setSidebarAbierto] = useState(true);
     const [menuAbierto, setMenuAbierto] = useState(false);
+
+    const location = useLocation();
+
+    const infoHeader = informacionHeader[location.pathname];
 
     return (
         <div className="layout">
@@ -37,12 +71,10 @@ function Layout({ children }) {
 
                     </div>
 
-
                     <div className="header-info">
-                        <h1>Bienvenido, usuario</h1>
-                        <p>Resumen de tu comunidad</p>
+                        <h1>{infoHeader?.titulo}</h1>
+                        <p>{infoHeader?.descripcion}</p>
                     </div>
-
 
                     <div className="header-usuario">
 
@@ -64,7 +96,7 @@ function Layout({ children }) {
                                     
                                     <Link to="/perfil">Mi perfil</Link>
                                     <Link to="/configuracion">Configuración</Link>                                        
-                                    <Link to="/cerrarSesion">Cerrar Sesión</Link>
+                                    <Link to="/">Cerrar Sesión</Link>
 
                                 </div>
                             )}
