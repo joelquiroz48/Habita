@@ -62,7 +62,7 @@ function Layout({ children }) {
                             {menuAbierto && (
                                 <div className="menu-perfil">
                                     
-                                    <Link to="/miPerfil">Mi perfil</Link>
+                                    <Link to="/perfil">Mi perfil</Link>
                                     <Link to="/configuracion">Configuración</Link>                                        
                                     <Link to="/cerrarSesion">Cerrar Sesión</Link>
 
@@ -115,13 +115,6 @@ function Layout({ children }) {
                                     <Link to="/documentos">
                                         <Folder />
                                         <span>Documentos</span>
-                                    </Link>
-                                </li>
-
-                                <li>
-                                    <Link to="/mensajes">
-                                        <MessageCircleMore />
-                                        <span>Mensajes</span>
                                     </Link>
                                 </li>
 
