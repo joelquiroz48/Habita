@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import iconPerfil from "../../assets/img/foto-perfil.png";
+import iconPerfil from "../../../assets/img/foto-perfil.png";
 
 import {
     UserRound,

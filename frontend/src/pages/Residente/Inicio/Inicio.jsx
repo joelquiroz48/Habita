@@ -16,7 +16,7 @@ import {
     CircleDollarSign,
 } from "lucide-react";
 
-import imagenPredeterminada from "../../assets/img/imagen-predeterminada.png";
+import imagenPredeterminada from "../../../assets/img/imagen-predeterminada.png";
 import "./Inicio.css";
 
 // =========================

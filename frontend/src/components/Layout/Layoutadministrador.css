@@ -1,0 +1,280 @@
+.layout-admin {
+  min-height: 100vh;
+  background: var(--fondo);
+}
+
+.layout-admin-principal {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* =========================
+          HEADER
+========================= */
+
+.layout-admin-principal > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 14px 24px;
+  background: var(--blanco);
+  border-bottom: 1px solid var(--borde-secundario);
+}
+
+.header-admin-navegacion {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.boton-sidebar-admin {
+  border: none;
+  background: transparent;
+  color: var(--texto-secundario);
+  cursor: pointer;
+  display: flex;
+}
+
+.logo-admin {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.logo-admin img {
+  width: 30px;
+  height: 30px;
+}
+
+.logo-admin h1 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--texto-principal);
+}
+
+.header-admin-info {
+  flex: 1;
+}
+
+.header-admin-info h1 {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--texto-principal);
+}
+
+.header-admin-info p {
+  font-size: 12px;
+  color: var(--texto-secundario);
+  margin-top: 2px;
+}
+
+.header-admin-usuario {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.header-admin-notificaciones {
+  color: var(--texto-secundario);
+  display: flex;
+  cursor: pointer;
+}
+
+.header-admin-usuario > img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.menu-admin-usuario {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  position: relative;
+  color: var(--texto-secundario);
+}
+
+.menu-admin-usuario-texto {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.menu-admin-usuario-texto strong {
+  font-size: 13px;
+  color: var(--texto-principal);
+}
+
+.menu-admin-usuario-texto span {
+  font-size: 11px;
+  color: var(--texto-secundario);
+}
+
+.menu-admin-perfil {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  background: var(--blanco);
+  border: 1px solid var(--borde-tarjeta);
+  border-radius: 10px;
+  box-shadow: 0 6px 18px var(--sombra-formulario);
+  display: flex;
+  flex-direction: column;
+  min-width: 160px;
+  overflow: hidden;
+  z-index: 10;
+}
+
+.menu-admin-perfil a {
+  padding: 10px 14px;
+  font-size: 13px;
+  color: var(--texto-principal);
+  text-decoration: none;
+}
+
+.menu-admin-perfil a:hover {
+  background: var(--celeste-claro);
+}
+
+/* =========================
+      SIDEBAR + CONTENIDO
+========================= */
+
+.contenido-layout-admin {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+.sidebar-admin {
+  width: 230px;
+  min-width: 230px;
+  background: var(--blanco);
+  border-right: 1px solid var(--borde-secundario);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px 12px;
+  transition: margin-left 0.2s ease;
+}
+
+.sidebar-admin:not(.mostrar) {
+  margin-left: -230px;
+}
+
+.sidebar-admin-nav ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.sidebar-admin-nav a {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 9px 12px;
+  border-radius: 8px;
+  color: var(--texto-secundario);
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.sidebar-admin-nav a svg {
+  width: 19px;
+  height: 19px;
+}
+
+.sidebar-admin-nav a:hover {
+  background: var(--hover-nav);
+}
+
+.sidebar-admin-nav a.activo {
+  background: var(--celeste);
+  color: var(--texto-nav);
+  font-weight: 600;
+}
+
+.sidebar-admin-consorcio {
+  display: flex;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 10px;
+  background: var(--celeste-claro);
+  margin-top: 16px;
+}
+
+.sidebar-admin-consorcio img {
+  width: 42px;
+  height: 42px;
+  border-radius: 8px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.sidebar-admin-consorcio-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.sidebar-admin-consorcio-info strong {
+  font-size: 13px;
+  color: var(--texto-principal);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-admin-consorcio-info span {
+  font-size: 11px;
+  color: var(--texto-secundario);
+}
+
+.sidebar-admin-cambiar {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  border: none;
+  background: transparent;
+  color: var(--verde-hover);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 0;
+  margin-top: 4px;
+  cursor: pointer;
+}
+
+#contenido-main-admin {
+  flex: 1;
+  min-width: 0;
+  overflow-y: auto;
+}
+
+/* =========================
+        RESPONSIVE
+========================= */
+
+@media (max-width: 900px) {
+  .header-admin-info {
+    display: none;
+  }
+
+  .sidebar-admin {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 20;
+    box-shadow: 0 0 20px var(--sombra-formulario);
+  }
+
+  .sidebar-admin:not(.mostrar) {
+    margin-left: -230px;
+  }
+}

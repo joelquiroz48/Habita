@@ -1,0 +1,510 @@
+.documentos {
+  padding: 28px 32px;
+
+  --doc-color-reglamentos: var(--color-documento-doc);
+  --doc-fondo-reglamentos: var(--fondo-documento-doc);
+  --doc-color-actas: var(--color-aviso-verde);
+  --doc-fondo-actas: var(--fondo-aviso-verde);
+  --doc-color-finanzas: var(--color-aviso-amarillo);
+  --doc-fondo-finanzas: var(--fondo-aviso-amarillo);
+  --doc-color-contratos: var(--color-aviso-azul);
+  --doc-fondo-contratos: var(--fondo-aviso-azul);
+  --doc-color-mantenimiento: var(--color-evento);
+  --doc-fondo-mantenimiento: #e5f6f4;
+  --doc-color-seguros: var(--color-documento-pdf);
+  --doc-fondo-seguros: var(--fondo-documento-pdf);
+  --doc-color-planos: #7c5cbf;
+  --doc-fondo-planos: #efe9fb;
+  --doc-color-otros: var(--texto-secundario);
+  --doc-fondo-otros: var(--fondo-icono-panel);
+
+  --doc-color-a: #5a67d8;
+  --doc-fondo-a: #e6e8fb;
+  --doc-color-b: #7c5cbf;
+  --doc-fondo-b: #efe9fb;
+  --doc-color-c: #d1548a;
+  --doc-fondo-c: #fbe6ef;
+}
+
+/* =========================
+        CABECERA
+========================= */
+
+.documentos-cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.documentos-filtros {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.documentos-buscador {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--borde-input);
+  border-radius: 8px;
+  background: var(--blanco);
+  padding: 9px 12px;
+  color: var(--texto-icono);
+  min-width: 220px;
+}
+
+.documentos-buscador input {
+  border: none;
+  outline: none;
+  flex: 1;
+  font-size: 13px;
+  font-family: inherit;
+  color: var(--texto-principal);
+}
+
+.documentos-filtro {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--borde-input);
+  border-radius: 8px;
+  background: var(--blanco);
+  color: var(--texto-secundario);
+  font-size: 13px;
+  padding: 9px 12px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.documentos-btn-subir {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  border: none;
+  border-radius: 8px;
+  background: var(--color-documento-doc);
+  color: var(--blanco);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 10px 16px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.documentos-btn-subir:hover {
+  opacity: 0.9;
+}
+
+/* =========================
+        CONTENIDO
+========================= */
+
+.documentos-contenido {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 16px;
+  align-items: start;
+}
+
+.documentos-tabla-card {
+  background: var(--blanco);
+  border: 1px solid var(--borde-tarjeta);
+  border-radius: 12px;
+  overflow: hidden;
+  overflow-x: auto;
+}
+
+.documentos-tabla-header,
+.documentos-tabla-fila {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1.4fr 0.8fr 0.7fr 0.7fr;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 18px;
+  width: 100%;
+  box-sizing: border-box;
+  min-width: 780px;
+}
+
+.documentos-tabla-header {
+  border-bottom: 1px solid var(--borde-secundario);
+}
+
+.documentos-tabla-header span {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--texto-secundario);
+}
+
+.documentos-th-nombre {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.documentos-tabla-fila {
+  border-bottom: 1px solid var(--separador);
+  font-size: 13px;
+  color: var(--texto-principal);
+}
+
+.documentos-tabla-body .documentos-tabla-fila:last-child {
+  border-bottom: none;
+}
+
+.documentos-nombre-celda {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.documentos-icono-archivo {
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.documentos-icono-archivo.pdf { background: var(--fondo-documento-pdf); color: var(--color-documento-pdf); }
+.documentos-icono-archivo.xlsx { background: var(--fondo-documento-money); color: var(--color-documento-money); }
+.documentos-icono-archivo.docx { background: var(--fondo-documento-doc); color: var(--color-documento-doc); }
+.documentos-icono-archivo.jpg { background: var(--doc-fondo-planos); color: var(--doc-color-planos); }
+
+.documentos-nombre-texto {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.documentos-nombre-texto strong {
+  font-size: 13px;
+  color: var(--texto-principal);
+  font-weight: 600;
+}
+
+.documentos-nombre-texto small {
+  font-size: 12px;
+  color: var(--texto-secundario);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.documentos-badge {
+  width: fit-content;
+  padding: 4px 10px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.documentos-badge.reglamentos { color: var(--doc-color-reglamentos); background: var(--doc-fondo-reglamentos); }
+.documentos-badge.actas { color: var(--doc-color-actas); background: var(--doc-fondo-actas); }
+.documentos-badge.finanzas { color: var(--doc-color-finanzas); background: var(--doc-fondo-finanzas); }
+.documentos-badge.contratos { color: var(--doc-color-contratos); background: var(--doc-fondo-contratos); }
+.documentos-badge.mantenimiento { color: var(--doc-color-mantenimiento); background: var(--doc-fondo-mantenimiento); }
+.documentos-badge.seguros { color: var(--doc-color-seguros); background: var(--doc-fondo-seguros); }
+.documentos-badge.planos { color: var(--doc-color-planos); background: var(--doc-fondo-planos); }
+.documentos-badge.otros { color: var(--doc-color-otros); background: var(--doc-fondo-otros); }
+
+.documentos-subido-celda {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.documentos-avatar {
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.documentos-avatar.a { background: var(--doc-fondo-a); color: var(--doc-color-a); }
+.documentos-avatar.b { background: var(--doc-fondo-b); color: var(--doc-color-b); }
+.documentos-avatar.c { background: var(--doc-fondo-c); color: var(--doc-color-c); }
+
+.documentos-subido-celda span:last-child {
+  display: flex;
+  flex-direction: column;
+}
+
+.documentos-subido-celda strong {
+  font-size: 12px;
+  color: var(--texto-principal);
+  font-weight: 600;
+}
+
+.documentos-subido-celda small {
+  font-size: 11px;
+  color: var(--texto-secundario);
+}
+
+.documentos-fecha,
+.documentos-tamano {
+  color: var(--texto-secundario);
+  font-size: 12px;
+}
+
+.documentos-tabla-acciones {
+  display: flex;
+  gap: 10px;
+}
+
+.documentos-tabla-acciones button {
+  border: none;
+  background: transparent;
+  color: var(--texto-icono);
+  cursor: pointer;
+  display: flex;
+  padding: 0;
+}
+
+/* ---- paginacion ---- */
+
+.documentos-paginacion {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.documentos-pagina,
+.documentos-pagina-flecha {
+  min-width: 30px;
+  height: 30px;
+  border: 1px solid var(--borde-secundario);
+  border-radius: 7px;
+  background: var(--blanco);
+  color: var(--texto-secundario);
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0 6px;
+}
+
+.documentos-pagina.activa {
+  border-color: var(--verde);
+  color: var(--verde);
+  font-weight: 600;
+}
+
+.documentos-pagina-puntos {
+  color: var(--texto-secundario);
+  font-size: 13px;
+  padding: 0 2px;
+}
+
+.documentos-paginacion-info {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--texto-secundario);
+}
+
+/* =========================
+      COLUMNA LATERAL
+========================= */
+
+.documentos-lateral {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.documentos-panel-card {
+  background: var(--blanco);
+  border: 1px solid var(--borde-tarjeta);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.documentos-panel-card h2 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--texto-principal);
+  margin-bottom: 12px;
+}
+
+.documentos-categorias-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.documentos-categoria-fila {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 13px;
+}
+
+.documentos-carpeta-icon {
+  width: 26px;
+  height: 26px;
+  min-width: 26px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.documentos-carpeta-icon.reglamentos { background: var(--doc-fondo-reglamentos); color: var(--doc-color-reglamentos); }
+.documentos-carpeta-icon.actas { background: var(--doc-fondo-actas); color: var(--doc-color-actas); }
+.documentos-carpeta-icon.finanzas { background: var(--doc-fondo-finanzas); color: var(--doc-color-finanzas); }
+.documentos-carpeta-icon.contratos { background: var(--doc-fondo-contratos); color: var(--doc-color-contratos); }
+.documentos-carpeta-icon.mantenimiento { background: var(--doc-fondo-mantenimiento); color: var(--doc-color-mantenimiento); }
+.documentos-carpeta-icon.seguros { background: var(--doc-fondo-seguros); color: var(--doc-color-seguros); }
+.documentos-carpeta-icon.planos { background: var(--doc-fondo-planos); color: var(--doc-color-planos); }
+.documentos-carpeta-icon.otros { background: var(--doc-fondo-otros); color: var(--doc-color-otros); }
+
+.documentos-categoria-nombre {
+  flex: 1;
+  color: var(--texto-principal);
+}
+
+.documentos-categoria-valor {
+  font-weight: 600;
+  color: var(--texto-secundario);
+}
+
+.documentos-btn-ver-todas {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  border: 1px solid var(--borde-secundario);
+  border-radius: 8px;
+  background: var(--blanco);
+  color: var(--texto-principal);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 9px;
+  margin-top: 14px;
+  cursor: pointer;
+}
+
+.documentos-btn-ver-todas:hover {
+  background: var(--fondo);
+}
+
+/* ---- almacenamiento ---- */
+
+.documentos-almacenamiento-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  margin-bottom: 6px;
+}
+
+.documentos-almacenamiento-info span {
+  color: var(--texto-secundario);
+}
+
+.documentos-almacenamiento-info strong {
+  color: var(--texto-principal);
+}
+
+.documentos-progreso {
+  width: 100%;
+  height: 7px;
+  border-radius: 4px;
+  background: var(--borde-input);
+  overflow: hidden;
+}
+
+.documentos-progreso-relleno {
+  height: 100%;
+  background: var(--color-documento-doc);
+  border-radius: 4px;
+}
+
+.documentos-progreso-porcentaje {
+  display: block;
+  font-size: 11px;
+  color: var(--texto-secundario);
+  margin-top: 4px;
+}
+
+.documentos-btn-gestionar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  border: 1px solid var(--borde-secundario);
+  border-radius: 8px;
+  background: var(--blanco);
+  color: var(--texto-principal);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 9px;
+  margin-top: 14px;
+  cursor: pointer;
+}
+
+.documentos-btn-gestionar:hover {
+  background: var(--fondo);
+}
+
+/* ---- acciones rapidas ---- */
+
+.documentos-acciones-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.documentos-accion-fila {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  border: none;
+  background: transparent;
+  color: var(--texto-verde);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 8px 4px;
+  cursor: pointer;
+  text-align: left;
+  border-radius: 6px;
+}
+
+.documentos-accion-fila:hover {
+  background: var(--celeste-claro);
+}
+
+/* =========================
+        RESPONSIVE
+========================= */
+
+@media (max-width: 1200px) {
+  .documentos-contenido {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 800px) {
+  .documentos {
+    padding: 20px;
+  }
+}
