@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import {
     WalletCards,
     CalendarDays,
@@ -236,7 +237,7 @@ function Inicio() {
                             {resumen.avisos.descripcion}
                         </span>
 
-                        <a href="#">Ver avisos</a>
+                        <Link to="/avisos">Ver avisos</Link>
                     </div>
                 </article>
 
@@ -294,10 +295,10 @@ function Inicio() {
                             Pagar ahora
                         </button>
 
-                        <button className="btn-secundario">
+                        <Link to="/expensas" className="btn-secundario">
                             <FileText size={16} />
                             Ver detalle de expensas
-                        </button>
+                        </Link>
                     </div>
                 </article>
 
@@ -306,7 +307,7 @@ function Inicio() {
                 <article className="panel-card">
                     <div className="panel-header">
                         <h2>Próximas reservas</h2>
-                        <a href="#">Ver todas</a>
+                        <Link to="/reservas">Ver todas</Link>
                     </div>
 
                     <div className="reservas-list">
@@ -346,10 +347,10 @@ function Inicio() {
                         ))}
                     </div>
 
-                    <a className="link-abajo" href="#">
+                    <Link className="link-abajo" to="/reservas">
                         Ir a mis reservas
                         <ChevronRight size={17} />
-                    </a>
+                    </Link>
                 </article>
 
                 {/* AVISOS */}
@@ -357,7 +358,7 @@ function Inicio() {
                 <article className="panel-card">
                     <div className="panel-header">
                         <h2>Avisos del consorcio</h2>
-                        <a href="#">Ver todos</a>
+                        <Link to="/avisos">Ver todos</Link>
                     </div>
 
                     <div className="avisos-list">
@@ -381,10 +382,10 @@ function Inicio() {
                         ))}
                     </div>
 
-                    <a className="link-abajo" href="#">
+                    <Link className="link-abajo" to="/avisos">
                         Ver todos los avisos
                         <ChevronRight size={17} />
-                    </a>
+                    </Link>
                 </article>
 
                 {/* DOCUMENTOS */}
@@ -392,7 +393,7 @@ function Inicio() {
                 <article className="panel-card">
                     <div className="panel-header">
                         <h2>Documentos recientes</h2>
-                        <a href="#">Ver todos</a>
+                        <Link to="/documentos">Ver todos</Link>
                     </div>
 
                     <div className="documentos-list">
