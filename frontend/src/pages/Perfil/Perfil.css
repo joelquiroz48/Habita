@@ -1,0 +1,559 @@
+/* =========================================================
+   TARJETAS GENERALES
+========================================================= */
+
+.perfil-card {
+    background: var(--blanco);
+    border: 1px solid var(--borde-tarjeta);
+    border-radius: 12px;
+    padding: 16px;
+    min-width: 0;
+}
+
+.perfil-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 13px;
+}
+
+.perfil-titulo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.perfil-titulo svg {
+    width: 18px;
+    height: 18px;
+    color: var(--verde);
+}
+
+.perfil-titulo h2 {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   GRID SUPERIOR
+========================================================= */
+
+.perfil-grid-superior {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 14px;
+    margin-bottom: 14px;
+}
+
+
+/* =========================================================
+   PERFIL DEL RESIDENTE
+========================================================= */
+
+.residente-contenido {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.avatar-residente img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.residente-datos {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.residente-datos h3 {
+    margin: 0 0 1px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.residente-datos span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--texto-secundario);
+}
+
+.residente-datos svg {
+    color: var(--texto-icono);
+}
+
+
+/* =========================================================
+   INFORMACIÓN DE LA UNIDAD
+========================================================= */
+
+.unidad-contenido {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.unidad-icono {
+    width: 58px;
+    height: 58px;
+    min-width: 58px;
+    border-radius: 50%;
+    background: var(--fondo-icono-resumen);
+    color: var(--verde);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.unidad-datos {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+}
+
+.unidad-datos > div {
+    display: grid;
+    grid-template-columns: 65px 1fr;
+    align-items: center;
+}
+
+.unidad-datos span {
+    font-size: 12px;
+    color: var(--texto-secundario);
+}
+
+.unidad-datos strong {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--texto-verde);
+}
+
+.badge-residente {
+    width: fit-content;
+    padding: 3px 8px;
+    border-radius: 8px;
+    background: var(--fondo-badge-pendiente);
+    color: var(--color-pendiente);
+    font-size: 12px;
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   GRID CENTRAL
+========================================================= */
+
+.perfil-grid-central {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 14px;
+    margin-bottom: 14px;
+}
+
+
+/* =========================================================
+   DATOS DE CONTACTO
+========================================================= */
+
+.contacto-form {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.campo-perfil {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    align-items: center;
+    gap: 8px;
+}
+
+.campo-perfil label {
+    font-size: 12px;
+    color: var(--texto-secundario);
+}
+
+.campo-perfil input {
+    width: 100%;
+    height: 27px;
+    padding: 0 9px;
+
+    border: 1px solid var(--borde-input);
+    border-radius: 6px;
+
+    background: var(--blanco);
+    color: var(--texto-secundario);
+
+    font-size: 12px;
+
+    outline: none;
+}
+
+.texto-ayuda {
+    margin: 8px 0 0;
+    font-size: 11px;
+    color: var(--texto-icono);
+}
+
+
+/* =========================================================
+   BOTÓN EDITAR
+========================================================= */
+
+.btn-editar {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    padding: 4px 7px;
+
+    border: 0px;
+    border-radius: 5px;
+
+    background: var(--verde);
+    color: var(--blanco);
+
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.btn-editar:hover {
+    background: var(--verde-medio);
+}
+
+
+/* =========================================================
+   PREFERENCIAS DE NOTIFICACIÓN
+========================================================= */
+
+.preferencias-lista {
+    display: flex;
+    flex-direction: column;
+}
+
+.preferencia {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+
+    padding: 7px 0;
+
+    border-bottom: 1px solid var(--separador);
+}
+
+.preferencia:last-child {
+    border-bottom: none;
+}
+
+.preferencia > div {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.preferencia strong {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.preferencia span {
+    font-size: 11px;
+    color: var(--texto-secundario);
+}
+
+
+/* =========================================================
+   SWITCH
+========================================================= */
+
+.switch {
+    position: relative;
+
+    width: 28px;
+    height: 16px;
+    min-width: 28px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: var(--borde-input);
+
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.switch span {
+    position: absolute;
+
+    width: 12px;
+    height: 12px;
+
+    top: 2px;
+    left: 2px;
+
+    border-radius: 50%;
+    background: var(--blanco);
+
+    transition: 0.2s;
+}
+
+.switch.activo {
+    background: var(--verde-medio);
+}
+
+.switch.activo span {
+    left: 14px;
+}
+
+/* =========================================================
+   SEGURIDAD DE LA CUENTA
+========================================================= */
+
+.seguridad-contenido {
+    display: grid;
+    grid-template-columns: 0.9fr 1.15fr 1.4fr;
+    gap: 20px;
+}
+
+.seguridad-bloque {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    padding-right: 15px;
+
+    border-right: 1px solid var(--separador);
+}
+
+.seguridad-bloque:last-child {
+    border-right: none;
+}
+
+.seguridad-bloque > strong {
+    font-size: 15px;
+}
+
+.password {
+    letter-spacing: 2px;
+    font-size: 20px;
+}
+
+.seguridad-bloque > small {
+    font-size: 13px;
+    color: var(--texto-secundario);
+}
+
+
+/* =========================================================
+   BOTONES DE SEGURIDAD
+========================================================= */
+
+.btn-seguridad {
+    width: fit-content;
+
+    margin-top: 7px;
+    padding: 5px 9px;
+    border: 0px;
+    border-radius: 5px;
+
+    background: var(--verde);
+    color: var(--blanco);
+
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.btn-seguridad:hover {
+    background: var(--verde-medio);
+}
+
+
+/* =========================================================
+   VERIFICACIÓN EN DOS PASOS
+========================================================= */
+
+.seguridad-titulo {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.seguridad-titulo strong {
+    font-size: 15px;
+}
+
+.badge-activa {
+    padding: 2px 6px;
+
+    border-radius: 7px;
+
+    background: var(--fondo-confirmada);
+    color: var(--color-pendiente);
+
+    font-size: 12px;
+}
+
+.seguridad-bloque p {
+    margin: 2px 0 0;
+
+    font-size: 13px;
+
+    color: var(--texto-secundario);
+}
+
+
+/* =========================================================
+   SESIONES ACTIVAS
+========================================================= */
+
+.sesiones-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 6px;
+}
+
+.sesiones-header strong {
+    font-size: 15px;
+}
+
+.sesiones-header button {
+    border: none;
+    background: none;
+
+    color: var(--verde-hover);
+
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.sesion {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    margin-bottom: 7px;
+}
+
+.sesion svg {
+    color: var(--texto-icono);
+    flex-shrink: 0;
+}
+
+.sesion > div {
+    display: flex;
+    flex-direction: column;
+
+    min-width: 0;
+}
+
+.sesion strong {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.sesion span {
+    font-size: 12px;
+    color: var(--texto-secundario);
+}
+
+.badge-actual {
+    margin-left: auto;
+
+    padding: 2px 5px;
+
+    border-radius: 5px;
+
+    background: var(--fondo-confirmada);
+    color: var(--color-pendiente);
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1200px) {
+
+    .perfil-grid-superior,
+    .perfil-grid-central {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .seguridad-contenido {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .seguridad-bloque:nth-child(2) {
+        border-right: none;
+    }
+
+    .seguridad-bloque:last-child {
+        grid-column: span 2;
+
+        padding-top: 12px;
+        padding-right: 0;
+
+        border-top: 1px solid var(--separador);
+    }
+}
+
+@media (max-width: 850px) {
+
+    .perfil-grid-superior,
+    .perfil-grid-central {
+        grid-template-columns: 1fr;
+    }
+
+    .seguridad-contenido {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .seguridad-bloque {
+        padding-right: 0;
+        padding-bottom: 12px;
+        border-right: none;
+        border-bottom: 1px solid var(--separador);
+    }
+
+    .seguridad-bloque:last-child {
+        grid-column: auto;
+        padding-top: 0;
+        padding-bottom: 0;
+        border-top: none;
+        border-bottom: none;
+    }
+}
+
+@media (max-width: 550px) {
+
+    .residente-contenido {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .campo-perfil {
+        grid-template-columns: 1fr;
+        gap: 3px;
+    }
+
+    .campo-perfil input {
+        height: 30px;
+    }
+}
