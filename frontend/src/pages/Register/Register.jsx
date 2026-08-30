@@ -76,8 +76,10 @@ function Register() {
 
                             <a href="/" className="marca" aria-label="Habita - Inicio">
 
-                                <img src={logo} alt="Logo de Habita"/>
+                                <Link to="/inicio" className="marca" aria-label="Habita - Inicio">
+                                <img src={logo} alt="Logo de Habita" />
                                 <h1>Habita</h1>
+                                </Link>
 
                             </a>
 
