@@ -25,19 +25,19 @@ import "./Inicio.css";
 const resumen = {
     expensas: {
         monto: "$ 45.230",
-        vencimiento: "Vence el 10/06/2024",
+        vencimiento: "Vence el 10/09/2026",
         estado: "Pendiente",
     },
     reunion: {
         dia: "15",
-        mes: "MAY",
+        mes: "SEPT",
         titulo: "Asamblea ordinaria",
         horario: "20:00 h · SUM",
     },
     reservas: {
         cantidad: 2,
         proxima: "Próxima: SUM",
-        horario: "18/05 · 18:00 a 22:00",
+        horario: "18/09 · 18:00 a 22:00",
     },
     avisos: {
         cantidad: 3,
@@ -47,24 +47,24 @@ const resumen = {
 
 const reservas = [
     {
+        nombre: "Laundry",
+        fecha: "02/09/2026",
+        horario: "10:00 a 11:00",
+        estado: "Pendiente",
+        imagen: imagenPredeterminada,
+    },
+    {
         nombre: "SUM",
-        fecha: "18/05/2024",
+        fecha: "18/09/2026",
         horario: "18:00 a 22:00",
         estado: "Confirmada",
         imagen: imagenPredeterminada,
     },
     {
         nombre: "Parrilla 2",
-        fecha: "18/05/2024",
+        fecha: "18/09/2026",
         horario: "12:00 a 16:00",
         estado: "Confirmada",
-        imagen: imagenPredeterminada,
-    },
-    {
-        nombre: "Laundry",
-        fecha: "02/06/2024",
-        horario: "10:00 a 11:00",
-        estado: "Pendiente",
         imagen: imagenPredeterminada,
     },
 ];
@@ -73,7 +73,7 @@ const avisos = [
     {
         titulo: "Poda de árboles en espacios comunes",
         descripcion:
-            "El próximo lunes 20/05 se realizará la poda de árboles en el jardín del frente.",
+            "El próximo martes 15/09 se realizará la poda de árboles en el jardín del frente.",
         fecha: "Hoy",
         icon: <TreePine />,
         clase: "verde",
@@ -81,8 +81,8 @@ const avisos = [
     {
         titulo: "Corte de luz programado",
         descripcion:
-            "El miércoles 22/05 de 9:00 a 13:00 habrá un corte de luz por tareas de EDENOR.",
-        fecha: "16/05",
+            "El martes 22/09 de 9:00 a 13:00 habrá un corte de luz por tareas de EDENOR.",
+        fecha: "31/08",
         icon: <Lightbulb />,
         clase: "amarillo",
     },
@@ -90,7 +90,7 @@ const avisos = [
         titulo: "Ahorro de agua",
         descripcion:
             "Recordamos la importancia del uso responsable del agua en todo el edificio.",
-        fecha: "14/05",
+        fecha: "27/08",
         icon: <Droplets />,
         clase: "azul",
     },
@@ -100,19 +100,19 @@ const documentos = [
     {
         nombre: "Reglamento de Copropiedad",
         tipo: "PDF",
-        fecha: "Actualizado 12/04/2024",
+        fecha: "Actualizado 12/08/2026",
         icon: "pdf",
     },
     {
-        nombre: "Acta Asamblea Ordinaria 04/2024",
+        nombre: "Acta Asamblea Ordinaria 08/2026",
         tipo: "PDF",
-        fecha: "10/04/2024",
+        fecha: "10/08/2026",
         icon: "doc",
     },
     {
-        nombre: "Recibo expensas 04/2024",
+        nombre: "Recibo expensas 08/2026",
         tipo: "PDF",
-        fecha: "10/05/2024",
+        fecha: "10/08/2026",
         icon: "money",
     },
 ];
@@ -120,19 +120,19 @@ const documentos = [
 const eventos = [
     {
         dia: "15",
-        mes: "MAY",
+        mes: "SEPT",
         titulo: "Asamblea ordinaria",
         info: "20:00 h · SUM",
     },
     {
         dia: "20",
-        mes: "MAY",
+        mes: "SEPT",
         titulo: "Poda de árboles",
         info: "08:00 h · Espacios comunes",
     },
     {
         dia: "22",
-        mes: "MAY",
+        mes: "SEPT",
         titulo: "Corte de luz programado",
         info: "09:00 a 13:00 h · Todo el edificio",
     },
@@ -265,7 +265,7 @@ function Inicio() {
 
                     <div className="expensas-content">
                         <span className="expensas-periodo">
-                            Expensas ordinarias - Mayo 2024
+                            Expensas ordinarias - Agosto 2026
                         </span>
 
                         <strong className="expensas-precio">
@@ -274,12 +274,12 @@ function Inicio() {
 
                         <div className="expensas-row">
                             <span>Vencimiento</span>
-                            <span>10/06/2024</span>
+                            <span>10/9/2026</span>
                         </div>
 
                         <div className="expensas-row">
                             <span>Período</span>
-                            <span>05/2024</span>
+                            <span>08/2026</span>
                         </div>
 
                         <div className="expensas-row">
