@@ -1,0 +1,440 @@
+.pagos {
+  padding: 28px 32px;
+}
+
+/* =========================
+          KPIS
+========================= */
+
+.pagos-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.pagos-kpi-card {
+  background: var(--blanco);
+  border: 1px solid var(--borde-tarjeta);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  box-sizing: border-box;
+}
+
+.pagos-kpi-icon {
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  border-radius: 50%;
+  background: var(--fondo-icono-resumen);
+  color: var(--verde);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pagos-kpi-card > div:last-child {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.pagos-kpi-label {
+  font-size: 12px;
+  color: var(--texto-secundario);
+  margin-bottom: 3px;
+}
+
+.pagos-kpi-card strong {
+  font-size: 19px;
+  color: var(--texto-principal);
+}
+
+.pagos-kpi-info {
+  font-size: 12px;
+  color: var(--texto-secundario);
+  margin-top: 3px;
+}
+
+.pagos-progreso {
+  width: 100%;
+  height: 6px;
+  border-radius: 4px;
+  background: var(--borde-input);
+  margin-top: 6px;
+  overflow: hidden;
+}
+
+.pagos-progreso-relleno {
+  height: 100%;
+  background: var(--verde);
+  border-radius: 4px;
+}
+
+/* =========================
+          FILTROS
+========================= */
+
+.pagos-filtros {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.pagos-filtro {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--borde-input);
+  border-radius: 8px;
+  background: var(--blanco);
+  color: var(--texto-secundario);
+  font-size: 13px;
+  padding: 9px 12px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.pagos-buscador {
+  flex: 1;
+  min-width: 160px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--borde-input);
+  border-radius: 8px;
+  background: var(--blanco);
+  padding: 9px 12px;
+  color: var(--texto-icono);
+}
+
+.pagos-buscador input {
+  border: none;
+  outline: none;
+  flex: 1;
+  font-size: 13px;
+  font-family: inherit;
+  color: var(--texto-principal);
+}
+
+.pagos-btn-exportar {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid var(--verde);
+  border-radius: 8px;
+  background: var(--blanco);
+  color: var(--verde);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 9px 14px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.pagos-btn-exportar:hover {
+  background: var(--celeste-claro);
+}
+
+/* =========================
+        CONTENIDO
+========================= */
+
+.pagos-contenido {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 16px;
+  align-items: start;
+}
+
+.pagos-contenido.sin-detalle {
+  grid-template-columns: 1fr;
+}
+
+.pagos-tabla-card {
+  background: var(--blanco);
+  border: 1px solid var(--borde-tarjeta);
+  border-radius: 12px;
+  overflow: hidden;
+  overflow-x: auto;
+}
+
+.pagos-tabla-header,
+.pagos-tabla-fila {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr 0.6fr 0.9fr 0.9fr 1.3fr 0.9fr 0.8fr;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 18px;
+  width: 100%;
+  box-sizing: border-box;
+  min-width: 780px;
+}
+
+.pagos-tabla-header {
+  border-bottom: 1px solid var(--borde-secundario);
+}
+
+.pagos-tabla-header span {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--texto-secundario);
+  text-align: left;
+}
+
+.pagos-tabla-fila {
+  border: none;
+  border-bottom: 1px solid var(--separador);
+  background: transparent;
+  font-size: 13px;
+  color: var(--texto-principal);
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+}
+
+.pagos-tabla-body .pagos-tabla-fila:last-child {
+  border-bottom: none;
+}
+
+.pagos-tabla-fila:hover {
+  background: var(--fondo);
+}
+
+.pagos-tabla-fila.seleccionada {
+  background: var(--celeste-claro);
+}
+
+.pagos-residente {
+  font-weight: 600;
+}
+
+.pagos-metodo {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--texto-secundario);
+}
+
+.pagos-metodo span {
+  display: flex;
+  flex-direction: column;
+  color: var(--texto-principal);
+  font-size: 13px;
+}
+
+.pagos-metodo small {
+  color: var(--texto-secundario);
+  font-size: 11px;
+}
+
+.pagos-badge {
+  width: fit-content;
+  padding: 4px 10px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.pagos-badge-confirmado {
+  color: var(--color-aviso-verde);
+  background: var(--fondo-aviso-verde);
+}
+
+.pagos-badge-pendiente {
+  color: var(--color-aviso-amarillo);
+  background: var(--fondo-aviso-amarillo);
+}
+
+.pagos-badge-rechazado {
+  color: var(--color-documento-pdf);
+  background: var(--fondo-documento-pdf);
+}
+
+.pagos-tabla-acciones {
+  display: flex;
+  gap: 10px;
+  color: var(--texto-icono);
+}
+
+/* ---- paginacion ---- */
+
+.pagos-paginacion {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.pagos-pagina,
+.pagos-pagina-flecha {
+  min-width: 30px;
+  height: 30px;
+  border: 1px solid var(--borde-secundario);
+  border-radius: 7px;
+  background: var(--blanco);
+  color: var(--texto-secundario);
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0 6px;
+}
+
+.pagos-pagina.activa {
+  border-color: var(--verde);
+  color: var(--verde);
+  font-weight: 600;
+}
+
+.pagos-pagina-puntos {
+  color: var(--texto-secundario);
+  font-size: 13px;
+  padding: 0 2px;
+}
+
+.pagos-paginacion-info {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--texto-secundario);
+}
+
+/* =========================
+      PANEL DE DETALLE
+========================= */
+
+.pagos-detalle {
+  background: var(--blanco);
+  border: 1px solid var(--borde-tarjeta);
+  border-radius: 12px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+}
+
+.pagos-detalle-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.pagos-detalle-header h2 {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--texto-principal);
+}
+
+.pagos-detalle-cerrar {
+  border: none;
+  background: transparent;
+  color: var(--texto-icono);
+  cursor: pointer;
+  display: flex;
+}
+
+.pagos-detalle-fila {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--separador);
+}
+
+.pagos-detalle-fila span {
+  color: var(--texto-secundario);
+}
+
+.pagos-detalle-fila strong {
+  color: var(--texto-principal);
+  font-weight: 600;
+  text-align: right;
+}
+
+.pagos-detalle-subtitulo {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--texto-secundario);
+  margin-top: 14px;
+  margin-bottom: 6px;
+}
+
+.pagos-detalle-metodo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--texto-principal);
+}
+
+.pagos-detalle-transaccion {
+  font-size: 13px;
+  color: var(--texto-principal);
+  font-weight: 600;
+}
+
+.pagos-detalle h3 {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--texto-secundario);
+  margin-top: 18px;
+  margin-bottom: 8px;
+}
+
+.pagos-btn-comprobante {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  border: 1px solid var(--verde);
+  border-radius: 8px;
+  background: var(--blanco);
+  color: var(--verde);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.pagos-btn-comprobante:hover {
+  background: var(--celeste-claro);
+}
+
+.pagos-detalle-archivo {
+  font-size: 12px;
+  color: var(--texto-secundario);
+  margin-top: 6px;
+}
+
+/* =========================
+        RESPONSIVE
+========================= */
+
+@media (max-width: 1200px) {
+  .pagos-kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .pagos-contenido,
+  .pagos-contenido.sin-detalle {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 800px) {
+  .pagos {
+    padding: 20px;
+  }
+
+  .pagos-kpi-grid {
+    grid-template-columns: 1fr;
+  }
+}

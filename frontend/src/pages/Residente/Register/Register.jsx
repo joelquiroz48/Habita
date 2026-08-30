@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Register.css";
 
-import logo from "../../assets/img/icon.png";
+import logo from "../../../assets/img/icon.png";
 import {User, UserRoundPlus, IdCard, Phone, LockKeyhole, Mail, Eye, EyeOff } from "lucide-react";
 
 function Register() {

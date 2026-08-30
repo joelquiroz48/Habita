@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Login.css";
 
-import logo from "../../assets/img/icon.png";
+import logo from "../../../assets/img/icon.png";
 import {Users, ShieldUser, FileText, ChartNoAxesColumnIncreasing, LockKeyhole, Mail, Eye, EyeOff } from "lucide-react";
 
 function Login() {

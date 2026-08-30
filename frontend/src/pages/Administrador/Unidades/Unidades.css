@@ -1,0 +1,234 @@
+.unidades {
+  padding: 28px 32px;
+}
+
+/* =========================
+        ACCIONES
+========================= */
+
+.unidades-acciones {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.unidades-buscador {
+  flex: 1;
+  max-width: 340px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--borde-input);
+  border-radius: 8px;
+  background: var(--blanco);
+  padding: 9px 12px;
+  color: var(--texto-icono);
+}
+
+.unidades-buscador input {
+  border: none;
+  outline: none;
+  flex: 1;
+  font-size: 13px;
+  font-family: inherit;
+  color: var(--texto-principal);
+}
+
+.unidades-filtro {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--borde-input);
+  border-radius: 8px;
+  background: var(--blanco);
+  color: var(--texto-secundario);
+  font-size: 13px;
+  padding: 9px 12px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.unidades-btn-nuevo {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  border: none;
+  border-radius: 8px;
+  background: var(--verde);
+  color: var(--blanco);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 10px 16px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.unidades-btn-nuevo:hover {
+  background: var(--verde-hover);
+}
+
+/* =========================
+          TABLA
+========================= */
+
+.unidades-tabla-card {
+  background: var(--blanco);
+  border: 1px solid var(--borde-tarjeta);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.unidades-tabla-header,
+.unidades-tabla-fila {
+  display: grid;
+  grid-template-columns: 0.7fr 1.2fr 0.8fr 1.4fr 0.9fr 0.8fr;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+}
+
+.unidades-tabla-header {
+  border-bottom: 1px solid var(--borde-secundario);
+}
+
+.unidades-tabla-header span {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--texto-secundario);
+}
+
+.unidades-tabla-fila {
+  border-bottom: 1px solid var(--separador);
+  font-size: 13px;
+  color: var(--texto-principal);
+}
+
+.unidades-tabla-body .unidades-tabla-fila:last-child {
+  border-bottom: none;
+}
+
+.unidades-nombre {
+  font-weight: 600;
+}
+
+.unidades-responsable {
+  color: var(--texto-secundario);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.unidades-badge {
+  width: fit-content;
+  padding: 4px 10px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.unidades-badge-activa {
+  color: var(--color-aviso-verde);
+  background: var(--fondo-aviso-verde);
+}
+
+.unidades-badge-disponible {
+  color: var(--color-aviso-azul);
+  background: var(--fondo-aviso-azul);
+}
+
+.unidades-tabla-acciones {
+  display: flex;
+  gap: 6px;
+}
+
+.unidades-tabla-acciones button {
+  border: none;
+  background: transparent;
+  color: var(--texto-icono);
+  cursor: pointer;
+  display: flex;
+  padding: 4px;
+}
+
+.unidades-tabla-acciones button:hover {
+  color: var(--texto-principal);
+}
+
+/* =========================
+        PAGINACION
+========================= */
+
+.unidades-paginacion {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 18px;
+}
+
+.unidades-pagina,
+.unidades-pagina-flecha {
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--borde-secundario);
+  border-radius: 7px;
+  background: var(--blanco);
+  color: var(--texto-secundario);
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.unidades-pagina.activa {
+  border-color: var(--verde);
+  color: var(--verde);
+  font-weight: 600;
+}
+
+.unidades-paginacion-info {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--texto-secundario);
+}
+
+/* =========================
+        RESPONSIVE
+========================= */
+
+@media (max-width: 900px) {
+  .unidades {
+    padding: 20px;
+  }
+
+  .unidades-acciones {
+    flex-wrap: wrap;
+  }
+
+  .unidades-tabla-header,
+  .unidades-tabla-fila {
+    grid-template-columns: 1fr 1fr;
+    row-gap: 4px;
+  }
+
+  .unidades-tabla-header span:nth-child(3),
+  .unidades-tabla-header span:nth-child(4) {
+    display: none;
+  }
+
+  .unidades-tabla-fila span:nth-child(3),
+  .unidades-tabla-fila .unidades-responsable {
+    display: none;
+  }
+
+  .unidades-paginacion {
+    flex-wrap: wrap;
+  }
+
+  .unidades-paginacion-info {
+    margin-left: 0;
+    width: 100%;
+  }
+}

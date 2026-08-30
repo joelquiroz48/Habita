@@ -1,0 +1,466 @@
+.expensas {
+  padding: 28px 32px;
+}
+
+/* =========================
+      CABECERA + KPIS
+========================= */
+
+.expensas-cabecera {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.expensas-kpi-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.expensas-kpi-card {
+  background: var(--blanco);
+  border: 1px solid var(--borde-tarjeta);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  box-sizing: border-box;
+}
+
+.expensas-kpi-icon {
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  border-radius: 50%;
+  background: var(--fondo-icono-resumen);
+  color: var(--verde);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.expensas-kpi-card > div:last-child {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.expensas-kpi-label {
+  font-size: 12px;
+  color: var(--texto-secundario);
+  margin-bottom: 3px;
+}
+
+.expensas-kpi-card strong {
+  font-size: 19px;
+  color: var(--texto-principal);
+}
+
+.expensas-kpi-info {
+  font-size: 12px;
+  color: var(--texto-secundario);
+  margin-top: 3px;
+}
+
+.expensas-progreso {
+  width: 100%;
+  height: 6px;
+  border-radius: 4px;
+  background: var(--borde-input);
+  margin-top: 6px;
+  overflow: hidden;
+}
+
+.expensas-progreso-relleno {
+  height: 100%;
+  background: var(--verde);
+  border-radius: 4px;
+}
+
+.expensas-btn-nuevo {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  border: none;
+  border-radius: 8px;
+  background: var(--verde);
+  color: var(--blanco);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 10px 16px;
+  cursor: pointer;
+  white-space: nowrap;
+  margin-top: 2px;
+}
+
+.expensas-btn-nuevo:hover {
+  background: var(--verde-hover);
+}
+
+/* =========================
+          TABS
+========================= */
+
+.expensas-tabs {
+  display: flex;
+  gap: 6px;
+  border-bottom: 1px solid var(--borde-secundario);
+  margin-bottom: 16px;
+}
+
+.expensas-tab {
+  border: none;
+  background: transparent;
+  color: var(--texto-secundario);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 10px 6px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+}
+
+.expensas-tab.activo {
+  color: var(--verde);
+  font-weight: 600;
+  border-bottom-color: var(--verde);
+}
+
+/* =========================
+    CONTENIDO (listado + detalle)
+========================= */
+
+.expensas-contenido {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 16px;
+  align-items: start;
+}
+
+/* ---- listado ---- */
+
+.expensas-filtros {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.expensas-filtro {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--borde-input);
+  border-radius: 8px;
+  background: var(--blanco);
+  color: var(--texto-secundario);
+  font-size: 13px;
+  padding: 9px 12px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.expensas-buscador {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--borde-input);
+  border-radius: 8px;
+  background: var(--blanco);
+  padding: 9px 12px;
+  color: var(--texto-icono);
+}
+
+.expensas-buscador input {
+  border: none;
+  outline: none;
+  flex: 1;
+  font-size: 13px;
+  font-family: inherit;
+  color: var(--texto-principal);
+}
+
+.expensas-tabla-card {
+  background: var(--blanco);
+  border: 1px solid var(--borde-tarjeta);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.expensas-tabla-header,
+.expensas-tabla-fila {
+  display: grid;
+  grid-template-columns: 20px 1fr 1fr 1fr 1.3fr 0.8fr 0.7fr;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 18px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.expensas-tabla-header {
+  border-bottom: 1px solid var(--borde-secundario);
+}
+
+.expensas-tabla-header span {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--texto-secundario);
+  text-align: left;
+}
+
+.expensas-tabla-fila {
+  border: none;
+  border-bottom: 1px solid var(--separador);
+  background: transparent;
+  font-size: 13px;
+  color: var(--texto-principal);
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+}
+
+.expensas-tabla-body .expensas-tabla-fila:last-child {
+  border-bottom: none;
+}
+
+.expensas-tabla-fila:hover {
+  background: var(--fondo);
+}
+
+.expensas-tabla-fila.seleccionada {
+  background: var(--celeste-claro);
+}
+
+.expensas-chevron {
+  color: var(--verde);
+  display: flex;
+}
+
+.expensas-periodo {
+  font-weight: 600;
+}
+
+.expensas-badge {
+  width: fit-content;
+  padding: 4px 10px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.expensas-badge-curso {
+  color: var(--color-aviso-azul);
+  background: var(--fondo-aviso-azul);
+}
+
+.expensas-badge-cerrada {
+  color: var(--color-aviso-verde);
+  background: var(--fondo-aviso-verde);
+}
+
+.expensas-tabla-acciones {
+  display: flex;
+  gap: 10px;
+  color: var(--texto-icono);
+}
+
+/* ---- paginacion ---- */
+
+.expensas-paginacion {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.expensas-pagina,
+.expensas-pagina-flecha {
+  min-width: 30px;
+  height: 30px;
+  border: 1px solid var(--borde-secundario);
+  border-radius: 7px;
+  background: var(--blanco);
+  color: var(--texto-secundario);
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0 6px;
+}
+
+.expensas-pagina.activa {
+  border-color: var(--verde);
+  color: var(--verde);
+  font-weight: 600;
+}
+
+.expensas-pagina-puntos {
+  color: var(--texto-secundario);
+  font-size: 13px;
+  padding: 0 2px;
+}
+
+.expensas-paginacion-info {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--texto-secundario);
+}
+
+/* ---- panel de detalle ---- */
+
+.expensas-detalle {
+  background: var(--blanco);
+  border: 1px solid var(--borde-tarjeta);
+  border-radius: 12px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+}
+
+.expensas-detalle-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.expensas-detalle-header h2 {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--texto-principal);
+}
+
+.expensas-detalle-linea {
+  font-size: 12px;
+  color: var(--texto-secundario);
+  margin-bottom: 3px;
+}
+
+.expensas-detalle-linea strong {
+  color: var(--texto-principal);
+  font-weight: 600;
+}
+
+.expensas-detalle h3 {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--texto-secundario);
+  text-transform: none;
+  margin-top: 16px;
+  margin-bottom: 8px;
+}
+
+.expensas-resumen-fila {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  padding: 5px 0;
+  border-bottom: 1px solid var(--separador);
+}
+
+.expensas-resumen-fila:last-of-type {
+  border-bottom: none;
+}
+
+.expensas-pendiente {
+  color: var(--color-vencimiento);
+  font-weight: 600;
+}
+
+.expensas-porcentaje {
+  color: var(--verde-hover);
+  font-weight: 600;
+}
+
+.expensas-btn-accion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 10px;
+  margin-top: 8px;
+  cursor: pointer;
+}
+
+.expensas-btn-accion.principal {
+  border: none;
+  background: var(--verde);
+  color: var(--blanco);
+}
+
+.expensas-btn-accion.principal:hover {
+  background: var(--verde-hover);
+}
+
+.expensas-btn-accion.secundario {
+  border: 1px solid var(--borde-secundario);
+  background: var(--blanco);
+  color: var(--texto-principal);
+}
+
+.expensas-btn-accion.secundario:hover {
+  background: var(--fondo);
+}
+
+.expensas-btn-accion.peligro {
+  border: 1px solid var(--color-documento-pdf);
+  background: var(--blanco);
+  color: var(--color-documento-pdf);
+}
+
+.expensas-btn-accion.peligro:hover {
+  background: var(--fondo-documento-pdf);
+}
+
+/* =========================
+        RESPONSIVE
+========================= */
+
+@media (max-width: 1200px) {
+  .expensas-kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .expensas-contenido {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 800px) {
+  .expensas {
+    padding: 20px;
+  }
+
+  .expensas-cabecera {
+    flex-direction: column;
+  }
+
+  .expensas-kpi-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .expensas-tabla-header,
+  .expensas-tabla-fila {
+    grid-template-columns: 20px 1fr 1fr;
+  }
+
+  .expensas-tabla-header span:nth-child(4),
+  .expensas-tabla-header span:nth-child(5),
+  .expensas-tabla-fila span:nth-child(4),
+  .expensas-tabla-fila span:nth-child(5) {
+    display: none;
+  }
+}
