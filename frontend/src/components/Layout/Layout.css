@@ -29,6 +29,10 @@
     padding: 0 20px;
     gap: 85px;
     background-color: var(--blanco);
+    border-bottom: 1px solid var(--borde-tarjeta);
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
 
@@ -127,13 +131,14 @@
 
 .layout .menu-perfil {
     position: absolute;
-    top: 45px;
+    top: 52px;
     right: 0;
     display: flex;
     flex-direction: column;
     min-width: 160px;
     padding: 8px;
     background-color: var(--blanco);
+    border: 1px solid var(--borde-tarjeta);
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     z-index: 1000;
@@ -163,6 +168,7 @@
     flex-shrink: 0;
     min-height: calc(100vh - 60px);
     background-color: var(--blanco);
+    border-right: 1px solid var(--borde-tarjeta);
 }
 
 
@@ -220,11 +226,17 @@
     }
 
     .layout .sidebar {
-        position: absolute;
-        width: 0;
-        min-height: calc(100vh - 60px);
+        position: fixed;
+        min-height: 0;
+        height: auto;
+        border-bottom: 1px solid var(--borde-tarjeta);
+        border-right: 1px solid var(--borde-tarjeta);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        border-radius: 10px;
         overflow: hidden;
         transition: width 0.2s ease;
+        top: 60px;
+        z-index: 99;
     }
 
     .layout .sidebar.mostrar {

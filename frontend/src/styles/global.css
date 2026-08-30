@@ -17,7 +17,7 @@
     /* ------- TEXTOS ---------- */
 
     --texto-principal: #08363C;
-    --texto-secundario: #5C6470;
+    --texto-secundario: #4d545f;
     --texto-verde: #0D5F59;
     --texto-icono: #5D6871C5;
 
@@ -89,4 +89,25 @@ body {
 svg {
     width: 22px;
     height: 22px;
+}
+
+/* =========================
+         SCROLLBAR
+========================= */
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--fondo);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--verde-medio);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--verde-hover);
 }
