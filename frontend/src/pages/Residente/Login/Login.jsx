@@ -35,7 +35,14 @@ function Login() {
 
             const body = await res.json().catch(() => ({}));
             if (!res.ok) {
-                setError(body.detail || body.msg || 'Error en el login');
+                const detalle = body.detail || body.msg || 'Error en el login';
+
+                setError(
+                    typeof detalle === "string"
+                        ? detalle
+                        : JSON.stringify(detalle)
+                );
+
                 setLoading(false);
                 return;
             }
@@ -46,8 +53,14 @@ function Login() {
             }
 
             setLoading(false);
-            // redirect to home or dashboard
-            navigate('/');
+
+            if (body.tipo === "ADMIN") {
+                navigate('/administrador/inicio');
+            } else if (body.tipo === "RESIDENTE") {
+                navigate('/inicio');
+            } else {
+                setError('Tipo de usuario no reconocido');
+            }
         } catch (err) {
             setError('Error de red');
             setLoading(false);
