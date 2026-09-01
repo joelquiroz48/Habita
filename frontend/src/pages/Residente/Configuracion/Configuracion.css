@@ -1,0 +1,402 @@
+/* =========================
+       CONFIGURACIÓN
+========================= */
+
+.configuracion {
+    width: 100%;
+    padding: 24px;
+    box-sizing: border-box;
+}
+
+
+/* =========================
+          GRID
+========================= */
+
+.configuracion-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.7fr) minmax(250px, 0.8fr);
+    gap: 14px;
+    align-items: start;
+}
+
+.configuracion-principal,
+.configuracion-lateral {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+
+/* =========================
+          CARDS
+========================= */
+
+.config-card {
+    background: var(--blanco);
+    border: 1px solid var(--borde-tarjeta);
+    border-radius: 12px;
+    padding: 16px;
+    box-sizing: border-box;
+}
+
+.config-card-header {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 15px;
+}
+
+.config-icon {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    border-radius: 7px;
+    background: var(--fondo-icono-panel);
+    color: var(--verde);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.config-card-header > div:last-child {
+    display: flex;
+    flex-direction: column;
+}
+
+.config-card-header h2 {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--texto-principal);
+}
+
+.config-card-header p {
+    font-size: 13px;
+    color: var(--texto-secundario);
+    margin-top: 2px;
+}
+
+
+/* =========================
+          LISTAS
+========================= */
+
+.config-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.config-item {
+    min-height: 58px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid var(--separador);
+}
+
+.config-item:last-child {
+    border-bottom: none;
+}
+
+.config-item-icon {
+    width: 31px;
+    height: 31px;
+    min-width: 31px;
+    border-radius: 7px;
+    background: var(--fondo-icono-panel);
+    color: var(--texto-icono);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.config-item-content {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.config-item-content strong {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--texto-principal);
+}
+
+.config-item-content span {
+    font-size: 12px;
+    color: var(--texto-secundario);
+    margin-top: 2px;
+}
+
+
+/* =========================
+          SELECT
+========================= */
+
+.config-item select {
+    width: 115px;
+    height: 28px;
+    padding: 0 7px;
+    border: 1px solid var(--borde-input);
+    border-radius: 6px;
+    background: var(--blanco);
+    color: var(--texto-secundario);
+    font-family: "Open Sans", sans-serif;
+    font-size: 12px;
+    outline: none;
+    cursor: pointer;
+}
+
+.config-item select:focus {
+    border-color: var(--verde);
+}
+
+
+/* =========================
+          SWITCH
+========================= */
+
+.switch {
+    position: relative;
+    width: 34px;
+    height: 19px;
+    flex-shrink: 0;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.switch span {
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    background: var(--borde-secundario);
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.switch span::before {
+    content: "";
+    position: absolute;
+    width: 13px;
+    height: 13px;
+    top: 3px;
+    left: 3px;
+    border-radius: 50%;
+    background: var(--blanco);
+    transition: 0.2s;
+}
+
+.switch input:checked + span {
+    background: var(--verde);
+}
+
+.switch input:checked + span::before {
+    transform: translateX(15px);
+}
+
+
+/* =========================
+        BOTONES / LINKS
+========================= */
+
+.config-link {
+    width: 100%;
+    min-height: 57px;
+    padding: 7px 0;
+    border: none;
+    border-bottom: 1px solid var(--separador);
+    background: transparent;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    text-align: left;
+    cursor: pointer;
+}
+
+.config-link:last-child {
+    border-bottom: none;
+}
+
+.config-link:hover .config-item-content strong {
+    color: var(--verde-hover);
+}
+
+.config-link > svg:last-child {
+    color: var(--texto-icono);
+    flex-shrink: 0;
+}
+
+
+/* =========================
+            AYUDA
+========================= */
+
+.ayuda-card {
+    background: linear-gradient(
+        145deg,
+        var(--blanco),
+        var(--celeste-claro)
+    );
+}
+
+.ayuda-lista {
+    display: flex;
+    flex-direction: column;
+}
+
+.ayuda-lista strong {
+    font-weight: 500;
+}
+
+
+/* =========================
+         INFORMACIÓN
+========================= */
+
+.info-links {
+    display: flex;
+    flex-direction: column;
+}
+
+.config-simple-link {
+    width: 100%;
+    min-height: 37px;
+    padding: 0;
+    border: none;
+    border-bottom: 1px solid var(--separador);
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--texto-secundario);
+    font-size: 13px;
+    text-align: left;
+    cursor: pointer;
+}
+
+.config-simple-link:hover {
+    color: var(--verde-hover);
+}
+
+.config-simple-link svg {
+    color: var(--texto-icono);
+}
+
+.version-habita {
+    font-size: 12px;
+    color: var(--texto-secundario);
+    margin-top: 11px;
+}
+
+
+/* =========================
+          CUENTA
+========================= */
+
+.cuenta-card h2 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--texto-principal);
+    margin-bottom: 12px;
+}
+
+.btn-logout,
+.btn-eliminar {
+    width: 100%;
+    height: 31px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.btn-logout {
+    border: 1px solid var(--borde-secundario);
+    background: var(--blanco);
+    color: var(--texto-secundario);
+}
+
+.btn-logout:hover {
+    border-color: var(--verde);
+    color: var(--verde-hover);
+}
+
+.btn-eliminar {
+    margin-top: 7px;
+    border: 1px solid #e8aaaa;
+    background: var(--blanco);
+    color: #d95353;
+}
+
+.btn-eliminar:hover {
+    background: #fff5f5;
+}
+
+
+/* =========================
+        RESPONSIVE
+========================= */
+
+@media (max-width: 1000px) {
+    .configuracion-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .configuracion-lateral {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .cuenta-card {
+        grid-column: span 2;
+    }
+}
+
+
+@media (max-width: 700px) {
+    .configuracion {
+        padding: 20px;
+    }
+
+    .configuracion-lateral {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .cuenta-card {
+        grid-column: auto;
+    }
+
+    .config-item {
+        align-items: flex-start;
+        padding: 10px 0;
+    }
+
+    .config-item select {
+        width: 100px;
+    }
+}
+
+
+@media (max-width: 500px) {
+    .config-item {
+        flex-wrap: wrap;
+    }
+
+    .config-item-content {
+        min-width: calc(100% - 45px);
+    }
+
+    .config-item select,
+    .config-item .switch {
+        margin-left: 41px;
+    }
+}

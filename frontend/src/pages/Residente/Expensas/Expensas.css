@@ -1,0 +1,827 @@
+/* =========================
+        CONTENEDOR
+========================= */
+
+.expensas {
+    width: 100%;
+}
+
+/* =========================
+        RESUMEN SUPERIOR
+========================= */
+
+.expensas-resumen {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 14px;
+}
+
+.expensa-resumen-card {
+    background: var(--blanco);
+    border: 1px solid var(--borde-tarjeta);
+    border-radius: 12px;
+    padding: 17px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    box-sizing: border-box;
+}
+
+.expensa-resumen-icon {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    border-radius: 50%;
+    background: var(--fondo-icono-resumen);
+    color: var(--verde);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.expensa-resumen-card > div:last-child {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.expensa-resumen-card > div:last-child > span:first-child {
+    font-size: 13px;
+    color: var(--texto-secundario);
+    margin-bottom: 4px;
+}
+
+.expensa-resumen-card strong {
+    color: var(--texto-principal);
+    font-size: 21px;
+    line-height: 1.2;
+    margin-bottom: 5px;
+}
+
+.expensa-resumen-card small {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--texto-secundario);
+    margin-top: 0;
+}
+
+.medio-preferido {
+    font-size: 16px !important;
+}
+
+.estado-descripcion {
+    margin-top: 5px !important;
+    line-height: 1.4;
+}
+/* =========================
+        BADGES
+========================= */
+
+.badge-expensa {
+    width: fit-content;
+    padding: 4px 8px;
+    margin-top: 5px;
+    border-radius: 5px;
+    background: var(--fondo-aviso-amarillo);
+    color: var(--color-vencimiento);
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+}
+
+.texto-vencimiento {
+    margin-top: 5px !important;
+    color: var(--color-vencimiento) !important;
+    font-size: 12px !important;
+}
+
+
+/* =========================
+        LINK VERDE
+========================= */
+
+.link-verde {
+    border: none;
+    background: transparent;
+    padding: 0;
+    margin-top: 4px;
+    width: fit-content;
+    color: var(--verde-hover);
+    font-size: 12px;
+    cursor: pointer;
+}
+
+
+/* =========================
+        CONTENIDO
+========================= */
+
+.expensas-contenido {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(260px, 0.9fr);
+    gap: 14px;
+}
+
+
+/* =========================
+        PANELES
+========================= */
+
+.panel-expensas {
+    background: var(--blanco);
+    border: 1px solid var(--borde-tarjeta);
+    border-radius: 10px;
+    padding: 14px;
+    box-sizing: border-box;
+}
+
+/* =========================
+        DETALLE EXPENSA
+========================= */
+
+.detalle-expensa {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.2fr);
+    gap: 20px;
+    min-height: 250px;
+}
+
+.detalle-header {
+    position: relative;
+    min-width: 0;
+}
+
+.detalle-info {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding-top: 10px;
+}
+
+.detalle-info h2 {
+    margin: 0 0 5px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.detalle-info strong {
+    margin: 5px;
+    font-size: 20px;
+    margin-bottom: 4px;
+}
+
+.detalle-info span {
+    font-size: 12px;
+    color: var(--texto-secundario);
+}
+
+.detalle-info small {
+    font-size: 12px;
+    color: var(--texto-secundario);
+    margin-top: 5px;
+}
+
+.btn-pagar {
+    width: 100%;
+    height: 32px;
+    margin-top: 14px;
+    border: none;
+    border-radius: 6px;
+    background: var(--verde);
+    color: var(--blanco);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-pagar:hover {
+    background: var(--verde-hover);
+}
+
+.btn-descargar {
+    width: 100%;
+    height: 31px;
+    margin-top: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    border: 1px solid var(--borde-input);
+    border-radius: 6px;
+    background: var(--blanco);
+    color: var(--texto-secundario);
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.btn-descargar:hover {
+    color: var(--verde);
+    border-color: var(--verde);
+}
+
+.btn-detalle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 6px 8px;
+    border: 1px solid var(--borde-input);
+    border-radius: 5px;
+    background: var(--blanco);
+    color: var(--texto-secundario);
+    font-size: 12px;
+    cursor: pointer;
+}
+
+
+/* =========================
+        DETALLE LISTA
+========================= */
+
+.detalle-lista {
+    padding-top: 4px;
+}
+
+.detalle-lista h3 {
+    margin: 0 0 9px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--texto-principal);
+}
+
+.detalle-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--separador);
+}
+
+.detalle-item > div {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.detalle-item svg {
+    width: 22px;
+    height: 22px;
+    color: var(--texto-icono);
+}
+
+.detalle-item span {
+    font-size: 12px;
+    color: var(--texto-secundario);
+}
+
+.detalle-item strong {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--texto-secundario);
+}
+
+.detalle-total {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 10px;
+}
+
+.detalle-total strong {
+    font-size: 14px;
+    color: var(--texto-principal);
+}
+
+
+/* =========================
+        SIDEBAR
+========================= */
+
+.expensas-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+
+/* =========================
+        HEADER PANEL
+========================= */
+
+.panel-expensas-header {
+    margin-bottom: 10px;
+}
+
+.panel-expensas-header h2 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--texto-principal);
+}
+
+.panel-expensas-header span {
+    display: block;
+    margin-top: 3px;
+    font-size: 12px;
+    color: var(--texto-secundario);
+}
+
+
+/* =========================
+        MEDIOS DE PAGO
+========================= */
+
+.medios-pago {
+    min-height: 210px;
+}
+
+.metodos-tabs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-bottom: 1px solid var(--borde-input);
+    margin-bottom: 9px;
+}
+
+.metodos-tabs button {
+    height: 28px;
+    border: none;
+    background: transparent;
+    color: var(--texto-secundario);
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.metodos-tabs button.activo {
+    color: var(--verde-hover);
+    border-bottom: 2px solid var(--verde);
+    font-weight: 600;
+}
+
+.tarjeta-guardada {
+    padding: 7px 0;
+    border-bottom: 1px solid var(--separador);
+}
+
+.tarjeta-guardada > span {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 11px;
+    color: var(--texto-secundario);
+}
+
+.tarjeta-guardada > div {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.tarjeta-guardada strong {
+    font-size: 12px;
+    color: var(--texto-nav);
+}
+
+.tarjeta-guardada div span {
+    flex: 1;
+    font-size: 11px;
+    color: var(--texto-secundario);
+}
+
+.tarjeta-guardada em {
+    padding: 3px 5px;
+    border-radius: 4px;
+    background: var(--fondo-confirmada);
+    color: var(--color-pendiente);
+    font-size: 10px;
+    font-style: normal;
+}
+
+.tarjeta-guardada input {
+    accent-color: var(--verde);
+}
+
+.nueva-tarjeta,
+.ver-medios {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    border: none;
+    background: transparent;
+    color: var(--verde-hover);
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.nueva-tarjeta {
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--separador);
+}
+
+.nueva-tarjeta svg:first-child {
+    margin-right: 5px;
+}
+
+.ver-medios {
+    justify-content: space-between;
+    padding-top: 8px;
+}
+
+
+/* =========================
+        AYUDA
+========================= */
+
+.ayuda-expensas {
+    padding-bottom: 8px;
+}
+
+.ayuda-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--separador);
+}
+
+.ayuda-item:last-child {
+    border-bottom: none;
+}
+
+.ayuda-icon {
+    width: 26px;
+    height: 26px;
+    min-width: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--fondo-icono-panel);
+    color: var(--verde);
+}
+
+.ayuda-item > div:nth-child(2) {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.ayuda-item strong {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--texto-principal);
+}
+
+.ayuda-item span {
+    font-size: 11px;
+    color: var(--texto-secundario);
+    margin-top: 3px;
+}
+
+.ayuda-item > svg {
+    width: 22px;
+    height: 22px;
+    color: var(--texto-icono);
+}
+
+
+/* =========================
+        ASISTENTE
+========================= */
+
+.asistente-expensas {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    background: linear-gradient(
+        135deg,
+        var(--celeste-claro),
+        var(--blanco)
+    );
+}
+
+.asistente-expensas-icon {
+    width: 43px;
+    height: 43px;
+    min-width: 43px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--verde);
+    color: var(--blanco);
+}
+
+.asistente-expensas h2 {
+    margin: 0 0 4px;
+    font-size: 15px;
+    color: var(--texto-verde);
+}
+
+.asistente-expensas p {
+    margin: 0 0 8px;
+    font-size: 12px;
+    color: var(--texto-secundario);
+}
+
+.asistente-expensas button {
+    height: 29px;
+    padding: 0 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    border: none;
+    border-radius: 6px;
+    background: var(--verde);
+    color: var(--blanco);
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.asistente-expensas button:hover {
+    background: var(--verde-hover);
+}
+
+
+/* =========================
+        HISTORIAL
+========================= */
+
+.historial-expensas {
+    grid-column: 1;
+    min-height: 250px;
+}
+
+.historial-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.filtros-expensas {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--borde-input);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.filtros-expensas button {
+    padding: 6px 10px;
+    border: none;
+    background: var(--blanco);
+    color: var(--texto-secundario);
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.filtros-expensas button.activo {
+    background: var(--celeste-claro);
+    color: var(--verde-hover);
+    font-weight: 600;
+}
+
+.filtro-fecha {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 8px;
+    border: 1px solid var(--borde-input);
+    border-radius: 5px;
+    background: var(--blanco);
+    color: var(--texto-secundario);
+    font-size: 11px;
+    cursor: pointer;
+}
+
+
+/* =========================
+        TABLA HISTORIAL
+========================= */
+
+.tabla-expensas {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.tabla-header,
+.tabla-fila {
+    display: grid;
+    grid-template-columns:
+        1.2fr
+        1fr
+        1.2fr
+        1.3fr
+        2.3fr;
+    align-items: center;
+    column-gap: 9px;
+}
+
+.tabla-header {
+    min-height: 32px;
+    padding: 0 9px;
+    background: var(--fondo-icono-panel);
+    border-top: 1px solid var(--borde-input);
+    border-bottom: 1px solid var(--borde-input);
+}
+
+.tabla-header span {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--texto-secundario);
+}
+
+.tabla-fila {
+    min-height: 38px;
+    padding: 0 9px;
+    border-bottom: 1px solid var(--separador);
+}
+
+.tabla-fila > span,
+.tabla-fila > strong {
+    font-size: 11px;
+    color: var(--texto-secundario);
+}
+
+.tabla-fila > strong {
+    color: var(--texto-principal);
+    font-weight: 500;
+}
+
+
+/* =========================
+        ESTADOS
+========================= */
+
+.estado-pagada,
+.estado-pendiente-expensa {
+    width: fit-content;
+    display: inline-block;
+    padding: 4px 7px;
+    border-radius: 4px;
+    font-size: 10px !important;
+    font-weight: 500;
+}
+
+.estado-pagada {
+    background: var(--fondo-confirmada);
+    color: var(--color-pendiente);
+}
+
+.estado-pendiente-expensa {
+    background: var(--fondo-aviso-amarillo);
+    color: var(--color-vencimiento);
+}
+
+
+/* =========================
+        ACCIONES
+========================= */
+
+.acciones-expensa {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.acciones-expensa button {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 6px;
+    border: none;
+    background: transparent;
+    color: var(--verde-hover);
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.acciones-expensa .accion-pagar {
+    padding: 5px 10px;
+    border-radius: 4px;
+    background: var(--verde);
+    color: var(--blanco);
+    font-weight: 600;
+}
+
+.acciones-expensa .accion-pagar:hover {
+    background: var(--verde-hover);
+}
+
+.acciones-expensa .accion-menu {
+    font-size: 17px;
+    color: var(--texto-icono);
+}
+
+
+/* =========================
+        PAGINACIÓN
+========================= */
+
+.paginacion-expensas {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding-top: 9px;
+}
+
+.paginacion-expensas span {
+    font-size: 11px;
+    color: var(--texto-secundario);
+}
+
+.paginacion-expensas button {
+    width: 24px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--borde-input);
+    border-radius: 5px;
+    background: var(--blanco);
+    color: var(--texto-secundario);
+    cursor: pointer;
+}
+
+.paginacion-expensas button svg {
+    width: 22px;
+    height: 22px;
+}
+
+
+/* =========================
+        RESPONSIVE
+========================= */
+
+@media (max-width: 1200px) {
+
+    .expensas-resumen {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .expensas-contenido {
+        grid-template-columns: 1fr;
+    }
+
+    .expensas-sidebar {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .historial-expensas {
+        grid-column: auto;
+    }
+}
+
+
+@media (max-width: 800px) {
+
+    .expensas-resumen {
+        grid-template-columns: 1fr;
+    }
+
+    .detalle-expensa {
+        grid-template-columns: 1fr;
+    }
+
+    .expensas-sidebar {
+        grid-template-columns: 1fr;
+    }
+
+    .tabla-expensas {
+        overflow-x: auto;
+    }
+
+    .tabla-header,
+    .tabla-fila {
+        min-width: 700px;
+    }
+}
+
+
+@media (max-width: 500px) {
+
+    .expensas {
+        width: 100%;
+    }
+
+    .historial-header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .filtros-expensas {
+        width: 100%;
+    }
+
+    .filtros-expensas button {
+        flex: 1;
+    }
+
+    .filtro-fecha {
+        width: 100%;
+        justify-content: center;
+    }
+}

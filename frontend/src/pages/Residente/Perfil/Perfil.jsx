@@ -22,7 +22,6 @@ function Perfil() {
         document.title = "Habita | Mi perfil";
     }, []);
 
-    // Estados de las preferencias de notificación
     const [notificaciones, setNotificaciones] = useState({
         avisos: true,
         expensas: true,
