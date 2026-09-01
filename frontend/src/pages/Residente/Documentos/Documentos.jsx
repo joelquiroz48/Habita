@@ -7,6 +7,7 @@ import {
     MoreHorizontal,
     FileText,
     FileSpreadsheet,
+    CircleDollarSign,
     Download,
     Eye,
     Search,
@@ -59,33 +60,33 @@ const categorias = [
 
 const documentosRecientes = [
     {
-        nombre: "Acta de Asamblea Ordinaria 2024",
-        categoria: "Asambleas",
-        fecha: "12/04/2024",
-        tipo: "pdf",
-    },
-    {
-        nombre: "Estado Contable - Abril 2024",
-        categoria: "Estados contables",
-        fecha: "10/04/2024",
-        tipo: "excel",
-    },
-    {
-        nombre: "Reglamento Interno del Edificio",
+        nombre: "Reglamento de Copropiedad",
         categoria: "Reglamentos",
-        fecha: "01/03/2024",
+        fecha: "12/08/2026",
         tipo: "pdf",
     },
     {
-        nombre: "Plan de Obras 2024",
-        categoria: "Obras y mejoras",
-        fecha: "20/02/2024",
+        nombre: "Acta Asamblea Ordinaria 08/2026",
+        categoria: "Asambleas",
+        fecha: "10/08/2026",
         tipo: "word",
     },
     {
-        nombre: "Informe de Mantenimiento - Marzo 2024",
+        nombre: "Recibo expensas 08/2026",
         categoria: "Otros",
-        fecha: "15/02/2024",
+        fecha: "10/08/2026",
+        tipo: "money",
+    },
+    {
+        nombre: "Plan de Obras 2026",
+        categoria: "Obras y mejoras",
+        fecha: "05/08/2026",
+        tipo: "word",
+    },
+    {
+        nombre: "Informe de Mantenimiento - Julio 2026",
+        categoria: "Otros",
+        fecha: "31/07/2026",
         tipo: "pdf",
     },
 ];
@@ -207,6 +208,10 @@ function Documentos() {
 
                                             {documento.tipo === "word" && (
                                                 <FileText size={12} />
+                                            )}
+
+                                            {documento.tipo === "money" && (
+                                                <CircleDollarSign size={12} />
                                             )}
 
                                         </div>

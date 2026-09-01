@@ -4,7 +4,7 @@ import {
     Megaphone,
     Bell,
     AlertTriangle,
-    Car,
+    Users,
     TreePine,
     FileText,
     Droplets,
@@ -21,80 +21,100 @@ import "./Avisos.css";
 // =========================
 
 const resumen = {
-    noLeidos: 5,
-    esteMes: 12,
+    noLeidos: 4,
+    esteMes: 7,
     importantes: 3,
 };
 
 const avisosDestacados = [
     {
-        titulo: "Corte programado de agua",
+        titulo: "Asamblea ordinaria",
         descripcion:
-            "El día martes 27/05 de 9:00 a 14:00 hs. se realizará un corte programado de agua en todo el edificio por tareas de mantenimiento.",
-        fecha: "23/05/2025",
+            "El próximo martes 15/09 se realizará la asamblea ordinaria del consorcio a las 20:00 h en el SUM.",
+        fecha: "01/09/2026",
+        autor: "Administración",
+        tipo: "Importante",
+        clase: "importante",
+        icon: <Users size={18} />,
+    },
+    {
+        titulo: "Corte de luz programado",
+        descripcion:
+            "El martes 8/09 de 9:00 a 13:00 habrá un corte de luz por tareas de EDENOR.",
+        fecha: "01/09/2026",
         autor: "Administración",
         tipo: "Importante",
         clase: "importante",
         icon: <AlertTriangle size={18} />,
     },
     {
-        titulo: "Normas de estacionamiento",
+        titulo: "Poda de árboles en espacios comunes",
         descripcion:
-            "Recordamos a todos los vecinos respetar las cocheras asignadas y no obstruir la circulación.",
-        fecha: "20/05/2025",
+            "El próximo martes 15/09 se realizará la poda de árboles en el jardín del frente.",
+        fecha: "31/08/2026",
         autor: "Administración",
-        tipo: "Recordatorio",
-        clase: "recordatorio",
-        icon: <Car size={18} />,
+        tipo: "Importante",
+        clase: "importante",
+        icon: <TreePine size={18} />,
     },
 ];
 
 const avisos = [
     {
-        titulo: "Mantenimiento de jardines",
+        titulo: "Asamblea ordinaria",
         descripcion:
-            "El día viernes 30/05 se realizará el mantenimiento mensual de los jardines del edificio.",
-        fecha: "22/05/2025",
+            "El próximo martes 15/09 se realizará la asamblea ordinaria del consorcio a las 20:00 h en el SUM.",
+        fecha: "01/09/2026",
+        clase: "violeta",
+        icon: <Users size={17} />,
+        categoria: "Eventos",
+        leido: false,
+    },
+    {
+        titulo: "Corte de luz programado",
+        descripcion:
+            "El martes 8/09 de 9:00 a 13:00 habrá un corte de luz por tareas de EDENOR.",
+        fecha: "01/09/2026",
+        clase: "rojo",
+        icon: <AlertTriangle size={17} />,
+        categoria: "Mantenimiento",
+        leido: false,
+    },
+    {
+        titulo: "Poda de árboles en espacios comunes",
+        descripcion:
+            "El próximo martes 15/09 se realizará la poda de árboles en el jardín del frente.",
+        fecha: "31/08/2026",
         clase: "verde",
         icon: <TreePine size={17} />,
         categoria: "Mantenimiento",
-        leido: true,
+        leido: false,
     },
     {
-        titulo: "Reunión de consorcio",
+        titulo: "Ahorro de agua",
         descripcion:
-            "Se informa que la próxima reunión de consorcio se llevará a cabo el día 31 de mayo.",
-        fecha: "21/05/2025",
-        clase: "azul",
-        icon: <CalendarDays size={17} />,
-        categoria: "Eventos",
+            "Recordamos la importancia del uso responsable del agua en todo el edificio.",
+        fecha: "27/08/2026",
+        clase: "celeste",
+        icon: <Droplets size={17} />,
+        categoria: "Servicios",
         leido: true,
-    },
+    },    
     {
         titulo: "Recepción de paquetes",
         descripcion:
             "Recordamos que los paquetes se pueden recibir en la administración durante el horario de atención.",
-        fecha: "19/05/2025",
+        fecha: "25/08/2026",
         clase: "violeta",
         icon: <FileText size={17} />,
         categoria: "Servicios",
         leido: false,
     },
     {
-        titulo: "Uso responsable del agua",
-        descripcion:
-            "Solicitamos a los vecinos hacer un uso responsable del agua y evitar desperdicios.",
-        fecha: "18/05/2025",
-        clase: "celeste",
-        icon: <Droplets size={17} />,
-        categoria: "Servicios",
-        leido: true,
-    },
-    {
         titulo: "Revisión de matafuegos",
         descripcion:
             "El próximo miércoles se realizará la revisión y mantenimiento de los matafuegos de los espacios comunes.",
-        fecha: "16/05/2025",
+        fecha: "21/08/2026",
         clase: "naranja",
         icon: <Wrench size={17} />,
         categoria: "Mantenimiento",
@@ -104,7 +124,7 @@ const avisos = [
         titulo: "Recordatorio de seguridad",
         descripcion:
             "Recordamos mantener cerrada la puerta de acceso al edificio y no permitir el ingreso de personas desconocidas.",
-        fecha: "14/05/2025",
+        fecha: "19/08/2026",
         clase: "rojo",
         icon: <Shield size={17} />,
         categoria: "Seguridad",
@@ -116,7 +136,7 @@ const categorias = [
     { nombre: "Mantenimiento", cantidad: 4 },
     { nombre: "Administración", cantidad: 3 },
     { nombre: "Seguridad", cantidad: 2 },
-    { nombre: "Eventos", cantidad: 2 },
+    { nombre: "Eventos", cantidad: 3 },
     { nombre: "Servicios", cantidad: 1 },
 ];
 

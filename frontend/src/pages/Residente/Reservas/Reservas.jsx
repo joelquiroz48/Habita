@@ -25,13 +25,13 @@ import "./Reservas.css";
 const resumenReservas = [
     {
         titulo: "Reservas activas",
-        valor: "2",
-        detalle: "1 confirmada · 1 pendiente",
+        valor: "3",
+        detalle: "2 confirmada · 1 pendiente",
         icono: CalendarDays,
     },
     {
         titulo: "Próxima reserva",
-        valor: "18 MAY",
+        valor: "18 SEP",
         detalle: "SUM · 18:00 a 22:00",
         icono: CalendarDays,
     },
@@ -53,7 +53,7 @@ const resumenReservas = [
 const reservasActivas = [
     {
         nombre: "SUM",
-        fecha: "18/05/2024",
+        fecha: "18/09/2026",
         horario: "18:00 a 22:00",
         estado: "Confirmada",
         imagen: imagenPredeterminada,
@@ -61,7 +61,7 @@ const reservasActivas = [
     },
     {
         nombre: "Parrilla 2",
-        fecha: "25/05/2024",
+        fecha: "25/09/2026",
         horario: "12:00 a 16:00",
         estado: "Confirmada",
         imagen: imagenPredeterminada,
@@ -69,7 +69,7 @@ const reservasActivas = [
     },
     {
         nombre: "Laundry",
-        fecha: "02/06/2024",
+        fecha: "12/09/2026",
         horario: "10:00 a 11:00",
         estado: "Pendiente",
         imagen: imagenPredeterminada,
@@ -105,28 +105,28 @@ const espaciosDisponibles = [
 const eventos = [
     {
         dia: "SÁB",
-        numero: "18",
+        numero: "5",
         horario: "18:00 a 22:00",
         espacio: "SUM",
         estado: "Confirmada",
     },
     {
         dia: "LUN",
-        numero: "20",
+        numero: "7",
         horario: "08:00 a 10:00",
         espacio: "Poda de árboles",
         estado: "Confirmada",
     },
     {
         dia: "JUE",
-        numero: "22",
+        numero: "10",
         horario: "09:00 a 13:00",
         espacio: "Corte de luz programado",
         estado: "Confirmada",
     },
     {
         dia: "SÁB",
-        numero: "25",
+        numero: "12",
         horario: "12:00 a 16:00",
         espacio: "Parrilla 2",
         estado: "Pendiente",
@@ -526,7 +526,7 @@ function Reservas() {
 
                                     <input
                                         type="date"
-                                        defaultValue="2024-05-18"
+                                        defaultValue="2026-09-03"
                                     />
 
                                 </div>
@@ -647,7 +647,7 @@ function Reservas() {
                                 </button>
 
                                 <strong>
-                                    Mayo 2024
+                                    Septiembre 2026
                                 </strong>
 
                                 <button>

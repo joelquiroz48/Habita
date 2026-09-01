@@ -21,8 +21,8 @@ import "./Expensas.css";
 
 const expensaActual = {
     monto: "$ 45.230",
-    periodo: "Mayo 2024",
-    vencimiento: "10/06/2024",
+    periodo: "Agosto 2026",
+    vencimiento: "10/09/2026",
     estado: "Pendiente de pago",
     medioPago: "Tarjeta de crédito",
     terminacion: "**** 4242",
@@ -55,39 +55,39 @@ const detalleExpensa = [
 
 const historialExpensas = [
     {
-        periodo: "Mayo 2024",
+        periodo: "Agosto 2026",
         importe: "$ 45.230",
-        vencimiento: "10/06/2024",
+        vencimiento: "10/09/2026",
         estado: "Pendiente de pago",
     },
     {
-        periodo: "Abril 2024",
+        periodo: "Julio 2026",
         importe: "$ 43.980",
-        vencimiento: "10/05/2024",
+        vencimiento: "10/08/2026",
         estado: "Pagada",
     },
     {
-        periodo: "Marzo 2024",
+        periodo: "Junio 2026",
         importe: "$ 43.500",
-        vencimiento: "10/04/2024",
+        vencimiento: "10/07/2026",
         estado: "Pagada",
     },
     {
-        periodo: "Febrero 2024",
+        periodo: "Mayo 2026",
         importe: "$ 42.830",
-        vencimiento: "10/03/2024",
+        vencimiento: "10/06/2026",
         estado: "Pagada",
     },
     {
-        periodo: "Enero 2024",
+        periodo: "Abril 2026",
         importe: "$ 42.100",
-        vencimiento: "10/02/2024",
+        vencimiento: "10/05/2026",
         estado: "Pagada",
     },
     {
-        periodo: "Diciembre 2023",
+        periodo: "Marzo 2026",
         importe: "$ 41.650",
-        vencimiento: "10/01/2024",
+        vencimiento: "10/04/2026",
         estado: "Pagada",
     },
 ];
@@ -149,7 +149,7 @@ function Expensas() {
                         </strong>
 
                         <small>
-                            En 5 días
+                            En 7 días
                         </small>
                     </div>
 
@@ -224,18 +224,18 @@ function Expensas() {
                     <div className="detalle-header">
 
                         <div className="detalle-info">
-                            <h2>Expensa de Mayo 2024</h2>
+                            <h2>Expensa de Agosto 2026</h2>
 
                             <strong>
                                 {expensaActual.monto}
                             </strong>
 
                             <span>
-                                Período: 01/05/2024 al 31/05/2024
+                                Período: 01/08/2026 al 31/08/2026
                             </span>
 
                             <small>
-                                Vence el 10/06/2024
+                                Vence el 10/09/2026
                             </small>
 
                             <em className="badge-expensa">

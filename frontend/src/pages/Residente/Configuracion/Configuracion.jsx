@@ -21,9 +21,9 @@ function Configuracion() {
     }, []);
 
     const [preferencias, setPreferencias] = useState({
-        espaciosDisponibles: true,
-        recordatorioReservas: true,
-        confirmarCancelacion: true,
+        espaciosDisponibles: false,
+        recordatorioReservas: false,
+        confirmarCancelacion: false,
     });
 
     const cambiarPreferencia = (tipo) => {

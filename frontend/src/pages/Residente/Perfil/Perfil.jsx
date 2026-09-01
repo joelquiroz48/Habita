@@ -23,9 +23,9 @@ function Perfil() {
     }, []);
 
     const [notificaciones, setNotificaciones] = useState({
-        avisos: true,
-        expensas: true,
-        reservas: true,
+        avisos: false,
+        expensas: false,
+        reservas: false,
     });
 
     const cambiarNotificacion = (tipo) => {
@@ -316,7 +316,7 @@ function Perfil() {
                             </span>
 
                             <small>
-                                Última actualización: 03/05/2024
+                                Última actualización: 03/05/2026
                             </small>
 
                             <button className="btn-seguridad">
@@ -388,7 +388,7 @@ function Perfil() {
                                     <strong>iPhone 14 en iOS</strong>
 
                                     <span>
-                                        Buenos Aires, Argentina · 08/05/2024, 10:32
+                                        Buenos Aires, Argentina · 08/05/2026, 10:32
                                     </span>
                                 </div>
 

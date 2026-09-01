@@ -211,6 +211,10 @@
     color: var(--color-documento-doc);
 }
 
+.documento-tipo.money {
+    background: var(--fondo-documento-money);
+    color: var(--color-documento-money);
+}
 
 /* =========================
       BADGES CATEGORÍA

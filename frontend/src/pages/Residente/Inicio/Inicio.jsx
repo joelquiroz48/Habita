@@ -49,7 +49,7 @@ const resumen = {
 const reservas = [
     {
         nombre: "Laundry",
-        fecha: "02/09/2026",
+        fecha: "12/09/2026",
         horario: "10:00 a 11:00",
         estado: "Pendiente",
         imagen: imagenPredeterminada,
@@ -63,7 +63,7 @@ const reservas = [
     },
     {
         nombre: "Parrilla 2",
-        fecha: "18/09/2026",
+        fecha: "25/09/2026",
         horario: "12:00 a 16:00",
         estado: "Confirmada",
         imagen: imagenPredeterminada,
@@ -72,20 +72,20 @@ const reservas = [
 
 const avisos = [
     {
+        titulo: "Corte de luz programado",
+        descripcion:
+            "El martes 8/09 de 9:00 a 13:00 habrá un corte de luz por tareas de EDENOR.",
+        fecha: "31/08",
+        icon: <Lightbulb />,
+        clase: "amarillo",
+    },
+    {
         titulo: "Poda de árboles en espacios comunes",
         descripcion:
             "El próximo martes 15/09 se realizará la poda de árboles en el jardín del frente.",
         fecha: "Hoy",
         icon: <TreePine />,
         clase: "verde",
-    },
-    {
-        titulo: "Corte de luz programado",
-        descripcion:
-            "El martes 22/09 de 9:00 a 13:00 habrá un corte de luz por tareas de EDENOR.",
-        fecha: "31/08",
-        icon: <Lightbulb />,
-        clase: "amarillo",
     },
     {
         titulo: "Ahorro de agua",
@@ -120,22 +120,22 @@ const documentos = [
 
 const eventos = [
     {
+        dia: "5",
+        mes: "SEPT",
+        titulo: "SUM",
+        info: "18:00 a 22:00 h · Reserva",
+    },
+    {
+        dia: "7",
+        mes: "SEPT",
+        titulo: "Poda de árboles",
+        info: "08:00 a 10:00 h · Espacios comunes",
+    },
+    {
         dia: "15",
         mes: "SEPT",
         titulo: "Asamblea ordinaria",
         info: "20:00 h · SUM",
-    },
-    {
-        dia: "20",
-        mes: "SEPT",
-        titulo: "Poda de árboles",
-        info: "08:00 h · Espacios comunes",
-    },
-    {
-        dia: "22",
-        mes: "SEPT",
-        titulo: "Corte de luz programado",
-        info: "09:00 a 13:00 h · Todo el edificio",
     },
 ];
 
