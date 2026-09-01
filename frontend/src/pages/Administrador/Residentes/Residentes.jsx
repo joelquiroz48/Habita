@@ -19,7 +19,7 @@ const residentes = [
     { nombre: "Nicolás Paz", unidad: "5B", email: "nicolas.paz@email.com", telefono: "11 2345 6789", estado: "Activo" },
     { nombre: "María Gómez", unidad: "3A", email: "maria.gomez@email.com", telefono: "11 3456 7890", estado: "Activo" },
     { nombre: "Juan López", unidad: "7C", email: "juan.lopez@email.com", telefono: "11 4567 8901", estado: "Activo" },
-    { nombre: "Carla Romero", unidad: "1B", email: "carla.romero@email.com", telefono: "11 5678 9012", estado: "Invitado" },
+    { nombre: "Carla Romero", unidad: "1B", email: "carla.romero@email.com", telefono: "11 5678 9012", estado: "Activo" },
     { nombre: "Pedro Martínez", unidad: "2D", email: "pedro.martinez@email.com", telefono: "11 6789 0123", estado: "Activo" },
 ];
 

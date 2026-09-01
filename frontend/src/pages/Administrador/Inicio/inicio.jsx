@@ -36,7 +36,7 @@ const kpis = {
         direccion: null,
     },
     expensas: {
-        valor: "$ 5.45.230",
+        valor: "$ 5.450.230",
         label: "Expensas del mes",
         info: "Recaudado",
         progreso: 78,
@@ -88,36 +88,71 @@ function armarGradienteDonut(datos) {
 }
 
 const ultimosReclamos = [
-    { titulo: "Fuga de agua en cochera", estado: "Pendiente", ubicacion: "Torre A - Piso 1", fecha: "Hoy 10:30" },
-    { titulo: "Luz de pasillo quemada", estado: "En proceso", ubicacion: "Torre B - Piso 5", fecha: "Hoy 08:15" },
-    { titulo: "Ascensor fuera de servicio", estado: "Pendiente", ubicacion: "Torre A - Piso 1", fecha: "Ayer 14:45" },
-    { titulo: "Pintura en paredes", estado: "Resuelto", ubicacion: "Torre C - Piso 2", fecha: "10/05/2024" },
-    { titulo: "Puerta de ingreso suelta", estado: "Pendiente", ubicacion: "Torre A - Piso 2", fecha: "09/05/2024" },
+    {
+        titulo: "Fuga de agua en cochera",
+        estado: "Pendiente",
+        ubicacion: "Torre A - Piso 1",
+        fecha: "Hoy 10:30",
+    },
+    {
+        titulo: "Luz de pasillo quemada",
+        estado: "En proceso",
+        ubicacion: "Torre B - Piso 5",
+        fecha: "Hoy 08:15",
+    },
+    {
+        titulo: "Ascensor fuera de servicio",
+        estado: "Pendiente",
+        ubicacion: "Torre A - Piso 1",
+        fecha: "Ayer 14:45",
+    },
+    {
+        titulo: "Pintura en paredes",
+        estado: "Resuelto",
+        ubicacion: "Torre C - Piso 2",
+        fecha: "28/08/2026",
+    },
+    {
+        titulo: "Puerta de ingreso suelta",
+        estado: "Pendiente",
+        ubicacion: "Torre A - Piso 2",
+        fecha: "27/08/2026",
+    },
 ];
 
 const ultimosPagos = [
-    { unidad: "Unidad 5B", monto: "$ 45.230", fecha: "10/05/2024", estado: "Aprobado" },
-    { unidad: "Unidad 2A", monto: "$ 45.230", fecha: "10/05/2024", estado: "Aprobado" },
-    { unidad: "Unidad 7C", monto: "$ 45.230", fecha: "09/05/2024", estado: "Aprobado" },
-    { unidad: "Unidad 1B", monto: "$ 45.230", fecha: "09/05/2024", estado: "Pendiente" },
-    { unidad: "Unidad 2D", monto: "$ 45.230", fecha: "08/05/2024", estado: "Aprobado" },
+    { unidad: "Unidad 5B", monto: "$ 45.230", fecha: "01/09/2026", estado: "Aprobado" },
+    { unidad: "Unidad 2A", monto: "$ 45.230", fecha: "01/09/2026", estado: "Aprobado" },
+    { unidad: "Unidad 7C", monto: "$ 45.230", fecha: "31/08/2026", estado: "Aprobado" },
+    { unidad: "Unidad 1B", monto: "$ 45.230", fecha: "31/08/2026", estado: "Pendiente" },
+    { unidad: "Unidad 2D", monto: "$ 45.230", fecha: "30/08/2026", estado: "Aprobado" },
 ];
 
 const proximaReunion = {
-    titulo: "Reunión de consorcio ordinaria",
-    fecha: "15 de mayo de 2024 - 18:00 hs",
+    titulo: "Asamblea ordinaria",
+    fecha: "15 de septiembre de 2026 - 20:00 hs",
     lugar: "Salón de usos múltiples",
 };
 
 const comunicadoDestacado = {
-    titulo: "Corte de agua programado",
-    descripcion: "El próximo martes 14/05 habrá corte de agua de 9:00 a 13:00 en todo el edificio.",
+    titulo: "Corte de luz programado",
+    descripcion:
+        "El martes 22/09 habrá un corte de luz de 9:00 a 13:00 por tareas de EDENOR en todo el edificio.",
 };
 
 const documentosRecientes = [
-    { nombre: "Acta reunión 10/04/2024", fecha: "10/04/2024" },
-    { nombre: "Informe de gastos Abril 2024", fecha: "08/05/2024" },
-    { nombre: "Reglamento interno actualizado", fecha: "05/05/2024" },
+    {
+        nombre: "Reglamento de Copropiedad",
+        fecha: "12/08/2026",
+    },
+    {
+        nombre: "Acta Asamblea Ordinaria 08/2026",
+        fecha: "10/08/2026",
+    },
+    {
+        nombre: "Recibo expensas 08/2026",
+        fecha: "10/08/2026",
+    },
 ];
 
 function badgeClase(estado) {
