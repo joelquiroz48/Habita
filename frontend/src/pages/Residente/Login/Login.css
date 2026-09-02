@@ -14,7 +14,7 @@
             var(--gradiente-fondo-suave) 40%,
             var(--transparente) 60%
         ),
-        url("../../assets/img/fondo.png");
+        url("../../../assets/img/fondo.png");
 
     border-radius: 100% 0px 0px;
     display: grid;

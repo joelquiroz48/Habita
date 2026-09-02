@@ -1,280 +1,315 @@
-.layout-admin {
-  min-height: 100vh;
-  background: var(--fondo);
+/* =========================
+            LAYOUT
+   ========================= */
+
+.layout {
+    min-height: 100vh;
+    width: 100%;
+    font-family: "Montserrat", sans-serif;
 }
 
-.layout-admin-principal {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+.layout .layout-principal {
+    width: 100%;
+}
+
+.layout .contenido-layout {
+    display: flex;
+    min-height: calc(100vh - 60px);
+    width: 100%;
 }
 
 /* =========================
-          HEADER
-========================= */
+            HEADER
+   ========================= */
 
-.layout-admin-principal > header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  padding: 14px 24px;
-  background: var(--blanco);
-  border-bottom: 1px solid var(--borde-secundario);
+.layout header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 60px;
+    padding: 0 20px;
+    box-sizing: border-box;
+    gap: 85px;
+    border-bottom: 1px solid var(--borde-tarjeta);
+
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
-.header-admin-navegacion {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+
+/* ----- Logo + botón ----- */
+
+.layout .header-navegacion {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-.boton-sidebar-admin {
-  border: none;
-  background: transparent;
-  color: var(--texto-secundario);
-  cursor: pointer;
-  display: flex;
+
+/* Logo administrador */
+
+.layout .logo-admin {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    text-decoration: none;
 }
 
-.logo-admin {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  text-decoration: none;
+.layout .logo-admin img {
+    width: 30px;
 }
 
-.logo-admin img {
-  width: 30px;
-  height: 30px;
+.layout .logo-admin h1 {
+    font-size: 20px;
+    color: var(--texto-principal);
+    transform: translateY(6px);
 }
 
-.logo-admin h1 {
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--texto-principal);
+
+/* ----- Botón sidebar ----- */
+
+.layout .boton-sidebar {
+    display: none;
+    border: none;
+    background: none;
+    padding: 5px;
+    font-size: 20px;
+    cursor: pointer;
 }
 
-.header-admin-info {
-  flex: 1;
-}
-
-.header-admin-info h1 {
-  font-size: 17px;
-  font-weight: 700;
-  color: var(--texto-principal);
-}
-
-.header-admin-info p {
-  font-size: 12px;
-  color: var(--texto-secundario);
-  margin-top: 2px;
-}
-
-.header-admin-usuario {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.header-admin-notificaciones {
-  color: var(--texto-secundario);
-  display: flex;
-  cursor: pointer;
-}
-
-.header-admin-usuario > img {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-.menu-admin-usuario {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  cursor: pointer;
-  position: relative;
-  color: var(--texto-secundario);
-}
-
-.menu-admin-usuario-texto {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.2;
-}
-
-.menu-admin-usuario-texto strong {
-  font-size: 13px;
-  color: var(--texto-principal);
-}
-
-.menu-admin-usuario-texto span {
-  font-size: 11px;
-  color: var(--texto-secundario);
-}
-
-.menu-admin-perfil {
-  position: absolute;
-  top: calc(100% + 10px);
-  right: 0;
-  background: var(--blanco);
-  border: 1px solid var(--borde-tarjeta);
-  border-radius: 10px;
-  box-shadow: 0 6px 18px var(--sombra-formulario);
-  display: flex;
-  flex-direction: column;
-  min-width: 160px;
-  overflow: hidden;
-  z-index: 10;
-}
-
-.menu-admin-perfil a {
-  padding: 10px 14px;
-  font-size: 13px;
-  color: var(--texto-principal);
-  text-decoration: none;
-}
-
-.menu-admin-perfil a:hover {
-  background: var(--celeste-claro);
-}
 
 /* =========================
-      SIDEBAR + CONTENIDO
-========================= */
+          INFO HEADER
+   ========================= */
 
-.contenido-layout-admin {
-  display: flex;
-  flex: 1;
-  min-height: 0;
+.layout .header-info {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
 }
 
-.sidebar-admin {
-  width: 230px;
-  min-width: 230px;
-  background: var(--blanco);
-  border-right: 1px solid var(--borde-secundario);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 16px 12px;
-  transition: margin-left 0.2s ease;
+.layout .header-info h1,
+.layout .header-info p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
-.sidebar-admin:not(.mostrar) {
-  margin-left: -230px;
+.layout .header-info h1 {
+    font-size: 17px;
 }
 
-.sidebar-admin-nav ul {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
+.layout .header-info p {
+    font-size: 12px;
 }
 
-.sidebar-admin-nav a {
-  display: flex;
-  align-items: center;
-  gap: 11px;
-  padding: 9px 12px;
-  border-radius: 8px;
-  color: var(--texto-secundario);
-  text-decoration: none;
-  font-size: 14px;
-}
-
-.sidebar-admin-nav a svg {
-  width: 19px;
-  height: 19px;
-}
-
-.sidebar-admin-nav a:hover {
-  background: var(--hover-nav);
-}
-
-.sidebar-admin-nav a.activo {
-  background: var(--celeste);
-  color: var(--texto-nav);
-  font-weight: 600;
-}
-
-.sidebar-admin-consorcio {
-  display: flex;
-  gap: 10px;
-  padding: 12px;
-  border-radius: 10px;
-  background: var(--celeste-claro);
-  margin-top: 16px;
-}
-
-.sidebar-admin-consorcio img {
-  width: 42px;
-  height: 42px;
-  border-radius: 8px;
-  object-fit: cover;
-  flex-shrink: 0;
-}
-
-.sidebar-admin-consorcio-info {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-}
-
-.sidebar-admin-consorcio-info strong {
-  font-size: 13px;
-  color: var(--texto-principal);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.sidebar-admin-consorcio-info span {
-  font-size: 11px;
-  color: var(--texto-secundario);
-}
-
-.sidebar-admin-cambiar {
-  display: flex;
-  align-items: center;
-  gap: 2px;
-  border: none;
-  background: transparent;
-  color: var(--verde-hover);
-  font-size: 11px;
-  font-weight: 600;
-  padding: 0;
-  margin-top: 4px;
-  cursor: pointer;
-}
-
-#contenido-main-admin {
-  flex: 1;
-  min-width: 0;
-  overflow-y: auto;
-}
 
 /* =========================
-        RESPONSIVE
-========================= */
+        USUARIO HEADER
+   ========================= */
+
+.layout .header-usuario {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}
+
+.layout .header-usuario img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.layout .header-notificaciones {
+    padding: 15px;
+}
+
+.layout .menu-usuario {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+
+/* ----- Información del administrador ----- */
+
+.layout .menu-admin-usuario-texto {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+}
+
+.layout .menu-admin-usuario-texto strong {
+    font-size: 13px;
+}
+
+.layout .menu-admin-usuario-texto span {
+    font-size: 11px;
+    color: var(--texto-secundario);
+}
+
+
+/* ----- Menú desplegable ----- */
+
+.layout .menu-perfil {
+    position: absolute;
+    top: 52px;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    min-width: 160px;
+    padding: 8px;
+    border: 1px solid var(--borde-tarjeta);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+}
+
+.layout .menu-perfil a {
+    display: block;
+    padding: 8px 12px;
+    text-decoration: none;
+    white-space: nowrap;
+    border-radius: 6px;
+}
+
+.layout .menu-perfil a:hover {
+    color: var(--texto-nav);
+    background-color: var(--hover-nav);
+}
+
+
+/* =========================
+            SIDEBAR
+   ========================= */
+
+.layout .sidebar {
+    width: 200px;
+    flex-shrink: 0;
+    min-height: calc(100vh - 60px);
+    border-right: 1px solid var(--borde-tarjeta);
+}
+
+
+/* ----- Navegación ----- */
+
+.layout .sidebar-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.layout .sidebar-nav li {
+    margin: 10px;
+}
+
+.layout .sidebar-nav li a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 13px;
+    color: var(--texto-secundario);
+    text-decoration: none;
+    font-size: 13px;
+    border-radius: 10px;
+    transition: 0.2s;
+}
+
+.layout .sidebar-nav li a:hover {
+    background-color: var(--hover-nav);
+    color: var(--texto-nav);
+}
+
+
+/* ----- Opción activa ----- */
+
+.layout .sidebar-nav li a.activo {
+    background-color: var(--celeste);
+    color: var(--texto-nav);
+}
+
+
+/* =========================
+             MAIN
+   ========================= */
+
+.layout main {
+    flex: 1;
+    min-width: 0;
+    padding: 20px;
+    background-color: var(--fondo);
+
+    /* permite que el contenido interno sea más ancho */
+    overflow-x: auto;
+}
+
+
+
+/* =========================
+          RESPONSIVE
+   ========================= */
 
 @media (max-width: 900px) {
-  .header-admin-info {
-    display: none;
-  }
 
-  .sidebar-admin {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    z-index: 20;
-    box-shadow: 0 0 20px var(--sombra-formulario);
-  }
+    .layout header {
+        gap: 30px;
+    }
 
-  .sidebar-admin:not(.mostrar) {
-    margin-left: -230px;
-  }
+    .layout .boton-sidebar {
+        display: block;
+    }
+
+    .layout .sidebar {
+        position: fixed;
+
+        top: 60px;
+        left: 0;
+
+        width: 0;
+        height: auto;
+        max-height: calc(100vh - 60px);
+
+        min-height: 0;
+
+        background-color: var(--blanco);
+
+        border-right: 1px solid var(--borde-tarjeta);
+        border-bottom: 1px solid var(--borde-tarjeta);
+
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        border-radius: 0 10px 10px 0;
+
+        overflow-x: hidden;
+        overflow-y: auto;
+
+        transition: width 0.2s ease;
+
+        z-index: 99;
+    }
+
+    .layout .sidebar.mostrar {
+        width: 200px;
+    }
+
+    .layout .sidebar-nav {
+        display: none;
+    }
+    
+    .layout .sidebar.mostrar .sidebar-nav {
+        display: block;
+    }
+    /* Ocultar scrollbar del sidebar pero mantener el scroll */
+    .layout .sidebar {
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    .layout .sidebar::-webkit-scrollbar {
+        display: none;
+    }
 }

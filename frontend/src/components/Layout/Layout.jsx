@@ -1,14 +1,24 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./Layout.css";
+
 import iconPerfil from "../../assets/img/foto-perfil.png";
 import iconLogo from "../../assets/img/icon.png";
 
-import {ChevronDown, Menu, Bell, House, Wallet, Calendar, Megaphone, Folder, MessageCircleMore } from "lucide-react";
+import {
+    ChevronDown,
+    Menu,
+    Bell,
+    House,
+    Wallet,
+    Calendar,
+    Megaphone,
+    Folder,
+} from "lucide-react";
 
 const informacionHeader = {
     "/inicio": {
-        titulo: "Bienvenido, usuario",
+        titulo: "Bienvenido, Residente",
         descripcion: "Resumen de tu comunidad",
     },
     "/expensas": {
@@ -37,23 +47,27 @@ const informacionHeader = {
     },
 };
 
-function Layout({ children }) {
+const itemsMenu = [
+    { to: "/inicio", icon: House, label: "Inicio" },
+    { to: "/expensas", icon: Wallet, label: "Mis expensas" },
+    { to: "/reservas", icon: Calendar, label: "Reservas" },
+    { to: "/avisos", icon: Megaphone, label: "Avisos" },
+    { to: "/documentos", icon: Folder, label: "Documentos" },
+];
 
+function Layout({ children }) {
     const [sidebarAbierto, setSidebarAbierto] = useState(true);
     const [menuAbierto, setMenuAbierto] = useState(false);
 
     const location = useLocation();
-
     const infoHeader = informacionHeader[location.pathname];
 
     return (
         <div className="layout">
-
             <div className="layout-principal">
 
                 {/* ----- HEADER ----- */}
                 <header>
-
                     <div className="header-navegacion">
 
                         <button
@@ -82,78 +96,77 @@ function Layout({ children }) {
                             <Bell />
                         </div>
 
-                        <img src={iconPerfil} alt="Imagen de perfil"/>
+                        <img
+                            src={iconPerfil}
+                            alt="Imagen de perfil"
+                        />
 
                         <div
                             className="menu-usuario"
                             onClick={() => setMenuAbierto(!menuAbierto)}
                         >
+                            <div className="menu-usuario-texto">
+                                <strong>Usuario_nombre</strong>
+                                <span>Residente</span>
+                            </div>
 
                             <ChevronDown />
 
                             {menuAbierto && (
                                 <div className="menu-perfil">
-                                    
-                                    <Link to="/perfil">Mi perfil</Link>
-                                    <Link to="/configuracion">Configuración</Link>                                        
-                                    <Link to="/">Cerrar Sesión</Link>
+                                    <Link to="/perfil">
+                                        Mi perfil
+                                    </Link>
 
+                                    <Link to="/configuracion">
+                                        Configuración
+                                    </Link>
+
+                                    <Link to="/">
+                                        Cerrar sesión
+                                    </Link>
                                 </div>
                             )}
-
                         </div>
 
                     </div>
-
                 </header>
-
 
                 {/* ----- SIDEBAR + CONTENIDO ----- */}
                 <div className="contenido-layout">
 
-                    <aside className={`sidebar ${sidebarAbierto ? "mostrar" : ""}`}>
+                    <aside
+                        className={`sidebar ${
+                            sidebarAbierto ? "mostrar" : ""
+                        }`}
+                    >
                         <nav className="sidebar-nav">
                             <ul>
 
-                                <li>
-                                    <Link to="/inicio">
-                                        <House />
-                                        <span>Inicio</span>
-                                    </Link>
-                                </li>
+                                {itemsMenu.map((item) => {
+                                    const Icono = item.icon;
 
-                                <li>
-                                    <Link to="/expensas">
-                                        <Wallet />
-                                        <span>Mis expensas</span>
-                                    </Link>
-                                </li>
+                                    const activo =
+                                        location.pathname === item.to;
 
-                                <li>
-                                    <Link to="/reservas">
-                                        <Calendar />
-                                        <span>Reservas</span>
-                                    </Link>
-                                </li>
-
-                                <li>
-                                    <Link to="/avisos">
-                                        <Megaphone />
-                                        <span>Avisos</span>
-                                    </Link>
-                                </li>
-
-                                <li>
-                                    <Link to="/documentos">
-                                        <Folder />
-                                        <span>Documentos</span>
-                                    </Link>
-                                </li>
+                                    return (
+                                        <li key={item.to}>
+                                            <Link
+                                                to={item.to}
+                                                className={
+                                                    activo ? "activo" : ""
+                                                }
+                                            >
+                                                <Icono />
+                                                <span>{item.label}</span>
+                                            </Link>
+                                        </li>
+                                    );
+                                })}
 
                             </ul>
                         </nav>
                     </aside>
-
 
                     {/* ----- CONTENIDO DE CADA PÁGINA ----- */}
                     <main id="contenido-main">
@@ -161,9 +174,7 @@ function Layout({ children }) {
                     </main>
 
                 </div>
-
             </div>
-
         </div>
     );
 }

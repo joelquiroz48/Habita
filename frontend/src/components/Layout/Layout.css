@@ -1,11 +1,12 @@
+
 /* =========================
             LAYOUT
    ========================= */
 
 .layout {
     min-height: 100vh;
+    width: 100%;
     font-family: "Montserrat", sans-serif;
-    color: var(--texto-principal);
 }
 
 .layout .layout-principal {
@@ -15,6 +16,7 @@
 .layout .contenido-layout {
     display: flex;
     min-height: calc(100vh - 60px);
+    width: 100%;
 }
 
 
@@ -25,11 +27,15 @@
 .layout header {
     display: flex;
     align-items: center;
+    width: 100%;
     height: 60px;
     padding: 0 20px;
+    box-sizing: border-box;
     gap: 85px;
+
     background-color: var(--blanco);
     border-bottom: 1px solid var(--borde-tarjeta);
+
     position: sticky;
     top: 0;
     z-index: 100;
@@ -42,6 +48,7 @@
     display: flex;
     align-items: center;
     gap: 10px;
+    flex-shrink: 0;
 }
 
 .layout .logo {
@@ -79,6 +86,7 @@
    ========================= */
 
 .layout .header-info {
+    flex: 1;
     min-width: 0;
     overflow: hidden;
 }
@@ -107,6 +115,7 @@
     display: flex;
     align-items: center;
     margin-left: auto;
+    flex-shrink: 0;
 }
 
 .layout .header-usuario img {
@@ -122,34 +131,59 @@
 
 .layout .menu-usuario {
     position: relative;
+    display: flex;
+    align-items: center;
+    gap: 6px;
     padding: 10px;
     cursor: pointer;
 }
 
+.layout .menu-usuario-texto {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+}
+
+.layout .menu-usuario-texto strong {
+    font-size: 13px;
+    color: var(--texto-principal);
+}
+
+.layout .menu-usuario-texto span {
+    font-size: 11px;
+    color: var(--texto-secundario);
+}
 
 /* ----- Menú desplegable ----- */
 
 .layout .menu-perfil {
     position: absolute;
-    top: 52px;
+    top: calc(100% + 5px);
     right: 0;
+
     display: flex;
     flex-direction: column;
+
     min-width: 160px;
     padding: 8px;
+
     background-color: var(--blanco);
     border: 1px solid var(--borde-tarjeta);
     border-radius: 8px;
+
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
     z-index: 1000;
 }
 
 .layout .menu-perfil a {
     display: block;
     padding: 8px 12px;
+
     color: var(--texto-principal);
     text-decoration: none;
     white-space: nowrap;
+
     border-radius: 6px;
 }
 
@@ -167,6 +201,7 @@
     width: 200px;
     flex-shrink: 0;
     min-height: calc(100vh - 60px);
+
     background-color: var(--blanco);
     border-right: 1px solid var(--borde-tarjeta);
 }
@@ -188,10 +223,13 @@
     display: flex;
     align-items: center;
     gap: 10px;
+
     padding: 10px 13px;
+
     color: var(--texto-secundario);
     text-decoration: none;
     font-size: 13px;
+
     border-radius: 10px;
     transition: 0.2s;
 }
@@ -210,10 +248,17 @@
     flex: 1;
     min-width: 0;
     padding: 20px;
+
     background-color: var(--fondo);
+
+    overflow-x: auto;
 }
 
-/* ------------------------------- */
+
+
+/* =========================
+          RESPONSIVE
+   ========================= */
 
 @media (max-width: 900px) {
 
@@ -227,15 +272,29 @@
 
     .layout .sidebar {
         position: fixed;
-        min-height: 0;
-        height: auto;
-        border-bottom: 1px solid var(--borde-tarjeta);
-        border-right: 1px solid var(--borde-tarjeta);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        border-radius: 10px;
-        overflow: hidden;
-        transition: width 0.2s ease;
+
         top: 60px;
+        left: 0;
+
+        width: 0;
+        height: auto;
+        max-height: calc(100vh - 60px);
+
+        min-height: 0;
+
+        background-color: var(--blanco);
+
+        border-right: 1px solid var(--borde-tarjeta);
+        border-bottom: 1px solid var(--borde-tarjeta);
+
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        border-radius: 0 10px 10px 0;
+
+        overflow-x: hidden;
+        overflow-y: auto;
+
+        transition: width 0.2s ease;
+
         z-index: 99;
     }
 
@@ -249,5 +308,15 @@
 
     .layout .sidebar.mostrar .sidebar-nav {
         display: block;
+    }
+    
+    /* Ocultar scrollbar del sidebar pero mantener el scroll */
+    .layout .sidebar {
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    .layout .sidebar::-webkit-scrollbar {
+        display: none;
     }
 }
