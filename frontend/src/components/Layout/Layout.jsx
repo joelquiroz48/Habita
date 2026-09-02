@@ -4,6 +4,7 @@ import "./Layout.css";
 
 import iconPerfil from "../../assets/img/foto-perfil.png";
 import iconLogo from "../../assets/img/icon.png";
+import imagenEdificio from "../../assets/img/imagen-predeterminada.png";
 
 import {
     ChevronDown,
@@ -165,6 +166,19 @@ function Layout({ children }) {
                                 })}
 
                             </ul>
+
+                            {/* ----- INFORMACIÓN DEL EDIFICIO ----- */}
+                            <div className="sidebar-edificio">
+                                <img
+                                    src={imagenEdificio}
+                                    alt="Imagen del edificio"
+                                />
+
+                                <div className="sidebar-edificio-info">
+                                    <strong>Torre Los Álamos</strong>
+                                    <span>Av. Siempre Viva 742</span>
+                                </div>
+                            </div>
                         </nav>
                     </aside>
 
