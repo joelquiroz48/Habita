@@ -23,23 +23,66 @@ import "./Reportes.css";
 // =========================
 
 const kpis = [
-    { label: "Recaudado en el período", valor: "$ 35.420", variacion: "12.5%", positivo: true, icon: Wallet, clase: "verde" },
-    { label: "Pagos realizados", valor: "78", variacion: "6.8%", positivo: true, icon: CreditCard, clase: "azul" },
-    { label: "Reclamos totales", valor: "64", variacion: "8.3%", positivo: false, icon: AlertTriangle, clase: "amarillo" },
-    { label: "Reclamos resueltos", valor: "20", variacion: "25%", positivo: true, icon: CheckCircle2, clase: "azul" },
-    { label: "Nuevos residentes", valor: "12", variacion: "9.1%", positivo: true, icon: Users, clase: "amarillo" },
-    { label: "Reservas realizadas", valor: "46", variacion: "15.2%", positivo: true, icon: CalendarCheck, clase: "azul" },
+    {
+        label: "Recaudado en el período",
+        valor: "$ 4.251.200",
+        variacion: "12.5%",
+        positivo: true,
+        icon: Wallet,
+        clase: "verde",
+    },
+    {
+        label: "Pagos realizados",
+        valor: "78",
+        variacion: "6.8%",
+        positivo: true,
+        icon: CreditCard,
+        clase: "azul",
+    },
+    {
+        label: "Reclamos totales",
+        valor: "64",
+        variacion: "8.3%",
+        positivo: false,
+        icon: AlertTriangle,
+        clase: "amarillo",
+    },
+    {
+        label: "Reclamos resueltos",
+        valor: "20",
+        variacion: "25%",
+        positivo: true,
+        icon: CheckCircle2,
+        clase: "azul",
+    },
+    {
+        label: "Nuevos residentes",
+        valor: "12",
+        variacion: "9.1%",
+        positivo: true,
+        icon: Users,
+        clase: "amarillo",
+    },
+    {
+        label: "Reservas realizadas",
+        valor: "28",
+        variacion: "12%",
+        positivo: true,
+        icon: CalendarCheck,
+        clase: "azul",
+    },
 ];
 
 const recaudacionMensual = [
-    { mes: "Dic 2023", recaudado: 30500, pendiente: 7500 },
-    { mes: "Ene 2024", recaudado: 31800, pendiente: 8200 },
-    { mes: "Feb 2024", recaudado: 29800, pendiente: 8100 },
-    { mes: "Mar 2024", recaudado: 31200, pendiente: 8700 },
-    { mes: "Abr 2024", recaudado: 33100, pendiente: 10500 },
-    { mes: "May 2024", recaudado: 35420, pendiente: 9810 },
+    { mes: "Mar 2026", recaudado: 4720000, pendiente: 142000 },
+    { mes: "Abr 2026", recaudado: 4862000, pendiente: 0 },
+    { mes: "May 2026", recaudado: 4987500, pendiente: 0 },
+    { mes: "Jun 2026", recaudado: 5123000, pendiente: 0 },
+    { mes: "Jul 2026", recaudado: 5284500, pendiente: 0 },
+    { mes: "Ago 2026", recaudado: 4251200, pendiente: 1031100 },
 ];
-const MAX_ESCALA = 50000;
+
+const MAX_ESCALA = 6000000;
 
 const reclamosPorEstado = [
     { nombre: "Pendientes", cantidad: 18, claseColor: "pendiente" },
@@ -71,28 +114,32 @@ function armarGradienteDonut(datos, total, prefijo) {
 
 const actividadReciente = [
     {
-        icon: CheckCircle2, clase: "verde",
+        icon: CheckCircle2,
+        clase: "verde",
         titulo: "Pago recibido de Nicolás Paz - Unidad 5B",
-        subtitulo: "Expensa Mayo 2024",
-        fecha: "15/05/2024 10:24",
+        subtitulo: "Expensa Agosto 2026",
+        fecha: "01/09/2026 10:24",
     },
     {
-        icon: AlertCircle, clase: "amarillo",
-        titulo: "Nuevo reclamo de María Gómez - Unidad 3A",
+        icon: AlertCircle,
+        clase: "amarillo",
+        titulo: "Nuevo reclamo de Nicolás Paz - Unidad 5B",
         subtitulo: "Fuga de agua en cocina",
-        fecha: "15/05/2024 09:15",
+        fecha: "01/09/2026 10:30",
     },
     {
-        icon: Megaphone, clase: "azul",
-        titulo: "Comunicado publicado: Corte de agua programado",
+        icon: Megaphone,
+        clase: "azul",
+        titulo: "Comunicado publicado: Corte de luz programado",
         subtitulo: "Publicado por Administrador",
-        fecha: "13/05/2024 10:30",
+        fecha: "01/09/2026 10:30",
     },
     {
-        icon: Calendar, clase: "teal",
+        icon: Calendar,
+        clase: "teal",
         titulo: "Nueva reserva en SUM",
-        subtitulo: "Reservado por Juan López - Unidad 7C",
-        fecha: "12/05/2024 18:45",
+        subtitulo: "Reservado por María Gómez - Unidad 3A",
+        fecha: "01/09/2026 10:15",
     },
 ];
 

@@ -24,7 +24,7 @@ import "./Pagos.css";
 // =========================
 
 const kpis = {
-    totalRecaudado: 35420,
+    totalRecaudado: 4251200,
     pagosRealizados: 78,
     pendientes: 12,
     tasaExito: 89,
@@ -32,38 +32,38 @@ const kpis = {
 
 const pagos = [
     {
-        fecha: "15/05/2024", hora: "10:24 hs", residente: "Nicolás Paz", unidad: "5B",
-        periodo: "Mayo 2024", importe: 45230, metodo: "tarjeta", metodoLabel: "Tarjeta •••• 4242",
+        fecha: "01/09/2026", hora: "10:24 hs", residente: "Nicolás Paz", unidad: "5B",
+        periodo: "Agosto 2026", importe: 45230, metodo: "tarjeta", metodoLabel: "Tarjeta •••• 4242",
         estado: "Confirmado", transaccion: "MP-8457293847",
     },
     {
-        fecha: "14/05/2024", hora: "09:10 hs", residente: "María Gómez", unidad: "3A",
-        periodo: "Mayo 2024", importe: 45230, metodo: "billetera", metodoLabel: "Mercado Pago",
+        fecha: "01/09/2026", hora: "09:10 hs", residente: "María Gómez", unidad: "3A",
+        periodo: "Agosto 2026", importe: 45230, metodo: "billetera", metodoLabel: "Mercado Pago",
         estado: "Confirmado", transaccion: "MP-8457293848",
     },
     {
-        fecha: "13/05/2024", hora: "16:45 hs", residente: "Juan López", unidad: "7C",
-        periodo: "Mayo 2024", importe: 45230, metodo: "transferencia", metodoLabel: "Transferencia",
+        fecha: "31/08/2026", hora: "16:45 hs", residente: "Juan López", unidad: "7C",
+        periodo: "Agosto 2026", importe: 45230, metodo: "transferencia", metodoLabel: "Transferencia",
         metodoSub: "Banco Galicia", estado: "Confirmado", transaccion: "MP-8457293849",
     },
     {
-        fecha: "12/05/2024", hora: "08:30 hs", residente: "Carla Romero", unidad: "1B",
-        periodo: "Mayo 2024", importe: 45230, metodo: "tarjeta", metodoLabel: "Tarjeta •••• 1234",
+        fecha: "31/08/2026", hora: "08:30 hs", residente: "Carla Romero", unidad: "1B",
+        periodo: "Agosto 2026", importe: 45230, metodo: "tarjeta", metodoLabel: "Tarjeta •••• 1234",
         estado: "Pendiente", transaccion: "MP-8457293850",
     },
     {
-        fecha: "11/05/2024", hora: "14:20 hs", residente: "Pedro Martínez", unidad: "2D",
-        periodo: "Mayo 2024", importe: 45230, metodo: "billetera", metodoLabel: "Rapipago",
+        fecha: "30/08/2026", hora: "14:20 hs", residente: "Pedro Martínez", unidad: "2D",
+        periodo: "Agosto 2026", importe: 45230, metodo: "billetera", metodoLabel: "Rapipago",
         estado: "Confirmado", transaccion: "MP-8457293851",
     },
     {
-        fecha: "10/05/2024", hora: "11:05 hs", residente: "Laura Sánchez", unidad: "4A",
-        periodo: "Mayo 2024", importe: 45230, metodo: "efectivo", metodoLabel: "Efectivo",
+        fecha: "29/08/2026", hora: "11:05 hs", residente: "Laura Sánchez", unidad: "4A",
+        periodo: "Agosto 2026", importe: 45230, metodo: "efectivo", metodoLabel: "Efectivo",
         estado: "Confirmado", transaccion: "MP-8457293852",
     },
     {
-        fecha: "09/05/2024", hora: "17:50 hs", residente: "Diego Fernández", unidad: "6E",
-        periodo: "Mayo 2024", importe: 45230, metodo: "transferencia", metodoLabel: "Transferencia",
+        fecha: "28/08/2026", hora: "17:50 hs", residente: "Diego Fernández", unidad: "6E",
+        periodo: "Agosto 2026", importe: 45230, metodo: "transferencia", metodoLabel: "Transferencia",
         metodoSub: "Banco BBVA", estado: "Rechazado", transaccion: "MP-8457293853",
     },
 ];
@@ -166,7 +166,7 @@ function Pagos() {
             <div className="pagos-filtros">
                 <button className="pagos-filtro">
                     <Calendar size={15} />
-                    01/05/2024 - 31/05/2024
+                    01/08/2026 - 10/09/2026
                     <ChevronDown size={15} />
                 </button>
 
