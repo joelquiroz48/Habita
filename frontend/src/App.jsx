@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Residente/Login/Login";
 import Register from "./pages/Residente/Register/Register";
+
 import Inicio from "./pages/Residente/Inicio/Inicio";
 import Expensas from "./pages/Residente/Expensas/Expensas";
 import Reservas from "./pages/Residente/Reservas/Reservas";
@@ -8,10 +9,11 @@ import Avisos from "./pages/Residente/Avisos/Avisos";
 import Documentos from "./pages/Residente/Documentos/Documentos";
 import Perfil from "./pages/Residente/Perfil/Perfil";
 import Configuracion from "./pages/Residente/Configuracion/Configuracion";
+
 import Layout from "./components/Layout/Layout";
+import LayoutAdministrador from "./components/LayoutAdministrador/LayoutAdministrador";
 
 import InicioAdmin from "./pages/Administrador/Inicio/inicio";
-import LayoutAdministrador from "./components/Layout/LayoutAdministrador";
 import ResidentesAdmin from "./pages/Administrador/Residentes/Residentes";
 import UnidadesAdmin from "./pages/Administrador/Unidades/Unidades";
 import ExpensasAdmin from "./pages/Administrador/Expensas/Expensas";
