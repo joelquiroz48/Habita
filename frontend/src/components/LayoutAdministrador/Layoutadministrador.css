@@ -61,7 +61,7 @@
 }
 
 .layout .logo-admin h1 {
-    font-size: 20px;
+    font-size: 24px;
     color: var(--texto-principal);
     transform: translateY(6px);
 }
