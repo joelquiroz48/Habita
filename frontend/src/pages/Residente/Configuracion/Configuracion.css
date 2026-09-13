@@ -5,7 +5,6 @@
 .configuracion {
     width: 100%;
     padding: 24px;
-    box-sizing: border-box;
 }
 
 
@@ -33,11 +32,9 @@
 ========================= */
 
 .config-card {
-    background: var(--blanco);
     border: 1px solid var(--borde-tarjeta);
     border-radius: 12px;
     padding: 16px;
-    box-sizing: border-box;
 }
 
 .config-card-header {
@@ -67,7 +64,6 @@
 .config-card-header h2 {
     font-size: 17px;
     font-weight: 600;
-    color: var(--texto-principal);
 }
 
 .config-card-header p {
@@ -120,7 +116,6 @@
 .config-item-content strong {
     font-size: 14px;
     font-weight: 600;
-    color: var(--texto-principal);
 }
 
 .config-item-content span {
@@ -140,9 +135,7 @@
     padding: 0 7px;
     border: 1px solid var(--borde-input);
     border-radius: 6px;
-    background: var(--blanco);
     color: var(--texto-secundario);
-    font-family: "Open Sans", sans-serif;
     font-size: 12px;
     outline: none;
     cursor: pointer;
@@ -187,7 +180,6 @@
     top: 3px;
     left: 3px;
     border-radius: 50%;
-    background: var(--blanco);
     transition: 0.2s;
 }
 
@@ -208,14 +200,12 @@
     width: 100%;
     min-height: 57px;
     padding: 7px 0;
-    border: none;
     border-bottom: 1px solid var(--separador);
     background: transparent;
     display: flex;
     align-items: center;
     gap: 9px;
     text-align: left;
-    cursor: pointer;
 }
 
 .config-link:last-child {
@@ -266,8 +256,6 @@
 .config-simple-link {
     width: 100%;
     min-height: 37px;
-    padding: 0;
-    border: none;
     border-bottom: 1px solid var(--separador);
     background: transparent;
     display: flex;
@@ -276,7 +264,6 @@
     color: var(--texto-secundario);
     font-size: 13px;
     text-align: left;
-    cursor: pointer;
 }
 
 .config-simple-link:hover {
@@ -301,7 +288,6 @@
 .cuenta-card h2 {
     font-size: 16px;
     font-weight: 600;
-    color: var(--texto-principal);
     margin-bottom: 12px;
 }
 
@@ -315,12 +301,10 @@
     justify-content: center;
     gap: 6px;
     font-size: 13px;
-    cursor: pointer;
 }
 
 .btn-logout {
     border: 1px solid var(--borde-secundario);
-    background: var(--blanco);
     color: var(--texto-secundario);
 }
 
@@ -332,7 +316,6 @@
 .btn-eliminar {
     margin-top: 7px;
     border: 1px solid #e8aaaa;
-    background: var(--blanco);
     color: #d95353;
 }
 

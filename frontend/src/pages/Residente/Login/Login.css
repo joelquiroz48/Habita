@@ -58,7 +58,6 @@
 .login .marca {
     display: flex;
     align-items: center;
-    text-decoration: none;
     color: inherit;
     margin-bottom: 7px;
 }
@@ -171,7 +170,6 @@
 .login .formulario {
     width: 100%;
     max-width: 400px;
-    background: var(--blanco);
     border-radius: 18px;
     padding: 40px;
     box-shadow: 0 14px 35px var(--sombra-formulario);
@@ -231,7 +229,6 @@
 
 .login .input-contenedor input {
     flex: 1;
-    border: none;
     outline: none;
     padding: 13px 10px;
     font-size: 13px;
@@ -241,11 +238,6 @@
 .login .input-icono svg {
     width: 15px;
     height: 15px;
-}
-
-.login .mostrar-password {
-    border: none;
-    cursor: pointer;
 }
 
 .login .mostrar-password svg {
@@ -277,7 +269,6 @@
 
 .login .link {
     color: var(--verde-medio);
-    text-decoration: none;
     font-weight: 600;
 }
 
@@ -285,14 +276,12 @@
 /* ---------- Botón ingresar ---------- */
 
 .login .boton-ingresar {
-    border: none;
     border-radius: 10px;
     padding: 14px;
     background: var(--verde-medio);
     color: var(--blanco);
     font-size: 16px;
     font-weight: 600;
-    cursor: pointer;
     transition: 0.2s;
 }
 
@@ -316,7 +305,6 @@
 .login .registro a {
     color: var(--verde-medio);
     font-weight: 600;
-    text-decoration: none;
 }
 
 

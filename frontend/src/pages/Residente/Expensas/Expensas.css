@@ -18,14 +18,12 @@
 }
 
 .expensa-resumen-card {
-    background: var(--blanco);
     border: 1px solid var(--borde-tarjeta);
     border-radius: 12px;
     padding: 17px;
     display: flex;
     align-items: flex-start;
     gap: 14px;
-    box-sizing: border-box;
 }
 
 .expensa-resumen-icon {
@@ -53,7 +51,6 @@
 }
 
 .expensa-resumen-card strong {
-    color: var(--texto-principal);
     font-size: 21px;
     line-height: 1.2;
     margin-bottom: 5px;
@@ -102,14 +99,11 @@
 ========================= */
 
 .link-verde {
-    border: none;
     background: transparent;
-    padding: 0;
     margin-top: 4px;
     width: fit-content;
     color: var(--verde-hover);
     font-size: 12px;
-    cursor: pointer;
 }
 
 
@@ -129,11 +123,9 @@
 ========================= */
 
 .panel-expensas {
-    background: var(--blanco);
     border: 1px solid var(--borde-tarjeta);
     border-radius: 10px;
     padding: 14px;
-    box-sizing: border-box;
 }
 
 /* =========================
@@ -186,13 +178,11 @@
     width: 100%;
     height: 32px;
     margin-top: 14px;
-    border: none;
     border-radius: 6px;
     background: var(--verde);
     color: var(--blanco);
     font-size: 14px;
     font-weight: 600;
-    cursor: pointer;
 }
 
 .btn-pagar:hover {
@@ -209,10 +199,8 @@
     gap: 5px;
     border: 1px solid var(--borde-input);
     border-radius: 6px;
-    background: var(--blanco);
     color: var(--texto-secundario);
     font-size: 13px;
-    cursor: pointer;
 }
 
 .btn-descargar:hover {
@@ -227,10 +215,8 @@
     padding: 6px 8px;
     border: 1px solid var(--borde-input);
     border-radius: 5px;
-    background: var(--blanco);
     color: var(--texto-secundario);
     font-size: 12px;
-    cursor: pointer;
 }
 
 
@@ -246,7 +232,6 @@
     margin: 0 0 9px;
     font-size: 15px;
     font-weight: 600;
-    color: var(--texto-principal);
 }
 
 .detalle-item {
@@ -288,7 +273,6 @@
 
 .detalle-total strong {
     font-size: 14px;
-    color: var(--texto-principal);
 }
 
 
@@ -312,10 +296,8 @@
 }
 
 .panel-expensas-header h2 {
-    margin: 0;
     font-size: 15px;
     font-weight: 600;
-    color: var(--texto-principal);
 }
 
 .panel-expensas-header span {
@@ -343,11 +325,9 @@
 
 .metodos-tabs button {
     height: 28px;
-    border: none;
     background: transparent;
     color: var(--texto-secundario);
     font-size: 12px;
-    cursor: pointer;
 }
 
 .metodos-tabs button.activo {
@@ -403,11 +383,9 @@
     width: 100%;
     display: flex;
     align-items: center;
-    border: none;
     background: transparent;
     color: var(--verde-hover);
     font-size: 12px;
-    cursor: pointer;
 }
 
 .nueva-tarjeta {
@@ -467,7 +445,6 @@
 .ayuda-item strong {
     font-size: 12px;
     font-weight: 600;
-    color: var(--texto-principal);
 }
 
 .ayuda-item span {
@@ -529,12 +506,10 @@
     align-items: center;
     justify-content: center;
     gap: 5px;
-    border: none;
     border-radius: 6px;
     background: var(--verde);
     color: var(--blanco);
     font-size: 12px;
-    cursor: pointer;
 }
 
 .asistente-expensas button:hover {
@@ -568,11 +543,8 @@
 
 .filtros-expensas button {
     padding: 6px 10px;
-    border: none;
-    background: var(--blanco);
     color: var(--texto-secundario);
     font-size: 11px;
-    cursor: pointer;
 }
 
 .filtros-expensas button.activo {
@@ -588,10 +560,8 @@
     padding: 6px 8px;
     border: 1px solid var(--borde-input);
     border-radius: 5px;
-    background: var(--blanco);
     color: var(--texto-secundario);
     font-size: 11px;
-    cursor: pointer;
 }
 
 
@@ -644,7 +614,6 @@
 }
 
 .tabla-fila > strong {
-    color: var(--texto-principal);
     font-weight: 500;
 }
 
@@ -689,11 +658,9 @@
     align-items: center;
     gap: 4px;
     padding: 4px 6px;
-    border: none;
     background: transparent;
     color: var(--verde-hover);
     font-size: 11px;
-    cursor: pointer;
 }
 
 .acciones-expensa .accion-pagar {
@@ -739,9 +706,7 @@
     justify-content: center;
     border: 1px solid var(--borde-input);
     border-radius: 5px;
-    background: var(--blanco);
     color: var(--texto-secundario);
-    cursor: pointer;
 }
 
 .paginacion-expensas button svg {

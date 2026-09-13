@@ -5,7 +5,6 @@
 .avisos {
     width: 100%;
     padding: 24px;
-    box-sizing: border-box;
 }
 
 
@@ -22,14 +21,12 @@
 
 .aviso-resumen-card {
     min-height: 92px;
-    background: var(--blanco);
     border: 1px solid var(--borde-tarjeta);
     border-radius: 12px;
     padding: 15px;
     display: flex;
     align-items: flex-start;
     gap: 13px;
-    box-sizing: border-box;
 }
 
 .aviso-resumen-icon {
@@ -124,7 +121,6 @@
 .avisos-seccion-titulo h2 {
     font-size: 15px;
     font-weight: 600;
-    margin: 0;
 }
 
 
@@ -146,7 +142,6 @@
     padding: 10px;
     border-radius: 9px;
     border: 1px solid;
-    box-sizing: border-box;
 }
 
 .aviso-destacado.importante {
@@ -252,14 +247,12 @@
     position: absolute;
     right: 9px;
     bottom: 9px;
-    border: none;
     background: transparent;
     color: var(--verde-hover);
     font-size: 11px;
     display: flex;
     align-items: center;
     gap: 3px;
-    cursor: pointer;
 }
 
 
@@ -268,11 +261,9 @@
 ========================= */
 
 .todos-avisos {
-    background: var(--blanco);
     border: 1px solid var(--borde-tarjeta);
     border-radius: 12px;
     padding: 15px;
-    box-sizing: border-box;
 }
 
 .avisos-seccion-header {
@@ -283,8 +274,6 @@
 }
 
 .avisos-seccion-header h2 {
-    margin: 0;
-    color: var(--texto-principal);
     font-size: 16px;
     font-weight: 600;
 }
@@ -367,8 +356,6 @@
 }
 
 .aviso-lista-header h3 {
-    margin: 0;
-    color: var(--texto-principal);
     font-size: 14px;
     font-weight: 600;
     overflow: hidden;
@@ -415,16 +402,13 @@
 ========================= */
 
 .avisos-panel {
-    background: var(--blanco);
     border: 1px solid var(--borde-tarjeta);
     border-radius: 12px;
     padding: 14px;
-    box-sizing: border-box;
 }
 
 .avisos-panel h2 {
     margin: 0 0 10px;
-    color: var(--texto-principal);
     font-size: 16px;
     font-weight: 600;
 }
@@ -447,10 +431,8 @@
 .buscador-avisos input {
     flex: 1;
     min-width: 0;
-    border: none;
     outline: none;
     background: transparent;
-    color: var(--texto-principal);
     font-size: 13px;
 }
 
@@ -478,14 +460,11 @@
     padding: 0 9px;
     border: 1px solid var(--separador);
     border-radius: 5px;
-    background: var(--blanco);
-    color: var(--texto-principal);
     font-size: 13px;
     text-align: left;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    cursor: pointer;
 }
 
 .filtros-lista button:hover {
@@ -532,15 +511,12 @@
 }
 
 .categorias-lista button {
-    border: none;
     background: transparent;
     padding: 5px 0;
-    color: var(--texto-principal);
     font-size: 12px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    cursor: pointer;
 }
 
 .categorias-lista button:hover {

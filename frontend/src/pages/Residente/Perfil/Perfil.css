@@ -3,7 +3,6 @@
 ========================================================= */
 
 .perfil-card {
-    background: var(--blanco);
     border: 1px solid var(--borde-tarjeta);
     border-radius: 12px;
     padding: 16px;
@@ -30,7 +29,6 @@
 }
 
 .perfil-titulo h2 {
-    margin: 0;
     font-size: 17px;
     font-weight: 600;
 }
@@ -190,7 +188,6 @@
     border: 1px solid var(--borde-input);
     border-radius: 6px;
 
-    background: var(--blanco);
     color: var(--texto-secundario);
 
     font-size: 12px;
@@ -223,7 +220,6 @@
     color: var(--blanco);
 
     font-size: 12px;
-    cursor: pointer;
 }
 
 .btn-editar:hover {
@@ -283,12 +279,10 @@
     height: 16px;
     min-width: 28px;
 
-    border: none;
     border-radius: 10px;
 
     background: var(--borde-input);
 
-    cursor: pointer;
     transition: 0.2s;
 }
 
@@ -302,7 +296,6 @@
     left: 2px;
 
     border-radius: 50%;
-    background: var(--blanco);
 
     transition: 0.2s;
 }
@@ -372,7 +365,6 @@
     color: var(--blanco);
 
     font-size: 13px;
-    cursor: pointer;
 }
 
 .btn-seguridad:hover {
@@ -431,13 +423,11 @@
 }
 
 .sesiones-header button {
-    border: none;
     background: none;
 
     color: var(--verde-hover);
 
     font-size: 13px;
-    cursor: pointer;
 }
 
 .sesion {
