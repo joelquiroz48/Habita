@@ -74,10 +74,76 @@
 
 }
 
+/* =========================
+      MODO OSCURO (NOCHE)
+   ========================= */
+
+[data-tema="oscuro"] {
+    /* ----- COLORES PRINCIPALES ---- */
+
+    --verde: #2fb0ab;
+    --verde-medio: #23a89c;
+    --verde-hover: #2ed1c3;
+
+    /* ------- FONDOS ---------- */
+
+    --fondo: #10181b;
+    --blanco: #1a2428;
+    --celeste: #16302eb3;
+    --celeste-claro: #16302ea6;
+
+    /* ------- TEXTOS ---------- */
+
+    --texto-principal: #eef4f4;
+    --texto-secundario: #a9b4bb;
+    --texto-verde: #6fd8cf;
+    --texto-icono: #a9b4bbc5;
+
+    --texto-nav: #6fd8cf;
+    --hover-nav: #23343a;
+
+    /* ----- BORDES Y SEPARADORES ------ */
+
+    --borde-input: #2c3a40;
+    --borde-tarjeta: #263237;
+    --borde-secundario: #2c3a40;
+    --separador: #2c3a4099;
+
+    /* ------ SOMBRAS ------ */
+
+    --sombra-formulario: rgba(0, 0, 0, 0.55);
+
+    /* ------ GRADIENTE DEL FONDO ------ */
+
+    --gradiente-fondo: #10181b;
+    --gradiente-fondo-medio: rgba(16, 24, 27, 0.8);
+    --gradiente-fondo-suave: rgba(16, 24, 27, 0.3);
+
+    /* Fondos */
+    --fondo-icono-resumen: #17302d;
+    --fondo-icono-panel: #182226;
+
+    --fondo-badge-pendiente: #17302a;
+    --fondo-confirmada: #173029;
+    --fondo-pendiente: #16262f;
+
+    --fondo-aviso-verde: #17302a;
+    --fondo-aviso-amarillo: #302a17;
+    --fondo-aviso-azul: #172530;
+
+    --fondo-documento-pdf: #301717;
+    --fondo-documento-doc: #172530;
+    --fondo-documento-money: #173021;
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+body {
+    transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 body {

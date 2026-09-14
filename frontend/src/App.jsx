@@ -13,7 +13,7 @@ import Configuracion from "./pages/Residente/Configuracion/Configuracion";
 import Layout from "./components/Layout/Layout";
 import LayoutAdministrador from "./components/LayoutAdministrador/LayoutAdministrador";
 
-import InicioAdmin from "./pages/Administrador/Inicio/inicio";
+import InicioAdmin from "./pages/Administrador/Inicio/Inicio";
 import ResidentesAdmin from "./pages/Administrador/Residentes/Residentes";
 import UnidadesAdmin from "./pages/Administrador/Unidades/Unidades";
 import ExpensasAdmin from "./pages/Administrador/Expensas/Expensas";

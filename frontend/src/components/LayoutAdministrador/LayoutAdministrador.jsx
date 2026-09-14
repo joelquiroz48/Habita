@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import ThemeToggle from "../ThemeToggle/ThemeToggle";
 import "./LayoutAdministrador.css";
 
 import iconPerfil from "../../assets/img/foto-perfil.png";
@@ -164,6 +165,8 @@ function LayoutAdministrador({ children }) {
                     </div>
 
                     <div className="header-usuario">
+
+                        <ThemeToggle />
 
                         <div className="header-notificaciones">
                             <Bell />

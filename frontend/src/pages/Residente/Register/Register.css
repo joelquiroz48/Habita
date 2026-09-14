@@ -348,3 +348,49 @@
     }
 
 }
+
+@media (max-width: 600px) {
+
+    .register .contenedor {
+        padding: 20px;
+        border-radius: 0;
+        gap: 30px;
+    }
+
+    .register .marca img {
+        width: 50px;
+    }
+
+    .register .marca h1 {
+        font-size: 38px;
+    }
+
+    .register .bienvenida h1 {
+        font-size: 26px;
+    }
+
+    .register .caracteristicas {
+        max-width: 100%;
+    }
+
+    .register .formulario {
+        padding: 26px 22px;
+    }
+
+}
+
+@media (max-width: 380px) {
+
+    .register .contenedor {
+        padding: 14px;
+    }
+
+    .register .marca h1 {
+        font-size: 32px;
+    }
+
+    .register .formulario {
+        padding: 20px 16px;
+    }
+
+}

@@ -354,3 +354,49 @@
     }
 
 }
+
+@media (max-width: 600px) {
+
+    .login .contenedor {
+        padding: 20px;
+        border-radius: 0;
+        gap: 30px;
+    }
+
+    .login .marca img {
+        width: 50px;
+    }
+
+    .login .marca h1 {
+        font-size: 38px;
+    }
+
+    .login .bienvenida h1 {
+        font-size: 26px;
+    }
+
+    .login .caracteristicas {
+        max-width: 100%;
+    }
+
+    .login .formulario {
+        padding: 26px 22px;
+    }
+
+}
+
+@media (max-width: 380px) {
+
+    .login .contenedor {
+        padding: 14px;
+    }
+
+    .login .marca h1 {
+        font-size: 32px;
+    }
+
+    .login .formulario {
+        padding: 20px 16px;
+    }
+
+}

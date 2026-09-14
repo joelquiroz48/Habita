@@ -1,0 +1,31 @@
+.boton-tema {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 38px;
+    height: 38px;
+
+    border: 1px solid var(--borde-tarjeta);
+    border-radius: 50%;
+    background-color: var(--fondo-icono-panel);
+
+    color: var(--texto-secundario);
+    cursor: pointer;
+
+    transition: background-color 0.2s, color 0.2s, transform 0.2s;
+}
+
+.boton-tema svg {
+    width: 18px;
+    height: 18px;
+}
+
+.boton-tema:hover {
+    background-color: var(--hover-nav);
+    color: var(--texto-nav);
+}
+
+.boton-tema:active {
+    transform: scale(0.92);
+}
