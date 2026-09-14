@@ -172,6 +172,7 @@
     max-width: 400px;
     border-radius: 18px;
     padding: 40px;
+    background-color: var(--blanco);
     box-shadow: 0 14px 35px var(--sombra-formulario);
 }
 

@@ -17,52 +17,6 @@
     margin-bottom: 14px;
 }
 
-.expensa-resumen-card {
-    border: 1px solid var(--borde-tarjeta);
-    border-radius: 12px;
-    padding: 17px;
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
-}
-
-.expensa-resumen-icon {
-    width: 44px;
-    height: 44px;
-    min-width: 44px;
-    border-radius: 50%;
-    background: var(--fondo-icono-resumen);
-    color: var(--verde);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.expensa-resumen-card > div:last-child {
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-}
-
-.expensa-resumen-card > div:last-child > span:first-child {
-    font-size: 13px;
-    color: var(--texto-secundario);
-    margin-bottom: 4px;
-}
-
-.expensa-resumen-card strong {
-    font-size: 21px;
-    line-height: 1.2;
-    margin-bottom: 5px;
-}
-
-.expensa-resumen-card small {
-    font-size: 11px;
-    font-weight: 500;
-    color: var(--texto-secundario);
-    margin-top: 0;
-}
-
 .medio-preferido {
     font-size: 16px !important;
 }

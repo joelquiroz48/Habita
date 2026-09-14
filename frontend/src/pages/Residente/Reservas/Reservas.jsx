@@ -16,7 +16,7 @@ import {
 import imagenPredeterminada from "../../../assets/img/imagen-predeterminada.png";
 
 import "./Reservas.css";
-
+import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
 
 /* =========================
         DATOS DE EJEMPLO
@@ -31,7 +31,7 @@ const resumenReservas = [
     },
     {
         titulo: "Próxima reserva",
-        valor: "18 SEP",
+        valor: "18/09/26",
         detalle: "SUM · 18:00 a 22:00",
         icono: CalendarDays,
     },
@@ -153,35 +153,22 @@ function Reservas() {
             ========================= */}
 
             <section className="reservas-resumen">
-
                 {resumenReservas.map((item, index) => {
-
                     const Icono = item.icono;
-
                     return (
-                        <article
-                            className="reserva-resumen-card"
+                        <TarjetaResumen
                             key={index}
-                        >
-                            <div className="reserva-resumen-icon">
-                                <Icono />
-                            </div>
-
-                            <div>
-                                <span>{item.titulo}</span>
-
-                                <strong>
-                                    {item.valor}
-                                </strong>
-
-                                <small>
+                            icono={<Icono />}
+                            titulo={item.titulo}
+                            valor={item.valor}
+                            contenido={
+                                <span className="resumen-info">
                                     {item.detalle}
-                                </small>
-                            </div>
-                        </article>
+                                </span>
+                            }
+                        />
                     );
                 })}
-
             </section>
 
 

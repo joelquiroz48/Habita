@@ -18,6 +18,7 @@ import {
 
 import imagenPredeterminada from "../../../assets/img/imagen-predeterminada.png";
 import "./Inicio.css";
+import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
 
 // =========================
 // DATOS DE EJEMPLO
@@ -30,8 +31,7 @@ const resumen = {
         estado: "Pendiente",
     },
     reunion: {
-        dia: "15",
-        mes: "SEPT",
+        fecha: "05/09/2026",
         titulo: "Asamblea ordinaria",
         horario: "20:00 h · SUM",
     },
@@ -139,6 +139,71 @@ const eventos = [
     },
 ];
 
+const resumenTarjetas = [
+    {
+        icono: WalletCards,
+        titulo: "Expensas",
+        valor: "$ 45.230",
+        contenido: (
+            <>
+                <span className="vencimiento">
+                    {resumen.expensas.vencimiento}
+                </span>
+                <span className="badge badge-pendiente">
+                    {resumen.expensas.estado}
+                </span>
+            </>
+        ),
+    },
+    {
+        icono: CalendarDays,
+        titulo: "Próxima reunión",
+        valor: (
+            <>
+                {resumen.reunion.fecha}
+            </>
+        ),
+        contenido: (
+            <>
+                <span className="resumen-info">
+                    {resumen.reunion.titulo}
+                </span>
+                <span className="resumen-info">
+                    {resumen.reunion.horario}
+                </span>
+            </>
+        ),
+    },
+    {
+        icono: CalendarCheck,
+        titulo: "Reservas activas",
+        valor: resumen.reservas.cantidad,
+        contenido: (
+            <>
+                <span className="resumen-info">
+                    {resumen.reservas.proxima}
+                </span>
+                <span className="resumen-info">
+                    {resumen.reservas.horario}
+                </span>
+            </>
+        ),
+    },
+    {
+        icono: Megaphone,
+        titulo: "Avisos nuevos",
+        valor: resumen.avisos.cantidad,
+        contenido: (
+            <>
+                <span className="resumen-info">
+                    {resumen.avisos.descripcion}
+                </span>
+                <Link to="/avisos">Ver avisos</Link>
+            </>
+        ),
+    },
+];
+
 function Inicio() {
 
     useEffect(() => {
@@ -151,96 +216,18 @@ function Inicio() {
             {/* TARJETAS SUPERIORES */}
 
             <section className="resumen-grid">
-
-                <article className="resumen-card">
-                    <div className="resumen-icon">
-                        <WalletCards />
-                    </div>
-
-                    <div>
-                        <span className="resumen-label">
-                            Expensas del mes
-                        </span>
-
-                        <strong>{resumen.expensas.monto}</strong>
-
-                        <span className="vencimiento">
-                            {resumen.expensas.vencimiento}
-                        </span>
-
-                        <span className="badge badge-pendiente">
-                            {resumen.expensas.estado}
-                        </span>
-                    </div>
-                </article>
-
-                <article className="resumen-card">
-                    <div className="resumen-icon">
-                        <CalendarDays />
-                    </div>
-
-                    <div>
-                        <span className="resumen-label">
-                            Próxima reunión
-                        </span>
-
-                        <strong>
-                            {resumen.reunion.dia}{" "}
-                            <small>{resumen.reunion.mes}</small>
-                        </strong>
-
-                        <span className="resumen-info">
-                            {resumen.reunion.titulo}
-                        </span>
-
-                        <span className="resumen-info">
-                            {resumen.reunion.horario}
-                        </span>
-                    </div>
-                </article>
-
-                <article className="resumen-card">
-                    <div className="resumen-icon">
-                        <CalendarCheck />
-                    </div>
-
-                    <div>
-                        <span className="resumen-label">
-                            Reservas activas
-                        </span>
-
-                        <strong>{resumen.reservas.cantidad}</strong>
-
-                        <span className="resumen-info">
-                            {resumen.reservas.proxima}
-                        </span>
-
-                        <span className="resumen-info">
-                            {resumen.reservas.horario}
-                        </span>
-                    </div>
-                </article>
-
-                <article className="resumen-card">
-                    <div className="resumen-icon">
-                        <Megaphone />
-                    </div>
-
-                    <div>
-                        <span className="resumen-label">
-                            Avisos nuevos
-                        </span>
-
-                        <strong>{resumen.avisos.cantidad}</strong>
-
-                        <span className="resumen-info">
-                            {resumen.avisos.descripcion}
-                        </span>
-
-                        <Link to="/avisos">Ver avisos</Link>
-                    </div>
-                </article>
-
+                {resumenTarjetas.map((item, index) => {
+                    const Icono = item.icono;
+                    return (
+                        <TarjetaResumen
+                            key={index}
+                            icono={<Icono />}
+                            titulo={item.titulo}
+                            valor={item.valor}
+                            contenido={item.contenido}
+                        />
+                    );
+                })}
             </section>
 
             {/* CONTENIDO CENTRAL */}

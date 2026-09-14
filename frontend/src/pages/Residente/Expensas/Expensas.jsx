@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 
 import "./Expensas.css";
-
+import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
 
 /* =========================
         DATOS DE EJEMPLO
@@ -92,6 +92,60 @@ const historialExpensas = [
     },
 ];
 
+const resumenExpensas = [
+    {
+        icono: WalletCards,
+        titulo: "Expensa actual",
+        valor: expensaActual.monto,
+        contenido: (
+            <>
+                <small>{expensaActual.periodo}</small>
+                <em className="badge-expensa">
+                    Pendiente de pago
+                </em>
+            </>
+        ),
+    },
+    {
+        icono: CalendarDays,
+        titulo: "Vencimiento",
+        valor: expensaActual.vencimiento,
+        contenido: (
+            <small>En 7 días</small>
+        ),
+    },
+    {
+        icono: Tag,
+        titulo: "Estado",
+        valor: "",
+        contenido: (
+            <>
+                <em className="badge-expensa">
+                    Pendiente
+                </em>
+                <small className="estado-descripcion">
+                    Tu expensa aún <br /> no fue pagada.
+                </small>
+            </>
+        ),
+    },
+    {
+        icono: CreditCard,
+        titulo: "Medio de pago preferido",
+        valor: "",
+        contenido: (
+            <>
+                <strong className="medio-preferido">
+                    Tarjeta de crédito
+                </strong>
+                <small>Terminada en 4242</small>
+                <button className="link-verde">
+                    Cambiar medio de pago
+                </button>
+            </>
+        ),
+    },
+];
 
 function Expensas() {
 
@@ -107,104 +161,18 @@ function Expensas() {
             ========================= */}
 
             <section className="expensas-resumen">
-
-                {/* EXPENSA ACTUAL */}
-                <article className="expensa-resumen-card">
-
-                    <div className="expensa-resumen-icon">
-                        <WalletCards />
-                    </div>
-
-                    <div>
-                        <span>Expensa actual</span>
-
-                        <strong>
-                            {expensaActual.monto}
-                        </strong>
-
-                        <small>
-                            {expensaActual.periodo}
-                        </small>
-
-                        <em className="badge-expensa">
-                            Pendiente de pago
-                        </em>
-                    </div>
-
-                </article>
-
-
-                {/* VENCIMIENTO */}
-                <article className="expensa-resumen-card">
-
-                    <div className="expensa-resumen-icon">
-                        <CalendarDays />
-                    </div>
-
-                    <div>
-                        <span>Vencimiento</span>
-
-                        <strong>
-                            {expensaActual.vencimiento}
-                        </strong>
-
-                        <small>
-                            En 7 días
-                        </small>
-                    </div>
-
-                </article>
-
-
-                {/* ESTADO */}
-                <article className="expensa-resumen-card">
-
-                    <div className="expensa-resumen-icon">
-                        <Tag />
-                    </div>
-
-                    <div>
-                        <span>Estado</span>
-
-                        <em className="badge-expensa">
-                            Pendiente
-                        </em>
-
-                        <small className="estado-descripcion">
-                            Tu expensa aún
-                            <br />
-                            no fue pagada.
-                        </small>
-                    </div>
-
-                </article>
-
-
-                {/* MEDIO DE PAGO */}
-                <article className="expensa-resumen-card">
-
-                    <div className="expensa-resumen-icon">
-                        <CreditCard />
-                    </div>
-
-                    <div>
-                        <span>Medio de pago preferido</span>
-
-                        <strong className="medio-preferido">
-                            Tarjeta de crédito
-                        </strong>
-
-                        <small>
-                            Terminada en 4242
-                        </small>
-
-                        <button className="link-verde">
-                            Cambiar medio de pago
-                        </button>
-                    </div>
-
-                </article>
-
+                {resumenExpensas.map((item, index) => {
+                    const Icono = item.icono;
+                    return (
+                        <TarjetaResumen
+                            key={index}
+                            icono={<Icono />}
+                            titulo={item.titulo}
+                            valor={item.valor}
+                            contenido={item.contenido}
+                        />
+                    );
+                })}
             </section>
 
 

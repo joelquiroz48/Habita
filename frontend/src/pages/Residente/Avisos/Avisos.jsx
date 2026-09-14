@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import {
     CalendarDays,
     Megaphone,
@@ -15,6 +16,8 @@ import {
 } from "lucide-react";
 
 import "./Avisos.css";
+import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
+
 
 // =========================
 // DATOS DE EJEMPLO
@@ -140,6 +143,39 @@ const categorias = [
     { nombre: "Servicios", cantidad: 1 },
 ];
 
+const resumenAvisos = [
+    {
+        icono: Bell,
+        titulo: "Avisos no leídos",
+        valor: resumen.noLeidos,
+        contenido: (
+            <Link to="/avisos" className="aviso-resumen-link">
+                Ver todos
+            </Link>
+        ),
+    },
+    {
+        icono: CalendarDays,
+        titulo: "Avisos este mes",
+        valor: resumen.esteMes,
+        contenido: (
+            <Link to="/avisos" className="aviso-resumen-link">
+                Ver todos
+            </Link>
+        ),
+    },
+    {
+        icono: Bell,
+        titulo: "Importantes",
+        valor: resumen.importantes,
+        contenido: (
+            <Link to="/avisos" className="aviso-resumen-link">
+                Ver todos
+            </Link>
+        ),
+    },
+];
+
 function Avisos() {
     useEffect(() => {
         document.title = "Habita | Avisos";
@@ -153,61 +189,19 @@ function Avisos() {
             ========================= */}
 
             <section className="avisos-resumen">
+                {resumenAvisos.map((item, index) => {
+                    const Icono = item.icono;
 
-                <article className="aviso-resumen-card">
-                    <div className="aviso-resumen-icon verde">
-                        <Bell size={20} />
-                    </div>
-
-                    <div>
-                        <span className="aviso-resumen-label">
-                            Avisos no leídos
-                        </span>
-
-                        <strong>{resumen.noLeidos}</strong>
-
-                        <span className="aviso-resumen-link">
-                            Ver todos
-                        </span>
-                    </div>
-                </article>
-
-                <article className="aviso-resumen-card">
-                    <div className="aviso-resumen-icon violeta">
-                        <CalendarDays size={20} />
-                    </div>
-
-                    <div>
-                        <span className="aviso-resumen-label">
-                            Avisos este mes
-                        </span>
-
-                        <strong>{resumen.esteMes}</strong>
-
-                        <span className="aviso-resumen-link">
-                            Ver todos
-                        </span>
-                    </div>
-                </article>
-
-                <article className="aviso-resumen-card">
-                    <div className="aviso-resumen-icon naranja">
-                        <Bell size={20} />
-                    </div>
-
-                    <div>
-                        <span className="aviso-resumen-label">
-                            Importantes
-                        </span>
-
-                        <strong>{resumen.importantes}</strong>
-
-                        <span className="aviso-resumen-link">
-                            Ver todos
-                        </span>
-                    </div>
-                </article>
-
+                    return (
+                        <TarjetaResumen
+                            key={index}
+                            icono={<Icono />}
+                            titulo={item.titulo}
+                            valor={item.valor}
+                            contenido={item.contenido}
+                        />
+                    );
+                })}
             </section>
 
             {/* =========================

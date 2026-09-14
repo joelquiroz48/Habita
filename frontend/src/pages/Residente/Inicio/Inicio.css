@@ -9,74 +9,21 @@
   margin-bottom: 16px;
 }
 
-.resumen-card {
-  min-height: 112px;
-  border: 1px solid var(--borde-tarjeta);
-  border-radius: 12px;
-  padding: 17px;
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
-}
-
-.resumen-icon {
-  width: 44px;
-  height: 44px;
-  min-width: 44px;
-  border-radius: 50%;
-  background: var(--fondo-icono-resumen);
-  color: var(--verde);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.resumen-card > div:last-child {
-  display: flex;
-  flex-direction: column;
-}
-
-.resumen-label {
-  font-size: 13px;
-  color: var(--texto-secundario);
-  margin-bottom: 4px;
-}
-
-.resumen-card strong {
-  font-size: 21px;
-  line-height: 1.2;
-  margin-bottom: 5px;
-}
-
-.resumen-card strong small {
-  font-size: 11px;
-  font-weight: 500;
-  color: var(--texto-secundario);
-  vertical-align: middle;
-}
-
-.resumen-info,
 .vencimiento {
-  font-size: 12px;
-  color: var(--texto-secundario);
-  line-height: 1.6;
-}
-
-.vencimiento {
-  color: var(--color-vencimiento);
+    color: var(--color-vencimiento);
 }
 
 .badge {
-  width: fit-content;
-  padding: 3px 7px;
-  border-radius: 10px;
-  font-size: 11px;
-  font-weight: 500;
+    width: fit-content;
+    padding: 3px 7px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 500;
 }
 
 .badge-pendiente {
-  color: var(--color-pendiente);
-  background: var(--fondo-badge-pendiente);
+    color: var(--color-pendiente);
+    background: var(--fondo-badge-pendiente);
 }
 
 /* =========================

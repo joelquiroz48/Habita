@@ -19,58 +19,6 @@
     margin-bottom: 16px;
 }
 
-.aviso-resumen-card {
-    min-height: 92px;
-    border: 1px solid var(--borde-tarjeta);
-    border-radius: 12px;
-    padding: 15px;
-    display: flex;
-    align-items: flex-start;
-    gap: 13px;
-}
-
-.aviso-resumen-icon {
-    width: 40px;
-    height: 40px;
-    min-width: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.aviso-resumen-icon.verde {
-    background: var(--fondo-aviso-verde);
-    color: var(--color-aviso-verde);
-}
-
-.aviso-resumen-icon.violeta {
-    background: #f1ebff;
-    color: #805ad5;
-}
-
-.aviso-resumen-icon.naranja {
-    background: #fff1df;
-    color: #e89020;
-}
-
-.aviso-resumen-card > div:last-child {
-    display: flex;
-    flex-direction: column;
-}
-
-.aviso-resumen-label {
-    font-size: 13px;
-    color: var(--texto-secundario);
-    margin-bottom: 2px;
-}
-
-.aviso-resumen-card strong {
-    font-size: 21px;
-    line-height: 1.2;
-    margin-bottom: 2px;
-}
-
 .aviso-resumen-link {
     color: var(--verde-hover);
     font-size: 12px;

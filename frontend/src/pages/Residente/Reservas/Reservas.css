@@ -7,7 +7,6 @@
     padding: 24px;
 }
 
-
 /* =========================
       RESUMEN SUPERIOR
 ========================= */
@@ -18,54 +17,6 @@
     gap: 14px;
     margin-bottom: 16px;
 }
-
-.reserva-resumen-card {
-    min-height: 112px;
-    border: 1px solid var(--borde-tarjeta);
-    border-radius: 12px;
-    padding: 17px;
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
-}
-
-.reserva-resumen-icon {
-    width: 44px;
-    height: 44px;
-    min-width: 44px;
-    border-radius: 50%;
-    background: var(--fondo-icono-resumen);
-    color: var(--verde);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.reserva-resumen-card > div:last-child {
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-}
-
-.reserva-resumen-card span {
-    font-size: 13px;
-    color: var(--texto-secundario);
-    margin-bottom: 4px;
-}
-
-.reserva-resumen-card strong {
-    color: var(--texto-principal);
-    font-size: 21px;
-    line-height: 1.2;
-    margin-bottom: 5px;
-}
-
-.reserva-resumen-card small {
-    font-size: 12px;
-    color: var(--texto-secundario);
-    line-height: 1.5;
-}
-
 
 /* =========================
       CONTENIDO PRINCIPAL
