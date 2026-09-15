@@ -36,40 +36,6 @@
     min-width: 0;
 }
 
-
-/* =========================
-          PANELES
-========================= */
-
-.panel-reservas {
-    width: 100%;
-    border: 1px solid var(--borde-tarjeta);
-    border-radius: 12px;
-    padding: 16px;
-    min-width: 0;
-}
-
-.panel-reservas-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    margin-bottom: 13px;
-}
-
-.panel-reservas-header h2 {
-    font-size: 16px;
-    font-weight: 600;
-}
-
-.panel-reservas-header span {
-    display: block;
-    font-size: 13px;
-    color: var(--texto-secundario);
-    margin-top: 3px;
-}
-
-
 /* =========================
         MIS RESERVAS
 ========================= */
@@ -207,10 +173,13 @@
     flex-shrink: 0;
 }
 
+.panel-header .btn-nueva-reserva svg {
+    color: var(--blanco);
+}
+
 .btn-nueva-reserva:hover {
     background: var(--verde-hover);
 }
-
 
 /* =========================
         NUEVA RESERVA

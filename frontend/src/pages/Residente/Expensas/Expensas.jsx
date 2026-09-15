@@ -187,39 +187,35 @@ function Expensas() {
                         DETALLE EXPENSA
                 ========================= */}
 
-                <article className="panel-expensas detalle-expensa">
+                <article className="panel detalle-expensa">
 
-                    <div className="detalle-header">
+                    <div className="detalle-info">
+                        <h2>Expensa de Agosto 2026</h2>
 
-                        <div className="detalle-info">
-                            <h2>Expensa de Agosto 2026</h2>
+                        <strong>
+                            {expensaActual.monto}
+                        </strong>
 
-                            <strong>
-                                {expensaActual.monto}
-                            </strong>
+                        <span>
+                            Período: 01/08/2026 al 31/08/2026
+                        </span>
 
-                            <span>
-                                Período: 01/08/2026 al 31/08/2026
-                            </span>
+                        <small>
+                            Vence el 10/09/2026
+                        </small>
 
-                            <small>
-                                Vence el 10/09/2026
-                            </small>
+                        <em className="badge-expensa">
+                            Pendiente de pago
+                        </em>
 
-                            <em className="badge-expensa">
-                                Pendiente de pago
-                            </em>
+                        <button className="btn-pagar">
+                            Pagar ahora
+                        </button>
 
-                            <button className="btn-pagar">
-                                Pagar ahora
-                            </button>
-
-                            <button className="btn-descargar">
-                                <Download size={14} />
-                                Descargar boleta
-                            </button>
-                        </div>
-
+                        <button className="btn-descargar">
+                            <Download size={14} />
+                            Descargar boleta
+                        </button>
                     </div>
 
 
@@ -272,9 +268,9 @@ function Expensas() {
 
                     {/* MEDIOS DE PAGO */}
 
-                    <article className="panel-expensas medios-pago">
+                    <article className="panel medios-pago">
 
-                        <div className="panel-expensas-header">
+                        <div className="panel-header">
                             <div>
                                 <h2>Medios de pago</h2>
                                 <span>
@@ -359,7 +355,7 @@ function Expensas() {
                         HISTORIAL
                 ========================= */}
 
-                <article className="panel-expensas historial-expensas">
+                <article className="panel historial-expensas">
 
                     <div className="historial-header">
 
@@ -475,82 +471,82 @@ function Expensas() {
 
                 </article>
 
-                    {/* AYUDA */}
+                {/* AYUDA */}
 
-                    <article className="panel-expensas ayuda-expensas">
+                <article className="panel ayuda-expensas">
 
-                        <div className="panel-expensas-header">
+                    <div className="panel-header">
 
-                            <div>
-                                <h2>Ayuda sobre expensas</h2>
-                            </div>
-
+                        <div>
+                            <h2>Ayuda sobre expensas</h2>
                         </div>
 
+                    </div>
 
-                        <div className="ayuda-item">
 
-                            <div className="ayuda-icon">
-                                <CircleHelp size={14} />
-                            </div>
+                    <div className="ayuda-item">
 
-                            <div>
-                                <strong>
-                                    ¿Cómo se calculan las expensas?
-                                </strong>
-
-                                <span>
-                                    Entendé qué incluye tu expensa mensual.
-                                </span>
-                            </div>
-
-                            <ChevronRight size={14} />
-
+                        <div className="ayuda-icon">
+                            <CircleHelp size={14} />
                         </div>
 
+                        <div>
+                            <strong>
+                                ¿Cómo se calculan las expensas?
+                            </strong>
 
-                        <div className="ayuda-item">
-
-                            <div className="ayuda-icon">
-                                <WalletCards size={14} />
-                            </div>
-
-                            <div>
-                                <strong>
-                                    Medios de pago y promociones
-                                </strong>
-
-                                <span>
-                                    Conocé las opciones disponibles.
-                                </span>
-                            </div>
-
-                            <ChevronRight size={14} />
-
+                            <span>
+                                Entendé qué incluye tu expensa mensual.
+                            </span>
                         </div>
 
+                        <ChevronRight size={14} />
 
-                        <div className="ayuda-item">
+                    </div>
 
-                            <div className="ayuda-icon">
-                                <FileText size={14} />
-                            </div>
 
-                            <div>
-                                <strong>
-                                    ¿Tenés un problema con tu pago?
-                                </strong>
+                    <div className="ayuda-item">
 
-                                <span>
-                                    Te ayudamos a resolverlo.
-                                </span>
-                            </div>
-
-                            <ChevronRight size={14} />
-
+                        <div className="ayuda-icon">
+                            <WalletCards size={14} />
                         </div>
 
-                    </article>
+                        <div>
+                            <strong>
+                                Medios de pago y promociones
+                            </strong>
+
+                            <span>
+                                Conocé las opciones disponibles.
+                            </span>
+                        </div>
+
+                        <ChevronRight size={14} />
+
+                    </div>
+
+
+                    <div className="ayuda-item">
+
+                        <div className="ayuda-icon">
+                            <FileText size={14} />
+                        </div>
+
+                        <div>
+                            <strong>
+                                ¿Tenés un problema con tu pago?
+                            </strong>
+
+                            <span>
+                                Te ayudamos a resolverlo.
+                            </span>
+                        </div>
+
+                        <ChevronRight size={14} />
+
+                    </div>
+
+                </article>
 
             </section>
 

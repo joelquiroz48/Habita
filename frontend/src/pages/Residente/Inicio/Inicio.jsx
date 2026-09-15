@@ -236,19 +236,12 @@ function Inicio() {
 
                 {/* EXPENSAS */}
 
-                <article className="panel-card expensas-card">
+                <article className="panel">
                     <div className="panel-header">
-                        <div className="panel-title">
-                            <span className="panel-icon">
-                                <FileText size={18} />
-                            </span>
-
-                            <h2>Estado de expensas</h2>
-
-                            <span className="badge badge-pendiente">
-                                Pendiente
-                            </span>
-                        </div>
+                        <h2>Estado de expensas</h2>
+                        <span className="badge badge-pendiente">
+                            Pendiente
+                        </span>
                     </div>
 
                     <div className="expensas-content">
@@ -291,7 +284,7 @@ function Inicio() {
 
                 {/* RESERVAS */}
 
-                <article className="panel-card">
+                <article className="panel">
                     <div className="panel-header">
                         <h2>Próximas reservas</h2>
                         <Link to="/reservas">Ver todas</Link>
@@ -342,7 +335,7 @@ function Inicio() {
 
                 {/* AVISOS */}
 
-                <article className="panel-card">
+                <article className="panel">
                     <div className="panel-header">
                         <h2>Avisos del consorcio</h2>
                         <Link to="/avisos">Ver todos</Link>
@@ -377,7 +370,7 @@ function Inicio() {
 
                 {/* DOCUMENTOS */}
 
-                <article className="panel-card">
+                <article className="panel">
                     <div className="panel-header">
                         <h2>Documentos recientes</h2>
                         <Link to="/documentos">Ver todos</Link>
@@ -416,7 +409,7 @@ function Inicio() {
 
                 {/* CALENDARIO */}
 
-                <article className="panel-card">
+                <article className="panel">
                     <div className="panel-header">
                         <h2>Calendario comunitario</h2>
                         <a href="#">Ver calendario</a>
@@ -441,7 +434,7 @@ function Inicio() {
 
                 {/* ASISTENTE */}
 
-                <article className="panel-card asistente-card">
+                <article className="panel asistente-card">
                     <div className="panel-header">
                         <h2>Asistente Habita</h2>
                     </div>

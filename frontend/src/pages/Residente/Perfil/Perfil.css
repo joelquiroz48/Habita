@@ -1,40 +1,4 @@
 /* =========================================================
-   TARJETAS GENERALES
-========================================================= */
-
-.perfil-card {
-    border: 1px solid var(--borde-tarjeta);
-    border-radius: 12px;
-    padding: 16px;
-    min-width: 0;
-}
-
-.perfil-card-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 13px;
-}
-
-.perfil-titulo {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.perfil-titulo svg {
-    width: 18px;
-    height: 18px;
-    color: var(--verde);
-}
-
-.perfil-titulo h2 {
-    font-size: 17px;
-    font-weight: 600;
-}
-
-
-/* =========================================================
    GRID SUPERIOR
 ========================================================= */
 

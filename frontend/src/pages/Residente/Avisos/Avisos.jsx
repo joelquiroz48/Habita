@@ -13,6 +13,8 @@ import {
     Shield,
     ChevronRight,
     Search,
+    SlidersHorizontal,
+    Tag,
 } from "lucide-react";
 
 import "./Avisos.css";
@@ -218,10 +220,10 @@ function Avisos() {
 
                     {/* DESTACADOS */}
 
-                    <section className="avisos-seccion">
+                    <section className="panel">
 
-                        <div className="avisos-seccion-titulo">
-                            <Megaphone size={14} />
+                        <div className="panel-header panel-header-junto">
+                            <Megaphone />
                             <h2>Avisos destacados</h2>
                         </div>
 
@@ -277,9 +279,9 @@ function Avisos() {
 
                     {/* TODOS LOS AVISOS */}
 
-                    <section className="avisos-seccion todos-avisos">
+                    <section className="panel">
 
-                        <div className="avisos-seccion-header">
+                        <div className="panel-header">
                             <h2>Todos los avisos</h2>
 
                             <span className="avisos-contador">
@@ -347,9 +349,12 @@ function Avisos() {
 
                     {/* FILTROS */}
 
-                    <section className="avisos-panel">
+                    <section className="panel">
 
-                        <h2>Filtrar avisos</h2>
+                        <div className="panel-header panel-header-junto">
+                            <SlidersHorizontal size={14} />
+                            <h2>Filtros</h2>
+                        </div>
 
                         <div className="buscador-avisos">
                             <input
@@ -392,9 +397,12 @@ function Avisos() {
 
                     {/* CATEGORÍAS */}
 
-                    <section className="avisos-panel categorias-panel">
+                    <section className="panel">
 
-                        <h2>Categorías</h2>
+                        <div className="panel-header panel-header-junto">
+                            <Tag size={14} />
+                            <h2>Categorias</h2>
+                        </div>
 
                         <div className="categorias-lista">
 

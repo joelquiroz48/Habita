@@ -156,9 +156,9 @@ function Documentos() {
                         DOCUMENTOS RECIENTES
                     ========================= */}
 
-                    <section className="panel-documentos recientes-documentos">
+                    <section className="panel recientes-documentos">
 
-                        <div className="panel-documentos-header">
+                        <div className="panel-header">
 
                             <div>
                                 <h2>Documentos recientes</h2>
@@ -267,14 +267,13 @@ function Documentos() {
 
                     </section>
 
-
                     {/* =========================
                         EXPLORAR POR CATEGORÍA
                     ========================= */}
 
-                    <section className="panel-documentos explorar-documentos">
+                    <section className="panel explorar-documentos">
 
-                        <div className="panel-documentos-header">
+                        <div className="panel-header">
 
                             <div>
                                 <h2>Explorar por categoría</h2>
@@ -342,16 +341,11 @@ function Documentos() {
                         INFORMACIÓN IMPORTANTE
                     ========================= */}
 
-                    <article className="panel-documentos informacion-documentos">
+                    <article className="panel informacion-documentos">
 
-                        <div className="sidebar-documentos-header">
-
-                            <div className="sidebar-icono">
-                                <Info size={14} />
-                            </div>
-
+                        <div className="panel-header panel-header-junto">
+                            <Info size={14} />
                             <h2>Información importante</h2>
-
                         </div>
 
 
@@ -381,16 +375,11 @@ function Documentos() {
                         BÚSQUEDA RÁPIDA
                     ========================= */}
 
-                    <article className="panel-documentos busqueda-documentos">
+                    <article className="panel busqueda-documentos">
 
-                        <div className="sidebar-documentos-header">
-
-                            <div className="sidebar-icono">
-                                <Search size={14} />
-                            </div>
-
+                        <div className="panel-header panel-header-junto">
+                            <Search size={14} />
                             <h2>Búsqueda rápida</h2>
-
                         </div>
 
 
@@ -414,16 +403,11 @@ function Documentos() {
                         FILTROS
                     ========================= */}
 
-                    <article className="panel-documentos filtros-documentos">
+                    <article className="panel filtros-documentos">
 
-                        <div className="sidebar-documentos-header">
-
-                            <div className="sidebar-icono">
-                                <SlidersHorizontal size={14} />
-                            </div>
-
+                        <div className="panel-header panel-header-junto">
+                            <SlidersHorizontal size={14} />
                             <h2>Filtros</h2>
-
                         </div>
 
 
@@ -478,13 +462,12 @@ function Documentos() {
                         AYUDA
                     ========================= */}
 
-                    <article className="panel-documentos ayuda-documentos">
+                    <article className="panel ayuda-documentos">
 
-                        <div className="ayuda-documentos-icono">
+                        <div className="panel-header panel-header-junto">
                             <CircleHelp size={14} />
+                            <h2>¿Necesitás ayuda?</h2>
                         </div>
-
-                        <strong>¿Necesitás ayuda?</strong>
 
                         <p>
                             Nuestro asistente puede ayudarte

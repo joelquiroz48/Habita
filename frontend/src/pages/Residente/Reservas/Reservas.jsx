@@ -191,9 +191,9 @@ function Reservas() {
                         MIS RESERVAS
                     ========================= */}
 
-                    <article className="panel-reservas mis-reservas">
+                    <article className="panel mis-reservas">
 
-                        <div className="panel-reservas-header">
+                        <div className="panel-header">
 
                             <div>
                                 <h2>Mis reservas activas</h2>
@@ -313,9 +313,9 @@ function Reservas() {
                         ESPACIOS DISPONIBLES
                     ========================= */}
 
-                    <article className="panel-reservas espacios-disponibles">
+                    <article className="panel espacios-disponibles">
 
-                        <div className="panel-reservas-header">
+                        <div className="panel-header">
 
                             <div>
                                 <h2>Espacios comunes disponibles</h2>
@@ -376,9 +376,9 @@ function Reservas() {
                         AYUDA
                     ========================= */}
 
-                    <article className="panel-reservas ayuda-reservas">
+                    <article className="panel ayuda-reservas">
 
-                        <div className="panel-reservas-header">
+                        <div className="panel-header">
 
                             <div>
                                 <h2>Ayuda sobre reservas</h2>
@@ -469,9 +469,9 @@ function Reservas() {
                         NUEVA RESERVA
                     ========================= */}
 
-                    <article className="panel-reservas nueva-reserva">
+                    <article className="panel nueva-reserva">
 
-                        <div className="panel-reservas-header">
+                        <div className="panel-header">
 
                             <div>
                                 <h2>Nueva reserva</h2>
@@ -610,9 +610,9 @@ function Reservas() {
                         CALENDARIO
                     ========================= */}
 
-                    <article className="panel-reservas calendario-reservas">
+                    <article className="panel calendario-reservas">
 
-                        <div className="panel-reservas-header">
+                        <div className="panel-header">
 
                             <div>
 
@@ -626,25 +626,23 @@ function Reservas() {
 
                             </div>
 
-
-                            <div className="calendario-mes">
-
-                                <button>
-                                    ‹
-                                </button>
-
-                                <strong>
-                                    Septiembre 2026
-                                </strong>
-
-                                <button>
-                                    ›
-                                </button>
-
-                            </div>
-
                         </div>
 
+                        <div className="calendario-mes">
+
+                            <button>
+                                ‹
+                            </button>
+
+                            <strong>
+                                Septiembre 2026
+                            </strong>
+
+                            <button>
+                                ›
+                            </button>
+
+                        </div>
 
                         <div className="eventos-reservas">
 

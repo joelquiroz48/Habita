@@ -29,7 +29,6 @@
     gap: 14px;
 }
 
-
 /* =========================
        ENCABEZADOS
 ========================= */
@@ -43,29 +42,10 @@
     font-weight: 600;
 }
 
-.panel-documentos {
-    border: 1px solid var(--borde-tarjeta);
-    border-radius: 12px;
-    padding: 14px;
-}
-
-.panel-documentos-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    margin-bottom: 10px;
-}
-
-.panel-documentos-header h2 {
-    font-size: 16px;
-    font-weight: 600;
-}
-
 .link-documentos {
     background: transparent;
     color: var(--verde-hover);
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 500;
 }
 
@@ -331,22 +311,9 @@
     width: 100%;
 }
 
-
 /* =========================
             AYUDA
 ========================= */
-
-.ayuda-documentos-icono {
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    background: var(--fondo-icono-panel);
-    color: var(--verde);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 7px;
-}
 
 .ayuda-documentos > strong {
     display: block;
@@ -394,18 +361,6 @@
     font-size: 13px;
     font-weight: 600;
 }
-
-.sidebar-icono {
-    width: 23px;
-    height: 23px;
-    border-radius: 50%;
-    background: var(--fondo-icono-panel);
-    color: var(--verde);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 
 /* =========================
     INFORMACIÓN IMPORTANTE

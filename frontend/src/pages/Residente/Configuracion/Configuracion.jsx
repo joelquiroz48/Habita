@@ -47,19 +47,15 @@ function Configuracion() {
                         PREFERENCIAS
                     ========================= */}
 
-                    <section className="config-card">
+                    <section className="panel">
 
-                        <div className="config-card-header">
-
-                            <div className="config-icon">
-                                <Settings size={17} />
-                            </div>
-
+                        <div className="panel-header panel-header-junto">
+                            <Settings />
                             <div>
                                 <h2>Preferencias de la aplicación</h2>
-                                <p>
+                                <span>
                                     Personalizá cómo querés utilizar Habita.
-                                </p>
+                                </span>
                             </div>
 
                         </div>
@@ -148,22 +144,17 @@ function Configuracion() {
                         RESERVAS
                     ========================= */}
 
-                    <section className="config-card">
+                    <section className="panel">
 
-                        <div className="config-card-header">
-
-                            <div className="config-icon">
-                                <CalendarCheck size={17} />
-                            </div>
-
+                        <div className="panel-header panel-header-junto">
+                            <CalendarCheck />
                             <div>
                                 <h2>Preferencias de reservas</h2>
-                                <p>
+                                <span>
                                     Configurá algunas opciones relacionadas
                                     con tus reservas.
-                                </p>
+                                </span>
                             </div>
-
                         </div>
 
 
@@ -276,21 +267,16 @@ function Configuracion() {
                             AYUDA
                     ========================= */}
 
-                    <section className="config-card ayuda-card">
+                    <section className="panel ayuda-card">
 
-                        <div className="config-card-header">
-
-                            <div className="config-icon">
-                                <HelpCircle size={17} />
-                            </div>
-
+                        <div className="panel-header panel-header-junto">
+                            <HelpCircle size={17} />
                             <div>
                                 <h2>Ayuda y soporte</h2>
-                                <p>
+                                <span>
                                     ¿Necesitás ayuda con Habita?
-                                </p>
+                                </span>
                             </div>
-
                         </div>
 
 
@@ -346,21 +332,15 @@ function Configuracion() {
                             INFORMACIÓN
                     ========================= */}
 
-                    <section className="config-card">
-
-                        <div className="config-card-header">
-
-                            <div className="config-icon">
-                                <FileText size={17} />
-                            </div>
-
+                    <section className="panel">
+                        <div className="panel-header panel-header-junto">
+                            <FileText size={17} />
                             <div>
                                 <h2>Información</h2>
-                                <p>
+                                <span>
                                     Información legal de Habita.
-                                </p>
+                                </span>
                             </div>
-
                         </div>
 
 
@@ -390,8 +370,8 @@ function Configuracion() {
                         ZONA DE CUENTA
                     ========================= */}
 
-                    <section className="config-card cuenta-card">
-
+                    <section className="panel cuenta-card">
+                        
                         <h2>Cuenta</h2>
 
                         <button className="btn-logout">

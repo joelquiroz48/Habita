@@ -26,53 +26,6 @@
     gap: 14px;
 }
 
-
-/* =========================
-          CARDS
-========================= */
-
-.config-card {
-    border: 1px solid var(--borde-tarjeta);
-    border-radius: 12px;
-    padding: 16px;
-}
-
-.config-card-header {
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    margin-bottom: 15px;
-}
-
-.config-icon {
-    width: 32px;
-    height: 32px;
-    min-width: 32px;
-    border-radius: 7px;
-    background: var(--fondo-icono-panel);
-    color: var(--verde);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.config-card-header > div:last-child {
-    display: flex;
-    flex-direction: column;
-}
-
-.config-card-header h2 {
-    font-size: 17px;
-    font-weight: 600;
-}
-
-.config-card-header p {
-    font-size: 13px;
-    color: var(--texto-secundario);
-    margin-top: 2px;
-}
-
-
 /* =========================
           LISTAS
 ========================= */

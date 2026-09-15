@@ -36,48 +36,6 @@
   gap: 14px;
 }
 
-.panel-card {
-  border: 1px solid var(--borde-tarjeta);
-  border-radius: 12px;
-  padding: 16px;
-  min-width: 0;
-}
-
-.panel-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 13px;
-}
-
-.panel-header h2 {
-  font-size: 15px;
-  font-weight: 600;
-}
-
-.panel-header a {
-  color: var(--verde-hover);
-  font-size: 12px;
-  font-weight: 500;
-}
-
-.panel-title {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.panel-icon {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: var(--fondo-icono-panel);
-  color: var(--texto-icono);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 /* =========================
           EXPENSAS
 ========================= */

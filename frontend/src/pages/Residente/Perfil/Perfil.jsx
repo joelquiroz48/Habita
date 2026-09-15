@@ -45,13 +45,11 @@ function Perfil() {
             <section className="perfil-grid-superior">
 
                 {/* PERFIL DEL RESIDENTE */}
-                <article className="perfil-card residente-card">
+                <article className="panel residente-card">
 
-                    <div className="perfil-card-header">
-                        <div className="perfil-titulo">
-                            <UserRound size={18} />
-                            <h2>Perfil del residente</h2>
-                        </div>
+                    <div className="panel-header panel-header-junto">
+                        <UserRound size={18} />
+                        <h2>Perfil del residente</h2>
                     </div>
 
                     <div className="residente-contenido">
@@ -85,13 +83,10 @@ function Perfil() {
 
 
                 {/* INFORMACIÓN DE LA UNIDAD */}
-                <article className="perfil-card unidad-card">
-
-                    <div className="perfil-card-header">
-                        <div className="perfil-titulo">
-                            <Building2 size={18} />
-                            <h2>Información de la unidad</h2>
-                        </div>
+                <article className="panel unidad-card">
+                    <div className="panel-header panel-header-junto">
+                        <Building2 size={38} />
+                        <h2>Información de la unidad</h2>
                     </div>
 
                     <div className="unidad-contenido">
@@ -138,12 +133,11 @@ function Perfil() {
             <section className="perfil-grid-central">
 
                 {/* DATOS DE CONTACTO */}
-                <article className="perfil-card contacto-card">
+                <article className="panel contacto-card">
 
-                    <div className="perfil-card-header">
-
-                        <div className="perfil-titulo">
-                            <Mail size={18} />
+                    <div className="panel-header">
+                        <div className="panel-header-icono">
+                            <Mail size={12} />
                             <h2>Datos de contacto</h2>
                         </div>
 
@@ -203,12 +197,11 @@ function Perfil() {
 
 
                 {/* PREFERENCIAS */}
-                <article className="perfil-card preferencias-card">
+                <article className="panel preferencias-card">
 
-                    <div className="perfil-card-header">
-
-                        <div className="perfil-titulo">
-                            <Bell size={18} />
+                    <div className="panel-header">
+                        <div className="panel-header-icono">
+                            <Bell size={12} />
                             <h2>Preferencias de notificación</h2>
                         </div>
 
@@ -292,15 +285,11 @@ function Perfil() {
             <section className="perfil-inferior">
 
                 {/* SEGURIDAD */}
-                <article className="perfil-card seguridad-card">
+                <article className="panel seguridad-card">
 
-                    <div className="perfil-card-header">
-
-                        <div className="perfil-titulo">
-                            <ShieldCheck size={18} />
-                            <h2>Seguridad de la cuenta</h2>
-                        </div>
-
+                    <div className="panel-header panel-header-junto">
+                        <ShieldCheck size={18} />
+                        <h2>Seguridad de la cuenta</h2>
                     </div>
 
 
