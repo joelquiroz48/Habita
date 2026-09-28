@@ -12,9 +12,9 @@ Habita busca reunir estas operaciones en una plataforma organizada, accesible y 
 
 ## 🎯 Objetivo
 
-Desarrollar una solución web que facilite la **comunicación y gestión entre residentes y administradores**, centralizando las principales operaciones relacionadas con un consorcio.
+Habita tiene como objetivo facilitar la comunicación y gestión entre residentes y administradores, centralizando las principales operaciones relacionadas con un consorcio.
 
-El proyecto será desarrollado de manera progresiva, comenzando por un **MVP (Producto Mínimo Viable)** y ampliando sus funcionalidades a medida que avance el desarrollo.
+La plataforma cuenta con diferentes funcionalidades según el rol del usuario, permitiendo a residentes consultar y gestionar información relacionada con su unidad, mientras que los administradores disponen de herramientas para gestionar el funcionamiento del consorcio.
 
 ---
 
@@ -22,87 +22,68 @@ El proyecto será desarrollado de manera progresiva, comenzando por un **MVP (Pr
 
 ### 🏠 Residente
 
-El residente podrá acceder a información y funcionalidades relacionadas con su unidad, como:
+El residente puede acceder a funcionalidades relacionadas con su unidad y su vida cotidiana dentro del consorcio:
 
-* Gestión de sus datos personales.
-* Consulta de expensas y pagos.
-* Registro y seguimiento de reclamos.
-* Visualización de comunicados.
-* Acceso a herramientas de asistencia.
+* 🏠 Visualización de información de su unidad.
+* 💰 Consulta de expensas y estado de pagos.
+* 📅 Consulta y gestión de reservas de espacios comunes.
+* 📢 Visualización de avisos y comunicados.
+* 📄 Acceso a documentos.
+* 👤 Gestión de su perfil.
+* ⚙️ Configuración de preferencias.
+* 📋 Consulta y gestión de reclamos.
 
 ### 🏢 Administrador
 
-El administrador contará con herramientas para gestionar el funcionamiento del consorcio, incluyendo:
+El administrador puede acceder a herramientas para gestionar distintos aspectos del consorcio:
 
-* Gestión de residentes.
-* Gestión de unidades.
-* Gestión de expensas.
-* Gestión y seguimiento de reclamos.
-* Publicación de comunicados.
-* Visualización de información general del consorcio.
+* 📊 Visualización de métricas e información general del consorcio.
+* 👥 Gestión de residentes.
+* 🏠 Gestión de unidades.
+* 💰 Gestión de expensas.
+* 💳 Consulta y gestión de pagos.
+* 📋 Gestión y seguimiento de reclamos.
+* 📢 Publicación y gestión de comunicados.
+* 📅 Gestión de reservas de espacios comunes.
+* 📄 Gestión de documentos.
+* 📈 Consulta de reportes e información administrativa.
 
 ---
 
-## 🚀 Funcionalidades previstas
+## 🔐 Autenticación
 
-Entre las principales funcionalidades que se planean desarrollar se encuentran:
-
-* 🔐 Autenticación y gestión de roles.
-* 👤 Gestión de usuarios.
-* 🏠 Gestión de unidades.
-* 📋 Gestión de reclamos.
-* 💰 Gestión de expensas y pagos.
-* 📢 Comunicados para residentes.
-* 🤖 Asistente basado en Inteligencia Artificial.
-* 📊 Dashboard administrativo.
-
-> Las funcionalidades pueden modificarse o ampliarse durante el desarrollo.
+* Registro e inicio de sesión.
+* Gestión de roles **RESIDENTE** y **ADMIN**.
+* Acceso diferenciado según el rol.
 
 ---
 
 ## 🛠️ Tecnologías
 
-El proyecto será desarrollado utilizando tecnologías trabajadas durante la capacitación.
-
 ### Frontend
 
 * React
+* Vite
 * JavaScript
-* HTML
-* CSS
+* HTML5
+* CSS3
+* Lucide React
 
 ### Backend
 
 * Python
-* Django
-* Django REST Framework
+* FastAPI
 
-### Base de datos
+### Base de datos y servicios
 
+* Supabase
 * PostgreSQL
 
 ### Herramientas
 
 * Git
 * GitHub
-
-También se prevé la integración de servicios externos para funcionalidades como **Inteligencia Artificial** y **pagos en entorno de prueba**.
-
----
-
-## 📌 MVP
-
-La primera versión de Habita estará enfocada en implementar el núcleo de la plataforma:
-
-1. Registro e inicio de sesión.
-2. Roles de residente y administrador.
-3. Gestión de usuarios.
-4. Gestión de unidades.
-5. Creación y seguimiento de reclamos.
-6. Gestión básica de expensas.
-7. Consulta de información según el rol.
-
-Las funcionalidades adicionales serán incorporadas progresivamente durante el desarrollo.
+* Visual Studio Code
 
 ---
 
@@ -110,11 +91,20 @@ Las funcionalidades adicionales serán incorporadas progresivamente durante el d
 
 ```text
 Habita/
+├── backend/
+│
 ├── frontend/
-└── backend/
+│   ├── src/
+│   │   ├── assets/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   └── styles/
+│   ├── package.json
+│   └── vite.config.js
+│
+├── .gitignore
+└── README.md
 ```
-
-La estructura interna de cada sección se irá definiendo a medida que avance el desarrollo.
 
 ---
 
@@ -122,7 +112,7 @@ La estructura interna de cada sección se irá definiendo a medida que avance el
 
 🚧 **En desarrollo**
 
-Habita se encuentra actualmente en etapa de desarrollo y definición de funcionalidades. La arquitectura, tecnologías y alcance pueden sufrir modificaciones a medida que avance el proyecto.
+Las funcionalidades y componentes de Habita se incorporan y mejoran progresivamente a medida que avanza el proyecto.
 
 ---
 
@@ -130,9 +120,7 @@ Habita se encuentra actualmente en etapa de desarrollo y definición de funciona
 
 **Habita es un proyecto desarrollado en el marco del programa de formación Full Stack de [Fundación Pescar](https://www.pescar.org.ar/), en colaboración con empresas participantes del programa.**
 
-El proyecto tiene como objetivo poner en práctica los conocimientos adquiridos durante la capacitación, aplicándolos al desarrollo de una solución web completa y funcional.
-
-El desarrollo se realiza de manera colaborativa, utilizando metodologías y herramientas de trabajo propias de un entorno de desarrollo de software.
+El proyecto tiene como objetivo poner en práctica los conocimientos adquiridos durante la capacitación, aplicándolos al desarrollo de una solución web.
 
 ---
 
