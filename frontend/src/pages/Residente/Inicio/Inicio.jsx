@@ -18,6 +18,8 @@ import {
 
 import imagenPredeterminada from "../../../assets/img/imagen-predeterminada.png";
 import "./Inicio.css";
+import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
+import Panel from "../../../components/Panel/Panel";
 
 // =========================
 // DATOS DE EJEMPLO
@@ -30,8 +32,7 @@ const resumen = {
         estado: "Pendiente",
     },
     reunion: {
-        dia: "15",
-        mes: "SEPT",
+        fecha: "05/09/2026",
         titulo: "Asamblea ordinaria",
         horario: "20:00 h · SUM",
     },
@@ -139,6 +140,71 @@ const eventos = [
     },
 ];
 
+const resumenTarjetas = [
+    {
+        icono: WalletCards,
+        titulo: "Expensas",
+        valor: "$ 45.230",
+        contenido: (
+            <>
+                <span className="vencimiento">
+                    {resumen.expensas.vencimiento}
+                </span>
+                <span className="badge badge-pendiente">
+                    {resumen.expensas.estado}
+                </span>
+            </>
+        ),
+    },
+    {
+        icono: CalendarDays,
+        titulo: "Próxima reunión",
+        valor: (
+            <>
+                {resumen.reunion.fecha}
+            </>
+        ),
+        contenido: (
+            <>
+                <span className="resumen-info">
+                    {resumen.reunion.titulo}
+                </span>
+                <span className="resumen-info">
+                    {resumen.reunion.horario}
+                </span>
+            </>
+        ),
+    },
+    {
+        icono: CalendarCheck,
+        titulo: "Reservas activas",
+        valor: resumen.reservas.cantidad,
+        contenido: (
+            <>
+                <span className="resumen-info">
+                    {resumen.reservas.proxima}
+                </span>
+                <span className="resumen-info">
+                    {resumen.reservas.horario}
+                </span>
+            </>
+        ),
+    },
+    {
+        icono: Megaphone,
+        titulo: "Avisos nuevos",
+        valor: resumen.avisos.cantidad,
+        contenido: (
+            <>
+                <span className="resumen-info">
+                    {resumen.avisos.descripcion}
+                </span>
+                <Link to="/avisos">Ver avisos</Link>
+            </>
+        ),
+    },
+];
+
 function Inicio() {
 
     useEffect(() => {
@@ -148,123 +214,36 @@ function Inicio() {
     return (
         <main className="inicio">
 
-            {/* TARJETAS SUPERIORES */}
+            {/* =========================
+                  RESUMEN SUPERIOR
+            ========================= */}
 
-            <section className="resumen-grid">
-
-                <article className="resumen-card">
-                    <div className="resumen-icon">
-                        <WalletCards />
-                    </div>
-
-                    <div>
-                        <span className="resumen-label">
-                            Expensas del mes
-                        </span>
-
-                        <strong>{resumen.expensas.monto}</strong>
-
-                        <span className="vencimiento">
-                            {resumen.expensas.vencimiento}
-                        </span>
-
-                        <span className="badge badge-pendiente">
-                            {resumen.expensas.estado}
-                        </span>
-                    </div>
-                </article>
-
-                <article className="resumen-card">
-                    <div className="resumen-icon">
-                        <CalendarDays />
-                    </div>
-
-                    <div>
-                        <span className="resumen-label">
-                            Próxima reunión
-                        </span>
-
-                        <strong>
-                            {resumen.reunion.dia}{" "}
-                            <small>{resumen.reunion.mes}</small>
-                        </strong>
-
-                        <span className="resumen-info">
-                            {resumen.reunion.titulo}
-                        </span>
-
-                        <span className="resumen-info">
-                            {resumen.reunion.horario}
-                        </span>
-                    </div>
-                </article>
-
-                <article className="resumen-card">
-                    <div className="resumen-icon">
-                        <CalendarCheck />
-                    </div>
-
-                    <div>
-                        <span className="resumen-label">
-                            Reservas activas
-                        </span>
-
-                        <strong>{resumen.reservas.cantidad}</strong>
-
-                        <span className="resumen-info">
-                            {resumen.reservas.proxima}
-                        </span>
-
-                        <span className="resumen-info">
-                            {resumen.reservas.horario}
-                        </span>
-                    </div>
-                </article>
-
-                <article className="resumen-card">
-                    <div className="resumen-icon">
-                        <Megaphone />
-                    </div>
-
-                    <div>
-                        <span className="resumen-label">
-                            Avisos nuevos
-                        </span>
-
-                        <strong>{resumen.avisos.cantidad}</strong>
-
-                        <span className="resumen-info">
-                            {resumen.avisos.descripcion}
-                        </span>
-
-                        <Link to="/avisos">Ver avisos</Link>
-                    </div>
-                </article>
-
+            <section className="inicio-resumen">
+                {resumenTarjetas.map((item, index) => {
+                    const Icono = item.icono;
+                    return (
+                        <TarjetaResumen
+                            key={index}
+                            icono={<Icono />}
+                            titulo={item.titulo}
+                            valor={item.valor}
+                            contenido={item.contenido}
+                        />
+                    );
+                })}
             </section>
 
-            {/* CONTENIDO CENTRAL */}
+            {/* =========================
+                CONTENIDO PRINCIPAL
+            ========================= */}
 
-            <section className="contenido-grid">
+            <section className="inicio-contenido">
 
                 {/* EXPENSAS */}
 
-                <article className="panel-card expensas-card">
-                    <div className="panel-header">
-                        <div className="panel-title">
-                            <span className="panel-icon">
-                                <FileText size={18} />
-                            </span>
-
-                            <h2>Estado de expensas</h2>
-
-                            <span className="badge badge-pendiente">
-                                Pendiente
-                            </span>
-                        </div>
-                    </div>
-
+                <Panel titulo="Estado de expensas" accion={<Link to="/expensas">Ver detalles</Link>}>
                     <div className="expensas-content">
+
                         <span className="expensas-periodo">
                             Expensas ordinarias - Agosto 2026
                         </span>
@@ -285,56 +264,39 @@ function Inicio() {
 
                         <div className="expensas-row">
                             <span>Estado</span>
-
-                            <span className="texto-pendiente-expensa">
-                                {resumen.expensas.estado} de pago
-                            </span>
+                            <span>{resumen.expensas.estado} de pago</span>
                         </div>
 
-                        <button className="btn-principal">
-                            Pagar ahora
-                        </button>
+                        <button className="btn-principal">Pagar ahora</button>
 
-                        <Link to="/expensas" className="btn-secundario">
-                            <FileText size={16} />
-                            Ver detalle de expensas
-                        </Link>
                     </div>
-                </article>
+                </Panel>
 
                 {/* RESERVAS */}
 
-                <article className="panel-card">
-                    <div className="panel-header">
-                        <h2>Próximas reservas</h2>
-                        <Link to="/reservas">Ver todas</Link>
-                    </div>
-
+                <Panel titulo="Próximas reservas" accion={<Link to="/reservas">Ver todas</Link>}>
                     <div className="reservas-list">
-                        {reservas.map((reserva, index) => (
-                            <div className="reserva-item" key={index}>
+                        {reservas.map((reserva) => (
+                            <div className="reserva-item" key={reserva.id}>
+
                                 <div className="reserva-imagen">
-                                    <img
-                                        src={reserva.imagen}
-                                        alt={reserva.nombre}
-                                    />
+                                    <img src={reserva.imagen} alt={reserva.nombre}/>
                                 </div>
 
                                 <div className="reserva-info">
                                     <strong>{reserva.nombre}</strong>
 
                                     <span>
-                                        <CalendarDays size={12} />
+                                        <CalendarDays />
                                         {reserva.fecha}
                                     </span>
 
                                     <span>
-                                        <Clock3 size={12} />
+                                        <Clock3 />
                                         {reserva.horario}
                                     </span>
 
-                                    <small
-                                        className={
+                                    <small className={
                                             reserva.estado === "Pendiente"
                                                 ? "estado-pendiente"
                                                 : "estado-confirmada"
@@ -343,30 +305,20 @@ function Inicio() {
                                         {reserva.estado}
                                     </small>
                                 </div>
+
                             </div>
                         ))}
                     </div>
-
-                    <Link className="link-abajo" to="/reservas">
-                        Ir a mis reservas
-                        <ChevronRight size={17} />
-                    </Link>
-                </article>
+                </Panel>
 
                 {/* AVISOS */}
 
-                <article className="panel-card">
-                    <div className="panel-header">
-                        <h2>Avisos del consorcio</h2>
-                        <Link to="/avisos">Ver todos</Link>
-                    </div>
-
+                <Panel titulo="Avisos del consorcio" accion={<Link to="/avisos">Ver todos</Link>}>
                     <div className="avisos-list">
-                        {avisos.map((aviso, index) => (
-                            <div className="aviso-item" key={index}>
-                                <div
-                                    className={`aviso-icon ${aviso.clase}`}
-                                >
+                        {avisos.map((aviso) => (
+                            <div className="aviso-item" key={aviso.id}>
+
+                                <div className={`aviso-icon ${aviso.clase}`}>
                                     {aviso.icon}
                                 </div>
 
@@ -378,66 +330,51 @@ function Inicio() {
 
                                     <p>{aviso.descripcion}</p>
                                 </div>
+
                             </div>
                         ))}
                     </div>
-
-                    <Link className="link-abajo" to="/avisos">
-                        Ver todos los avisos
-                        <ChevronRight size={17} />
-                    </Link>
-                </article>
+                </Panel>
 
                 {/* DOCUMENTOS */}
 
-                <article className="panel-card">
-                    <div className="panel-header">
-                        <h2>Documentos recientes</h2>
-                        <Link to="/documentos">Ver todos</Link>
-                    </div>
-
+                <Panel titulo="Documentos recientes" accion={<Link to="/documentos">Ver todos</Link>}>
                     <div className="documentos-list">
-                        {documentos.map((documento, index) => (
-                            <div className="documento-item" key={index}>
-                                <div
-                                    className={`documento-icon ${documento.icon}`}
-                                >
+                        {documentos.map((documento) => (
+                            <div className="documento-item" key={documento.id}>
+                                <div className={`documento-icon ${documento.icon}`}>
                                     {documento.icon === "pdf" && "PDF"}
+
                                     {documento.icon === "doc" && (
-                                        <FileText size={17} />
+                                        <FileText />
                                     )}
+
                                     {documento.icon === "money" && (
-                                        <CircleDollarSign size={17} />
+                                        <CircleDollarSign />
                                     )}
                                 </div>
 
                                 <div>
                                     <strong>{documento.nombre}</strong>
-
                                     <span>
                                         {documento.tipo} · {documento.fecha}
                                     </span>
                                 </div>
 
                                 <button>
-                                    <Download size={16} />
+                                    <Download />
                                 </button>
                             </div>
                         ))}
                     </div>
-                </article>
+                </Panel>
 
                 {/* CALENDARIO */}
 
-                <article className="panel-card">
-                    <div className="panel-header">
-                        <h2>Calendario comunitario</h2>
-                        <a href="#">Ver calendario</a>
-                    </div>
-
+                <Panel titulo="Calendario comunitario" accion={<Link to="/calendario">Ver calendario</Link>}>
                     <div className="eventos-list">
-                        {eventos.map((evento, index) => (
-                            <div className="evento-item" key={index}>
+                        {eventos.map((evento) => (
+                            <div className="evento-item" key={evento.id}>
                                 <div className="evento-fecha">
                                     <span>{evento.mes}</span>
                                     <strong>{evento.dia}</strong>
@@ -450,19 +387,12 @@ function Inicio() {
                             </div>
                         ))}
                     </div>
-                </article>
+                </Panel>
 
                 {/* ASISTENTE */}
 
-                <article className="panel-card asistente-card">
-                    <div className="panel-header">
-                        <h2>Asistente Habita</h2>
-                    </div>
-
-                    <p>
-                        Tu asistente inteligente siempre
-                        disponible para ayudarte.
-                    </p>
+                <Panel titulo="Asistente Habita" className="asistente-card">
+                    <p>Tu asistente inteligente siempre <br /> disponible para ayudarte.</p>
 
                     <div className="preguntas">
                         <button>¿Cómo reservo el SUM?</button>
@@ -471,10 +401,10 @@ function Inicio() {
                     </div>
 
                     <button className="btn-asistente">
-                        <MessageCircle size={17} />
+                        <MessageCircle  />
                         Chatear con Habita
                     </button>
-                </article>
+                </Panel>
 
             </section>
         </main>

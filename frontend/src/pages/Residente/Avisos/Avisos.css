@@ -5,9 +5,7 @@
 .avisos {
     width: 100%;
     padding: 24px;
-    box-sizing: border-box;
 }
-
 
 /* =========================
         RESUMEN SUPERIOR
@@ -20,113 +18,24 @@
     margin-bottom: 16px;
 }
 
-.aviso-resumen-card {
-    min-height: 92px;
-    background: var(--blanco);
-    border: 1px solid var(--borde-tarjeta);
-    border-radius: 12px;
-    padding: 15px;
-    display: flex;
-    align-items: flex-start;
-    gap: 13px;
-    box-sizing: border-box;
-}
-
-.aviso-resumen-icon {
-    width: 40px;
-    height: 40px;
-    min-width: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.aviso-resumen-icon.verde {
-    background: var(--fondo-aviso-verde);
-    color: var(--color-aviso-verde);
-}
-
-.aviso-resumen-icon.violeta {
-    background: #f1ebff;
-    color: #805ad5;
-}
-
-.aviso-resumen-icon.naranja {
-    background: #fff1df;
-    color: #e89020;
-}
-
-.aviso-resumen-card > div:last-child {
-    display: flex;
-    flex-direction: column;
-}
-
-.aviso-resumen-label {
-    font-size: 13px;
-    color: var(--texto-secundario);
-    margin-bottom: 2px;
-}
-
-.aviso-resumen-card strong {
-    font-size: 21px;
-    line-height: 1.2;
-    margin-bottom: 2px;
-}
-
 .aviso-resumen-link {
     color: var(--verde-hover);
     font-size: 12px;
 }
 
-
-/* =========================
-       GRID PRINCIPAL
-========================= */
-
-.avisos-grid {
+.avisos-contenido {
     display: grid;
     grid-template-columns: minmax(0, 3fr) minmax(230px, 1.15fr);
     gap: 14px;
     align-items: start;
 }
 
-.avisos-principal {
+.avisos-columna {
     min-width: 0;
-}
-
-.avisos-lateral {
     display: flex;
     flex-direction: column;
     gap: 14px;
 }
-
-
-/* =========================
-       TÍTULOS DE SECCIÓN
-========================= */
-
-.avisos-seccion {
-    margin-bottom: 16px;
-}
-
-.avisos-seccion-titulo {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    margin-bottom: 8px;
-}
-
-.avisos-seccion-titulo svg {
-    color: var(--texto-secundario);
-}
-
-.avisos-seccion-titulo h2 {
-    font-size: 15px;
-    font-weight: 600;
-    margin: 0;
-}
-
 
 /* =========================
        AVISOS DESTACADOS
@@ -146,7 +55,6 @@
     padding: 10px;
     border-radius: 9px;
     border: 1px solid;
-    box-sizing: border-box;
 }
 
 .aviso-destacado.importante {
@@ -252,42 +160,18 @@
     position: absolute;
     right: 9px;
     bottom: 9px;
-    border: none;
     background: transparent;
     color: var(--verde-hover);
     font-size: 11px;
     display: flex;
     align-items: center;
     gap: 3px;
-    cursor: pointer;
 }
 
 
 /* =========================
         TODOS LOS AVISOS
 ========================= */
-
-.todos-avisos {
-    background: var(--blanco);
-    border: 1px solid var(--borde-tarjeta);
-    border-radius: 12px;
-    padding: 15px;
-    box-sizing: border-box;
-}
-
-.avisos-seccion-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 8px;
-}
-
-.avisos-seccion-header h2 {
-    margin: 0;
-    color: var(--texto-principal);
-    font-size: 16px;
-    font-weight: 600;
-}
 
 .avisos-contador {
     color: var(--texto-secundario);
@@ -367,8 +251,6 @@
 }
 
 .aviso-lista-header h3 {
-    margin: 0;
-    color: var(--texto-principal);
     font-size: 14px;
     font-weight: 600;
     overflow: hidden;
@@ -415,16 +297,13 @@
 ========================= */
 
 .avisos-panel {
-    background: var(--blanco);
     border: 1px solid var(--borde-tarjeta);
     border-radius: 12px;
     padding: 14px;
-    box-sizing: border-box;
 }
 
 .avisos-panel h2 {
     margin: 0 0 10px;
-    color: var(--texto-principal);
     font-size: 16px;
     font-weight: 600;
 }
@@ -447,10 +326,8 @@
 .buscador-avisos input {
     flex: 1;
     min-width: 0;
-    border: none;
     outline: none;
     background: transparent;
-    color: var(--texto-principal);
     font-size: 13px;
 }
 
@@ -478,14 +355,11 @@
     padding: 0 9px;
     border: 1px solid var(--separador);
     border-radius: 5px;
-    background: var(--blanco);
-    color: var(--texto-principal);
     font-size: 13px;
     text-align: left;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    cursor: pointer;
 }
 
 .filtros-lista button:hover {
@@ -532,15 +406,12 @@
 }
 
 .categorias-lista button {
-    border: none;
     background: transparent;
     padding: 5px 0;
-    color: var(--texto-principal);
     font-size: 12px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    cursor: pointer;
 }
 
 .categorias-lista button:hover {
@@ -563,7 +434,7 @@
 
 @media (max-width: 1000px) {
 
-    .avisos-grid {
+    .avisos-contenido {
         grid-template-columns: 1fr;
     }
 

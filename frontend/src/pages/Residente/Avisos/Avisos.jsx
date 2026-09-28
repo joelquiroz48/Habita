@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import {
     CalendarDays,
     Megaphone,
@@ -12,9 +13,13 @@ import {
     Shield,
     ChevronRight,
     Search,
+    SlidersHorizontal,
+    Tag,
 } from "lucide-react";
 
 import "./Avisos.css";
+import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
+import Panel from "../../../components/Panel/Panel";
 
 // =========================
 // DATOS DE EJEMPLO
@@ -35,7 +40,7 @@ const avisosDestacados = [
         autor: "Administración",
         tipo: "Importante",
         clase: "importante",
-        icon: <Users size={18} />,
+        icon: <Users />,
     },
     {
         titulo: "Corte de luz programado",
@@ -45,7 +50,7 @@ const avisosDestacados = [
         autor: "Administración",
         tipo: "Importante",
         clase: "importante",
-        icon: <AlertTriangle size={18} />,
+        icon: <AlertTriangle />,
     },
     {
         titulo: "Poda de árboles en espacios comunes",
@@ -55,7 +60,7 @@ const avisosDestacados = [
         autor: "Administración",
         tipo: "Importante",
         clase: "importante",
-        icon: <TreePine size={18} />,
+        icon: <TreePine />,
     },
 ];
 
@@ -66,7 +71,7 @@ const avisos = [
             "El próximo martes 15/09 se realizará la asamblea ordinaria del consorcio a las 20:00 h en el SUM.",
         fecha: "01/09/2026",
         clase: "violeta",
-        icon: <Users size={17} />,
+        icon: <Users />,
         categoria: "Eventos",
         leido: false,
     },
@@ -76,7 +81,7 @@ const avisos = [
             "El martes 8/09 de 9:00 a 13:00 habrá un corte de luz por tareas de EDENOR.",
         fecha: "01/09/2026",
         clase: "rojo",
-        icon: <AlertTriangle size={17} />,
+        icon: <AlertTriangle />,
         categoria: "Mantenimiento",
         leido: false,
     },
@@ -86,7 +91,7 @@ const avisos = [
             "El próximo martes 15/09 se realizará la poda de árboles en el jardín del frente.",
         fecha: "31/08/2026",
         clase: "verde",
-        icon: <TreePine size={17} />,
+        icon: <TreePine />,
         categoria: "Mantenimiento",
         leido: false,
     },
@@ -96,7 +101,7 @@ const avisos = [
             "Recordamos la importancia del uso responsable del agua en todo el edificio.",
         fecha: "27/08/2026",
         clase: "celeste",
-        icon: <Droplets size={17} />,
+        icon: <Droplets />,
         categoria: "Servicios",
         leido: true,
     },    
@@ -106,7 +111,7 @@ const avisos = [
             "Recordamos que los paquetes se pueden recibir en la administración durante el horario de atención.",
         fecha: "25/08/2026",
         clase: "violeta",
-        icon: <FileText size={17} />,
+        icon: <FileText  />,
         categoria: "Servicios",
         leido: false,
     },
@@ -116,7 +121,7 @@ const avisos = [
             "El próximo miércoles se realizará la revisión y mantenimiento de los matafuegos de los espacios comunes.",
         fecha: "21/08/2026",
         clase: "naranja",
-        icon: <Wrench size={17} />,
+        icon: <Wrench />,
         categoria: "Mantenimiento",
         leido: true,
     },
@@ -126,7 +131,7 @@ const avisos = [
             "Recordamos mantener cerrada la puerta de acceso al edificio y no permitir el ingreso de personas desconocidas.",
         fecha: "19/08/2026",
         clase: "rojo",
-        icon: <Shield size={17} />,
+        icon: <Shield />,
         categoria: "Seguridad",
         leido: true,
     },
@@ -138,6 +143,39 @@ const categorias = [
     { nombre: "Seguridad", cantidad: 2 },
     { nombre: "Eventos", cantidad: 3 },
     { nombre: "Servicios", cantidad: 1 },
+];
+
+const resumenAvisos = [
+    {
+        icono: Bell,
+        titulo: "Avisos no leídos",
+        valor: resumen.noLeidos,
+        contenido: (
+            <Link to="/avisos" className="aviso-resumen-link">
+                Ver todos
+            </Link>
+        ),
+    },
+    {
+        icono: CalendarDays,
+        titulo: "Avisos este mes",
+        valor: resumen.esteMes,
+        contenido: (
+            <Link to="/avisos" className="aviso-resumen-link">
+                Ver todos
+            </Link>
+        ),
+    },
+    {
+        icono: Bell,
+        titulo: "Importantes",
+        valor: resumen.importantes,
+        contenido: (
+            <Link to="/avisos" className="aviso-resumen-link">
+                Ver todos
+            </Link>
+        ),
+    },
 ];
 
 function Avisos() {
@@ -153,101 +191,44 @@ function Avisos() {
             ========================= */}
 
             <section className="avisos-resumen">
+                {resumenAvisos.map((item, index) => {
+                    const Icono = item.icono;
 
-                <article className="aviso-resumen-card">
-                    <div className="aviso-resumen-icon verde">
-                        <Bell size={20} />
-                    </div>
-
-                    <div>
-                        <span className="aviso-resumen-label">
-                            Avisos no leídos
-                        </span>
-
-                        <strong>{resumen.noLeidos}</strong>
-
-                        <span className="aviso-resumen-link">
-                            Ver todos
-                        </span>
-                    </div>
-                </article>
-
-                <article className="aviso-resumen-card">
-                    <div className="aviso-resumen-icon violeta">
-                        <CalendarDays size={20} />
-                    </div>
-
-                    <div>
-                        <span className="aviso-resumen-label">
-                            Avisos este mes
-                        </span>
-
-                        <strong>{resumen.esteMes}</strong>
-
-                        <span className="aviso-resumen-link">
-                            Ver todos
-                        </span>
-                    </div>
-                </article>
-
-                <article className="aviso-resumen-card">
-                    <div className="aviso-resumen-icon naranja">
-                        <Bell size={20} />
-                    </div>
-
-                    <div>
-                        <span className="aviso-resumen-label">
-                            Importantes
-                        </span>
-
-                        <strong>{resumen.importantes}</strong>
-
-                        <span className="aviso-resumen-link">
-                            Ver todos
-                        </span>
-                    </div>
-                </article>
-
+                    return (
+                        <TarjetaResumen
+                            key={index}
+                            icono={<Icono />}
+                            titulo={item.titulo}
+                            valor={item.valor}
+                            contenido={item.contenido}
+                        />
+                    );
+                })}
             </section>
 
             {/* =========================
-                    CONTENIDO PRINCIPAL
+                CONTENIDO PRINCIPAL
             ========================= */}
 
-            <section className="avisos-grid">
+            <section className="avisos-contenido">
 
                 {/* =========================
-                        COLUMNA PRINCIPAL
+                     COLUMNA IZQUIERDA
                 ========================= */}
 
-                <div className="avisos-principal">
+                <section className="avisos-columna">
 
                     {/* DESTACADOS */}
 
-                    <section className="avisos-seccion">
-
-                        <div className="avisos-seccion-titulo">
-                            <Megaphone size={14} />
-                            <h2>Avisos destacados</h2>
-                        </div>
-
+                    <Panel icono={<Megaphone />} titulo="Avisos destacados" className="avisos-destacados-panel">
                         <div className="avisos-destacados">
-
-                            {avisosDestacados.map((aviso, index) => (
-                                <article
-                                    className={`aviso-destacado ${aviso.clase}`}
-                                    key={index}
-                                >
-                                    <div className="aviso-destacado-icon">
-                                        {aviso.icon}
-                                    </div>
+                            {avisosDestacados.map((aviso) => (
+                                <article className={`aviso-destacado ${aviso.clase}`} key={aviso.id}>
+                                    <div className="aviso-destacado-icon">{aviso.icon}</div>
 
                                     <div className="aviso-destacado-contenido">
-
                                         <div className="aviso-destacado-header">
-                                            <span className="aviso-tipo">
-                                                {aviso.tipo}
-                                            </span>
+                                            <span className="aviso-tipo">{aviso.tipo}</span>
 
                                             <span className="aviso-punto" />
                                         </div>
@@ -258,119 +239,79 @@ function Avisos() {
 
                                         <div className="aviso-meta">
                                             <span>
-                                                <CalendarDays size={12} />
+                                                <CalendarDays />
                                                 {aviso.fecha}
                                             </span>
 
-                                            <span>
-                                                {aviso.autor}
-                                            </span>
+                                            <span>{aviso.autor}</span>
                                         </div>
-
                                     </div>
 
                                     <button className="aviso-ver-mas">
                                         Ver más
-                                        <ChevronRight size={15} />
+                                        <ChevronRight />
                                     </button>
-
                                 </article>
                             ))}
-
                         </div>
-
-                    </section>
+                    </Panel>
 
                     {/* TODOS LOS AVISOS */}
 
-                    <section className="avisos-seccion todos-avisos">
-
-                        <div className="avisos-seccion-header">
-                            <h2>Todos los avisos</h2>
-
+                    <Panel
+                        titulo="Todos los avisos"
+                        accion={
                             <span className="avisos-contador">
                                 {avisos.length} avisos
                             </span>
-                        </div>
-
+                        }
+                    >
                         <div className="avisos-lista">
-
-                            {avisos.map((aviso, index) => (
-                                <article
-                                    className={`aviso-lista-item ${
+                            {avisos.map((aviso) => (
+                                <article className={`aviso-lista-item ${
                                         !aviso.leido ? "no-leido" : ""
                                     }`}
-                                    key={index}
+                                    key={aviso.id}
                                 >
-
-                                    <div
-                                        className={`aviso-lista-icon ${aviso.clase}`}
-                                    >
-                                        {aviso.icon}
-                                    </div>
+                                    <div className={`aviso-lista-icon ${aviso.clase}`}>{aviso.icon}</div>
 
                                     <div className="aviso-lista-contenido">
-
                                         <div className="aviso-lista-header">
                                             <h3>{aviso.titulo}</h3>
-
-                                            <span>
-                                                {aviso.fecha}
-                                            </span>
+                                            <span>{aviso.fecha}</span>
                                         </div>
 
                                         <p>{aviso.descripcion}</p>
 
-                                        <small>
-                                            {aviso.categoria}
-                                        </small>
-
+                                        <small>{aviso.categoria}</small>
                                     </div>
 
-                                    {!aviso.leido && (
-                                        <span className="aviso-no-leido" />
-                                    )}
+                                    {!aviso.leido && (<span className="aviso-no-leido" />)}
 
-                                    <ChevronRight
-                                        className="aviso-chevron"
-                                        size={17}
-                                    />
-
+                                    <ChevronRight className="aviso-chevron"/>
                                 </article>
                             ))}
-
                         </div>
+                    </Panel>
 
-                    </section>
-
-                </div>
+                </section>
 
                 {/* =========================
-                        COLUMNA LATERAL
+                       COLUMNA DERECHA
                 ========================= */}
 
-                <aside className="avisos-lateral">
+                <section className="avisos-columna">
 
                     {/* FILTROS */}
 
-                    <section className="avisos-panel">
-
-                        <h2>Filtrar avisos</h2>
-
+                    <Panel icono={<SlidersHorizontal />} titulo="Filtros" className="filtros-avisos">
                         <div className="buscador-avisos">
-                            <input
-                                type="text"
-                                placeholder="Buscar avisos..."
-                            />
-
-                            <Search size={15} />
+                            <input type="text" placeholder="Buscar avisos..."/>
+                            <Search />
                         </div>
 
                         <div className="filtros-lista">
-
-                            <button className="filtro-activo">
-                                Todos
-                            </button>
+                            <button className="filtro-activo">Todos</button>
 
                             <button>
                                 No leídos
@@ -391,31 +332,22 @@ function Avisos() {
                                 Informativos
                                 <span className="filtro-punto azul" />
                             </button>
-
                         </div>
-
-                    </section>
+                    </Panel>
 
                     {/* CATEGORÍAS */}
 
-                    <section className="avisos-panel categorias-panel">
-
-                        <h2>Categorías</h2>
-
+                    <Panel icono={<Tag />} titulo="Categorías" className="categorias-avisos">
                         <div className="categorias-lista">
-
-                            {categorias.map((categoria, index) => (
-                                <button key={index}>
+                            {categorias.map((categoria) => (
+                                <button key={categoria.id}>
                                     <span>{categoria.nombre}</span>
                                     <small>{categoria.cantidad}</small>
                                 </button>
                             ))}
-
                         </div>
-
-                    </section>
-
-                </aside>
+                    </Panel>
+                </section>
 
             </section>
 

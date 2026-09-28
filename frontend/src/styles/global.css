@@ -10,7 +10,7 @@
     /* ------- FONDOS ---------- */
 
     --fondo: #FAFBFC;
-    --blanco: #FFFFFF;
+    --blanco: #FFFF;
     --celeste: #d6f4effc;
     --celeste-claro: #e1f5f1e9;
 
@@ -74,6 +74,10 @@
 
 }
 
+/* -----------------------------------
+       ESTILOS GLOBALES
+   ----------------------------------- */
+
 * {
     margin: 0;
     padding: 0;
@@ -86,9 +90,24 @@ body {
     background: var(--fondo);
 }
 
+/* ----------------------------------- */
+
 svg {
     width: 22px;
     height: 22px;
+}
+
+a {
+    text-decoration: none;
+}
+
+button {
+    cursor: pointer;
+}
+
+input,
+button {
+    border: none;
 }
 
 /* =========================

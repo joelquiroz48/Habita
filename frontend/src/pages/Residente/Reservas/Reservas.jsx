@@ -9,6 +9,7 @@ import {
     Pencil,
     X,
     ChevronRight,
+    ChevronLeft,
     CircleHelp,
     Info,
 } from "lucide-react";
@@ -16,7 +17,8 @@ import {
 import imagenPredeterminada from "../../../assets/img/imagen-predeterminada.png";
 
 import "./Reservas.css";
-
+import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
+import Panel from "../../../components/Panel/Panel";
 
 /* =========================
         DATOS DE EJEMPLO
@@ -31,7 +33,7 @@ const resumenReservas = [
     },
     {
         titulo: "Próxima reserva",
-        valor: "18 SEP",
+        valor: "18/09/26",
         detalle: "SUM · 18:00 a 22:00",
         icono: CalendarDays,
     },
@@ -153,37 +155,23 @@ function Reservas() {
             ========================= */}
 
             <section className="reservas-resumen">
-
                 {resumenReservas.map((item, index) => {
-
                     const Icono = item.icono;
-
                     return (
-                        <article
-                            className="reserva-resumen-card"
+                        <TarjetaResumen
                             key={index}
-                        >
-                            <div className="reserva-resumen-icon">
-                                <Icono />
-                            </div>
-
-                            <div>
-                                <span>{item.titulo}</span>
-
-                                <strong>
-                                    {item.valor}
-                                </strong>
-
-                                <small>
+                            icono={<Icono />}
+                            titulo={item.titulo}
+                            valor={item.valor}
+                            contenido={
+                                <span className="resumen-info">
                                     {item.detalle}
-                                </small>
-                            </div>
-                        </article>
+                                </span>
+                            }
+                        />
                     );
                 })}
-
             </section>
-
 
             {/* =========================
                 CONTENIDO PRINCIPAL
@@ -191,68 +179,38 @@ function Reservas() {
 
             <section className="reservas-contenido">
 
-
                 {/* =========================
                     COLUMNA IZQUIERDA
                 ========================= */}
 
+                <section className="reservas-columna">
 
-                <div className="reservas-columna reservas-columna-izquierda">
+                    {/* MIS RESERVAS */}
 
-
-                    {/* =========================
-                        MIS RESERVAS
-                    ========================= */}
-
-                    <article className="panel-reservas mis-reservas">
-
-                        <div className="panel-reservas-header">
-
-                            <div>
-                                <h2>Mis reservas activas</h2>
-
-                                <span>
-                                    Consultá y administrá tus próximas reservas
-                                </span>
-                            </div>
-
+                    <Panel
+                        titulo="Mis reservas activas"
+                        descripcion="Consultá y administrá tus próximas reservas"
+                        accion={
                             <button className="btn-nueva-reserva">
-                                <Plus size={15} />
+                                <Plus />
                                 Nueva reserva
                             </button>
-
-                        </div>
-
-
+                        }
+                        className="mis-reservas"
+                    >
                         <div className="reservas-lista">
-
-                            {reservasActivas.map((reserva, index) => (
-
-                                <div
-                                    className="reserva-card"
-                                    key={index}
-                                >
-
+                            {reservasActivas.map((reserva) => (
+                                <div className="reserva-card" key={reserva.id}>
                                     <div className="reserva-card-imagen">
-
-                                        <img
-                                            src={reserva.imagen}
-                                            alt={reserva.nombre}
-                                        />
-
+                                        <img src={reserva.imagen} alt={reserva.nombre}/>
                                     </div>
-
 
                                     <div className="reserva-card-info">
 
                                         <div className="reserva-card-titulo">
+                                            <strong>{reserva.nombre}</strong>
 
-                                            <strong>
-                                                {reserva.nombre}
-                                            </strong>
-
-                                            <small
-                                                className={
+                                            <small className={
                                                     reserva.estado === "Confirmada"
                                                         ? "estado-confirmada"
                                                         : "estado-pendiente"
@@ -260,251 +218,125 @@ function Reservas() {
                                             >
                                                 {reserva.estado}
                                             </small>
-
                                         </div>
 
-
                                         <div className="reserva-card-datos">
-
                                             <span>
-                                                <CalendarDays size={12} />
+                                                <CalendarDays />
                                                 {reserva.fecha}
                                             </span>
 
                                             <span>
-                                                <Clock3 size={12} />
+                                                <Clock3 />
                                                 {reserva.horario}
                                             </span>
-
                                         </div>
 
-
-                                        <small className="numero-reserva">
-                                            Reserva {reserva.numero}
-                                        </small>
+                                        <small className="numero-reserva">Reserva {reserva.numero}</small>
 
                                     </div>
 
-
                                     <div className="reserva-card-acciones">
-
                                         <button>
-                                            <Eye size={13} />
+                                            <Eye />
                                             Ver detalle
                                         </button>
 
                                         {reserva.estado === "Confirmada" && (
-
                                             <button>
-                                                <Pencil size={13} />
+                                                <Pencil />
                                                 Modificar
                                             </button>
-
                                         )}
 
                                         {reserva.estado === "Pendiente" && (
-
                                             <button className="btn-cancelar">
-                                                <X size={13} />
+                                                <X />
                                                 Cancelar
                                             </button>
-
                                         )}
-
                                     </div>
-
                                 </div>
-
                             ))}
-
                         </div>
+                    </Panel>
 
-                    </article>
+                    {/* ESPACIOS DISPONIBLES */}
 
-
-                    {/* =========================
-                        ESPACIOS DISPONIBLES
-                    ========================= */}
-
-                    <article className="panel-reservas espacios-disponibles">
-
-                        <div className="panel-reservas-header">
-
-                            <div>
-                                <h2>Espacios comunes disponibles</h2>
-
-                                <span>
-                                    Elegí un espacio para realizar una reserva
-                                </span>
-                            </div>
-
-                        </div>
-
-
+                    <Panel titulo="Espacios comunes disponibles" descripcion="Elegí un espacio para realizar una reserva" className="espacios-disponibles">
                         <div className="espacios-grid">
-
-                            {espaciosDisponibles.map((espacio, index) => (
-
-                                <div
-                                    className="espacio-card"
-                                    key={index}
-                                >
-
+                            {espaciosDisponibles.map((espacio) => (
+                                <div className="espacio-card" key={espacio.id}>
                                     <div className="espacio-imagen">
-
-                                        <img
-                                            src={espacio.imagen}
-                                            alt={espacio.nombre}
-                                        />
-
+                                        <img src={espacio.imagen} alt={espacio.nombre}/>
                                     </div>
-
 
                                     <div className="espacio-info">
+                                        <strong>{espacio.nombre}</strong>
 
-                                        <strong>
-                                            {espacio.nombre}
-                                        </strong>
+                                        <span>{espacio.capacidad}</span>
 
-                                        <span>
-                                            {espacio.capacidad}
-                                        </span>
-
-                                        <button>
-                                            Reservar
-                                        </button>
-
+                                        <button>Reservar</button>
                                     </div>
-
                                 </div>
-
                             ))}
-
                         </div>
+                    </Panel>
 
-                    </article>
+                    {/* AYUDA */}
 
-
-                    {/* =========================
-                        AYUDA
-                    ========================= */}
-
-                    <article className="panel-reservas ayuda-reservas">
-
-                        <div className="panel-reservas-header">
+                    <Panel titulo="Ayuda sobre reservas" descripcion="Información útil para reservar espacios" className="ayuda-reservas">
+                        <div className="ayuda-reserva-item">
+                            <div className="ayuda-reserva-icon"><CircleHelp /></div>
 
                             <div>
-                                <h2>Ayuda sobre reservas</h2>
+                                <strong>¿Cómo reservo el SUM?</strong>
 
-                                <span>
-                                    Información útil para reservar espacios
-                                </span>
+                                <span>Conocé el proceso para realizar una reserva.</span>
                             </div>
 
+                            <ChevronRight />
                         </div>
-
 
                         <div className="ayuda-reserva-item">
-
-                            <div className="ayuda-reserva-icon">
-                                <CircleHelp size={14} />
-                            </div>
+                            <div className="ayuda-reserva-icon"><CalendarDays /></div>
 
                             <div>
-                                <strong>
-                                    ¿Cómo reservo el SUM?
-                                </strong>
+                                <strong>Políticas de cancelación</strong>
 
-                                <span>
-                                    Conocé el proceso para realizar una reserva.
-                                </span>
+                                <span>Consultá cuándo podés cancelar una reserva.</span>
                             </div>
 
-                            <ChevronRight size={14} />
-
+                            <ChevronRight  />
                         </div>
-
 
                         <div className="ayuda-reserva-item">
-
-                            <div className="ayuda-reserva-icon">
-                                <CalendarDays size={14} />
-                            </div>
+                            <div className="ayuda-reserva-icon"><Info /></div>
 
                             <div>
-                                <strong>
-                                    Políticas de cancelación
-                                </strong>
+                                <strong>Espacios y horarios disponibles</strong>
 
-                                <span>
-                                    Consultá cuándo podés cancelar una reserva.
-                                </span>
+                                <span>Revisá las condiciones de cada espacio.</span>
                             </div>
 
-                            <ChevronRight size={14} />
-
+                            <ChevronRight />
                         </div>
+                    </Panel>
 
-
-                        <div className="ayuda-reserva-item">
-
-                            <div className="ayuda-reserva-icon">
-                                <Info size={14} />
-                            </div>
-
-                            <div>
-                                <strong>
-                                    Espacios y horarios disponibles
-                                </strong>
-
-                                <span>
-                                    Revisá las condiciones de cada espacio.
-                                </span>
-                            </div>
-
-                            <ChevronRight size={14} />
-
-                        </div>
-
-                    </article>
-
-                </div>
-
+                </section>
 
                 {/* =========================
-                    COLUMNA DERECHA
+                      COLUMNA DERECHA
                 ========================= */}
 
-                <div className="reservas-columna reservas-columna-derecha">
+                <section className="reservas-columna">
 
+                    {/* NUEVA RESERVA */}
 
-                    {/* =========================
-                        NUEVA RESERVA
-                    ========================= */}
-
-                    <article className="panel-reservas nueva-reserva">
-
-                        <div className="panel-reservas-header">
-
-                            <div>
-                                <h2>Nueva reserva</h2>
-
-                                <span>
-                                    Completá los datos para reservar un espacio
-                                </span>
-                            </div>
-
-                        </div>
-
-
+                    <Panel titulo="Nueva reserva" descripcion="Completá los datos para reservar un espacio" className="nueva-reserva">
                         <form className="form-reserva">
-
                             <div className="campo-reserva">
-
-                                <label>
-                                    Espacio
-                                </label>
-
+                                <label>Espacio</label>
                                 <select>
                                     <option>SUM</option>
                                     <option>Parrilla 1</option>
@@ -512,190 +344,80 @@ function Reservas() {
                                     <option>Laundry</option>
                                     <option>Sala de reuniones</option>
                                 </select>
-
                             </div>
 
-
                             <div className="campo-reserva">
-
-                                <label>
-                                    Fecha
-                                </label>
-
+                                <label>Fecha</label>
                                 <div className="input-icono">
-
-                                    <input
-                                        type="date"
-                                        defaultValue="2026-09-03"
-                                    />
-
+                                    <input type="date" defaultValue="2026-09-03"/>
                                 </div>
-
                             </div>
 
-
                             <div className="campo-reserva">
-
-                                <label>
-                                    Horario
-                                </label>
-
+                                <label>Horario</label>
                                 <select>
                                     <option>18:00 a 22:00</option>
                                     <option>12:00 a 16:00</option>
                                     <option>10:00 a 11:00</option>
                                     <option>08:00 a 10:00</option>
                                 </select>
-
                             </div>
 
-
                             <div className="campo-reserva">
-
-                                <label>
-                                    Cantidad de invitados
-                                </label>
-
+                                <label>Cantidad de invitados</label>
                                 <select>
                                     <option>20</option>
                                     <option>10</option>
                                     <option>5</option>
                                     <option>2</option>
                                 </select>
-
                             </div>
 
+                            <button type="button" className="btn-solicitar">Solicitar reserva</button>
 
-                            <button
-                                type="button"
-                                className="btn-solicitar"
-                            >
-                                Solicitar reserva
-                            </button>
-
-
-                            <button
-                                type="button"
-                                className="btn-limpiar"
-                            >
-                                Ver reglamento
-                            </button>
-
+                            <button type="button" className="btn-limpiar">Ver reglamento</button>
                         </form>
 
-
                         <div className="reglas-reserva">
-
-                            <div className="reglas-icono">
-                                <Info size={15} />
-                            </div>
+                            <div className="reglas-icono"><Info /></div>
 
                             <div>
-
-                                <strong>
-                                    Reglas de uso
-                                </strong>
+                                <strong>Reglas de uso</strong>
 
                                 <ul>
-
-                                    <li>
-                                        Respetar los horarios asignados.
-                                    </li>
-
-                                    <li>
-                                        Dejar el espacio en condiciones.
-                                    </li>
-
-                                    <li>
-                                        Las reservas se cancelan con 24 h de anticipación.
-                                    </li>
-
+                                    <li>Respetar los horarios asignados.</li>
+                                    <li>Dejar el espacio en condiciones.</li>
+                                    <li>Las reservas se cancelan con 24 h de anticipación.</li>
                                 </ul>
-
                             </div>
-
                         </div>
+                    </Panel>
 
-                    </article>
+                    {/* CALENDARIO */}
 
+                    <Panel titulo="Calendario de reservas" descripcion="Próximas actividades y reservas" className="calendario-reservas">
+                        <div className="calendario-mes">
+                            <button><ChevronLeft /></button>
 
-                    {/* =========================
-                        CALENDARIO
-                    ========================= */}
+                            <strong>Septiembre 2026</strong>
 
-                    <article className="panel-reservas calendario-reservas">
-
-                        <div className="panel-reservas-header">
-
-                            <div>
-
-                                <h2>
-                                    Calendario de reservas
-                                </h2>
-
-                                <span>
-                                    Próximas actividades y reservas
-                                </span>
-
-                            </div>
-
-
-                            <div className="calendario-mes">
-
-                                <button>
-                                    ‹
-                                </button>
-
-                                <strong>
-                                    Septiembre 2026
-                                </strong>
-
-                                <button>
-                                    ›
-                                </button>
-
-                            </div>
-
+                            <button><ChevronRight /></button>
                         </div>
-
 
                         <div className="eventos-reservas">
-
-                            {eventos.map((evento, index) => (
-
-                                <div
-                                    className="evento-reserva"
-                                    key={index}
-                                >
-
+                            {eventos.map((evento) => (
+                                <div className="evento-reserva" key={evento.id}>
                                     <div className="evento-fecha-reserva">
-
-                                        <span>
-                                            {evento.dia}
-                                        </span>
-
-                                        <strong>
-                                            {evento.numero}
-                                        </strong>
-
+                                        <span>{evento.dia}</span>
+                                        <strong>{evento.numero}</strong>
                                     </div>
-
 
                                     <div className="evento-info-reserva">
-
-                                        <span>
-                                            {evento.horario}
-                                        </span>
-
-                                        <strong>
-                                            {evento.espacio}
-                                        </strong>
-
+                                        <span>{evento.horario}</span>
+                                        <strong>{evento.espacio}</strong>
                                     </div>
 
-
-                                    <small
-                                        className={
+                                    <small className={
                                             evento.estado === "Confirmada"
                                                 ? "evento-confirmado"
                                                 : "evento-pendiente"
@@ -703,25 +425,17 @@ function Reservas() {
                                     >
                                         {evento.estado}
                                     </small>
-
                                 </div>
-
                             ))}
-
                         </div>
 
-
                         <button className="link-calendario">
-
                             Ver calendario completo
-
-                            <ChevronRight size={14} />
-
+                            <ChevronRight />
                         </button>
+                    </Panel>
 
-                    </article>
-
-                </div>
+                </section>
 
             </section>
 
