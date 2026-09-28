@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 
 import "./Reclamos.css";
+import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
 
 // =========================
 // DATOS DE EJEMPLO
@@ -57,6 +58,37 @@ const categoriasFrecuentes = [
     { nombre: "Ascensores", cantidad: 10, icon: ArrowUpDown, claseColor: "ascensores" },
     { nombre: "Iluminación", cantidad: 8, icon: Lightbulb, claseColor: "iluminacion" },
     { nombre: "Otros", cantidad: 10, icon: MoreHorizontal, claseColor: "otros" },
+];
+
+const resumenTarjetas = [
+    {
+        icono: ClipboardList,
+        titulo: "Total de reclamos",
+        valor: kpis.total,
+        contenido: <span>Este mes</span>,
+        claseIcono: "verde",
+    },
+    {
+        icono: Clock,
+        titulo: "Pendientes",
+        valor: kpis.pendientes,
+        contenido: <span>Esperando respuesta</span>,
+        claseIcono: "amarillo",
+    },
+    {
+        icono: Settings2,
+        titulo: "En proceso",
+        valor: kpis.enProceso,
+        contenido: <span>En tratamiento</span>,
+        claseIcono: "azul",
+    },
+    {
+        icono: CheckCircle2,
+        titulo: "Resueltos",
+        valor: kpis.resueltos,
+        contenido: <span>Este mes</span>,
+        claseIcono: "verde",
+    },
 ];
 
 function armarGradienteDonut(datos, total) {
@@ -103,57 +135,29 @@ function Reclamos() {
     return (
         <main className="reclamos">
 
-            {/* KPIS */}
+            {/* =========================
+                  RESUMEN SUPERIOR
+            ========================= */}
 
-            <section className="reclamos-kpi-grid">
+            <section className="reclamos-resumen">
+                {resumenTarjetas.map((item, index) => {
+                    const Icono = item.icono;
 
-                <article className="reclamos-kpi-card">
-                    <div className="reclamos-kpi-icon verde">
-                        <ClipboardList />
-                    </div>
-                    <div>
-                        <span className="reclamos-kpi-label">Total de reclamos</span>
-                        <strong>{kpis.total}</strong>
-                        <span className="reclamos-kpi-info">Este mes</span>
-                    </div>
-                </article>
-
-                <article className="reclamos-kpi-card">
-                    <div className="reclamos-kpi-icon amarillo">
-                        <Clock />
-                    </div>
-                    <div>
-                        <span className="reclamos-kpi-label">Pendientes</span>
-                        <strong>{kpis.pendientes}</strong>
-                        <span className="reclamos-kpi-info">Esperando respuesta</span>
-                    </div>
-                </article>
-
-                <article className="reclamos-kpi-card">
-                    <div className="reclamos-kpi-icon azul">
-                        <Settings2 />
-                    </div>
-                    <div>
-                        <span className="reclamos-kpi-label">En proceso</span>
-                        <strong>{kpis.enProceso}</strong>
-                        <span className="reclamos-kpi-info">En tratamiento</span>
-                    </div>
-                </article>
-
-                <article className="reclamos-kpi-card">
-                    <div className="reclamos-kpi-icon verde">
-                        <CheckCircle2 />
-                    </div>
-                    <div>
-                        <span className="reclamos-kpi-label">Resueltos</span>
-                        <strong>{kpis.resueltos}</strong>
-                        <span className="reclamos-kpi-info">Este mes</span>
-                    </div>
-                </article>
-
+                    return (
+                        <TarjetaResumen
+                            key={index}
+                            icono={<Icono />}
+                            titulo={item.titulo}
+                            valor={item.valor}
+                            contenido={item.contenido}
+                        />
+                    );
+                })}
             </section>
 
-            {/* FILTROS */}
+            {/* =========================
+                CONTENIDO PRINCIPAL
+            ========================= */}
 
             <div className="reclamos-filtros">
                 <button className="reclamos-filtro">
@@ -267,7 +271,7 @@ function Reclamos() {
 
                 {/* RESUMEN */}
 
-                <aside className="reclamos-resumen">
+                <aside className="reclamos-resumen-lateral">
 
                     <h2>Resumen de reclamos</h2>
 

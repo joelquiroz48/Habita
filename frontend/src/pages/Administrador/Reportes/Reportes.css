@@ -66,47 +66,11 @@
           KPIS
 ========================= */
 
-.reportes-kpi-grid {
+.reportes-resumen {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 12px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
   margin-bottom: 18px;
-}
-
-.reportes-kpi-card {
-  background: var(--blanco);
-  border: 1px solid var(--borde-tarjeta);
-  border-radius: 12px;
-  padding: 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  box-sizing: border-box;
-}
-
-.reportes-kpi-icon {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.reportes-kpi-icon.verde { background: var(--fondo-icono-resumen); color: var(--verde); }
-.reportes-kpi-icon.azul { background: var(--fondo-aviso-azul); color: var(--color-aviso-azul); }
-.reportes-kpi-icon.amarillo { background: var(--fondo-aviso-amarillo); color: var(--color-aviso-amarillo); }
-
-.reportes-kpi-label {
-  display: block;
-  font-size: 11px;
-  color: var(--texto-secundario);
-  margin-bottom: 3px;
-}
-
-.reportes-kpi-card strong {
-  font-size: 18px;
-  color: var(--texto-principal);
 }
 
 .reportes-tendencia {
@@ -123,7 +87,7 @@
 }
 
 .reportes-tendencia.negativa {
-  color: var(--color-documento-pdf);
+  color: var(--color-aviso-rojo);
 }
 
 .reportes-tendencia.negativa svg {
@@ -454,9 +418,9 @@
         RESPONSIVE
 ========================= */
 
-@media (max-width: 1300px) {
-  .reportes-kpi-grid {
-    grid-template-columns: repeat(3, 1fr);
+@media (max-width: 1200px) {
+  .reportes-resumen {
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .reportes-graficos-grid {
@@ -464,18 +428,16 @@
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 800px) {
+  .reportes-resumen {
+    grid-template-columns: 1fr 1fr;
+  }
+
   .reportes-inferior-grid {
     grid-template-columns: 1fr;
   }
-}
-
-@media (max-width: 700px) {
+  
   .reportes {
     padding: 20px;
-  }
-
-  .reportes-kpi-grid {
-    grid-template-columns: 1fr 1fr;
   }
 }

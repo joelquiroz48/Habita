@@ -17,59 +17,78 @@ import {
 } from "lucide-react";
 
 import "./Reportes.css";
+import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
 
 // =========================
 // DATOS DE EJEMPLO
 // =========================
 
-const kpis = [
+const resumenTarjetas = [
     {
-        label: "Recaudado en el período",
+        icono: Wallet,
+        titulo: "Recaudado en el período",
         valor: "$ 4.251.200",
-        variacion: "12.5%",
-        positivo: true,
-        icon: Wallet,
-        clase: "verde",
+        contenido: (
+            <span className="reportes-tendencia positiva">
+                <ArrowUp size={12} />
+                12.5% vs. mes anterior
+            </span>
+        ),
     },
     {
-        label: "Pagos realizados",
+        icono: CreditCard,
+        titulo: "Pagos realizados",
         valor: "78",
-        variacion: "6.8%",
-        positivo: true,
-        icon: CreditCard,
-        clase: "azul",
+        contenido: (
+            <span className="reportes-tendencia positiva">
+                <ArrowUp size={12} />
+                6.8% vs. mes anterior
+            </span>
+        ),
     },
     {
-        label: "Reclamos totales",
+        icono: AlertTriangle,
+        titulo: "Reclamos totales",
         valor: "64",
-        variacion: "8.3%",
-        positivo: false,
-        icon: AlertTriangle,
-        clase: "amarillo",
+        contenido: (
+            <span className="reportes-tendencia negativa">
+                <ArrowUp size={12} />
+                8.3% vs. mes anterior
+            </span>
+        ),
     },
     {
-        label: "Reclamos resueltos",
+        icono: CheckCircle2,
+        titulo: "Reclamos resueltos",
         valor: "20",
-        variacion: "25%",
-        positivo: true,
-        icon: CheckCircle2,
-        clase: "azul",
+        contenido: (
+            <span className="reportes-tendencia positiva">
+                <ArrowUp size={12} />
+                25% vs. mes anterior
+            </span>
+        ),
     },
     {
-        label: "Nuevos residentes",
+        icono: Users,
+        titulo: "Nuevos residentes",
         valor: "12",
-        variacion: "9.1%",
-        positivo: true,
-        icon: Users,
-        clase: "amarillo",
+        contenido: (
+            <span className="reportes-tendencia positiva">
+                <ArrowUp size={12} />
+                9.1% vs. mes anterior
+            </span>
+        ),
     },
     {
-        label: "Reservas realizadas",
+        icono: CalendarCheck,
+        titulo: "Reservas realizadas",
         valor: "28",
-        variacion: "12%",
-        positivo: true,
-        icon: CalendarCheck,
-        clase: "azul",
+        contenido: (
+            <span className="reportes-tendencia positiva">
+                <ArrowUp size={12} />
+                12% vs. mes anterior
+            </span>
+        ),
     },
 ];
 
@@ -162,6 +181,22 @@ function Reportes() {
     return (
         <main className="reportes">
 
+            <section className="reportes-resumen">
+                {resumenTarjetas.map((item, index) => {
+                    const Icono = item.icono;
+
+                    return (
+                        <TarjetaResumen
+                            key={index}
+                            icono={<Icono size={19} />}
+                            titulo={item.titulo}
+                            valor={item.valor}
+                            contenido={item.contenido}
+                        />
+                    );
+                })}
+            </section>
+
             {/* FILTROS */}
 
             <div className="reportes-filtros">
@@ -189,26 +224,7 @@ function Reportes() {
 
             {/* KPIS */}
 
-            <section className="reportes-kpi-grid">
-                {kpis.map((kpi) => {
-                    const Icono = kpi.icon;
-                    return (
-                        <article className="reportes-kpi-card" key={kpi.label}>
-                            <div className={`reportes-kpi-icon ${kpi.clase}`}>
-                                <Icono size={19} />
-                            </div>
-                            <div>
-                                <span className="reportes-kpi-label">{kpi.label}</span>
-                                <strong>{kpi.valor}</strong>
-                                <span className={`reportes-tendencia ${kpi.positivo ? "positiva" : "negativa"}`}>
-                                    <ArrowUp size={12} />
-                                    {kpi.variacion} vs. mes anterior
-                                </span>
-                            </div>
-                        </article>
-                    );
-                })}
-            </section>
+            
 
             {/* GRAFICOS */}
 

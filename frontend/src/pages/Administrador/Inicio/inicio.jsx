@@ -8,13 +8,13 @@ import {
     ChevronDown,
     ArrowUp,
     ArrowDown,
-    ChevronRight,
     CalendarClock,
     Megaphone,
     FileText,
 } from "lucide-react";
 
 import "./Inicio.css";
+import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
 
 // =========================
 // DATOS DE EJEMPLO
@@ -155,6 +155,79 @@ const documentosRecientes = [
     },
 ];
 
+const resumenTarjetas = [
+    {
+        icono: Users,
+        titulo: kpis.residentes.label,
+        valor: kpis.residentes.valor,
+        contenido: (
+            <>
+                <span className="admin-info">
+                    {kpis.residentes.info}
+                </span>
+                <span className="admin-tendencia positiva">
+                    <ArrowUp size={12} />
+                    {kpis.residentes.tendencia}
+                </span>
+            </>
+        ),
+    },
+    {
+        icono: Building2,
+        titulo: kpis.unidades.label,
+        valor: kpis.unidades.valor,
+        contenido: (
+            <>
+                <span className="admin-info">
+                    {kpis.unidades.info}
+                </span>
+                <span className="admin-tendencia">
+                    {kpis.unidades.tendencia}
+                </span>
+            </>
+        ),
+    },
+    {
+        icono: DollarSign,
+        titulo: kpis.expensas.label,
+        valor: kpis.expensas.valor,
+        contenido: (
+            <>
+                <span className="admin-info">
+                    {kpis.expensas.info}
+                </span>
+
+                <div className="admin-progreso">
+                    <div
+                        className="admin-progreso-relleno"
+                        style={{ width: `${kpis.expensas.progreso}%` }}
+                    />
+                </div>
+
+                <span className="admin-info">
+                    {kpis.expensas.progreso}% del total
+                </span>
+            </>
+        ),
+    },
+    {
+        icono: MessageSquare,
+        titulo: kpis.reclamos.label,
+        valor: kpis.reclamos.valor,
+        contenido: (
+            <>
+                <span className="admin-info">
+                    {kpis.reclamos.info}
+                </span>
+                <span className="admin-tendencia negativa">
+                    <ArrowDown size={12} />
+                    {kpis.reclamos.tendencia}
+                </span>
+            </>
+        ),
+    },
+];
+
 function badgeClase(estado) {
     switch (estado) {
         case "Pendiente":
@@ -178,75 +251,29 @@ function Dashboard() {
     return (
         <main className="admin-dashboard">
 
-            {/* ENCABEZADO */}
+            {/* =========================
+                  RESUMEN SUPERIOR
+            ========================= */}
 
+            <section className="admin-resumen">
+                {resumenTarjetas.map((item, index) => {
+                    const Icono = item.icono;
 
-
-            {/* TARJETAS DE KPI */}
-
-            <section className="admin-kpi-grid">
-
-                <article className="admin-kpi-card">
-                    <div className="admin-kpi-icon">
-                        <Users />
-                    </div>
-                    <div>
-                        <span className="admin-kpi-label">{kpis.residentes.label}</span>
-                        <strong>{kpis.residentes.valor}</strong>
-                        <span className="admin-kpi-info">{kpis.residentes.info}</span>
-                        <span className="admin-kpi-tendencia positiva">
-                            <ArrowUp size={12} />
-                            {kpis.residentes.tendencia}
-                        </span>
-                    </div>
-                </article>
-
-                <article className="admin-kpi-card">
-                    <div className="admin-kpi-icon">
-                        <Building2 />
-                    </div>
-                    <div>
-                        <span className="admin-kpi-label">{kpis.unidades.label}</span>
-                        <strong>{kpis.unidades.valor}</strong>
-                        <span className="admin-kpi-info">{kpis.unidades.info}</span>
-                        <span className="admin-kpi-tendencia">{kpis.unidades.tendencia}</span>
-                    </div>
-                </article>
-
-                <article className="admin-kpi-card">
-                    <div className="admin-kpi-icon">
-                        <DollarSign />
-                    </div>
-                    <div>
-                        <span className="admin-kpi-label">{kpis.expensas.label}</span>
-                        <strong>{kpis.expensas.valor}</strong>
-                        <span className="admin-kpi-info">{kpis.expensas.info}</span>
-                        <div className="admin-progreso">
-                            <div
-                                className="admin-progreso-relleno"
-                                style={{ width: `${kpis.expensas.progreso}%` }}
-                            />
-                        </div>
-                        <span className="admin-kpi-info">{kpis.expensas.progreso}% del total</span>
-                    </div>
-                </article>
-
-                <article className="admin-kpi-card">
-                    <div className="admin-kpi-icon">
-                        <MessageSquare />
-                    </div>
-                    <div>
-                        <span className="admin-kpi-label">{kpis.reclamos.label}</span>
-                        <strong>{kpis.reclamos.valor}</strong>
-                        <span className="admin-kpi-info">{kpis.reclamos.info}</span>
-                        <span className="admin-kpi-tendencia positiva">
-                            <ArrowDown size={12} />
-                            {kpis.reclamos.tendencia}
-                        </span>
-                    </div>
-                </article>
-
+                    return (
+                        <TarjetaResumen
+                            key={index}
+                            icono={<Icono />}
+                            titulo={item.titulo}
+                            valor={item.valor}
+                            contenido={item.contenido}
+                        />
+                    );
+                })}
             </section>
+
+            {/* =========================
+                CONTENIDO PRINCIPAL
+            ========================= */}
 
             {/* GRAFICOS */}
 

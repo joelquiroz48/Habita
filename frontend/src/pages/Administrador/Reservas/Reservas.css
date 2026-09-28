@@ -9,93 +9,16 @@
       CABECERA + KPIS
 ========================= */
 
-.reservas-cabecera {
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
-  margin-bottom: 16px;
-}
-
-.reservas-kpi-grid {
-  flex: 1;
+.reservas-resumen {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 14px;
-}
-
-.reservas-kpi-card {
-  background: var(--blanco);
-  border: 1px solid var(--borde-tarjeta);
-  border-radius: 12px;
-  padding: 16px;
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  box-sizing: border-box;
-}
-
-.reservas-kpi-icon {
-  width: 42px;
-  height: 42px;
-  min-width: 42px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.reservas-kpi-icon.verde { background: var(--fondo-icono-resumen); color: var(--verde); }
-.reservas-kpi-icon.amarillo { background: var(--fondo-aviso-amarillo); color: var(--color-aviso-amarillo); }
-.reservas-kpi-icon.azul { background: var(--fondo-aviso-azul); color: var(--color-aviso-azul); }
-.reservas-kpi-icon.purpura { background: var(--reservas-fondo-purpura); color: var(--reservas-color-purpura); }
-
-.reservas-kpi-card > div:last-child {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-}
-
-.reservas-kpi-label {
-  font-size: 12px;
-  color: var(--texto-secundario);
-  margin-bottom: 3px;
-}
-
-.reservas-kpi-card strong {
-  font-size: 19px;
-  color: var(--texto-principal);
-}
-
-.reservas-kpi-info {
-  font-size: 12px;
-  color: var(--texto-secundario);
-  margin-top: 3px;
 }
 
 .reservas-tendencia {
   font-size: 12px;
   color: var(--color-aviso-verde);
   margin-top: 3px;
-}
-
-.reservas-btn-nuevo {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  border: none;
-  border-radius: 8px;
-  background: var(--verde);
-  color: var(--blanco);
-  font-size: 13px;
-  font-weight: 600;
-  padding: 10px 16px;
-  cursor: pointer;
-  white-space: nowrap;
-  margin-top: 2px;
-}
-
-.reservas-btn-nuevo:hover {
-  background: var(--verde-hover);
 }
 
 /* =========================
@@ -527,7 +450,7 @@
 ========================= */
 
 @media (max-width: 1200px) {
-  .reservas-kpi-grid {
+  .reservas-resumen {
     grid-template-columns: repeat(2, 1fr);
   }
 
@@ -545,7 +468,7 @@
     flex-direction: column;
   }
 
-  .reservas-kpi-grid {
+  .reservas-resumen {
     grid-template-columns: 1fr;
   }
 }

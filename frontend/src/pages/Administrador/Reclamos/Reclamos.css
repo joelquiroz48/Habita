@@ -29,70 +29,11 @@
           KPIS
 ========================= */
 
-.reclamos-kpi-grid {
+.reclamos-resumen {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 14px;
   margin-bottom: 18px;
-}
-
-.reclamos-kpi-card {
-  background: var(--blanco);
-  border: 1px solid var(--borde-tarjeta);
-  border-radius: 12px;
-  padding: 16px;
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  box-sizing: border-box;
-}
-
-.reclamos-kpi-icon {
-  width: 42px;
-  height: 42px;
-  min-width: 42px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.reclamos-kpi-icon.verde {
-  background: var(--fondo-icono-resumen);
-  color: var(--verde);
-}
-
-.reclamos-kpi-icon.amarillo {
-  background: var(--reclamos-fondo-pendiente);
-  color: var(--reclamos-color-pendiente);
-}
-
-.reclamos-kpi-icon.azul {
-  background: var(--reclamos-fondo-proceso);
-  color: var(--reclamos-color-proceso);
-}
-
-.reclamos-kpi-card > div:last-child {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-}
-
-.reclamos-kpi-label {
-  font-size: 12px;
-  color: var(--texto-secundario);
-  margin-bottom: 3px;
-}
-
-.reclamos-kpi-card strong {
-  font-size: 19px;
-  color: var(--texto-principal);
-}
-
-.reclamos-kpi-info {
-  font-size: 12px;
-  color: var(--texto-secundario);
-  margin-top: 3px;
 }
 
 /* =========================
@@ -318,7 +259,7 @@
         RESUMEN LATERAL
 ========================= */
 
-.reclamos-resumen {
+.reclamos-resumen-lateral {
   background: var(--blanco);
   border: 1px solid var(--borde-tarjeta);
   border-radius: 12px;
@@ -327,14 +268,14 @@
   flex-direction: column;
 }
 
-.reclamos-resumen h2 {
+.reclamos-resumen-lateral h2 {
   font-size: 15px;
   font-weight: 600;
   color: var(--texto-principal);
   margin-bottom: 14px;
 }
 
-.reclamos-resumen h3 {
+.reclamos-resumen-lateral h3 {
   font-size: 12px;
   font-weight: 600;
   color: var(--texto-secundario);
@@ -464,7 +405,7 @@
 ========================= */
 
 @media (max-width: 1200px) {
-  .reclamos-kpi-grid {
+  .reclamos-resumen {
     grid-template-columns: repeat(2, 1fr);
   }
 
@@ -478,7 +419,7 @@
     padding: 20px;
   }
 
-  .reclamos-kpi-grid {
+  .reclamos-resumen {
     grid-template-columns: 1fr;
   }
 }

@@ -6,57 +6,11 @@
           KPIS
 ========================= */
 
-.pagos-kpi-grid {
+.pagos-resumen {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 14px;
   margin-bottom: 18px;
-}
-
-.pagos-kpi-card {
-  background: var(--blanco);
-  border: 1px solid var(--borde-tarjeta);
-  border-radius: 12px;
-  padding: 16px;
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  box-sizing: border-box;
-}
-
-.pagos-kpi-icon {
-  width: 42px;
-  height: 42px;
-  min-width: 42px;
-  border-radius: 50%;
-  background: var(--fondo-icono-resumen);
-  color: var(--verde);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.pagos-kpi-card > div:last-child {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-}
-
-.pagos-kpi-label {
-  font-size: 12px;
-  color: var(--texto-secundario);
-  margin-bottom: 3px;
-}
-
-.pagos-kpi-card strong {
-  font-size: 19px;
-  color: var(--texto-principal);
-}
-
-.pagos-kpi-info {
-  font-size: 12px;
-  color: var(--texto-secundario);
-  margin-top: 3px;
 }
 
 .pagos-progreso {
@@ -419,7 +373,7 @@
 ========================= */
 
 @media (max-width: 1200px) {
-  .pagos-kpi-grid {
+  .pagos-resumen {
     grid-template-columns: repeat(2, 1fr);
   }
 
@@ -434,7 +388,7 @@
     padding: 20px;
   }
 
-  .pagos-kpi-grid {
+  .pagos-resumen {
     grid-template-columns: 1fr;
   }
 }

@@ -13,7 +13,7 @@ import Configuracion from "./pages/Residente/Configuracion/Configuracion";
 import Layout from "./components/Layout/Layout";
 import LayoutAdministrador from "./components/LayoutAdministrador/LayoutAdministrador";
 
-import InicioAdmin from "./pages/Administrador/Inicio/inicio";
+import InicioAdmin from "./pages/Administrador/Inicio/Inicio";
 import ResidentesAdmin from "./pages/Administrador/Residentes/Residentes";
 import UnidadesAdmin from "./pages/Administrador/Unidades/Unidades";
 import ExpensasAdmin from "./pages/Administrador/Expensas/Expensas";
@@ -30,46 +30,54 @@ function App() {
         <BrowserRouter>
             <Routes>
                 {/* ----- Pantallas sin Layout ----- */}
+                
                 <Route path="/" element={<Login />} />
                 <Route path="/register" element={<Register />} />
 
                 {/* ----- Pantallas con Layout (Residente) ----- */}
+
                 <Route path="/inicio" element={
                         <Layout>
                             <Inicio />
                         </Layout>
                     }
                 />
+
                 <Route path="/expensas" element={
                         <Layout>
                             <Expensas />
                         </Layout>
                     }
                 />
+
                 <Route path="/reservas" element={
                         <Layout>
                             <Reservas />
                         </Layout>
                     }
                 />
+
                 <Route path="/avisos" element={
                         <Layout>
                             <Avisos />
                         </Layout>
                     }
                 />
+
                 <Route path="/documentos" element={
                         <Layout>
                             <Documentos />
                         </Layout>
                     }
                 />
+
                 <Route path="/perfil" element={
                         <Layout>
                             <Perfil />
                         </Layout>
                     }
                 />
+
                 <Route path="/configuracion" element={
                         <Layout>
                             <Configuracion />
@@ -77,79 +85,83 @@ function App() {
                     }
                 />
 
-                        <Route path="/administrador/residentes" element={
-                <LayoutAdministrador>
-                    <ResidentesAdmin />
-                </LayoutAdministrador>
-            }
-        />
-            <Route path="/administrador/pagos" element={
-            <LayoutAdministrador>
-                <PagosAdmin />
-            </LayoutAdministrador>
-        }
-    />
-            <Route path="/administrador/reclamos" element={
-            <LayoutAdministrador>
-                <ReclamosAdmin />
-            </LayoutAdministrador>
-        }
-    />
-            <Route path="/administrador/expensas" element={
-            <LayoutAdministrador>
-                <ExpensasAdmin />
-            </LayoutAdministrador>
-        }
-    />
-
-    <Route path="/administrador/unidades" element={
-            <LayoutAdministrador>
-                <UnidadesAdmin />
-            </LayoutAdministrador>
-        }
-    />
-
-    <Route path="/administrador/comunicados" element={
-            <LayoutAdministrador>
-                <ComunicadosAdmin />
-            </LayoutAdministrador>
-        }
-    />  
-        <Route path="/administrador/reservas" element={
-            <LayoutAdministrador>
-                <ReservasAdmin />
-            </LayoutAdministrador>
-        }
-    />
-
-        <Route path="/administrador/documentos" element={
-            <LayoutAdministrador>
-                <DocumentosAdmin />
-            </LayoutAdministrador>
-        }
-    />
-        <Route path="/administrador/reportes" element={
-            <LayoutAdministrador>
-                <ReportesAdmin />
-            </LayoutAdministrador>
-        }
-    />
-
-        <Route path="/administrador/configuracion" element={
-            <LayoutAdministrador>
-                <ConfiguracionAdmin />
-            </LayoutAdministrador>
-        }
-    />
-
-
-                    {/* ----- Pantallas con Layout (Administrador) ----- */}
+                {/* ----- Pantallas con Layout (Administrador) ----- */}
+                
                 <Route path="/administrador/inicio" element={
                         <LayoutAdministrador>
                             <InicioAdmin />
                         </LayoutAdministrador>
                     }
                 />
+
+                <Route path="/administrador/residentes" element={
+                        <LayoutAdministrador>
+                            <ResidentesAdmin />
+                        </LayoutAdministrador>
+                    }
+                />
+
+                <Route path="/administrador/pagos" element={
+                        <LayoutAdministrador>
+                            <PagosAdmin />
+                        </LayoutAdministrador>
+                    }
+                />
+                <Route path="/administrador/reclamos" element={
+                        <LayoutAdministrador>
+                            <ReclamosAdmin />
+                        </LayoutAdministrador>
+                    }
+                />
+                <Route path="/administrador/expensas" element={
+                        <LayoutAdministrador>
+                            <ExpensasAdmin />
+                        </LayoutAdministrador>
+                    }
+                />
+
+                <Route path="/administrador/unidades" element={
+                        <LayoutAdministrador>
+                            <UnidadesAdmin />
+                        </LayoutAdministrador>
+                    }
+                />
+
+                <Route path="/administrador/comunicados" element={
+                        <LayoutAdministrador>
+                            <ComunicadosAdmin />
+                        </LayoutAdministrador>
+                    }
+                />  
+
+                <Route path="/administrador/reservas" element={
+                        <LayoutAdministrador>
+                            <ReservasAdmin />
+                        </LayoutAdministrador>
+                    }
+                />
+
+                <Route path="/administrador/documentos" element={
+                        <LayoutAdministrador>
+                            <DocumentosAdmin />
+                        </LayoutAdministrador>
+                    }
+                />
+
+                <Route path="/administrador/reportes" element={
+                        <LayoutAdministrador>
+                            <ReportesAdmin />
+                        </LayoutAdministrador>
+                    }
+                />
+
+                <Route path="/administrador/configuracion" element={
+                        <LayoutAdministrador>
+                            <ConfiguracionAdmin />
+                        </LayoutAdministrador>
+                    }
+                />
+
             </Routes>
         </BrowserRouter>
     );

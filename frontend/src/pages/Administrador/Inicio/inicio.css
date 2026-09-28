@@ -34,61 +34,14 @@
       TARJETAS DE KPI
 ========================= */
 
-.admin-kpi-grid {
+.admin-resumen {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 14px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
-.admin-kpi-card {
-  background: var(--blanco);
-  border: 1px solid var(--borde-tarjeta);
-  border-radius: 12px;
-  padding: 18px;
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
-  box-sizing: border-box;
-}
-
-.admin-kpi-icon {
-  width: 44px;
-  height: 44px;
-  min-width: 44px;
-  border-radius: 50%;
-  background: var(--fondo-icono-resumen);
-  color: var(--verde);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.admin-kpi-card > div:last-child {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-}
-
-.admin-kpi-label {
-  font-size: 13px;
-  color: var(--texto-secundario);
-  margin-bottom: 4px;
-}
-
-.admin-kpi-card strong {
-  font-size: 22px;
-  color: var(--texto-principal);
-  line-height: 1.2;
-}
-
-.admin-kpi-info {
-  font-size: 12px;
-  color: var(--texto-secundario);
-  margin-top: 3px;
-}
-
-.admin-kpi-tendencia {
+.admin-tendencia {
   display: flex;
   align-items: center;
   gap: 3px;
@@ -97,8 +50,12 @@
   margin-top: 6px;
 }
 
-.admin-kpi-tendencia.positiva {
+.admin-tendencia.positiva {
   color: var(--color-aviso-verde);
+}
+
+.admin-tendencia.negativa {
+  color: var(--color-aviso-rojo);
 }
 
 .admin-progreso {
@@ -498,7 +455,7 @@
 ========================= */
 
 @media (max-width: 1200px) {
-  .admin-kpi-grid {
+  .admin-resumen {
     grid-template-columns: repeat(2, 1fr);
   }
 
@@ -514,7 +471,7 @@
     padding: 20px;
   }
 
-  .admin-kpi-grid {
+  .admin-resumen {
     grid-template-columns: 1fr;
   }
 

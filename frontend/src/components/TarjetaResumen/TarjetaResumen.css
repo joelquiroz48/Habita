@@ -1,8 +1,3 @@
-.resumen-contenido {
-    display: flex;
-    flex-direction: column;
-}
-
 .resumen-tarjeta {
     display: flex;
     align-items: flex-start;

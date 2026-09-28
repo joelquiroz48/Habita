@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 
 import "./Expensas.css";
+import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
 
 // =========================
 // DATOS DE EJEMPLO
@@ -121,78 +122,71 @@ function Expensas() {
     }, []);
 
     const expensaActual = expensas[0];
+    const resumenTarjetas = [
+        {
+            icono: Calendar,
+            titulo: "Expensa actual",
+            valor: expensaActual.periodo,
+            contenido: <span>Período vigente</span>,
+        },
+        {
+            icono: DollarSign,
+            titulo: "Importe total",
+            valor: formatearMonto(expensaActual.importe),
+            contenido: <span>Total a recaudar</span>,
+        },
+        {
+            icono: Users,
+            titulo: "Unidades",
+            valor: totalUnidadesConExpensa,
+            contenido: <span>Con expensa</span>,
+        },
+        {
+            icono: PiggyBank,
+            titulo: "Recaudado",
+            valor: formatearMonto(expensaActual.recaudado),
+            contenido: (
+                <>
+                    <div className="expensas-progreso">
+                        <div
+                            className="expensas-progreso-relleno"
+                            style={{ width: `${expensaActual.porcentaje}%` }}
+                        />
+                    </div>
+                    <span>{expensaActual.porcentaje}% del total</span>
+                </>
+            ),
+        },
+    ];
     const detalle = expensas.find((e) => e.periodo === periodoSeleccionado);
     const pendiente = detalle.importe - detalle.recaudado;
 
     return (
         <main className="expensas">
 
-            {/* CABECERA CON KPIS */}
+            {/* =========================
+                  RESUMEN SUPERIOR
+            ========================= */}
 
-            <div className="expensas-cabecera">
+            <section className="expensas-resumen">
+                {resumenTarjetas.map((item, index) => {
+                    const Icono = item.icono;
 
-                <section className="expensas-kpi-grid">
+                    return (
+                        <TarjetaResumen
+                            key={index}
+                            icono={<Icono />}
+                            titulo={item.titulo}
+                            valor={item.valor}
+                            contenido={item.contenido}
+                        />
+                    );
+                })}
+            </section>
 
-                    <article className="expensas-kpi-card">
-                        <div className="expensas-kpi-icon">
-                            <Calendar />
-                        </div>
-                        <div>
-                            <span className="expensas-kpi-label">Expensa actual</span>
-                            <strong>{expensaActual.periodo}</strong>
-                            <span className="expensas-kpi-info">Período vigente</span>
-                        </div>
-                    </article>
-
-                    <article className="expensas-kpi-card">
-                        <div className="expensas-kpi-icon">
-                            <DollarSign />
-                        </div>
-                        <div>
-                            <span className="expensas-kpi-label">Importe total</span>
-                            <strong>{formatearMonto(expensaActual.importe)}</strong>
-                            <span className="expensas-kpi-info">Total a recaudar</span>
-                        </div>
-                    </article>
-
-                    <article className="expensas-kpi-card">
-                        <div className="expensas-kpi-icon">
-                            <Users />
-                        </div>
-                        <div>
-                            <span className="expensas-kpi-label">Unidades</span>
-                            <strong>{totalUnidadesConExpensa}</strong>
-                            <span className="expensas-kpi-info">Con expensa</span>
-                        </div>
-                    </article>
-
-                    <article className="expensas-kpi-card">
-                        <div className="expensas-kpi-icon">
-                            <PiggyBank />
-                        </div>
-                        <div>
-                            <span className="expensas-kpi-label">Recaudado</span>
-                            <strong>{formatearMonto(expensaActual.recaudado)}</strong>
-                            <div className="expensas-progreso">
-                                <div
-                                    className="expensas-progreso-relleno"
-                                    style={{ width: `${expensaActual.porcentaje}%` }}
-                                />
-                            </div>
-                            <span className="expensas-kpi-info">{expensaActual.porcentaje}% del total</span>
-                        </div>
-                    </article>
-
-                </section>
-
-                <button className="expensas-btn-nuevo">
-                    <Plus size={16} />
-                    Nueva expensa
-                </button>
-
-            </div>
-
-            {/* TABS */}
+            {/* =========================
+                CONTENIDO PRINCIPAL
+            ========================= */}
 
             <div className="expensas-tabs">
                 <button className="expensas-tab activo">Listado de expensas</button>

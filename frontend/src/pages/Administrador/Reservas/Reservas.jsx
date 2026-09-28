@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 
 import "./Reservas.css";
+import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
 
 // =========================
 // DATOS DE EJEMPLO
@@ -143,6 +144,33 @@ const espaciosMasReservados = [
 ];
 const maxReservasEspacio = Math.max(...espaciosMasReservados.map((e) => e.cantidad));
 
+const resumenTarjetas = [
+    {
+        icono: Calendar,
+        titulo: "Reservas este mes",
+        valor: kpis.reservasMes,
+        contenido: <span className="reservas-tendencia">↑ {kpis.tendencia}</span>,
+    },
+    {
+        icono: Clock,
+        titulo: "Pendientes",
+        valor: kpis.pendientes,
+        contenido: <span>Por confirmar</span>,
+    },
+    {
+        icono: CheckCircle2,
+        titulo: "Confirmadas",
+        valor: kpis.confirmadas,
+        contenido: <span>Este mes</span>,
+    },
+    {
+        icono: XCircle,
+        titulo: "Canceladas",
+        valor: kpis.canceladas,
+        contenido: <span>Este mes</span>,
+    },
+];
+
 function badgeClase(estado) {
     if (estado === "Confirmada") return "reservas-badge-confirmada";
     if (estado === "Pendiente") return "reservas-badge-pendiente";
@@ -164,62 +192,25 @@ function Reservas() {
     return (
         <main className="reservas">
 
-            {/* CABECERA CON BOTON */}
+            {/* =========================
+                  RESUMEN SUPERIOR
+            ========================= */}
 
-            <div className="reservas-cabecera">
-                <section className="reservas-kpi-grid">
+            <section className="reservas-resumen">
+                {resumenTarjetas.map((item, index) => {
+                    const Icono = item.icono;
 
-                    <article className="reservas-kpi-card">
-                        <div className="reservas-kpi-icon verde">
-                            <Calendar />
-                        </div>
-                        <div>
-                            <span className="reservas-kpi-label">Reservas este mes</span>
-                            <strong>{kpis.reservasMes}</strong>
-                            <span className="reservas-tendencia">↑ {kpis.tendencia}</span>
-                        </div>
-                    </article>
-
-                    <article className="reservas-kpi-card">
-                        <div className="reservas-kpi-icon amarillo">
-                            <Clock />
-                        </div>
-                        <div>
-                            <span className="reservas-kpi-label">Pendientes</span>
-                            <strong>{kpis.pendientes}</strong>
-                            <span className="reservas-kpi-info">Por confirmar</span>
-                        </div>
-                    </article>
-
-                    <article className="reservas-kpi-card">
-                        <div className="reservas-kpi-icon azul">
-                            <CheckCircle2 />
-                        </div>
-                        <div>
-                            <span className="reservas-kpi-label">Confirmadas</span>
-                            <strong>{kpis.confirmadas}</strong>
-                            <span className="reservas-kpi-info">Este mes</span>
-                        </div>
-                    </article>
-
-                    <article className="reservas-kpi-card">
-                        <div className="reservas-kpi-icon purpura">
-                            <XCircle />
-                        </div>
-                        <div>
-                            <span className="reservas-kpi-label">Canceladas</span>
-                            <strong>{kpis.canceladas}</strong>
-                            <span className="reservas-kpi-info">Este mes</span>
-                        </div>
-                    </article>
-
-                </section>
-
-                <button className="reservas-btn-nuevo">
-                    <Plus size={16} />
-                    Nueva reserva
-                </button>
-            </div>
+                    return (
+                        <TarjetaResumen
+                            key={index}
+                            icono={<Icono />}
+                            titulo={item.titulo}
+                            valor={item.valor}
+                            contenido={item.contenido}
+                        />
+                    );
+                })}
+            </section>
 
             {/* FILTROS */}
 

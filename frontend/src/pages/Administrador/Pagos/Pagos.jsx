@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 
 import "./Pagos.css";
+import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
 
 // =========================
 // DATOS DE EJEMPLO
@@ -78,6 +79,43 @@ const iconosMetodo = {
     efectivo: Banknote,
 };
 
+const resumenTarjetas = [
+    {
+        icono: Wallet,
+        titulo: "Total recaudado",
+        valor: formatearMonto(kpis.totalRecaudado),
+        contenido: <span>Este mes</span>,
+    },
+    {
+        icono: Download,
+        titulo: "Pagos realizados",
+        valor: kpis.pagosRealizados,
+        contenido: <span>Este mes</span>,
+    },
+    {
+        icono: Clock,
+        titulo: "Pendientes",
+        valor: kpis.pendientes,
+        contenido: <span>Este mes</span>,
+    },
+    {
+        icono: CheckCircle2,
+        titulo: "Pagos confirmados",
+        valor: `${kpis.tasaExito}%`,
+        contenido: (
+            <>
+                <div className="pagos-progreso">
+                    <div
+                        className="pagos-progreso-relleno"
+                        style={{ width: `${kpis.tasaExito}%` }}
+                    />
+                </div>
+                <span>Tasa de éxito</span>
+            </>
+        ),
+    },
+];
+
 function formatearMonto(numero) {
     return `$ ${numero.toLocaleString("es-AR")}`;
 }
@@ -105,61 +143,29 @@ function Pagos() {
     return (
         <main className="pagos">
 
-            {/* KPIS */}
+            {/* =========================
+                  RESUMEN SUPERIOR
+            ========================= */}
 
-            <section className="pagos-kpi-grid">
+            <section className="pagos-resumen">
+                {resumenTarjetas.map((item, index) => {
+                    const Icono = item.icono;
 
-                <article className="pagos-kpi-card">
-                    <div className="pagos-kpi-icon">
-                        <Wallet />
-                    </div>
-                    <div>
-                        <span className="pagos-kpi-label">Total recaudado</span>
-                        <strong>{formatearMonto(kpis.totalRecaudado)}</strong>
-                        <span className="pagos-kpi-info">Este mes</span>
-                    </div>
-                </article>
-
-                <article className="pagos-kpi-card">
-                    <div className="pagos-kpi-icon">
-                        <Download />
-                    </div>
-                    <div>
-                        <span className="pagos-kpi-label">Pagos realizados</span>
-                        <strong>{kpis.pagosRealizados}</strong>
-                        <span className="pagos-kpi-info">Este mes</span>
-                    </div>
-                </article>
-
-                <article className="pagos-kpi-card">
-                    <div className="pagos-kpi-icon">
-                        <Clock />
-                    </div>
-                    <div>
-                        <span className="pagos-kpi-label">Pendientes</span>
-                        <strong>{kpis.pendientes}</strong>
-                        <span className="pagos-kpi-info">Este mes</span>
-                    </div>
-                </article>
-
-                <article className="pagos-kpi-card">
-                    <div className="pagos-kpi-icon">
-                        <CheckCircle2 />
-                    </div>
-                    <div>
-                        <span className="pagos-kpi-label">Pagos confirmados</span>
-                        <strong>{kpis.tasaExito}%</strong>
-                        <div className="pagos-progreso">
-                            <div
-                                className="pagos-progreso-relleno"
-                                style={{ width: `${kpis.tasaExito}%` }}
-                            />
-                        </div>
-                        <span className="pagos-kpi-info">Tasa de éxito</span>
-                    </div>
-                </article>
-
+                    return (
+                        <TarjetaResumen
+                            key={index}
+                            icono={<Icono />}
+                            titulo={item.titulo}
+                            valor={item.valor}
+                            contenido={item.contenido}
+                        />
+                    );
+                })}
             </section>
+
+            {/* =========================
+                CONTENIDO PRINCIPAL
+            ========================= */}
 
             {/* FILTROS */}
 
