@@ -150,11 +150,13 @@ function Documentos() {
 
             <section className="documentos-contenido">
 
-                <div className="documentos-principal">
+                {/* =========================
+                      COLUMNA IZQUIERDA
+                ========================= */}
 
-                    {/* =========================
-                        DOCUMENTOS RECIENTES
-                    ========================= */}
+                <section className="documentos-columna">
+
+                    {/* DOCUMENTOS RECIENTES*/}
 
                     <Panel
                         titulo="Documentos recientes"
@@ -181,15 +183,15 @@ function Documentos() {
                                             )}
 
                                             {documento.tipo === "excel" && (
-                                                <FileSpreadsheet size={12} />
+                                                <FileSpreadsheet />
                                             )}
 
                                             {documento.tipo === "word" && (
-                                                <FileText size={12} />
+                                                <FileText />
                                             )}
 
                                             {documento.tipo === "money" && (
-                                                <CircleDollarSign size={12} />
+                                                <CircleDollarSign />
                                             )}
                                         </div>
 
@@ -212,18 +214,16 @@ function Documentos() {
 
                                     {/* ACCIONES */}
                                     <div className="acciones-documento">
-                                        <button title="Descargar"><Download size={13} /></button>
+                                        <button title="Descargar"><Download /></button>
 
-                                        <button title="Ver documento"><Eye size={13} /></button>
+                                        <button title="Ver documento"><Eye /></button>
                                     </div>
                                 </div>
                             ))}
                         </div>
                     </Panel>
 
-                    {/* =========================
-                        EXPLORAR POR CATEGORÍA
-                    ========================= */}
+                    {/* EXPLORAR POR CATEGORÍA */}
 
                     <Panel
                         titulo="Explorar por categoría"
@@ -240,7 +240,7 @@ function Documentos() {
 
                                 return (
                                     <article className="categoria-explorar" key={index}>
-                                        <div className={`explorar-icono ${categoria.clase}`}><Icono size={17} /></div>
+                                        <div className={`explorar-icono ${categoria.clase}`}><Icono /></div>
 
                                         <strong>{categoria.nombre}</strong>
 
@@ -253,20 +253,17 @@ function Documentos() {
                         </div>
                     </Panel>
 
-                </div>
-
+                </section>
 
                 {/* =========================
-                    SIDEBAR
+                      COLUMNA DERECHA
                 ========================= */}
 
-                <aside className="documentos-sidebar">
+                <section className="documentos-columna">
 
-                    {/* =========================
-                        INFORMACIÓN IMPORTANTE
-                    ========================= */}
+                    {/* INFORMACIÓN IMPORTANTE */}
 
-                    <Panel titulo="Información importante" icono={<Info size={14} />} className="informacion-documentos">
+                    <Panel titulo="Información importante" icono={<Info />} className="informacion-documentos">
                         <ul>
                             <li>Los documentos se actualizan periódicamente.</li>
                             <li>Podés descargar o visualizar cada archivo.</li>
@@ -274,25 +271,19 @@ function Documentos() {
                         </ul>
                     </Panel>
 
+                    {/* BÚSQUEDA RÁPIDA */}
 
-                    {/* =========================
-                        BÚSQUEDA RÁPIDA
-                    ========================= */}
-
-                    <Panel titulo="Búsqueda rápida" icono={<Search size={14} />} className="busqueda-documentos">
+                    <Panel titulo="Búsqueda rápida" icono={<Search />} className="busqueda-documentos">
                         <div className="buscador-documentos">
                             <input type="text" placeholder="Buscar documento..."/>
 
-                            <button><Search size={14} /></button>
+                            <button><Search /></button>
                         </div>
                     </Panel>
 
+                    {/* FILTROS */}
 
-                    {/* =========================
-                        FILTROS
-                    ========================= */}
-
-                    <Panel titulo="Filtros" icono={<SlidersHorizontal size={14} />} className="filtros-documentos">
+                    <Panel titulo="Filtros" icono={<SlidersHorizontal />} className="filtros-documentos">
                         <div className="filtro-documento">
                             <select>
                                 <option>Todas las categorías</option>
@@ -312,21 +303,18 @@ function Documentos() {
                         </div>
                     </Panel>
 
-                    {/* =========================
-                        AYUDA
-                    ========================= */}
+                    {/* AYUDA */}
 
-                    <Panel titulo="¿Necesitás ayuda?" icono={<CircleHelp size={14} />} className="ayuda-documentos">
+                    <Panel titulo="¿Necesitás ayuda?" icono={<CircleHelp />} className="ayuda-documentos">
                         <p>Nuestro asistente puede ayudarte a encontrar el documento que necesitás.</p>
 
                         <button className="btn-consultar">
-                            <MessageCircle size={17} />
+                            <MessageCircle />
                             Chatear a Habita
                         </button>
                     </Panel>
 
-
-                </aside>
+                </section>
 
             </section>
 

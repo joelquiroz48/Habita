@@ -7,7 +7,6 @@
     padding: 24px;
 }
 
-
 /* =========================
         RESUMEN SUPERIOR
 ========================= */
@@ -24,25 +23,15 @@
     font-size: 12px;
 }
 
-
-/* =========================
-       GRID PRINCIPAL
-========================= */
-
-.avisos-grid {
+.avisos-contenido {
     display: grid;
     grid-template-columns: minmax(0, 3fr) minmax(230px, 1.15fr);
     gap: 14px;
     align-items: start;
 }
 
-.avisos-principal {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.avisos-lateral {
+.avisos-columna {
+    min-width: 0;
     display: flex;
     flex-direction: column;
     gap: 14px;
@@ -445,7 +434,7 @@
 
 @media (max-width: 1000px) {
 
-    .avisos-grid {
+    .avisos-contenido {
         grid-template-columns: 1fr;
     }
 

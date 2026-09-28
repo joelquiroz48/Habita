@@ -2,7 +2,7 @@
         GRID SUPERIOR
 ========================= */
 
-.resumen-grid {
+.inicio-resumen {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 14px;
@@ -27,10 +27,10 @@
 }
 
 /* =========================
-      GRID PRINCIPAL
+           GRID
 ========================= */
 
-.contenido-grid {
+.inicio-contenido {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 14px;
@@ -415,11 +415,11 @@
 /* --------------------------------- */
 
 @media (max-width: 1200px) {
-  .resumen-grid {
+  .inicio-resumen {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .contenido-grid {
+  .inicio-contenido {
     grid-template-columns: repeat(2, 1fr);
   }
 }
@@ -429,8 +429,8 @@
     padding: 20px;
   }
 
-  .resumen-grid,
-  .contenido-grid {
+  .inicio-resumen,
+  .inicio-contenido {
     grid-template-columns: 1fr;
   }
 }

@@ -1,17 +1,16 @@
 /* =========================================================
-   GRID SUPERIOR
+                        GRID
 ========================================================= */
 
-.perfil-grid-superior {
+.perfil-fila {
     display: grid;
     grid-template-columns: 1.1fr 1fr;
     gap: 14px;
     margin-bottom: 14px;
 }
 
-
 /* =========================================================
-   PERFIL DEL RESIDENTE
+                PERFIL DEL RESIDENTE
 ========================================================= */
 
 .residente-contenido {
@@ -50,7 +49,6 @@
 .residente-datos svg {
     color: var(--texto-icono);
 }
-
 
 /* =========================================================
    INFORMACIÓN DE LA UNIDAD
@@ -109,19 +107,6 @@
     font-weight: 500;
 }
 
-
-/* =========================================================
-   GRID CENTRAL
-========================================================= */
-
-.perfil-grid-central {
-    display: grid;
-    grid-template-columns: 1.1fr 1fr;
-    gap: 14px;
-    margin-bottom: 14px;
-}
-
-
 /* =========================================================
    DATOS DE CONTACTO
 ========================================================= */
@@ -148,14 +133,10 @@
     width: 100%;
     height: 27px;
     padding: 0 9px;
-
     border: 1px solid var(--borde-input);
     border-radius: 6px;
-
     color: var(--texto-secundario);
-
     font-size: 12px;
-
     outline: none;
 }
 
@@ -165,7 +146,6 @@
     color: var(--texto-icono);
 }
 
-
 /* =========================================================
    BOTÓN EDITAR
 ========================================================= */
@@ -174,22 +154,21 @@
     display: flex;
     align-items: center;
     gap: 4px;
-
     padding: 4px 7px;
-
     border: 0px;
     border-radius: 5px;
-
     background: var(--verde);
     color: var(--blanco);
-
     font-size: 12px;
+}
+
+.btn-editar svg {
+    color: var(--blanco);
 }
 
 .btn-editar:hover {
     background: var(--verde-medio);
 }
-
 
 /* =========================================================
    PREFERENCIAS DE NOTIFICACIÓN
@@ -205,9 +184,7 @@
     align-items: center;
     justify-content: space-between;
     gap: 10px;
-
     padding: 7px 0;
-
     border-bottom: 1px solid var(--separador);
 }
 
@@ -231,36 +208,27 @@
     color: var(--texto-secundario);
 }
 
-
 /* =========================================================
    SWITCH
 ========================================================= */
 
 .switch {
     position: relative;
-
     width: 28px;
     height: 16px;
     min-width: 28px;
-
     border-radius: 10px;
-
     background: var(--borde-input);
-
     transition: 0.2s;
 }
 
 .switch span {
     position: absolute;
-
     width: 12px;
     height: 12px;
-
     top: 2px;
     left: 2px;
-
     border-radius: 50%;
-
     transition: 0.2s;
 }
 
@@ -284,13 +252,10 @@
 
 .seguridad-bloque {
     min-width: 0;
-
     display: flex;
     flex-direction: column;
     gap: 4px;
-
     padding-right: 15px;
-
     border-right: 1px solid var(--separador);
 }
 
@@ -312,29 +277,24 @@
     color: var(--texto-secundario);
 }
 
-
 /* =========================================================
    BOTONES DE SEGURIDAD
 ========================================================= */
 
 .btn-seguridad {
     width: fit-content;
-
     margin-top: 7px;
     padding: 5px 9px;
     border: 0px;
     border-radius: 5px;
-
     background: var(--verde);
     color: var(--blanco);
-
     font-size: 13px;
 }
 
 .btn-seguridad:hover {
     background: var(--verde-medio);
 }
-
 
 /* =========================================================
    VERIFICACIÓN EN DOS PASOS
@@ -352,23 +312,17 @@
 
 .badge-activa {
     padding: 2px 6px;
-
     border-radius: 7px;
-
     background: var(--fondo-confirmada);
     color: var(--color-pendiente);
-
     font-size: 12px;
 }
 
 .seguridad-bloque p {
     margin: 2px 0 0;
-
     font-size: 13px;
-
     color: var(--texto-secundario);
 }
-
 
 /* =========================================================
    SESIONES ACTIVAS
@@ -378,7 +332,6 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     margin-bottom: 6px;
 }
 
@@ -388,9 +341,7 @@
 
 .sesiones-header button {
     background: none;
-
     color: var(--verde-hover);
-
     font-size: 13px;
 }
 
@@ -398,7 +349,6 @@
     display: flex;
     align-items: center;
     gap: 7px;
-
     margin-bottom: 7px;
 }
 
@@ -410,7 +360,6 @@
 .sesion > div {
     display: flex;
     flex-direction: column;
-
     min-width: 0;
 }
 
@@ -426,17 +375,12 @@
 
 .badge-actual {
     margin-left: auto;
-
     padding: 2px 5px;
-
     border-radius: 5px;
-
     background: var(--fondo-confirmada);
     color: var(--color-pendiente);
-
     font-size: 13px;
 }
-
 
 /* =========================================================
    RESPONSIVE
@@ -444,8 +388,7 @@
 
 @media (max-width: 1200px) {
 
-    .perfil-grid-superior,
-    .perfil-grid-central {
+    .perfil-fila {
         grid-template-columns: 1fr 1fr;
     }
 
@@ -459,18 +402,15 @@
 
     .seguridad-bloque:last-child {
         grid-column: span 2;
-
         padding-top: 12px;
         padding-right: 0;
-
         border-top: 1px solid var(--separador);
     }
 }
 
 @media (max-width: 850px) {
 
-    .perfil-grid-superior,
-    .perfil-grid-central {
+    .perfil-fila {
         grid-template-columns: 1fr;
     }
 

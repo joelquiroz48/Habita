@@ -9,6 +9,7 @@ import {
     Pencil,
     X,
     ChevronRight,
+    ChevronLeft,
     CircleHelp,
     Info,
 } from "lucide-react";
@@ -172,32 +173,26 @@ function Reservas() {
                 })}
             </section>
 
-
             {/* =========================
                 CONTENIDO PRINCIPAL
             ========================= */}
 
             <section className="reservas-contenido">
 
-
                 {/* =========================
                     COLUMNA IZQUIERDA
                 ========================= */}
 
+                <section className="reservas-columna">
 
-                <div className="reservas-columna reservas-columna-izquierda">
-
-
-                    {/* =========================
-                        MIS RESERVAS
-                    ========================= */}
+                    {/* MIS RESERVAS */}
 
                     <Panel
                         titulo="Mis reservas activas"
                         descripcion="Consultá y administrá tus próximas reservas"
                         accion={
                             <button className="btn-nueva-reserva">
-                                <Plus size={15} />
+                                <Plus />
                                 Nueva reserva
                             </button>
                         }
@@ -227,12 +222,12 @@ function Reservas() {
 
                                         <div className="reserva-card-datos">
                                             <span>
-                                                <CalendarDays size={12} />
+                                                <CalendarDays />
                                                 {reserva.fecha}
                                             </span>
 
                                             <span>
-                                                <Clock3 size={12} />
+                                                <Clock3 />
                                                 {reserva.horario}
                                             </span>
                                         </div>
@@ -243,20 +238,20 @@ function Reservas() {
 
                                     <div className="reserva-card-acciones">
                                         <button>
-                                            <Eye size={13} />
+                                            <Eye />
                                             Ver detalle
                                         </button>
 
                                         {reserva.estado === "Confirmada" && (
                                             <button>
-                                                <Pencil size={13} />
+                                                <Pencil />
                                                 Modificar
                                             </button>
                                         )}
 
                                         {reserva.estado === "Pendiente" && (
                                             <button className="btn-cancelar">
-                                                <X size={13} />
+                                                <X />
                                                 Cancelar
                                             </button>
                                         )}
@@ -266,10 +261,7 @@ function Reservas() {
                         </div>
                     </Panel>
 
-
-                    {/* =========================
-                        ESPACIOS DISPONIBLES
-                    ========================= */}
+                    {/* ESPACIOS DISPONIBLES */}
 
                     <Panel titulo="Espacios comunes disponibles" descripcion="Elegí un espacio para realizar una reserva" className="espacios-disponibles">
                         <div className="espacios-grid">
@@ -291,14 +283,11 @@ function Reservas() {
                         </div>
                     </Panel>
 
-
-                    {/* =========================
-                        AYUDA
-                    ========================= */}
+                    {/* AYUDA */}
 
                     <Panel titulo="Ayuda sobre reservas" descripcion="Información útil para reservar espacios" className="ayuda-reservas">
                         <div className="ayuda-reserva-item">
-                            <div className="ayuda-reserva-icon"><CircleHelp size={14} /></div>
+                            <div className="ayuda-reserva-icon"><CircleHelp /></div>
 
                             <div>
                                 <strong>¿Cómo reservo el SUM?</strong>
@@ -306,11 +295,11 @@ function Reservas() {
                                 <span>Conocé el proceso para realizar una reserva.</span>
                             </div>
 
-                            <ChevronRight size={14} />
+                            <ChevronRight />
                         </div>
 
                         <div className="ayuda-reserva-item">
-                            <div className="ayuda-reserva-icon"><CalendarDays size={14} /></div>
+                            <div className="ayuda-reserva-icon"><CalendarDays /></div>
 
                             <div>
                                 <strong>Políticas de cancelación</strong>
@@ -318,11 +307,11 @@ function Reservas() {
                                 <span>Consultá cuándo podés cancelar una reserva.</span>
                             </div>
 
-                            <ChevronRight size={14} />
+                            <ChevronRight  />
                         </div>
 
                         <div className="ayuda-reserva-item">
-                            <div className="ayuda-reserva-icon"><Info size={14} /></div>
+                            <div className="ayuda-reserva-icon"><Info /></div>
 
                             <div>
                                 <strong>Espacios y horarios disponibles</strong>
@@ -330,23 +319,19 @@ function Reservas() {
                                 <span>Revisá las condiciones de cada espacio.</span>
                             </div>
 
-                            <ChevronRight size={14} />
+                            <ChevronRight />
                         </div>
                     </Panel>
 
-                </div>
-
+                </section>
 
                 {/* =========================
-                    COLUMNA DERECHA
+                      COLUMNA DERECHA
                 ========================= */}
 
-                <div className="reservas-columna reservas-columna-derecha">
+                <section className="reservas-columna">
 
-
-                    {/* =========================
-                        NUEVA RESERVA
-                    ========================= */}
+                    {/* NUEVA RESERVA */}
 
                     <Panel titulo="Nueva reserva" descripcion="Completá los datos para reservar un espacio" className="nueva-reserva">
                         <form className="form-reserva">
@@ -394,7 +379,7 @@ function Reservas() {
                         </form>
 
                         <div className="reglas-reserva">
-                            <div className="reglas-icono"> <Info size={15} /></div>
+                            <div className="reglas-icono"><Info /></div>
 
                             <div>
                                 <strong>Reglas de uso</strong>
@@ -408,18 +393,15 @@ function Reservas() {
                         </div>
                     </Panel>
 
-
-                    {/* =========================
-                        CALENDARIO
-                    ========================= */}
+                    {/* CALENDARIO */}
 
                     <Panel titulo="Calendario de reservas" descripcion="Próximas actividades y reservas" className="calendario-reservas">
                         <div className="calendario-mes">
-                            <button>‹</button>
+                            <button><ChevronLeft /></button>
 
                             <strong>Septiembre 2026</strong>
 
-                            <button>›</button>
+                            <button><ChevronRight /></button>
                         </div>
 
                         <div className="eventos-reservas">
@@ -449,11 +431,11 @@ function Reservas() {
 
                         <button className="link-calendario">
                             Ver calendario completo
-                            <ChevronRight size={14} />
+                            <ChevronRight />
                         </button>
                     </Panel>
 
-                </div>
+                </section>
 
             </section>
 

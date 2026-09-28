@@ -25,6 +25,7 @@
     margin-top: 5px !important;
     line-height: 1.4;
 }
+
 /* =========================
         BADGES
 ========================= */
@@ -68,6 +69,14 @@
 .expensas-contenido {
     display: grid;
     grid-template-columns: minmax(0, 2fr) minmax(260px, 0.9fr);
+    gap: 14px;
+    align-items: start;
+}
+
+.expensas-columna {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
     gap: 14px;
 }
 

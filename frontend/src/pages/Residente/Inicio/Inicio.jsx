@@ -214,9 +214,11 @@ function Inicio() {
     return (
         <main className="inicio">
 
-            {/* TARJETAS SUPERIORES */}
+            {/* =========================
+                  RESUMEN SUPERIOR
+            ========================= */}
 
-            <section className="resumen-grid">
+            <section className="inicio-resumen">
                 {resumenTarjetas.map((item, index) => {
                     const Icono = item.icono;
                     return (
@@ -231,13 +233,15 @@ function Inicio() {
                 })}
             </section>
 
-            {/* CONTENIDO CENTRAL */}
+            {/* =========================
+                CONTENIDO PRINCIPAL
+            ========================= */}
 
-            <section className="contenido-grid">
+            <section className="inicio-contenido">
 
                 {/* EXPENSAS */}
 
-                <Panel titulo="Estado de expensas"  accion={<Link to="/expensas">Ver detalles</Link>}>
+                <Panel titulo="Estado de expensas" accion={<Link to="/expensas">Ver detalles</Link>}>
                     <div className="expensas-content">
 
                         <span className="expensas-periodo">
@@ -283,12 +287,12 @@ function Inicio() {
                                     <strong>{reserva.nombre}</strong>
 
                                     <span>
-                                        <CalendarDays size={12} />
+                                        <CalendarDays />
                                         {reserva.fecha}
                                     </span>
 
                                     <span>
-                                        <Clock3 size={12} />
+                                        <Clock3 />
                                         {reserva.horario}
                                     </span>
 
@@ -333,6 +337,7 @@ function Inicio() {
                 </Panel>
 
                 {/* DOCUMENTOS */}
+
                 <Panel titulo="Documentos recientes" accion={<Link to="/documentos">Ver todos</Link>}>
                     <div className="documentos-list">
                         {documentos.map((documento) => (
@@ -341,11 +346,11 @@ function Inicio() {
                                     {documento.icon === "pdf" && "PDF"}
 
                                     {documento.icon === "doc" && (
-                                        <FileText size={17} />
+                                        <FileText />
                                     )}
 
                                     {documento.icon === "money" && (
-                                        <CircleDollarSign size={17} />
+                                        <CircleDollarSign />
                                     )}
                                 </div>
 
@@ -357,7 +362,7 @@ function Inicio() {
                                 </div>
 
                                 <button>
-                                    <Download size={16} />
+                                    <Download />
                                 </button>
                             </div>
                         ))}
@@ -396,7 +401,7 @@ function Inicio() {
                     </div>
 
                     <button className="btn-asistente">
-                        <MessageCircle size={17} />
+                        <MessageCircle  />
                         Chatear con Habita
                     </button>
                 </Panel>

@@ -40,7 +40,7 @@ const avisosDestacados = [
         autor: "Administración",
         tipo: "Importante",
         clase: "importante",
-        icon: <Users size={18} />,
+        icon: <Users />,
     },
     {
         titulo: "Corte de luz programado",
@@ -50,7 +50,7 @@ const avisosDestacados = [
         autor: "Administración",
         tipo: "Importante",
         clase: "importante",
-        icon: <AlertTriangle size={18} />,
+        icon: <AlertTriangle />,
     },
     {
         titulo: "Poda de árboles en espacios comunes",
@@ -60,7 +60,7 @@ const avisosDestacados = [
         autor: "Administración",
         tipo: "Importante",
         clase: "importante",
-        icon: <TreePine size={18} />,
+        icon: <TreePine />,
     },
 ];
 
@@ -71,7 +71,7 @@ const avisos = [
             "El próximo martes 15/09 se realizará la asamblea ordinaria del consorcio a las 20:00 h en el SUM.",
         fecha: "01/09/2026",
         clase: "violeta",
-        icon: <Users size={17} />,
+        icon: <Users />,
         categoria: "Eventos",
         leido: false,
     },
@@ -81,7 +81,7 @@ const avisos = [
             "El martes 8/09 de 9:00 a 13:00 habrá un corte de luz por tareas de EDENOR.",
         fecha: "01/09/2026",
         clase: "rojo",
-        icon: <AlertTriangle size={17} />,
+        icon: <AlertTriangle />,
         categoria: "Mantenimiento",
         leido: false,
     },
@@ -91,7 +91,7 @@ const avisos = [
             "El próximo martes 15/09 se realizará la poda de árboles en el jardín del frente.",
         fecha: "31/08/2026",
         clase: "verde",
-        icon: <TreePine size={17} />,
+        icon: <TreePine />,
         categoria: "Mantenimiento",
         leido: false,
     },
@@ -101,7 +101,7 @@ const avisos = [
             "Recordamos la importancia del uso responsable del agua en todo el edificio.",
         fecha: "27/08/2026",
         clase: "celeste",
-        icon: <Droplets size={17} />,
+        icon: <Droplets />,
         categoria: "Servicios",
         leido: true,
     },    
@@ -111,7 +111,7 @@ const avisos = [
             "Recordamos que los paquetes se pueden recibir en la administración durante el horario de atención.",
         fecha: "25/08/2026",
         clase: "violeta",
-        icon: <FileText size={17} />,
+        icon: <FileText  />,
         categoria: "Servicios",
         leido: false,
     },
@@ -121,7 +121,7 @@ const avisos = [
             "El próximo miércoles se realizará la revisión y mantenimiento de los matafuegos de los espacios comunes.",
         fecha: "21/08/2026",
         clase: "naranja",
-        icon: <Wrench size={17} />,
+        icon: <Wrench />,
         categoria: "Mantenimiento",
         leido: true,
     },
@@ -131,7 +131,7 @@ const avisos = [
             "Recordamos mantener cerrada la puerta de acceso al edificio y no permitir el ingreso de personas desconocidas.",
         fecha: "19/08/2026",
         clase: "rojo",
-        icon: <Shield size={17} />,
+        icon: <Shield />,
         categoria: "Seguridad",
         leido: true,
     },
@@ -207,20 +207,20 @@ function Avisos() {
             </section>
 
             {/* =========================
-                    CONTENIDO PRINCIPAL
+                CONTENIDO PRINCIPAL
             ========================= */}
 
-            <section className="avisos-grid">
+            <section className="avisos-contenido">
 
                 {/* =========================
-                        COLUMNA PRINCIPAL
+                     COLUMNA IZQUIERDA
                 ========================= */}
 
-                <div className="avisos-principal">
+                <section className="avisos-columna">
 
                     {/* DESTACADOS */}
 
-                    <Panel icono={<Megaphone size={18} />} titulo="Avisos destacados" className="avisos-destacados-panel">
+                    <Panel icono={<Megaphone />} titulo="Avisos destacados" className="avisos-destacados-panel">
                         <div className="avisos-destacados">
                             {avisosDestacados.map((aviso) => (
                                 <article className={`aviso-destacado ${aviso.clase}`} key={aviso.id}>
@@ -239,7 +239,7 @@ function Avisos() {
 
                                         <div className="aviso-meta">
                                             <span>
-                                                <CalendarDays size={12} />
+                                                <CalendarDays />
                                                 {aviso.fecha}
                                             </span>
 
@@ -249,7 +249,7 @@ function Avisos() {
 
                                     <button className="aviso-ver-mas">
                                         Ver más
-                                        <ChevronRight size={15} />
+                                        <ChevronRight />
                                     </button>
                                 </article>
                             ))}
@@ -288,26 +288,26 @@ function Avisos() {
 
                                     {!aviso.leido && (<span className="aviso-no-leido" />)}
 
-                                    <ChevronRight className="aviso-chevron" size={17}/>
+                                    <ChevronRight className="aviso-chevron"/>
                                 </article>
                             ))}
                         </div>
                     </Panel>
 
-                </div>
+                </section>
 
                 {/* =========================
-                        COLUMNA LATERAL
+                       COLUMNA DERECHA
                 ========================= */}
 
-                <aside className="avisos-lateral">
+                <section className="avisos-columna">
 
                     {/* FILTROS */}
 
-                    <Panel icono={<SlidersHorizontal size={14} />} titulo="Filtros" className="filtros-avisos">
+                    <Panel icono={<SlidersHorizontal />} titulo="Filtros" className="filtros-avisos">
                         <div className="buscador-avisos">
                             <input type="text" placeholder="Buscar avisos..."/>
-                            <Search size={15} />
+                            <Search />
                         </div>
 
                         <div className="filtros-lista">
@@ -337,7 +337,7 @@ function Avisos() {
 
                     {/* CATEGORÍAS */}
 
-                    <Panel icono={<Tag size={14} />} titulo="Categorías" className="categorias-avisos">
+                    <Panel icono={<Tag />} titulo="Categorías" className="categorias-avisos">
                         <div className="categorias-lista">
                             {categorias.map((categoria) => (
                                 <button key={categoria.id}>
@@ -347,7 +347,7 @@ function Avisos() {
                             ))}
                         </div>
                     </Panel>
-                </aside>
+                </section>
 
             </section>
 

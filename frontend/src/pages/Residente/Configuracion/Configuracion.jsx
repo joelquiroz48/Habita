@@ -9,7 +9,6 @@ import {
     MessageCircle,
     FileText,
     LogOut,
-    Trash2,
     ChevronRight,
 } from "lucide-react";
 
@@ -57,22 +56,25 @@ function Configuracion() {
 
     return (
         <main className="configuracion">
-            <div className="configuracion-grid">
+
+            {/* ===========================
+                  CONTENIDO PRINCIPAL
+            ============================= */}
+
+            <div className="configuracion-contenido">
 
                 {/* =========================
-                    COLUMNA PRINCIPAL
+                    COLUMNA IZQUIERDA
                 ========================= */}
 
-                <div className="configuracion-principal">
+                <section className="configuracion-columna">
 
-                    {/* =========================
-                        PREFERENCIAS
-                    ========================= */}
+                    {/* PREFERENCIAS */}
 
-                    <Panel titulo="Preferencias de la aplicación" descripcion="Personalizá cómo querés utilizar Habita." icono={<Settings size={18} />}>
+                    <Panel titulo="Preferencias de la aplicación" descripcion="Personalizá cómo querés utilizar Habita." icono={<Settings />}>
                         <div className="config-list">
                             <div className="config-item">
-                                <div className="config-item-icon"><Palette size={16} /></div>
+                                <div className="config-item-icon"><Palette /></div>
 
                                 <div className="config-item-content">
                                     <strong>Apariencia</strong>
@@ -86,7 +88,7 @@ function Configuracion() {
                             </div>
 
                             <div className="config-item">
-                                <div className="config-item-icon"><Globe size={16} /></div>
+                                <div className="config-item-icon"><Globe /></div>
 
                                 <div className="config-item-content">
                                     <strong>Idioma</strong>
@@ -99,7 +101,7 @@ function Configuracion() {
                             </div>
 
                             <div className="config-item">
-                                <div className="config-item-icon"><CalendarCheck size={16} /></div>
+                                <div className="config-item-icon"><CalendarCheck /></div>
 
                                 <div className="config-item-content">
                                     <strong>Formato de fecha</strong>
@@ -114,19 +116,16 @@ function Configuracion() {
                         </div>
                     </Panel>
 
+                    {/* RESERVAS */}
 
-                    {/* =========================
-                        RESERVAS
-                    ========================= */}
-
-                    <Panel titulo="Preferencias de reservas" descripcion="Configurá algunas opciones relacionadas con tus reservas." icono={<CalendarCheck size={18} />}>
+                    <Panel titulo="Preferencias de reservas" descripcion="Configurá algunas opciones relacionadas con tus reservas." icono={<CalendarCheck />}>
                         <div className="config-list">
                             {configuraciones.map((configuracion) => {
                                 const Icono = configuracion.icono;
 
                                 return (
                                     <div className="config-item" key={configuracion.clave}>
-                                        <div className="config-item-icon"><Icono size={16} /></div>
+                                        <div className="config-item-icon"><Icono /></div>
 
                                         <div className="config-item-content">
                                             <strong>{configuracion.titulo}</strong>
@@ -151,62 +150,56 @@ function Configuracion() {
                         </div>
                     </Panel>
 
-                </div>
-
+                </section>
 
                 {/* =========================
-                    COLUMNA LATERAL
+                    COLUMNA DERECHA
                 ========================= */}
 
-                <aside className="configuracion-lateral">
+                <section className="configuracion-columna">
 
-                    {/* =========================
-                            AYUDA
-                    ========================= */}
+                    {/* AYUDA */}
 
-                    <Panel className="ayuda-card" icono={<HelpCircle size={17} />} titulo="Ayuda y soporte" descripcion="¿Necesitás ayuda con Habita?">
+                    <Panel className="ayuda-card" icono={<HelpCircle />} titulo="Ayuda y soporte" descripcion="¿Necesitás ayuda con Habita?">
                         <div className="ayuda-lista">
                             <button className="config-link">
-                                <div className="config-item-icon"><HelpCircle size={15} /></div>
+                                <div className="config-item-icon"><HelpCircle /></div>
 
                                 <div className="config-item-content">
                                     <strong>Centro de ayuda</strong>
                                     <span>Consultá preguntas frecuentes.</span>
                                 </div>
 
-                                <ChevronRight size={14} />
+                                <ChevronRight />
                             </button>
 
                             <button className="config-link">
-                                <div className="config-item-icon"><MessageCircle size={15} /></div>
+                                <div className="config-item-icon"><MessageCircle /></div>
 
                                 <div className="config-item-content">
                                     <strong>Reportar un problema</strong>
                                     <span>Contanos si encontraste un error.</span>
                                 </div>
 
-                                <ChevronRight size={14} />
+                                <ChevronRight />
                             </button>
                         </div>
                     </Panel>
 
+                    {/* INFORMACIÓN */}
 
-                    {/* =========================
-                            INFORMACIÓN
-                    ========================= */}
-
-                    <Panel titulo="Cuenta" icono={<FileText size={17} />} descripcion="Información legal de Habita.">
+                    <Panel titulo="Cuenta" icono={<FileText />} descripcion="Información legal de Habita.">
 
                         <div className="info-links">
 
                             <button className="config-simple-link">
                                 Términos y condiciones
-                                <ChevronRight size={14} />
+                                <ChevronRight />
                             </button>
 
                             <button className="config-simple-link">
                                 Política de privacidad
-                                <ChevronRight size={14} />
+                                <ChevronRight />
                             </button>
 
                         </div>
@@ -215,19 +208,16 @@ function Configuracion() {
 
                     </Panel>
 
+                    {/* ZONA DE CUENTA */}
 
-                    {/* =========================
-                        ZONA DE CUENTA
-                    ========================= */}
                     <Panel titulo="Cuenta" className="cuenta-card">
-
                         <button className="btn-logout">
-                            <LogOut size={15} />
+                            <LogOut />
                             Cerrar sesión
                         </button>
-
                     </Panel>
-                </aside>
+
+                </section>
 
             </div>
         </main>

@@ -58,13 +58,14 @@ function Perfil() {
         <main className="perfil">
 
             {/* =========================
-                FILA SUPERIOR
+                  FILA SUPERIOR
             ========================= */}
 
-            <section className="perfil-grid-superior">
+            <section className="perfil-fila">
 
                 {/* PERFIL DEL RESIDENTE */}
-                <Panel titulo="Perfil del residente" icono={<UserRound size={18} />} className="residente-card">
+
+                <Panel titulo="Perfil del residente" icono={<UserRound />} className="residente-card">
                     <div className="residente-contenido">
                         <div className="avatar-residente">
                             <img src={iconPerfil} alt="Imagen de perfil"/>
@@ -74,28 +75,28 @@ function Perfil() {
                             <h3>Nombre_usuario</h3>
 
                             <span>
-                                <Mail size={13} />
+                                <Mail />
                                 ejemplo@gmail.com
                             </span>
 
                             <span>
-                                <Phone size={13} />
+                                <Phone />
                                 +54 11 1234 5678
                             </span>
 
                             <span>
-                                <UserRound size={13} />
+                                <UserRound />
                                 Residente
                             </span>
                         </div>
                     </div>
                 </Panel>
 
-
                 {/* INFORMACIÓN DE LA UNIDAD */}
-                <Panel titulo="Información de la unidad" icono={<Building2 size={18} />} className="unidad-card">
+
+                <Panel titulo="Información de la unidad" icono={<Building2 />} className="unidad-card">
                     <div className="unidad-contenido">
-                        <div className="unidad-icono"><Building2 size={38} /></div>
+                        <div className="unidad-icono"><Building2 /></div>
 
                         <div className="unidad-datos">
                             <div>
@@ -121,19 +122,21 @@ function Perfil() {
                     </div>
                 </Panel>
             </section>
+
             {/* =========================
-                FILA CENTRAL
+                  FILA CENTRAL
             ========================= */}
 
-            <section className="perfil-grid-central">
+            <section className="perfil-fila">
 
                 {/* DATOS DE CONTACTO */}
+
                 <Panel
                     titulo="Datos de contacto"
-                    icono={<Mail size={12} />}
+                    icono={<Mail />}
                     accion={
                         <button className="btn-editar">
-                            <Pencil size={12} />
+                            <Pencil />
                             Editar
                         </button>
                     }
@@ -164,14 +167,14 @@ function Perfil() {
                     <p className="texto-ayuda">Estos datos se utilizarán para comunicarnos con vos.</p>
                 </Panel>
 
-
                 {/* PREFERENCIAS */}
+
                 <Panel
                     titulo="Preferencias de notificación"
-                    icono={<Bell size={12} />}
+                    icono={<Bell />}
                     accion={
                         <button className="btn-editar">
-                            <Pencil size={12} />
+                            <Pencil />
                             Editar
                         </button>
                     }
@@ -199,7 +202,6 @@ function Perfil() {
 
             </section>
 
-
             {/* =========================
                 FILA INFERIOR
             ========================= */}
@@ -207,9 +209,10 @@ function Perfil() {
             <section className="perfil-inferior">
 
                 {/* SEGURIDAD */}
+
                 <Panel
                     titulo="Seguridad de la cuenta"
-                    icono={<ShieldCheck size={18} />}
+                    icono={<ShieldCheck />}
                     className="seguridad-card"
                 >
                     <div className="seguridad-contenido">
@@ -247,7 +250,7 @@ function Perfil() {
                             </div>
 
                             <div className="sesion">
-                                <Monitor size={16} />
+                                <Monitor />
 
                                 <div>
                                     <strong>Chrome en Windows</strong>
@@ -258,7 +261,7 @@ function Perfil() {
                             </div>
 
                             <div className="sesion">
-                                <Smartphone size={16} />
+                                <Smartphone />
 
                                 <div>
                                     <strong>iPhone 14 en iOS</strong>
