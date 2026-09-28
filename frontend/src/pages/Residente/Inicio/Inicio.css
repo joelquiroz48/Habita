@@ -48,12 +48,11 @@
 .expensas-periodo {
   font-size: 12px;
   color: var(--texto-secundario);
-  margin-top: 5px;
 }
 
 .expensas-precio {
   font-size: 20px;
-  margin: 8px 0 10px;
+  margin: 8px 0 8px;
 }
 
 .expensas-row {
@@ -61,10 +60,6 @@
   justify-content: space-between;
   font-size: 13px;
   margin-bottom: 9px;
-}
-
-.texto-pendiente-expensa {
-  color: var(--color-vencimiento);
 }
 
 .btn-principal {
@@ -117,8 +112,8 @@
 }
 
 .reserva-imagen {
-  width: 55px;
-  height: 43px;
+  width: 50px;
+  height: 50px;
   border-radius: 5px;
   overflow: hidden;
   flex-shrink: 0;
@@ -154,16 +149,6 @@
   font-size: 11px;
   padding: 3px 5px;
   border-radius: 4px;
-}
-
-.estado-confirmada {
-  background: var(--fondo-confirmada);
-  color: var(--color-pendiente);
-}
-
-.estado-pendiente {
-  background: var(--fondo-pendiente);
-  color: var(--color-pendiente-azul);
 }
 
 .link-abajo {
@@ -386,7 +371,7 @@
         ASISTENTE
 ========================= */
 
-.asistente-card > p {
+.asistente-card p {
   font-size: 14px;
   line-height: 1.5;
   color: var(--texto-secundario);

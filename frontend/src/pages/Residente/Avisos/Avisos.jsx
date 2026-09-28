@@ -19,7 +19,7 @@ import {
 
 import "./Avisos.css";
 import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
-
+import Panel from "../../../components/Panel/Panel";
 
 // =========================
 // DATOS DE EJEMPLO
@@ -220,30 +220,15 @@ function Avisos() {
 
                     {/* DESTACADOS */}
 
-                    <section className="panel">
-
-                        <div className="panel-header panel-header-junto">
-                            <Megaphone />
-                            <h2>Avisos destacados</h2>
-                        </div>
-
+                    <Panel icono={<Megaphone size={18} />} titulo="Avisos destacados" className="avisos-destacados-panel">
                         <div className="avisos-destacados">
-
-                            {avisosDestacados.map((aviso, index) => (
-                                <article
-                                    className={`aviso-destacado ${aviso.clase}`}
-                                    key={index}
-                                >
-                                    <div className="aviso-destacado-icon">
-                                        {aviso.icon}
-                                    </div>
+                            {avisosDestacados.map((aviso) => (
+                                <article className={`aviso-destacado ${aviso.clase}`} key={aviso.id}>
+                                    <div className="aviso-destacado-icon">{aviso.icon}</div>
 
                                     <div className="aviso-destacado-contenido">
-
                                         <div className="aviso-destacado-header">
-                                            <span className="aviso-tipo">
-                                                {aviso.tipo}
-                                            </span>
+                                            <span className="aviso-tipo">{aviso.tipo}</span>
 
                                             <span className="aviso-punto" />
                                         </div>
@@ -258,86 +243,56 @@ function Avisos() {
                                                 {aviso.fecha}
                                             </span>
 
-                                            <span>
-                                                {aviso.autor}
-                                            </span>
+                                            <span>{aviso.autor}</span>
                                         </div>
-
                                     </div>
 
                                     <button className="aviso-ver-mas">
                                         Ver más
                                         <ChevronRight size={15} />
                                     </button>
-
                                 </article>
                             ))}
-
                         </div>
-
-                    </section>
+                    </Panel>
 
                     {/* TODOS LOS AVISOS */}
 
-                    <section className="panel">
-
-                        <div className="panel-header">
-                            <h2>Todos los avisos</h2>
-
+                    <Panel
+                        titulo="Todos los avisos"
+                        accion={
                             <span className="avisos-contador">
                                 {avisos.length} avisos
                             </span>
-                        </div>
-
+                        }
+                    >
                         <div className="avisos-lista">
-
-                            {avisos.map((aviso, index) => (
-                                <article
-                                    className={`aviso-lista-item ${
+                            {avisos.map((aviso) => (
+                                <article className={`aviso-lista-item ${
                                         !aviso.leido ? "no-leido" : ""
                                     }`}
-                                    key={index}
+                                    key={aviso.id}
                                 >
-
-                                    <div
-                                        className={`aviso-lista-icon ${aviso.clase}`}
-                                    >
-                                        {aviso.icon}
-                                    </div>
+                                    <div className={`aviso-lista-icon ${aviso.clase}`}>{aviso.icon}</div>
 
                                     <div className="aviso-lista-contenido">
-
                                         <div className="aviso-lista-header">
                                             <h3>{aviso.titulo}</h3>
-
-                                            <span>
-                                                {aviso.fecha}
-                                            </span>
+                                            <span>{aviso.fecha}</span>
                                         </div>
 
                                         <p>{aviso.descripcion}</p>
 
-                                        <small>
-                                            {aviso.categoria}
-                                        </small>
-
+                                        <small>{aviso.categoria}</small>
                                     </div>
 
-                                    {!aviso.leido && (
-                                        <span className="aviso-no-leido" />
-                                    )}
+                                    {!aviso.leido && (<span className="aviso-no-leido" />)}
 
-                                    <ChevronRight
-                                        className="aviso-chevron"
-                                        size={17}
-                                    />
-
+                                    <ChevronRight className="aviso-chevron" size={17}/>
                                 </article>
                             ))}
-
                         </div>
-
-                    </section>
+                    </Panel>
 
                 </div>
 
@@ -349,27 +304,14 @@ function Avisos() {
 
                     {/* FILTROS */}
 
-                    <section className="panel">
-
-                        <div className="panel-header panel-header-junto">
-                            <SlidersHorizontal size={14} />
-                            <h2>Filtros</h2>
-                        </div>
-
+                    <Panel icono={<SlidersHorizontal size={14} />} titulo="Filtros" className="filtros-avisos">
                         <div className="buscador-avisos">
-                            <input
-                                type="text"
-                                placeholder="Buscar avisos..."
-                            />
-
+                            <input type="text" placeholder="Buscar avisos..."/>
                             <Search size={15} />
                         </div>
 
                         <div className="filtros-lista">
-
-                            <button className="filtro-activo">
-                                Todos
-                            </button>
+                            <button className="filtro-activo">Todos</button>
 
                             <button>
                                 No leídos
@@ -390,33 +332,21 @@ function Avisos() {
                                 Informativos
                                 <span className="filtro-punto azul" />
                             </button>
-
                         </div>
-
-                    </section>
+                    </Panel>
 
                     {/* CATEGORÍAS */}
 
-                    <section className="panel">
-
-                        <div className="panel-header panel-header-junto">
-                            <Tag size={14} />
-                            <h2>Categorias</h2>
-                        </div>
-
+                    <Panel icono={<Tag size={14} />} titulo="Categorías" className="categorias-avisos">
                         <div className="categorias-lista">
-
-                            {categorias.map((categoria, index) => (
-                                <button key={index}>
+                            {categorias.map((categoria) => (
+                                <button key={categoria.id}>
                                     <span>{categoria.nombre}</span>
                                     <small>{categoria.cantidad}</small>
                                 </button>
                             ))}
-
                         </div>
-
-                    </section>
-
+                    </Panel>
                 </aside>
 
             </section>

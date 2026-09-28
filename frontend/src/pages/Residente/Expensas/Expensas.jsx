@@ -14,6 +14,7 @@ import {
 
 import "./Expensas.css";
 import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
+import Panel from "../../../components/Panel/Panel";
 
 /* =========================
         DATOS DE EJEMPLO
@@ -187,30 +188,20 @@ function Expensas() {
                         DETALLE EXPENSA
                 ========================= */}
 
-                <article className="panel detalle-expensa">
+                <Panel className="detalle-expensa">
 
                     <div className="detalle-info">
                         <h2>Expensa de Agosto 2026</h2>
 
-                        <strong>
-                            {expensaActual.monto}
-                        </strong>
+                        <strong>{expensaActual.monto}</strong>
 
-                        <span>
-                            Período: 01/08/2026 al 31/08/2026
-                        </span>
+                        <span>Período: 01/08/2026 al 31/08/2026</span>
 
-                        <small>
-                            Vence el 10/09/2026
-                        </small>
+                        <small>Vence el 10/09/2026</small>
 
-                        <em className="badge-expensa">
-                            Pendiente de pago
-                        </em>
+                        <em className="badge-expensa">Pendiente de pago</em>
 
-                        <button className="btn-pagar">
-                            Pagar ahora
-                        </button>
+                        <button className="btn-pagar">Pagar ahora</button>
 
                         <button className="btn-descargar">
                             <Download size={14} />
@@ -218,163 +209,92 @@ function Expensas() {
                         </button>
                     </div>
 
-
                     <div className="detalle-lista">
-
                         <h3>Detalle de la expensa</h3>
 
-                        {detalleExpensa.map((item, index) => (
-
-                            <div
-                                className="detalle-item"
-                                key={index}
-                            >
-
+                        {detalleExpensa.map((item) => (
+                            <div className="detalle-item" key={item.id}>
                                 <div>
                                     <CircleHelp size={12} />
                                     <span>{item.concepto}</span>
                                 </div>
 
-                                <strong>
-                                    {item.monto}
-                                </strong>
-
+                                <strong>{item.monto}</strong>
                             </div>
-
                         ))}
 
-
                         <div className="detalle-total">
-
                             <strong>Total</strong>
 
-                            <strong>
-                                {expensaActual.monto}
-                            </strong>
-
+                            <strong>{expensaActual.monto}</strong>
                         </div>
-
                     </div>
 
-                </article>
-
+                </Panel>
 
                 {/* =========================
-                        COLUMNA DERECHA
+                        MEDIOS DE PAGO
                 ========================= */}
 
-                <aside className="expensas-sidebar">
+                <Panel titulo="Medios de pago" descripcion="Elegí cómo querés pagar tu expensa" className="medios-pago">
+                    <div className="metodos-tabs">
+                        <button className="activo">Tarjeta</button>
 
+                        <button>Transferencia</button>
 
-                    {/* MEDIOS DE PAGO */}
+                        <button>QR</button>
+                    </div>
 
-                    <article className="panel medios-pago">
+                    <div className="tarjeta-guardada">
+                        <span>Tarjeta de crédito</span>
 
-                        <div className="panel-header">
-                            <div>
-                                <h2>Medios de pago</h2>
-                                <span>
-                                    Elegí cómo querés pagar tu expensa
-                                </span>
-                            </div>
+                        <div>
+                            <strong>VISA</strong>
+
+                            <span>Visa terminada en 4242</span>
+
+                            <em>Predeterminada</em>
                         </div>
+                    </div>
 
+                    <div className="tarjeta-guardada">
+                        <span>Otra tarjeta</span>
 
-                        <div className="metodos-tabs">
+                        <div>
+                            <strong>VISA</strong>
 
-                            <button className="activo">
-                                Tarjeta
-                            </button>
+                            <span>Visa terminada en 1234</span>
 
-                            <button>
-                                Transferencia
-                            </button>
-
-                            <button>
-                                QR
-                            </button>
-
+                            <input type="radio" name="tarjeta"/>
                         </div>
+                    </div>
 
+                    <button className="nueva-tarjeta">
+                        <Plus size={14} />
+                        Agregar nueva tarjeta
+                        <ChevronRight size={14} />
+                    </button>
 
-                        <div className="tarjeta-guardada">
-
-                            <span>Tarjeta de crédito</span>
-
-                            <div>
-                                <strong>VISA</strong>
-
-                                <span>
-                                    Visa terminada en 4242
-                                </span>
-
-                                <em>
-                                    Predeterminada
-                                </em>
-                            </div>
-
-                        </div>
-
-
-                        <div className="tarjeta-guardada">
-
-                            <span>Otra tarjeta</span>
-
-                            <div>
-                                <strong>VISA</strong>
-
-                                <span>
-                                    Visa terminada en 1234
-                                </span>
-
-                                <input
-                                    type="radio"
-                                    name="tarjeta"
-                                />
-                            </div>
-
-                        </div>
-
-
-                        <button className="nueva-tarjeta">
-                            <Plus size={14} />
-                            Agregar nueva tarjeta
-                            <ChevronRight size={14} />
-                        </button>
-
-
-                        <button className="ver-medios">
-                            Ver mis medios de pago
-                            <ChevronRight size={14} />
-                        </button>
-
-                    </article>
-                </aside>
+                    <button className="ver-medios">
+                        Ver mis medios de pago
+                        <ChevronRight size={14} />
+                    </button>
+                </Panel>
 
                 {/* =========================
                         HISTORIAL
                 ========================= */}
 
-                <article className="panel historial-expensas">
-
+                <Panel className="historial-expensas">
                     <div className="historial-header">
 
                         <div className="filtros-expensas">
+                            <button className="activo">Todas</button>
 
-                            <button className="activo">
-                                Todas
-                            </button>
+                            <button>Pendientes</button>
 
-                            <button>
-                                Pendientes
-                            </button>
-
-                            <button>
-                                Pagadas
-                            </button>
-
+                            <button>Pagadas</button>
                         </div>
-
 
                         <button className="filtro-fecha">
                             <CalendarDays size={13} />
@@ -384,43 +304,26 @@ function Expensas() {
 
                     </div>
 
-
                     <div className="tabla-expensas">
 
                         <div className="tabla-header">
-
                             <span>Período</span>
                             <span>Importe</span>
                             <span>Vencimiento</span>
                             <span>Estado</span>
                             <span>Acciones</span>
-
                         </div>
 
+                        {historialExpensas.map((expensa) => (
+                            <div className="tabla-fila" key={expensa.id}>
+                                <span>{expensa.periodo}</span>
 
-                        {historialExpensas.map((expensa, index) => (
+                                <strong>{expensa.importe}</strong>
 
-                            <div
-                                className="tabla-fila"
-                                key={index}
-                            >
-
-                                <span>
-                                    {expensa.periodo}
-                                </span>
-
-                                <strong>
-                                    {expensa.importe}
-                                </strong>
+                                <span>{expensa.vencimiento}</span>
 
                                 <span>
-                                    {expensa.vencimiento}
-                                </span>
-
-                                <span>
-
-                                    <small
-                                        className={
+                                    <small className={
                                             expensa.estado === "Pagada"
                                                 ? "estado-pagada"
                                                 : "estado-pendiente-expensa"
@@ -428,12 +331,9 @@ function Expensas() {
                                     >
                                         {expensa.estado}
                                     </small>
-
                                 </span>
 
-
                                 <div className="acciones-expensa">
-
                                     <button title="Descargar">
                                         <Download size={13} />
                                         Descargar
@@ -444,109 +344,61 @@ function Expensas() {
                                         Ver detalle
                                     </button>
 
-                                    <button className="accion-menu">
+                                    <button
+                                        className="accion-menu"
+                                        title="Más opciones"
+                                    >
                                         ⋮
                                     </button>
-
                                 </div>
-
                             </div>
-
                         ))}
 
                     </div>
 
-
                     <div className="paginacion-expensas">
+                        <span>1 de 2</span>
 
-                        <span>
-                            1 de 2
-                        </span>
-
-                        <button>
-                            <ChevronRight size={15} />
-                        </button>
-
+                        <button> <ChevronRight size={15} /></button>
                     </div>
-
-                </article>
+                </Panel>
 
                 {/* AYUDA */}
 
-                <article className="panel ayuda-expensas">
-
-                    <div className="panel-header">
-
-                        <div>
-                            <h2>Ayuda sobre expensas</h2>
-                        </div>
-
-                    </div>
-
-
+                <Panel titulo="Ayuda sobre expensas" className="ayuda-expensas">
                     <div className="ayuda-item">
-
-                        <div className="ayuda-icon">
-                            <CircleHelp size={14} />
-                        </div>
+                        <div className="ayuda-icon"><CircleHelp size={14} /></div>
 
                         <div>
-                            <strong>
-                                ¿Cómo se calculan las expensas?
-                            </strong>
-
-                            <span>
-                                Entendé qué incluye tu expensa mensual.
-                            </span>
+                            <strong>¿Cómo se calculan las expensas?</strong>
+                            <span>Entendé qué incluye tu expensa mensual.</span>
                         </div>
 
                         <ChevronRight size={14} />
-
                     </div>
 
-
                     <div className="ayuda-item">
-
-                        <div className="ayuda-icon">
-                            <WalletCards size={14} />
-                        </div>
+                        <div className="ayuda-icon"><WalletCards size={14} /></div>
 
                         <div>
-                            <strong>
-                                Medios de pago y promociones
-                            </strong>
-
-                            <span>
-                                Conocé las opciones disponibles.
-                            </span>
+                            <strong>Medios de pago y promociones</strong>
+                            <span>Conocé las opciones disponibles.</span>
                         </div>
 
                         <ChevronRight size={14} />
-
                     </div>
 
-
                     <div className="ayuda-item">
-
-                        <div className="ayuda-icon">
-                            <FileText size={14} />
-                        </div>
+                        <div className="ayuda-icon"><FileText size={14} /></div>
 
                         <div>
-                            <strong>
-                                ¿Tenés un problema con tu pago?
-                            </strong>
-
-                            <span>
-                                Te ayudamos a resolverlo.
-                            </span>
+                            <strong>¿Tenés un problema con tu pago?</strong>
+                            <span>Te ayudamos a resolverlo.</span>
                         </div>
 
                         <ChevronRight size={14} />
-
                     </div>
-
-                </article>
+                </Panel>
 
             </section>
 

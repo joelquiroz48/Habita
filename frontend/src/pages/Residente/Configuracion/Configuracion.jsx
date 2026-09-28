@@ -14,6 +14,28 @@ import {
 } from "lucide-react";
 
 import "./Configuracion.css";
+import Panel from "../../../components/Panel/Panel";
+
+const configuraciones = [
+    {
+        clave: "espaciosDisponibles",
+        icono: CalendarCheck,
+        titulo: "Mostrar espacios disponibles",
+        descripcion: "Priorizá los espacios con disponibilidad.",
+    },
+    {
+        clave: "recordatorioReservas",
+        icono: CalendarCheck,
+        titulo: "Recordatorio de reservas",
+        descripcion: "Mostrá recordatorios de próximas reservas.",
+    },
+    {
+        clave: "confirmarCancelacion",
+        icono: Shield,
+        titulo: "Confirmar antes de cancelar",
+        descripcion: "Pedir confirmación antes de cancelar una reserva.",
+    },
+];
 
 function Configuracion() {
     useEffect(() => {
@@ -47,212 +69,87 @@ function Configuracion() {
                         PREFERENCIAS
                     ========================= */}
 
-                    <section className="panel">
-
-                        <div className="panel-header panel-header-junto">
-                            <Settings />
-                            <div>
-                                <h2>Preferencias de la aplicación</h2>
-                                <span>
-                                    Personalizá cómo querés utilizar Habita.
-                                </span>
-                            </div>
-
-                        </div>
-
+                    <Panel titulo="Preferencias de la aplicación" descripcion="Personalizá cómo querés utilizar Habita." icono={<Settings size={18} />}>
                         <div className="config-list">
-
                             <div className="config-item">
-
-                                <div className="config-item-icon">
-                                    <Palette size={16} />
-                                </div>
+                                <div className="config-item-icon"><Palette size={16} /></div>
 
                                 <div className="config-item-content">
                                     <strong>Apariencia</strong>
-                                    <span>
-                                        Elegí cómo se muestra la aplicación.
-                                    </span>
+                                    <span>Elegí cómo se muestra la aplicación.</span>
                                 </div>
 
                                 <select defaultValue="claro">
-                                    <option value="claro">
-                                        Claro
-                                    </option>
-
-                                    <option value="automatico">
-                                        Automático
-                                    </option>
+                                    <option value="claro">Claro</option>
+                                    <option value="automatico">Automático</option>
                                 </select>
-
                             </div>
 
-
                             <div className="config-item">
-
-                                <div className="config-item-icon">
-                                    <Globe size={16} />
-                                </div>
+                                <div className="config-item-icon"><Globe size={16} /></div>
 
                                 <div className="config-item-content">
                                     <strong>Idioma</strong>
-                                    <span>
-                                        Seleccioná el idioma de Habita.
-                                    </span>
+                                    <span>Seleccioná el idioma de Habita.</span>
                                 </div>
 
                                 <select defaultValue="es">
-                                    <option value="es">
-                                        Español
-                                    </option>
+                                    <option value="es">Español</option>
                                 </select>
-
                             </div>
 
-
                             <div className="config-item">
-
-                                <div className="config-item-icon">
-                                    <CalendarCheck size={16} />
-                                </div>
+                                <div className="config-item-icon"><CalendarCheck size={16} /></div>
 
                                 <div className="config-item-content">
                                     <strong>Formato de fecha</strong>
-                                    <span>
-                                        Elegí cómo querés visualizar las fechas.
-                                    </span>
+                                    <span>Elegí cómo querés visualizar las fechas.</span>
                                 </div>
 
                                 <select defaultValue="ddmmyyyy">
-                                    <option value="ddmmyyyy">
-                                        DD/MM/AAAA
-                                    </option>
-
-                                    <option value="mmddyyyy">
-                                        MM/DD/AAAA
-                                    </option>
+                                    <option value="ddmmyyyy">DD/MM/AAAA</option>
+                                    <option value="mmddyyyy">MM/DD/AAAA</option>
                                 </select>
-
                             </div>
-
                         </div>
-
-                    </section>
+                    </Panel>
 
 
                     {/* =========================
                         RESERVAS
                     ========================= */}
 
-                    <section className="panel">
-
-                        <div className="panel-header panel-header-junto">
-                            <CalendarCheck />
-                            <div>
-                                <h2>Preferencias de reservas</h2>
-                                <span>
-                                    Configurá algunas opciones relacionadas
-                                    con tus reservas.
-                                </span>
-                            </div>
-                        </div>
-
-
+                    <Panel titulo="Preferencias de reservas" descripcion="Configurá algunas opciones relacionadas con tus reservas." icono={<CalendarCheck size={18} />}>
                         <div className="config-list">
+                            {configuraciones.map((configuracion) => {
+                                const Icono = configuracion.icono;
 
-                            <div className="config-item">
+                                return (
+                                    <div className="config-item" key={configuracion.clave}>
+                                        <div className="config-item-icon"><Icono size={16} /></div>
 
-                                <div className="config-item-icon">
-                                    <CalendarCheck size={16} />
-                                </div>
+                                        <div className="config-item-content">
+                                            <strong>{configuracion.titulo}</strong>
+                                            <span>{configuracion.descripcion}</span>
+                                        </div>
 
-                                <div className="config-item-content">
-                                    <strong>
-                                        Mostrar espacios disponibles
-                                    </strong>
-
-                                    <span>
-                                        Priorizá los espacios con disponibilidad.
-                                    </span>
-                                </div>
-
-                                <button
-                                    type="button"
-                                    className={`switch ${
-                                        preferencias.espaciosDisponibles ? "activo" : ""
-                                    }`}
-                                    onClick={() => cambiarPreferencia("espaciosDisponibles")}
-                                    aria-pressed={preferencias.espaciosDisponibles}
-                                >
-                                    <span></span>
-                                </button>
-
-                            </div>
-
-
-                            <div className="config-item">
-
-                                <div className="config-item-icon">
-                                    <CalendarCheck size={16} />
-                                </div>
-
-                                <div className="config-item-content">
-                                    <strong>
-                                        Recordatorio de reservas
-                                    </strong>
-
-                                    <span>
-                                        Mostrá recordatorios de próximas reservas.
-                                    </span>
-                                </div>
-
-                                <button
-                                    type="button"
-                                    className={`switch ${
-                                        preferencias.recordatorioReservas ? "activo" : ""
-                                    }`}
-                                    onClick={() => cambiarPreferencia("recordatorioReservas")}
-                                    aria-pressed={preferencias.recordatorioReservas}
-                                >
-                                    <span></span>
-                                </button>
-
-                            </div>
-
-
-                            <div className="config-item">
-
-                                <div className="config-item-icon">
-                                    <Shield size={16} />
-                                </div>
-
-                                <div className="config-item-content">
-                                    <strong>
-                                        Confirmar antes de cancelar
-                                    </strong>
-
-                                    <span>
-                                        Pedir confirmación antes de cancelar
-                                        una reserva.
-                                    </span>
-                                </div>
-
-                                <button
-                                    type="button"
-                                    className={`switch ${
-                                        preferencias.confirmarCancelacion ? "activo" : ""
-                                    }`}
-                                    onClick={() => cambiarPreferencia("confirmarCancelacion")}
-                                    aria-pressed={preferencias.confirmarCancelacion}
-                                >
-                                    <span></span>
-                                </button>
-
-                            </div>
-
+                                        <button
+                                            type="button"
+                                            className={`switch ${
+                                                preferencias[configuracion.clave] ? "activo" : ""
+                                            }`}
+                                            onClick={() =>
+                                                cambiarPreferencia(configuracion.clave)
+                                            }
+                                            aria-pressed={preferencias[configuracion.clave]}
+                                        >
+                                            <span></span>
+                                        </button>
+                                    </div>
+                                );
+                            })}
                         </div>
-
-                    </section>
+                    </Panel>
 
                 </div>
 
@@ -267,82 +164,38 @@ function Configuracion() {
                             AYUDA
                     ========================= */}
 
-                    <section className="panel ayuda-card">
-
-                        <div className="panel-header panel-header-junto">
-                            <HelpCircle size={17} />
-                            <div>
-                                <h2>Ayuda y soporte</h2>
-                                <span>
-                                    ¿Necesitás ayuda con Habita?
-                                </span>
-                            </div>
-                        </div>
-
-
+                    <Panel className="ayuda-card" icono={<HelpCircle size={17} />} titulo="Ayuda y soporte" descripcion="¿Necesitás ayuda con Habita?">
                         <div className="ayuda-lista">
-
                             <button className="config-link">
-
-                                <div className="config-item-icon">
-                                    <HelpCircle size={15} />
-                                </div>
+                                <div className="config-item-icon"><HelpCircle size={15} /></div>
 
                                 <div className="config-item-content">
-                                    <strong>
-                                        Centro de ayuda
-                                    </strong>
-
-                                    <span>
-                                        Consultá preguntas frecuentes.
-                                    </span>
+                                    <strong>Centro de ayuda</strong>
+                                    <span>Consultá preguntas frecuentes.</span>
                                 </div>
 
                                 <ChevronRight size={14} />
-
                             </button>
 
-
                             <button className="config-link">
-
-                                <div className="config-item-icon">
-                                    <MessageCircle size={15} />
-                                </div>
+                                <div className="config-item-icon"><MessageCircle size={15} /></div>
 
                                 <div className="config-item-content">
-                                    <strong>
-                                        Reportar un problema
-                                    </strong>
-
-                                    <span>
-                                        Contanos si encontraste un error.
-                                    </span>
+                                    <strong>Reportar un problema</strong>
+                                    <span>Contanos si encontraste un error.</span>
                                 </div>
 
                                 <ChevronRight size={14} />
-
                             </button>
-
                         </div>
-
-                    </section>
+                    </Panel>
 
 
                     {/* =========================
                             INFORMACIÓN
                     ========================= */}
 
-                    <section className="panel">
-                        <div className="panel-header panel-header-junto">
-                            <FileText size={17} />
-                            <div>
-                                <h2>Información</h2>
-                                <span>
-                                    Información legal de Habita.
-                                </span>
-                            </div>
-                        </div>
-
+                    <Panel titulo="Cuenta" icono={<FileText size={17} />} descripcion="Información legal de Habita.">
 
                         <div className="info-links">
 
@@ -358,34 +211,22 @@ function Configuracion() {
 
                         </div>
 
+                        <div className="version-habita">Habita · Versión 1.0.0</div>
 
-                        <div className="version-habita">
-                            Habita · Versión 1.0.0
-                        </div>
-
-                    </section>
+                    </Panel>
 
 
                     {/* =========================
                         ZONA DE CUENTA
                     ========================= */}
-
-                    <section className="panel cuenta-card">
-                        
-                        <h2>Cuenta</h2>
+                    <Panel titulo="Cuenta" className="cuenta-card">
 
                         <button className="btn-logout">
                             <LogOut size={15} />
                             Cerrar sesión
                         </button>
 
-                        <button className="btn-eliminar">
-                            <Trash2 size={14} />
-                            Eliminar cuenta
-                        </button>
-
-                    </section>
-
+                    </Panel>
                 </aside>
 
             </div>

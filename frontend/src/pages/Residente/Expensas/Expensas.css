@@ -75,6 +75,10 @@
         DETALLE EXPENSA
 ========================= */
 
+.detalle-expensa .panel-contenido {
+    display: contents;
+}
+
 .detalle-expensa {
     display: grid;
     grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.2fr);
@@ -213,17 +217,6 @@
 
 .detalle-total strong {
     font-size: 14px;
-}
-
-
-/* =========================
-        SIDEBAR
-========================= */
-
-.expensas-sidebar {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
 }
 
 /* =========================

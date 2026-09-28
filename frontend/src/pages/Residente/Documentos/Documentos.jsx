@@ -18,7 +18,7 @@ import {
 } from "lucide-react";
 
 import "./Documentos.css";
-
+import Panel from "../../../components/Panel/Panel";
 
 /* =========================
         DATOS DE EJEMPLO
@@ -156,48 +156,26 @@ function Documentos() {
                         DOCUMENTOS RECIENTES
                     ========================= */}
 
-                    <section className="panel recientes-documentos">
-
-                        <div className="panel-header">
-
-                            <div>
-                                <h2>Documentos recientes</h2>
-                            </div>
-
-                            <button className="link-documentos">
-                                Ver todos
-                            </button>
-
-                        </div>
-
-
+                    <Panel
+                        titulo="Documentos recientes"
+                        accion={
+                            <button className="link-documentos">Ver todos</button>
+                        }
+                        className="recientes-documentos"
+                    >
                         <div className="tabla-documentos">
-
                             <div className="tabla-documentos-header">
-
                                 <span>Documento</span>
                                 <span>Categoría</span>
                                 <span>Fecha</span>
                                 <span>Acciones</span>
-
                             </div>
 
-
                             {documentosRecientes.map((documento, index) => (
-
-                                <div
-                                    className="tabla-documento-fila"
-                                    key={index}
-                                >
-
+                                <div className="tabla-documento-fila" key={index}>
                                     {/* DOCUMENTO */}
-
                                     <div className="documento-nombre">
-
-                                        <div
-                                            className={`documento-tipo ${documento.tipo}`}
-                                        >
-
+                                        <div className={`documento-tipo ${documento.tipo}`}>
                                             {documento.tipo === "pdf" && (
                                                 <span>PDF</span>
                                             )}
@@ -213,20 +191,13 @@ function Documentos() {
                                             {documento.tipo === "money" && (
                                                 <CircleDollarSign size={12} />
                                             )}
-
                                         </div>
 
-                                        <span>
-                                            {documento.nombre}
-                                        </span>
-
+                                        <span>{documento.nombre}</span>
                                     </div>
 
-
                                     {/* CATEGORÍA */}
-
                                     <span>
-
                                         <small
                                             className={`categoria-badge ${documento.categoria
                                                 .toLowerCase()
@@ -234,99 +205,53 @@ function Documentos() {
                                         >
                                             {documento.categoria}
                                         </small>
-
                                     </span>
-
 
                                     {/* FECHA */}
-
-                                    <span className="fecha-documento">
-                                        {documento.fecha}
-                                    </span>
-
+                                    <span className="fecha-documento">{documento.fecha}</span>
 
                                     {/* ACCIONES */}
-
                                     <div className="acciones-documento">
+                                        <button title="Descargar"><Download size={13} /></button>
 
-                                        <button title="Descargar">
-                                            <Download size={13} />
-                                        </button>
-
-                                        <button title="Ver documento">
-                                            <Eye size={13} />
-                                        </button>
-
+                                        <button title="Ver documento"><Eye size={13} /></button>
                                     </div>
-
                                 </div>
-
                             ))}
-
                         </div>
-
-                    </section>
+                    </Panel>
 
                     {/* =========================
                         EXPLORAR POR CATEGORÍA
                     ========================= */}
 
-                    <section className="panel explorar-documentos">
-
-                        <div className="panel-header">
-
-                            <div>
-                                <h2>Explorar por categoría</h2>
-                            </div>
-
+                    <Panel
+                        titulo="Explorar por categoría"
+                        accion={
                             <button className="link-documentos">
                                 Ver todas las categorías
                             </button>
-
-                        </div>
-
-
+                        }
+                        className="explorar-documentos"
+                    >
                         <div className="explorar-grid">
-
                             {categoriasExplorar.map((categoria, index) => {
-
                                 const Icono = categoria.icono;
 
                                 return (
-                                    <article
-                                        className="categoria-explorar"
-                                        key={index}
-                                    >
+                                    <article className="categoria-explorar" key={index}>
+                                        <div className={`explorar-icono ${categoria.clase}`}><Icono size={17} /></div>
 
-                                        <div
-                                            className={`explorar-icono ${categoria.clase}`}
-                                        >
-                                            <Icono size={17} />
-                                        </div>
+                                        <strong>{categoria.nombre}</strong>
 
+                                        <p>{categoria.descripcion}</p>
 
-                                        <strong>
-                                            {categoria.nombre}
-                                        </strong>
-
-
-                                        <p>
-                                            {categoria.descripcion}
-                                        </p>
-
-
-                                        <span>
-                                            {categoria.cantidad}
-                                        </span>
-
+                                        <span>{categoria.cantidad}</span>
                                     </article>
                                 );
-
                             })}
-
                         </div>
-
-                    </section>
+                    </Panel>
 
                 </div>
 
@@ -341,145 +266,64 @@ function Documentos() {
                         INFORMACIÓN IMPORTANTE
                     ========================= */}
 
-                    <article className="panel informacion-documentos">
-
-                        <div className="panel-header panel-header-junto">
-                            <Info size={14} />
-                            <h2>Información importante</h2>
-                        </div>
-
-
+                    <Panel titulo="Información importante" icono={<Info size={14} />} className="informacion-documentos">
                         <ul>
-
-                            <li>
-                                Los documentos se actualizan
-                                periódicamente.
-                            </li>
-
-                            <li>
-                                Podés descargar o visualizar
-                                cada archivo.
-                            </li>
-
-                            <li>
-                                Ante cualquier duda, podés
-                                contactar con la administración.
-                            </li>
-
+                            <li>Los documentos se actualizan periódicamente.</li>
+                            <li>Podés descargar o visualizar cada archivo.</li>
+                            <li>Ante cualquier duda, podés contactar con la administración.</li>
                         </ul>
-
-                    </article>
+                    </Panel>
 
 
                     {/* =========================
                         BÚSQUEDA RÁPIDA
                     ========================= */}
 
-                    <article className="panel busqueda-documentos">
-
-                        <div className="panel-header panel-header-junto">
-                            <Search size={14} />
-                            <h2>Búsqueda rápida</h2>
-                        </div>
-
-
+                    <Panel titulo="Búsqueda rápida" icono={<Search size={14} />} className="busqueda-documentos">
                         <div className="buscador-documentos">
+                            <input type="text" placeholder="Buscar documento..."/>
 
-                            <input
-                                type="text"
-                                placeholder="Buscar documento..."
-                            />
-
-                            <button>
-                                <Search size={14} />
-                            </button>
-
+                            <button><Search size={14} /></button>
                         </div>
-
-                    </article>
+                    </Panel>
 
 
                     {/* =========================
                         FILTROS
                     ========================= */}
 
-                    <article className="panel filtros-documentos">
-
-                        <div className="panel-header panel-header-junto">
-                            <SlidersHorizontal size={14} />
-                            <h2>Filtros</h2>
+                    <Panel titulo="Filtros" icono={<SlidersHorizontal size={14} />} className="filtros-documentos">
+                        <div className="filtro-documento">
+                            <select>
+                                <option>Todas las categorías</option>
+                                <option>Reglamentos</option>
+                                <option>Asambleas</option>
+                                <option>Estados contables</option>
+                                <option>Obras y mejoras</option>
+                                <option>Otros</option>
+                            </select>
                         </div>
-
 
                         <div className="filtro-documento">
-
                             <select>
-                                <option>
-                                    Todas las categorías
-                                </option>
-
-                                <option>
-                                    Reglamentos
-                                </option>
-
-                                <option>
-                                    Asambleas
-                                </option>
-
-                                <option>
-                                    Estados contables
-                                </option>
-
-                                <option>
-                                    Obras y mejoras
-                                </option>
-
-                                <option>
-                                    Otros
-                                </option>
+                                <option>Más recientes</option>
+                                <option>Más antiguos</option>
                             </select>
-
                         </div>
-
-
-                        <div className="filtro-documento">
-
-                            <select>
-                                <option>
-                                    Más recientes
-                                </option>
-
-                                <option>
-                                    Más antiguos
-                                </option>
-                            </select>
-
-                        </div>
-
-                    </article>
+                    </Panel>
 
                     {/* =========================
                         AYUDA
                     ========================= */}
 
-                    <article className="panel ayuda-documentos">
-
-                        <div className="panel-header panel-header-junto">
-                            <CircleHelp size={14} />
-                            <h2>¿Necesitás ayuda?</h2>
-                        </div>
-
-                        <p>
-                            Nuestro asistente puede ayudarte
-                            a encontrar el documento que necesitás.
-                        </p>
+                    <Panel titulo="¿Necesitás ayuda?" icono={<CircleHelp size={14} />} className="ayuda-documentos">
+                        <p>Nuestro asistente puede ayudarte a encontrar el documento que necesitás.</p>
 
                         <button className="btn-consultar">
                             <MessageCircle size={17} />
                             Chatear a Habita
                         </button>
-
-                    </article>
+                    </Panel>
 
 
                 </aside>

@@ -19,6 +19,7 @@ import {
 import imagenPredeterminada from "../../../assets/img/imagen-predeterminada.png";
 import "./Inicio.css";
 import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
+import Panel from "../../../components/Panel/Panel";
 
 // =========================
 // DATOS DE EJEMPLO
@@ -236,15 +237,9 @@ function Inicio() {
 
                 {/* EXPENSAS */}
 
-                <article className="panel">
-                    <div className="panel-header">
-                        <h2>Estado de expensas</h2>
-                        <span className="badge badge-pendiente">
-                            Pendiente
-                        </span>
-                    </div>
-
+                <Panel titulo="Estado de expensas"  accion={<Link to="/expensas">Ver detalles</Link>}>
                     <div className="expensas-content">
+
                         <span className="expensas-periodo">
                             Expensas ordinarias - Agosto 2026
                         </span>
@@ -265,39 +260,23 @@ function Inicio() {
 
                         <div className="expensas-row">
                             <span>Estado</span>
-
-                            <span className="texto-pendiente-expensa">
-                                {resumen.expensas.estado} de pago
-                            </span>
+                            <span>{resumen.expensas.estado} de pago</span>
                         </div>
 
-                        <button className="btn-principal">
-                            Pagar ahora
-                        </button>
+                        <button className="btn-principal">Pagar ahora</button>
 
-                        <Link to="/expensas" className="btn-secundario">
-                            <FileText size={16} />
-                            Ver detalle de expensas
-                        </Link>
                     </div>
-                </article>
+                </Panel>
 
                 {/* RESERVAS */}
 
-                <article className="panel">
-                    <div className="panel-header">
-                        <h2>Próximas reservas</h2>
-                        <Link to="/reservas">Ver todas</Link>
-                    </div>
-
+                <Panel titulo="Próximas reservas" accion={<Link to="/reservas">Ver todas</Link>}>
                     <div className="reservas-list">
-                        {reservas.map((reserva, index) => (
-                            <div className="reserva-item" key={index}>
+                        {reservas.map((reserva) => (
+                            <div className="reserva-item" key={reserva.id}>
+
                                 <div className="reserva-imagen">
-                                    <img
-                                        src={reserva.imagen}
-                                        alt={reserva.nombre}
-                                    />
+                                    <img src={reserva.imagen} alt={reserva.nombre}/>
                                 </div>
 
                                 <div className="reserva-info">
@@ -313,8 +292,7 @@ function Inicio() {
                                         {reserva.horario}
                                     </span>
 
-                                    <small
-                                        className={
+                                    <small className={
                                             reserva.estado === "Pendiente"
                                                 ? "estado-pendiente"
                                                 : "estado-confirmada"
@@ -323,30 +301,20 @@ function Inicio() {
                                         {reserva.estado}
                                     </small>
                                 </div>
+
                             </div>
                         ))}
                     </div>
-
-                    <Link className="link-abajo" to="/reservas">
-                        Ir a mis reservas
-                        <ChevronRight size={17} />
-                    </Link>
-                </article>
+                </Panel>
 
                 {/* AVISOS */}
 
-                <article className="panel">
-                    <div className="panel-header">
-                        <h2>Avisos del consorcio</h2>
-                        <Link to="/avisos">Ver todos</Link>
-                    </div>
-
+                <Panel titulo="Avisos del consorcio" accion={<Link to="/avisos">Ver todos</Link>}>
                     <div className="avisos-list">
-                        {avisos.map((aviso, index) => (
-                            <div className="aviso-item" key={index}>
-                                <div
-                                    className={`aviso-icon ${aviso.clase}`}
-                                >
+                        {avisos.map((aviso) => (
+                            <div className="aviso-item" key={aviso.id}>
+
+                                <div className={`aviso-icon ${aviso.clase}`}>
                                     {aviso.icon}
                                 </div>
 
@@ -358,34 +326,24 @@ function Inicio() {
 
                                     <p>{aviso.descripcion}</p>
                                 </div>
+
                             </div>
                         ))}
                     </div>
-
-                    <Link className="link-abajo" to="/avisos">
-                        Ver todos los avisos
-                        <ChevronRight size={17} />
-                    </Link>
-                </article>
+                </Panel>
 
                 {/* DOCUMENTOS */}
-
-                <article className="panel">
-                    <div className="panel-header">
-                        <h2>Documentos recientes</h2>
-                        <Link to="/documentos">Ver todos</Link>
-                    </div>
-
+                <Panel titulo="Documentos recientes" accion={<Link to="/documentos">Ver todos</Link>}>
                     <div className="documentos-list">
-                        {documentos.map((documento, index) => (
-                            <div className="documento-item" key={index}>
-                                <div
-                                    className={`documento-icon ${documento.icon}`}
-                                >
+                        {documentos.map((documento) => (
+                            <div className="documento-item" key={documento.id}>
+                                <div className={`documento-icon ${documento.icon}`}>
                                     {documento.icon === "pdf" && "PDF"}
+
                                     {documento.icon === "doc" && (
                                         <FileText size={17} />
                                     )}
+
                                     {documento.icon === "money" && (
                                         <CircleDollarSign size={17} />
                                     )}
@@ -393,7 +351,6 @@ function Inicio() {
 
                                 <div>
                                     <strong>{documento.nombre}</strong>
-
                                     <span>
                                         {documento.tipo} · {documento.fecha}
                                     </span>
@@ -405,19 +362,14 @@ function Inicio() {
                             </div>
                         ))}
                     </div>
-                </article>
+                </Panel>
 
                 {/* CALENDARIO */}
 
-                <article className="panel">
-                    <div className="panel-header">
-                        <h2>Calendario comunitario</h2>
-                        <a href="#">Ver calendario</a>
-                    </div>
-
+                <Panel titulo="Calendario comunitario" accion={<Link to="/calendario">Ver calendario</Link>}>
                     <div className="eventos-list">
-                        {eventos.map((evento, index) => (
-                            <div className="evento-item" key={index}>
+                        {eventos.map((evento) => (
+                            <div className="evento-item" key={evento.id}>
                                 <div className="evento-fecha">
                                     <span>{evento.mes}</span>
                                     <strong>{evento.dia}</strong>
@@ -430,19 +382,12 @@ function Inicio() {
                             </div>
                         ))}
                     </div>
-                </article>
+                </Panel>
 
                 {/* ASISTENTE */}
 
-                <article className="panel asistente-card">
-                    <div className="panel-header">
-                        <h2>Asistente Habita</h2>
-                    </div>
-
-                    <p>
-                        Tu asistente inteligente siempre
-                        disponible para ayudarte.
-                    </p>
+                <Panel titulo="Asistente Habita" className="asistente-card">
+                    <p>Tu asistente inteligente siempre <br /> disponible para ayudarte.</p>
 
                     <div className="preguntas">
                         <button>¿Cómo reservo el SUM?</button>
@@ -454,7 +399,7 @@ function Inicio() {
                         <MessageCircle size={17} />
                         Chatear con Habita
                     </button>
-                </article>
+                </Panel>
 
             </section>
         </main>
