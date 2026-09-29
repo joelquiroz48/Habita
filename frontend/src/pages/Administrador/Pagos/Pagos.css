@@ -110,19 +110,8 @@
   grid-template-columns: 1fr;
 }
 
-.pagos-tabla-card {
-  background: var(--blanco);
-  border: 1px solid var(--borde-tarjeta);
-  border-radius: 12px;
-  overflow: hidden;
-  overflow-x: auto;
-}
-
-.pagos-tabla-header,
-.pagos-tabla-fila {
-  display: grid;
-  grid-template-columns: 0.9fr 1.1fr 0.6fr 0.9fr 0.9fr 1.3fr 0.9fr 0.8fr;
-  align-items: center;
+.pagos-tabla .tabla-header,
+.pagos-tabla .tabla-fila {
   gap: 10px;
   padding: 13px 18px;
   width: 100%;
@@ -130,37 +119,18 @@
   min-width: 780px;
 }
 
-.pagos-tabla-header {
-  border-bottom: 1px solid var(--borde-secundario);
-}
-
-.pagos-tabla-header span {
+.pagos-tabla .tabla-header span {
   font-size: 12px;
   font-weight: 600;
   color: var(--texto-secundario);
   text-align: left;
 }
 
-.pagos-tabla-fila {
-  border: none;
-  border-bottom: 1px solid var(--separador);
+.pagos-tabla .tabla-fila {
   background: transparent;
-  font-size: 13px;
-  color: var(--texto-principal);
-  cursor: pointer;
-  text-align: left;
-  font-family: inherit;
 }
 
-.pagos-tabla-body .pagos-tabla-fila:last-child {
-  border-bottom: none;
-}
-
-.pagos-tabla-fila:hover {
-  background: var(--fondo);
-}
-
-.pagos-tabla-fila.seleccionada {
+.pagos-tabla .tabla-fila.seleccionada {
   background: var(--celeste-claro);
 }
 
@@ -216,48 +186,13 @@
   color: var(--texto-icono);
 }
 
-/* ---- paginacion ---- */
-
-.pagos-paginacion {
-  display: flex;
-  align-items: center;
-  gap: 6px;
+.pagos-tabla .tabla-paginacion {
+  padding: 0 18px 14px;
   margin-top: 16px;
-  flex-wrap: wrap;
 }
 
-.pagos-pagina,
-.pagos-pagina-flecha {
-  min-width: 30px;
-  height: 30px;
-  border: 1px solid var(--borde-secundario);
-  border-radius: 7px;
-  background: var(--blanco);
-  color: var(--texto-secundario);
-  font-size: 13px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  padding: 0 6px;
-}
-
-.pagos-pagina.activa {
-  border-color: var(--verde);
-  color: var(--verde);
-  font-weight: 600;
-}
-
-.pagos-pagina-puntos {
-  color: var(--texto-secundario);
-  font-size: 13px;
-  padding: 0 2px;
-}
-
-.pagos-paginacion-info {
-  margin-left: auto;
+.pagos-tabla .tabla-paginacion-info {
   font-size: 12px;
-  color: var(--texto-secundario);
 }
 
 /* =========================

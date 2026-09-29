@@ -112,55 +112,26 @@
   color: var(--texto-principal);
 }
 
-.expensas-tabla-card {
-  background: var(--blanco);
-  border: 1px solid var(--borde-tarjeta);
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-.expensas-tabla-header,
-.expensas-tabla-fila {
-  display: grid;
-  grid-template-columns: 20px 1fr 1fr 1fr 1.3fr 0.8fr 0.7fr;
-  align-items: center;
+.expensas-tabla .tabla-header,
+.expensas-tabla .tabla-fila {
   gap: 10px;
   padding: 14px 18px;
   width: 100%;
   box-sizing: border-box;
 }
 
-.expensas-tabla-header {
-  border-bottom: 1px solid var(--borde-secundario);
-}
-
-.expensas-tabla-header span {
+.expensas-tabla .tabla-header span {
   font-size: 12px;
   font-weight: 600;
   color: var(--texto-secundario);
   text-align: left;
 }
 
-.expensas-tabla-fila {
-  border: none;
-  border-bottom: 1px solid var(--separador);
+.expensas-tabla .tabla-fila {
   background: transparent;
-  font-size: 13px;
-  color: var(--texto-principal);
-  cursor: pointer;
-  text-align: left;
-  font-family: inherit;
 }
 
-.expensas-tabla-body .expensas-tabla-fila:last-child {
-  border-bottom: none;
-}
-
-.expensas-tabla-fila:hover {
-  background: var(--fondo);
-}
-
-.expensas-tabla-fila.seleccionada {
+.expensas-tabla .tabla-fila.seleccionada {
   background: var(--celeste-claro);
 }
 
@@ -197,48 +168,13 @@
   color: var(--texto-icono);
 }
 
-/* ---- paginacion ---- */
-
-.expensas-paginacion {
-  display: flex;
-  align-items: center;
-  gap: 6px;
+.expensas-tabla .tabla-paginacion {
+  padding: 0 18px 14px;
   margin-top: 16px;
-  flex-wrap: wrap;
 }
 
-.expensas-pagina,
-.expensas-pagina-flecha {
-  min-width: 30px;
-  height: 30px;
-  border: 1px solid var(--borde-secundario);
-  border-radius: 7px;
-  background: var(--blanco);
-  color: var(--texto-secundario);
-  font-size: 13px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  padding: 0 6px;
-}
-
-.expensas-pagina.activa {
-  border-color: var(--verde);
-  color: var(--verde);
-  font-weight: 600;
-}
-
-.expensas-pagina-puntos {
-  color: var(--texto-secundario);
-  font-size: 13px;
-  padding: 0 2px;
-}
-
-.expensas-paginacion-info {
-  margin-left: auto;
+.expensas-tabla .tabla-paginacion-info {
   font-size: 12px;
-  color: var(--texto-secundario);
 }
 
 /* ---- panel de detalle ---- */
@@ -358,15 +294,15 @@
     grid-template-columns: 1fr;
   }
 
-  .expensas-tabla-header,
-  .expensas-tabla-fila {
-    grid-template-columns: 20px 1fr 1fr;
+  .expensas-tabla .tabla-header,
+  .expensas-tabla .tabla-fila {
+    grid-template-columns: 20px 1fr 1fr 0.8fr 0.7fr !important;
   }
 
-  .expensas-tabla-header span:nth-child(4),
-  .expensas-tabla-header span:nth-child(5),
-  .expensas-tabla-fila span:nth-child(4),
-  .expensas-tabla-fila span:nth-child(5) {
+  .expensas-tabla .tabla-header > span:nth-child(4),
+  .expensas-tabla .tabla-header > span:nth-child(5),
+  .expensas-tabla .tabla-fila > span:nth-child(4),
+  .expensas-tabla .tabla-fila > span:nth-child(5) {
     display: none;
   }
 }

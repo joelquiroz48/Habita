@@ -9,7 +9,6 @@ import {
     Search,
     Eye,
     MoreVertical,
-    ChevronLeft,
     ChevronRight,
     X,
     CreditCard,
@@ -20,6 +19,7 @@ import {
 import "./Pagos.css";
 import Panel from "../../../components/Panel/Panel";
 import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
+import Tabla from "../../../components/Tabla/Tabla";
 
 // =========================
 // DATOS DE EJEMPLO
@@ -69,9 +69,6 @@ const pagos = [
         metodoSub: "Banco BBVA", estado: "Rechazado", transaccion: "MP-8457293853",
     },
 ];
-
-const totalPagos = 78;
-const paginas = [1, 2, 3, 4, 5];
 
 const iconosMetodo = {
     tarjeta: CreditCard,
@@ -141,6 +138,70 @@ function Pagos() {
         setDetalleAbierto(true);
     }
 
+    const columnas = [
+        {
+            clave: "indicador",
+            titulo: "",
+            ancho: "20px",
+            render: (pago) => pagoSeleccionado.transaccion === pago.transaccion && detalleAbierto
+                ? <ChevronRight size={15} />
+                : null,
+        },
+        { clave: "fecha", titulo: "Fecha", ancho: "0.9fr" },
+        { clave: "residente", titulo: "Residente", ancho: "1.1fr", clase: "pagos-residente" },
+        { clave: "unidad", titulo: "Unidad", ancho: "0.6fr" },
+        { clave: "periodo", titulo: "Período", ancho: "0.9fr" },
+        {
+            clave: "importe",
+            titulo: "Importe",
+            ancho: "0.9fr",
+            render: (pago) => formatearMonto(pago.importe),
+        },
+        {
+            clave: "metodo",
+            titulo: "Método de pago",
+            ancho: "1.3fr",
+            render: (pago) => {
+                const Icono = iconosMetodo[pago.metodo];
+
+                return (
+                    <span className="pagos-metodo">
+                        <Icono size={16} />
+                        <span>
+                            {pago.metodoLabel}
+                            {pago.metodoSub && <small>{pago.metodoSub}</small>}
+                        </span>
+                    </span>
+                );
+            },
+        },
+        {
+            clave: "estado",
+            titulo: "Estado",
+            ancho: "0.9fr",
+            render: (pago) => (
+                <span className={`pagos-badge ${badgeClase(pago.estado)}`}>
+                    {pago.estado}
+                </span>
+            ),
+        },
+        {
+            clave: "comprobante",
+            titulo: "Comprobante",
+            ancho: "0.8fr",
+            render: () => (
+                <span className="pagos-tabla-acciones">
+                    <span aria-label="Ver comprobante">
+                        <Eye size={16} />
+                    </span>
+                    <span aria-label="Más opciones">
+                        <MoreVertical size={16} />
+                    </span>
+                </span>
+            ),
+        },
+    ];
+
     return (
         <main className="pagos">
 
@@ -204,89 +265,18 @@ function Pagos() {
 
                 <section className="pagos-listado">
 
-                    <div className="pagos-tabla-card">
-                        <div className="pagos-tabla-header">
-                            <span>Fecha</span>
-                            <span>Residente</span>
-                            <span>Unidad</span>
-                            <span>Período</span>
-                            <span>Importe</span>
-                            <span>Método de pago</span>
-                            <span>Estado</span>
-                            <span>Comprobante</span>
-                        </div>
-
-                        <div className="pagos-tabla-body">
-                            {pagos.map((pago, index) => {
-                                const Icono = iconosMetodo[pago.metodo];
-                                const seleccionado = pagoSeleccionado.transaccion === pago.transaccion;
-
-                                return (
-                                    <button
-                                        key={index}
-                                        className={`pagos-tabla-fila ${seleccionado && detalleAbierto ? "seleccionada" : ""}`}
-                                        onClick={() => abrirDetalle(pago)}
-                                    >
-                                        <span>{pago.fecha}</span>
-                                        <span className="pagos-residente">{pago.residente}</span>
-                                        <span>{pago.unidad}</span>
-                                        <span>{pago.periodo}</span>
-                                        <span>{formatearMonto(pago.importe)}</span>
-
-                                        <span className="pagos-metodo">
-                                            <Icono size={16} />
-                                            <span>
-                                                {pago.metodoLabel}
-                                                {pago.metodoSub && (
-                                                    <small>{pago.metodoSub}</small>
-                                                )}
-                                            </span>
-                                        </span>
-
-                                        <span className={`pagos-badge ${badgeClase(pago.estado)}`}>
-                                            {pago.estado}
-                                        </span>
-
-                                        <span className="pagos-tabla-acciones">
-                                            <span aria-label="Ver comprobante">
-                                                <Eye size={16} />
-                                            </span>
-                                            <span aria-label="Más opciones">
-                                                <MoreVertical size={16} />
-                                            </span>
-                                        </span>
-                                    </button>
-                                );
-                            })}
-                        </div>
-                    </div>
-
-                    <div className="pagos-paginacion">
-                        <button className="pagos-pagina-flecha" aria-label="Página anterior">
-                            <ChevronLeft size={16} />
-                        </button>
-
-                        {paginas.map((pagina) => (
-                            <button
-                                key={pagina}
-                                className={`pagos-pagina ${pagina === 1 ? "activa" : ""}`}
-                            >
-                                {pagina}
-                            </button>
-                        ))}
-
-                        <span className="pagos-pagina-puntos">...</span>
-
-                        <button className="pagos-pagina">10</button>
-
-                        <button className="pagos-pagina-flecha" aria-label="Página siguiente">
-                            <ChevronRight size={16} />
-                        </button>
-
-                        <span className="pagos-paginacion-info">
-                            Mostrando 1 a {pagos.length} de {totalPagos} pagos
-                        </span>
-                    </div>
+                    <Tabla
+                        columnas={columnas}
+                        datos={pagos}
+                        etiqueta="pagos"
+                        className="pagos-tabla"
+                        onFilaClick={abrirDetalle}
+                        claseFila={(pago) =>
+                            pagoSeleccionado.transaccion === pago.transaccion && detalleAbierto
+                                ? "seleccionada"
+                                : ""
+                        }
+                    />
 
                 </section>
 

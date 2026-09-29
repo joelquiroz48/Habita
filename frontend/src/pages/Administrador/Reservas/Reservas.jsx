@@ -21,6 +21,7 @@ import {
 import "./Reservas.css";
 import Panel from "../../../components/Panel/Panel";
 import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
+import Tabla from "../../../components/Tabla/Tabla";
 
 // =========================
 // DATOS DE EJEMPLO
@@ -111,9 +112,6 @@ const reservas = [
     },
 ];
 
-const totalReservas = 28;
-const paginas = [1, 2, 3, 4];
-
 const tabs = ["Todas", "Pendientes", "Confirmadas", "Canceladas"];
 
 const estadoPorTab = {
@@ -176,6 +174,70 @@ function badgeClase(estado) {
     if (estado === "Pendiente") return "reservas-badge-pendiente";
     return "reservas-badge-cancelada";
 }
+
+const columnas = [
+    {
+        clave: "fecha",
+        titulo: "Fecha y hora",
+        ancho: "1fr",
+        render: (reserva) => (
+            <span className="reservas-fecha-celda">
+                <span>
+                    {reserva.fecha}
+                    <small>{reserva.horario}</small>
+                </span>
+            </span>
+        ),
+    },
+    {
+        clave: "espacio",
+        titulo: "Espacio",
+        ancho: "1.2fr",
+        render: (reserva) => {
+            const Icono = iconosEspacio[reserva.espacio];
+
+            return (
+                <span className="reservas-espacio-celda">
+                    <span className={`reservas-icono ${claseEspacio[reserva.espacio]}`}>
+                        <Icono size={16} />
+                    </span>
+                    <span>
+                        <strong>{reserva.espacio}</strong>
+                        <small>{reserva.ubicacion}</small>
+                    </span>
+                </span>
+            );
+        },
+    },
+    { clave: "residente", titulo: "Residente", ancho: "1fr" },
+    { clave: "unidad", titulo: "Unidad", ancho: "0.6fr" },
+    {
+        clave: "estado",
+        titulo: "Estado",
+        ancho: "0.9fr",
+        render: (reserva) => (
+            <span className={`reservas-badge ${badgeClase(reserva.estado)}`}>
+                {reserva.estado}
+            </span>
+        ),
+    },
+    { clave: "creada", titulo: "Creada el", ancho: "1fr", clase: "reservas-creada" },
+    {
+        clave: "acciones",
+        titulo: "Acciones",
+        ancho: "0.7fr",
+        render: () => (
+            <span className="reservas-tabla-acciones">
+                <button aria-label="Ver reserva">
+                    <Eye size={16} />
+                </button>
+                <button aria-label="Más opciones">
+                    <MoreVertical size={16} />
+                </button>
+            </span>
+        ),
+    },
+];
 
 function Reservas() {
 
@@ -255,90 +317,12 @@ function Reservas() {
                         ))}
                     </div>
 
-                    <div className="reservas-tabla-card">
-                        <div className="reservas-tabla-header">
-                            <span>Fecha y hora</span>
-                            <span>Espacio</span>
-                            <span>Residente</span>
-                            <span>Unidad</span>
-                            <span>Estado</span>
-                            <span>Creada el</span>
-                            <span>Acciones</span>
-                        </div>
-
-                        <div className="reservas-tabla-body">
-                            {reservasFiltradas.map((reserva, index) => {
-                                const Icono = iconosEspacio[reserva.espacio];
-
-                                return (
-                                    <div className="reservas-tabla-fila" key={index}>
-                                        <span className="reservas-fecha-celda">
-                                            <Calendar size={14} />
-                                            <span>
-                                                {reserva.fecha}
-                                                <small>{reserva.horario}</small>
-                                            </span>
-                                        </span>
-
-                                        <span className="reservas-espacio-celda">
-                                            <span className={`reservas-icono ${claseEspacio[reserva.espacio]}`}>
-                                                <Icono size={16} />
-                                            </span>
-                                            <span>
-                                                <strong>{reserva.espacio}</strong>
-                                                <small>{reserva.ubicacion}</small>
-                                            </span>
-                                        </span>
-
-                                        <span>{reserva.residente}</span>
-                                        <span>{reserva.unidad}</span>
-
-                                        <span className={`reservas-badge ${badgeClase(reserva.estado)}`}>
-                                            {reserva.estado}
-                                        </span>
-
-                                        <span className="reservas-creada">{reserva.creada}</span>
-
-                                        <span className="reservas-tabla-acciones">
-                                            <button aria-label="Ver reserva">
-                                                <Eye size={16} />
-                                            </button>
-                                            <button aria-label="Más opciones">
-                                                <MoreVertical size={16} />
-                                            </button>
-                                        </span>
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    </div>
-
-                    <div className="reservas-paginacion">
-                        <button className="reservas-pagina-flecha" aria-label="Página anterior">
-                            <ChevronLeft size={16} />
-                        </button>
-
-                        {paginas.map((pagina) => (
-                            <button
-                                key={pagina}
-                                className={`reservas-pagina ${pagina === 1 ? "activa" : ""}`}
-                            >
-                                {pagina}
-                            </button>
-                        ))}
-
-                        <span className="reservas-pagina-puntos">...</span>
-
-                        <button className="reservas-pagina">6</button>
-
-                        <button className="reservas-pagina-flecha" aria-label="Página siguiente">
-                            <ChevronRight size={16} />
-                        </button>
-
-                        <span className="reservas-paginacion-info">
-                            Mostrando 1 a {reservas.length} de {totalReservas} reservas
-                        </span>
-                    </div>
+                    <Tabla
+                        columnas={columnas}
+                        datos={reservasFiltradas}
+                        etiqueta="reservas"
+                        className="reservas-tabla"
+                    />
 
                 </section>
 

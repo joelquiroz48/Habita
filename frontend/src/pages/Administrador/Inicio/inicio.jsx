@@ -16,6 +16,7 @@ import {
 import "./Inicio.css";
 import Panel from "../../../components/Panel/Panel";
 import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
+import TablaReportes from "../../../components/TablaReportes/TablaReportes";
 
 // =========================
 // DATOS DE EJEMPLO
@@ -76,7 +77,6 @@ const reclamosPorEstado = [
 
 const totalReclamos = reclamosPorEstado.reduce((acc, r) => acc + r.cantidad, 0);
 
-// Genera los porcentajes acumulados para el conic-gradient del donut
 function armarGradienteDonut(datos) {
     let acumulado = 0;
     const segmentos = datos.map((d) => {
@@ -229,6 +229,60 @@ const resumenTarjetas = [
     },
 ];
 
+const columnasReclamos = [
+    {
+        clave: "titulo",
+        ancho: "minmax(0, 1.6fr)",
+        className: "admin-tabla-titulo",
+    },
+    {
+        clave: "estado",
+        ancho: "auto",
+        render: (estado) => (
+            <span className={`admin-badge ${badgeClase(estado)}`}>
+                {estado}
+            </span>
+        ),
+    },
+    {
+        clave: "ubicacion",
+        ancho: "minmax(0, 1fr)",
+        className: "admin-tabla-secundario",
+    },
+    {
+        clave: "fecha",
+        ancho: "auto",
+        className: "admin-tabla-fecha",
+    },
+];
+
+const columnasPagos = [
+    {
+        clave: "unidad",
+        ancho: "minmax(0, 1.6fr)",
+        className: "admin-tabla-titulo",
+    },
+    {
+        clave: "monto",
+        ancho: "minmax(0, 1fr)",
+        className: "admin-tabla-secundario",
+    },
+    {
+        clave: "fecha",
+        ancho: "auto",
+        className: "admin-tabla-fecha",
+    },
+    {
+        clave: "estado",
+        ancho: "auto",
+        render: (estado) => (
+            <span className={`admin-badge ${badgeClase(estado)}`}>
+                {estado}
+            </span>
+        ),
+    },
+];
+
 function badgeClase(estado) {
     switch (estado) {
         case "Pendiente":
@@ -347,33 +401,21 @@ function Dashboard() {
             <section className="admin-fila-central">
 
                 <Panel titulo="Últimos reclamos" accion={<Link to="/administrador/reclamos">Ver todos</Link>}>
-                    <div className="admin-tabla-lista">
-                        {ultimosReclamos.map((reclamo, index) => (
-                            <div className="admin-tabla-fila" key={index}>
-                                <span className="admin-tabla-titulo">{reclamo.titulo}</span>
-                                <span className={`admin-badge ${badgeClase(reclamo.estado)}`}>
-                                    {reclamo.estado}
-                                </span>
-                                <span className="admin-tabla-secundario">{reclamo.ubicacion}</span>
-                                <span className="admin-tabla-fecha">{reclamo.fecha}</span>
-                            </div>
-                        ))}
-                    </div>
+                    <TablaReportes
+                        columnas={columnasReclamos}
+                        datos={ultimosReclamos}
+                        obtenerClave={(reclamo) =>
+                            `${reclamo.titulo}-${reclamo.fecha}`
+                        }
+                    />
                 </Panel>
 
                 <Panel titulo="Últimos pagos" accion={<Link to="/administrador/pagos">Ver todos</Link>}>
-                    <div className="admin-tabla-lista">
-                        {ultimosPagos.map((pago, index) => (
-                            <div className="admin-tabla-fila" key={index}>
-                                <span className="admin-tabla-titulo">{pago.unidad}</span>
-                                <span className="admin-tabla-secundario">{pago.monto}</span>
-                                <span className="admin-tabla-fecha">{pago.fecha}</span>
-                                <span className={`admin-badge ${badgeClase(pago.estado)}`}>
-                                    {pago.estado}
-                                </span>
-                            </div>
-                        ))}
-                    </div>
+                    <TablaReportes
+                        columnas={columnasPagos}
+                        datos={ultimosPagos}
+                        obtenerClave={(pago) => `${pago.unidad}-${pago.fecha}`}
+                    />
                 </Panel>
 
             </section>

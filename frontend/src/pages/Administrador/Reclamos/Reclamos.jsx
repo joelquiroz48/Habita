@@ -9,8 +9,6 @@ import {
     Download,
     Eye,
     MoreVertical,
-    ChevronLeft,
-    ChevronRight,
     Wrench,
     Sparkles,
     ArrowUpDown,
@@ -22,6 +20,7 @@ import {
 import "./Reclamos.css";
 import Panel from "../../../components/Panel/Panel";
 import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
+import Tabla from "../../../components/Tabla/Tabla";
 
 // =========================
 // DATOS DE EJEMPLO
@@ -45,7 +44,6 @@ const reclamos = [
 ];
 
 const totalReclamos = 64;
-const paginas = [1, 2, 3, 4, 5];
 
 const resumenEstados = [
     { estado: "Pendientes", cantidad: 18, claseColor: "pendiente" },
@@ -127,6 +125,59 @@ function prioridadBadgeClase(prioridad) {
     return "reclamos-prioridad-baja";
 }
 
+const columnas = [
+    { clave: "id", titulo: "ID", ancho: "1fr", clase: "reclamos-id" },
+    { clave: "fecha", titulo: "Fecha", ancho: "0.9fr" },
+    { clave: "residente", titulo: "Residente", ancho: "1.1fr", clase: "reclamos-residente" },
+    { clave: "unidad", titulo: "Unidad", ancho: "0.6fr" },
+    {
+        clave: "categoria",
+        titulo: "Categoría",
+        ancho: "1fr",
+        render: (reclamo) => (
+            <span className={`reclamos-cat-badge ${categoriaBadgeClase(reclamo.categoria)}`}>
+                {reclamo.categoria}
+            </span>
+        ),
+    },
+    { clave: "asunto", titulo: "Asunto", ancho: "1.5fr", clase: "reclamos-asunto" },
+    {
+        clave: "estado",
+        titulo: "Estado",
+        ancho: "0.9fr",
+        render: (reclamo) => (
+            <span className={`reclamos-badge ${estadoBadgeClase(reclamo.estado)}`}>
+                {reclamo.estado}
+            </span>
+        ),
+    },
+    {
+        clave: "prioridad",
+        titulo: "Prioridad",
+        ancho: "0.8fr",
+        render: (reclamo) => (
+            <span className={`reclamos-badge ${prioridadBadgeClase(reclamo.prioridad)}`}>
+                {reclamo.prioridad}
+            </span>
+        ),
+    },
+    {
+        clave: "acciones",
+        titulo: "Acciones",
+        ancho: "0.7fr",
+        render: () => (
+            <span className="reclamos-tabla-acciones">
+                <button aria-label="Ver reclamo">
+                    <Eye size={16} />
+                </button>
+                <button aria-label="Más opciones">
+                    <MoreVertical size={16} />
+                </button>
+            </span>
+        ),
+    },
+];
+
 function Reclamos() {
 
     useEffect(() => {
@@ -193,80 +244,12 @@ function Reclamos() {
 
                 <section className="reclamos-listado">
 
-                    <div className="reclamos-tabla-card">
-                        <div className="reclamos-tabla-header">
-                            <span>ID</span>
-                            <span>Fecha</span>
-                            <span>Residente</span>
-                            <span>Unidad</span>
-                            <span>Categoría</span>
-                            <span>Asunto</span>
-                            <span>Estado</span>
-                            <span>Prioridad</span>
-                            <span>Acciones</span>
-                        </div>
-
-                        <div className="reclamos-tabla-body">
-                            {reclamos.map((reclamo) => (
-                                <div className="reclamos-tabla-fila" key={reclamo.id}>
-                                    <span className="reclamos-id">{reclamo.id}</span>
-                                    <span>{reclamo.fecha}</span>
-                                    <span className="reclamos-residente">{reclamo.residente}</span>
-                                    <span>{reclamo.unidad}</span>
-
-                                    <span className={`reclamos-cat-badge ${categoriaBadgeClase(reclamo.categoria)}`}>
-                                        {reclamo.categoria}
-                                    </span>
-
-                                    <span className="reclamos-asunto">{reclamo.asunto}</span>
-
-                                    <span className={`reclamos-badge ${estadoBadgeClase(reclamo.estado)}`}>
-                                        {reclamo.estado}
-                                    </span>
-
-                                    <span className={`reclamos-badge ${prioridadBadgeClase(reclamo.prioridad)}`}>
-                                        {reclamo.prioridad}
-                                    </span>
-
-                                    <span className="reclamos-tabla-acciones">
-                                        <button aria-label="Ver reclamo">
-                                            <Eye size={16} />
-                                        </button>
-                                        <button aria-label="Más opciones">
-                                            <MoreVertical size={16} />
-                                        </button>
-                                    </span>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-
-                    <div className="reclamos-paginacion">
-                        <button className="reclamos-pagina-flecha" aria-label="Página anterior">
-                            <ChevronLeft size={16} />
-                        </button>
-
-                        {paginas.map((pagina) => (
-                            <button
-                                key={pagina}
-                                className={`reclamos-pagina ${pagina === 1 ? "activa" : ""}`}
-                            >
-                                {pagina}
-                            </button>
-                        ))}
-
-                        <span className="reclamos-pagina-puntos">...</span>
-
-                        <button className="reclamos-pagina">10</button>
-
-                        <button className="reclamos-pagina-flecha" aria-label="Página siguiente">
-                            <ChevronRight size={16} />
-                        </button>
-
-                        <span className="reclamos-paginacion-info">
-                            Mostrando 1 a {reclamos.length} de {totalReclamos} reclamos
-                        </span>
-                    </div>
+                    <Tabla
+                        columnas={columnas}
+                        datos={reclamos}
+                        etiqueta="reclamos"
+                        className="reclamos-tabla"
+                    />
 
                 </section>
 

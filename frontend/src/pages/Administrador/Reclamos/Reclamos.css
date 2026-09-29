@@ -114,19 +114,8 @@
   align-items: start;
 }
 
-.reclamos-tabla-card {
-  background: var(--blanco);
-  border: 1px solid var(--borde-tarjeta);
-  border-radius: 12px;
-  overflow: hidden;
-  overflow-x: auto;
-}
-
-.reclamos-tabla-header,
-.reclamos-tabla-fila {
-  display: grid;
-  grid-template-columns: 1fr 0.9fr 1.1fr 0.6fr 1fr 1.5fr 0.9fr 0.8fr 0.7fr;
-  align-items: center;
+.reclamos-tabla .tabla-header,
+.reclamos-tabla .tabla-fila {
   gap: 10px;
   padding: 13px 18px;
   width: 100%;
@@ -134,24 +123,10 @@
   min-width: 920px;
 }
 
-.reclamos-tabla-header {
-  border-bottom: 1px solid var(--borde-secundario);
-}
-
-.reclamos-tabla-header span {
+.reclamos-tabla .tabla-header span {
   font-size: 12px;
   font-weight: 600;
   color: var(--texto-secundario);
-}
-
-.reclamos-tabla-fila {
-  border-bottom: 1px solid var(--separador);
-  font-size: 13px;
-  color: var(--texto-principal);
-}
-
-.reclamos-tabla-body .reclamos-tabla-fila:last-child {
-  border-bottom: none;
 }
 
 .reclamos-id {
@@ -209,50 +184,6 @@
 
 .reclamos-tabla-acciones button:hover {
   color: var(--texto-principal);
-}
-
-/* ---- paginacion ---- */
-
-.reclamos-paginacion {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-top: 16px;
-  flex-wrap: wrap;
-}
-
-.reclamos-pagina,
-.reclamos-pagina-flecha {
-  min-width: 30px;
-  height: 30px;
-  border: 1px solid var(--borde-secundario);
-  border-radius: 7px;
-  background: var(--blanco);
-  color: var(--texto-secundario);
-  font-size: 13px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  padding: 0 6px;
-}
-
-.reclamos-pagina.activa {
-  border-color: var(--verde);
-  color: var(--verde);
-  font-weight: 600;
-}
-
-.reclamos-pagina-puntos {
-  color: var(--texto-secundario);
-  font-size: 13px;
-  padding: 0 2px;
-}
-
-.reclamos-paginacion-info {
-  margin-left: auto;
-  font-size: 12px;
-  color: var(--texto-secundario);
 }
 
 /* =========================

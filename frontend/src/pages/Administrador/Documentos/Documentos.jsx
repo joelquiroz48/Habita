@@ -9,7 +9,6 @@ import {
     ChevronDown,
     Download,
     MoreVertical,
-    ChevronLeft,
     ChevronRight,
     HardDrive,
     FolderPlus,
@@ -18,6 +17,7 @@ import {
 
 import "./Documentos.css";
 import Panel from "../../../components/Panel/Panel";
+import Tabla from "../../../components/Tabla/Tabla";
 
 // =========================
 // DATOS DE EJEMPLO
@@ -130,9 +130,6 @@ const documentos = [
     },
 ];
 
-const totalDocumentos = 62;
-const paginas = [1, 2, 3, 4, 5];
-
 const categorias = [
     { nombre: "Reglamentos", cantidad: 6, clase: "reglamentos" },
     { nombre: "Actas", cantidad: 12, clase: "actas" },
@@ -150,6 +147,68 @@ const accionesRapidas = [
     { icon: Upload, label: "Subir documento" },
     { icon: FolderPlus, label: "Nueva carpeta" },
     { icon: FileText, label: "Solicitar documento" },
+];
+
+const columnas = [
+    {
+        clave: "nombre",
+        titulo: "Nombre",
+        ancho: "2fr",
+        render: (doc) => (
+            <span className="documentos-nombre-celda">
+                <span className={`documentos-icono-archivo ${doc.icon}`}>
+                    {doc.icon.toUpperCase()}
+                </span>
+                <span className="documentos-nombre-texto">
+                    <strong>{doc.nombre}</strong>
+                    <small>{doc.subtitulo}</small>
+                </span>
+            </span>
+        ),
+    },
+    {
+        clave: "categoria",
+        titulo: "Categoría",
+        ancho: "1fr",
+        render: (doc) => (
+            <span className={`documentos-badge ${doc.clase}`}>
+                {doc.categoria}
+            </span>
+        ),
+    },
+    {
+        clave: "subidoPor",
+        titulo: "Subido por",
+        ancho: "1.4fr",
+        render: (doc) => (
+            <span className="documentos-subido-celda">
+                <span className={`documentos-avatar ${doc.avatar}`}>
+                    {doc.iniciales}
+                </span>
+                <span>
+                    <strong>{doc.subidoPor}</strong>
+                    <small>{doc.rol}</small>
+                </span>
+            </span>
+        ),
+    },
+    { clave: "fecha", titulo: "Fecha", ancho: "0.8fr", clase: "documentos-fecha" },
+    { clave: "tamano", titulo: "Tamaño", ancho: "0.7fr", clase: "documentos-tamano" },
+    {
+        clave: "acciones",
+        titulo: "Acciones",
+        ancho: "0.7fr",
+        render: () => (
+            <span className="documentos-tabla-acciones">
+                <button aria-label="Descargar">
+                    <Download size={16} />
+                </button>
+                <button aria-label="Más opciones">
+                    <MoreVertical size={16} />
+                </button>
+            </span>
+        ),
+    },
 ];
 
 function Documentos() {
@@ -200,88 +259,12 @@ function Documentos() {
 
                 <section className="documentos-listado">
 
-                    <div className="documentos-tabla-card">
-                        <div className="documentos-tabla-header">
-                            <span className="documentos-th-nombre">
-                                Nombre
-                                <ArrowDown size={13} />
-                            </span>
-                            <span>Categoría</span>
-                            <span>Subido por</span>
-                            <span>Fecha</span>
-                            <span>Tamaño</span>
-                            <span>Acciones</span>
-                        </div>
-
-                        <div className="documentos-tabla-body">
-                            {documentos.map((doc, index) => (
-                                <div className="documentos-tabla-fila" key={index}>
-                                    <span className="documentos-nombre-celda">
-                                        <span className={`documentos-icono-archivo ${doc.icon}`}>
-                                            {doc.icon.toUpperCase()}
-                                        </span>
-                                        <span className="documentos-nombre-texto">
-                                            <strong>{doc.nombre}</strong>
-                                            <small>{doc.subtitulo}</small>
-                                        </span>
-                                    </span>
-
-                                    <span className={`documentos-badge ${doc.clase}`}>
-                                        {doc.categoria}
-                                    </span>
-
-                                    <span className="documentos-subido-celda">
-                                        <span className={`documentos-avatar ${doc.avatar}`}>
-                                            {doc.iniciales}
-                                        </span>
-                                        <span>
-                                            <strong>{doc.subidoPor}</strong>
-                                            <small>{doc.rol}</small>
-                                        </span>
-                                    </span>
-
-                                    <span className="documentos-fecha">{doc.fecha}</span>
-                                    <span className="documentos-tamano">{doc.tamano}</span>
-
-                                    <span className="documentos-tabla-acciones">
-                                        <button aria-label="Descargar">
-                                            <Download size={16} />
-                                        </button>
-                                        <button aria-label="Más opciones">
-                                            <MoreVertical size={16} />
-                                        </button>
-                                    </span>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-
-                    <div className="documentos-paginacion">
-                        <button className="documentos-pagina-flecha" aria-label="Página anterior">
-                            <ChevronLeft size={16} />
-                        </button>
-
-                        {paginas.map((pagina) => (
-                            <button
-                                key={pagina}
-                                className={`documentos-pagina ${pagina === 1 ? "activa" : ""}`}
-                            >
-                                {pagina}
-                            </button>
-                        ))}
-
-                        <span className="documentos-pagina-puntos">...</span>
-
-                        <button className="documentos-pagina">8</button>
-
-                        <button className="documentos-pagina-flecha" aria-label="Página siguiente">
-                            <ChevronRight size={16} />
-                        </button>
-
-                        <span className="documentos-paginacion-info">
-                            Mostrando 1 a {documentos.length} de {totalDocumentos} documentos
-                        </span>
-                    </div>
+                    <Tabla
+                        columnas={columnas}
+                        datos={documentos}
+                        etiqueta="documentos"
+                        className="documentos-tabla"
+                    />
 
                 </section>
 

@@ -109,19 +109,8 @@
 
 /* ---- tabla ---- */
 
-.reservas-tabla-card {
-  background: var(--blanco);
-  border: 1px solid var(--borde-tarjeta);
-  border-radius: 12px;
-  overflow: hidden;
-  overflow-x: auto;
-}
-
-.reservas-tabla-header,
-.reservas-tabla-fila {
-  display: grid;
-  grid-template-columns: 1fr 1.2fr 1fr 0.6fr 0.9fr 1fr 0.7fr;
-  align-items: center;
+.reservas-tabla .tabla-header,
+.reservas-tabla .tabla-fila {
   gap: 10px;
   padding: 13px 18px;
   width: 100%;
@@ -129,31 +118,16 @@
   min-width: 880px;
 }
 
-.reservas-tabla-header {
-  border-bottom: 1px solid var(--borde-secundario);
-}
-
-.reservas-tabla-header span {
+.reservas-tabla .tabla-header > span {
   font-size: 12px;
   font-weight: 600;
   color: var(--texto-secundario);
 }
 
-.reservas-tabla-fila {
-  border-bottom: 1px solid var(--separador);
-  font-size: 13px;
-  color: var(--texto-principal);
-}
-
-.reservas-tabla-body .reservas-tabla-fila:last-child {
-  border-bottom: none;
-}
-
 .reservas-fecha-celda {
   display: flex;
-  align-items: center;
-  gap: 6px;
-  color: var(--texto-icono);
+  flex-direction: column;
+  color: var(--texto-principal);
 }
 
 .reservas-fecha-celda span {
@@ -230,48 +204,13 @@
   padding: 0;
 }
 
-/* ---- paginacion ---- */
-
-.reservas-paginacion {
-  display: flex;
-  align-items: center;
-  gap: 6px;
+.reservas-tabla .tabla-paginacion {
+  padding: 0 18px 13px;
   margin-top: 16px;
-  flex-wrap: wrap;
 }
 
-.reservas-pagina,
-.reservas-pagina-flecha {
-  min-width: 30px;
-  height: 30px;
-  border: 1px solid var(--borde-secundario);
-  border-radius: 7px;
-  background: var(--blanco);
-  color: var(--texto-secundario);
-  font-size: 13px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  padding: 0 6px;
-}
-
-.reservas-pagina.activa {
-  border-color: var(--verde);
-  color: var(--verde);
-  font-weight: 600;
-}
-
-.reservas-pagina-puntos {
-  color: var(--texto-secundario);
-  font-size: 13px;
-  padding: 0 2px;
-}
-
-.reservas-paginacion-info {
-  margin-left: auto;
+.reservas-tabla .tabla-paginacion-info {
   font-size: 12px;
-  color: var(--texto-secundario);
 }
 
 /* =========================

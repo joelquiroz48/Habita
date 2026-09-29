@@ -221,25 +221,6 @@
   margin-bottom: 16px;
 }
 
-.admin-tabla-lista {
-  display: flex;
-  flex-direction: column;
-}
-
-.admin-tabla-fila {
-  display: grid;
-  grid-template-columns: 1.6fr auto 1fr auto;
-  align-items: center;
-  gap: 10px;
-  padding: 9px 0;
-  border-bottom: 1px solid var(--separador);
-  font-size: 13px;
-}
-
-.admin-tabla-fila:last-child {
-  border-bottom: none;
-}
-
 .admin-tabla-titulo {
   color: var(--texto-principal);
   font-weight: 500;
@@ -420,11 +401,6 @@
 
   .admin-resumen {
     grid-template-columns: 1fr;
-  }
-
-  .admin-tabla-fila {
-    grid-template-columns: 1fr;
-    gap: 4px;
   }
 
   .admin-tabla-fecha {

@@ -9,7 +9,6 @@ import {
     Search,
     Eye,
     MoreVertical,
-    ChevronLeft,
     ChevronRight,
     Pencil,
     Download,
@@ -19,6 +18,7 @@ import {
 import "./Expensas.css";
 import Panel from "../../../components/Panel/Panel";
 import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
+import Tabla from "../../../components/Tabla/Tabla";
 
 // =========================
 // DATOS DE EJEMPLO
@@ -103,8 +103,6 @@ const expensas = [
 ];
 
 const totalUnidadesConExpensa = 96;
-const totalPeriodos = 47;
-const paginas = [1, 2, 3, 4, 5];
 
 function formatearMonto(numero) {
     return `$ ${numero.toLocaleString("es-AR")}`;
@@ -161,6 +159,63 @@ function Expensas() {
     ];
     const detalle = expensas.find((e) => e.periodo === periodoSeleccionado);
     const pendiente = detalle.importe - detalle.recaudado;
+    const columnas = [
+        {
+            clave: "indicador",
+            titulo: "",
+            ancho: "20px",
+            clase: "expensas-chevron",
+            render: (item) => item.periodo === periodoSeleccionado && <ChevronRight size={15} />,
+        },
+        {
+            clave: "periodo",
+            titulo: "Período",
+            ancho: "1fr",
+            clase: "expensas-periodo",
+        },
+        {
+            clave: "vencimiento",
+            titulo: "Vencimiento",
+            ancho: "1fr",
+        },
+        {
+            clave: "importe",
+            titulo: "Importe total",
+            ancho: "1fr",
+            render: (item) => formatearMonto(item.importe),
+        },
+        {
+            clave: "recaudado",
+            titulo: "Recaudado",
+            ancho: "1.3fr",
+            render: (item) => `${formatearMonto(item.recaudado)} (${item.porcentaje}%)`,
+        },
+        {
+            clave: "estado",
+            titulo: "Estado",
+            ancho: "0.8fr",
+            render: (item) => (
+                <span className={`expensas-badge ${badgeClase(item.estado)}`}>
+                    {item.estado}
+                </span>
+            ),
+        },
+        {
+            clave: "acciones",
+            titulo: "Acciones",
+            ancho: "0.7fr",
+            render: () => (
+                <span className="expensas-tabla-acciones">
+                    <span aria-label="Ver detalle">
+                        <Eye size={16} />
+                    </span>
+                    <span aria-label="Más opciones">
+                        <MoreVertical size={16} />
+                    </span>
+                </span>
+            ),
+        },
+    ];
 
     return (
         <main className="expensas">
@@ -220,81 +275,14 @@ function Expensas() {
                         </div>
                     </div>
 
-                    <div className="expensas-tabla-card">
-                        <div className="expensas-tabla-header">
-                            <span></span>
-                            <span>Período</span>
-                            <span>Vencimiento</span>
-                            <span>Importe total</span>
-                            <span>Recaudado</span>
-                            <span>Estado</span>
-                            <span>Acciones</span>
-                        </div>
-
-                        <div className="expensas-tabla-body">
-                            {expensas.map((item) => {
-                                const seleccionada = item.periodo === periodoSeleccionado;
-
-                                return (
-                                    <button
-                                        key={item.periodo}
-                                        className={`expensas-tabla-fila ${seleccionada ? "seleccionada" : ""}`}
-                                        onClick={() => setPeriodoSeleccionado(item.periodo)}
-                                    >
-                                        <span className="expensas-chevron">
-                                            {seleccionada && <ChevronRight size={15} />}
-                                        </span>
-                                        <span className="expensas-periodo">{item.periodo}</span>
-                                        <span>{item.vencimiento}</span>
-                                        <span>{formatearMonto(item.importe)}</span>
-                                        <span>
-                                            {formatearMonto(item.recaudado)} ({item.porcentaje}%)
-                                        </span>
-
-                                        <span className={`expensas-badge ${badgeClase(item.estado)}`}>
-                                            {item.estado}
-                                        </span>
-
-                                        <span className="expensas-tabla-acciones">
-                                            <span aria-label="Ver detalle">
-                                                <Eye size={16} />
-                                            </span>
-                                            <span aria-label="Más opciones">
-                                                <MoreVertical size={16} />
-                                            </span>
-                                        </span>
-                                    </button>
-                                );
-                            })}
-                        </div>
-                    </div>
-
-                    <div className="expensas-paginacion">
-                        <button className="expensas-pagina-flecha" aria-label="Página anterior">
-                            <ChevronLeft size={16} />
-                        </button>
-
-                        {paginas.map((pagina) => (
-                            <button
-                                key={pagina}
-                                className={`expensas-pagina ${pagina === 1 ? "activa" : ""}`}
-                            >
-                                {pagina}
-                            </button>
-                        ))}
-
-                        <span className="expensas-pagina-puntos">...</span>
-
-                        <button className="expensas-pagina">10</button>
-
-                        <button className="expensas-pagina-flecha" aria-label="Página siguiente">
-                            <ChevronRight size={16} />
-                        </button>
-
-                        <span className="expensas-paginacion-info">
-                            Mostrando 1 a {expensas.length} de {totalPeriodos} períodos
-                        </span>
-                    </div>
+                    <Tabla
+                        columnas={columnas}
+                        datos={expensas}
+                        etiqueta="períodos"
+                        className="expensas-tabla"
+                        onFilaClick={(item) => setPeriodoSeleccionado(item.periodo)}
+                        claseFila={(item) => item.periodo === periodoSeleccionado ? "seleccionada" : ""}
+                    />
 
                 </section>
 

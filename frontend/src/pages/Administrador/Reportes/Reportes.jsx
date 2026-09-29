@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import {
     Calendar,
     ChevronDown,
@@ -19,6 +20,7 @@ import {
 import "./Reportes.css";
 import Panel from "../../../components/Panel/Panel";
 import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
+import TablaReportes from "../../../components/TablaReportes/TablaReportes";
 
 // =========================
 // DATOS DE EJEMPLO
@@ -171,6 +173,60 @@ const resumenGeneral = [
     { metrica: "Reservas realizadas", valor: "46", variacion: "15.2%", positivo: true },
     { metrica: "Comunicados publicados", valor: "6", variacion: "20%", positivo: true },
     { metrica: "Nuevos residentes", valor: "12", variacion: "9.1%", positivo: true },
+];
+
+const columnasActividad = [
+    {
+        clave: "titulo",
+        titulo: "Actividad",
+        ancho: "minmax(0, 1fr)",
+        render: (_, item) => {
+
+            return (
+                <div className="reportes-actividad-contenido">
+                    <span className="reportes-actividad-texto">
+                        <strong>{item.titulo}</strong>
+                        <small>{item.subtitulo}</small>
+                    </span>
+                </div>
+            );
+        },
+    },
+    {
+        clave: "fecha",
+        titulo: "Fecha",
+        ancho: "auto",
+        className: "reportes-actividad-fecha",
+    },
+];
+
+const columnasResumen = [
+    {
+        clave: "metrica",
+        titulo: "Métrica",
+        ancho: "minmax(0, 1.5fr)",
+    },
+    {
+        clave: "valor",
+        titulo: "Valor",
+        ancho: "minmax(70px, 1fr)",
+        className: "reportes-tabla-resumen-valor",
+    },
+    {
+        clave: "variacion",
+        titulo: "Vs. mes anterior",
+        ancho: "minmax(120px, 1fr)",
+        render: (_, fila) => (
+            <span
+                className={`reportes-tendencia ${
+                    fila.positivo ? "positiva" : "negativa"
+                }`}
+            >
+                <ArrowUp size={12} />
+                {fila.variacion}
+            </span>
+        ),
+    },
 ];
 
 function Reportes() {
@@ -379,68 +435,21 @@ function Reportes() {
 
             <section className="reportes-inferior-grid">
 
-                <Panel titulo="Actividad reciente">
-                    <div className="reportes-actividad-lista">
-                        {actividadReciente.map((item, index) => {
-                            const Icono = item.icon;
-
-                            return (
-                                <div className="reportes-actividad-fila" key={index}>
-                                    <span className={`reportes-actividad-icon ${item.clase}`}>
-                                        <Icono size={16} />
-                                    </span>
-
-                                    <span className="reportes-actividad-texto">
-                                        <strong>{item.titulo}</strong>
-                                        <small>{item.subtitulo}</small>
-                                    </span>
-
-                                    <span className="reportes-actividad-fecha">
-                                        {item.fecha}
-                                    </span>
-                                </div>
-                            );
-                        })}
-                    </div>
-
-                    <a href="#" className="reportes-link-centrado">
-                        Ver toda la actividad
-                        <ChevronRight size={14} />
-                    </a>
+                <Panel titulo="Actividad reciente" accion={<Link to="/administrador/reportes">Ver todo</Link>}>
+                    <TablaReportes
+                        columnas={columnasActividad}
+                        datos={actividadReciente}
+                        obtenerClave={(item) => `${item.titulo}-${item.fecha}`}
+                    />
                 </Panel>
 
-                <Panel titulo="Resumen general del período">
-                    <div className="reportes-tabla-resumen">
-                        <div className="reportes-tabla-resumen-header">
-                            <span>Métrica</span>
-                            <span>Valor</span>
-                            <span>Vs. mes anterior</span>
-                        </div>
-
-                        {resumenGeneral.map((fila) => (
-                            <div className="reportes-tabla-resumen-fila" key={fila.metrica}>
-                                <span>{fila.metrica}</span>
-
-                                <span className="reportes-tabla-resumen-valor">
-                                    {fila.valor}
-                                </span>
-
-                                <span
-                                    className={`reportes-tendencia ${
-                                        fila.positivo ? "positiva" : "negativa"
-                                    }`}
-                                >
-                                    <ArrowUp size={12} />
-                                    {fila.variacion}
-                                </span>
-                            </div>
-                        ))}
-                    </div>
-
-                    <a href="#" className="reportes-link-centrado">
-                        Ver reporte completo
-                        <ChevronRight size={14} />
-                    </a>
+                <Panel titulo="Resumen general del período" accion={<Link to="/administrador/reportes">Ver todo</Link>}>
+                    <TablaReportes
+                        columnas={columnasResumen}
+                        datos={resumenGeneral}
+                        obtenerClave={(fila) => fila.metrica}
+                        mostrarEncabezado
+                    />
                 </Panel>
 
             </section>
