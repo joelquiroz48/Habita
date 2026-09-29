@@ -13,52 +13,6 @@
   gap: 14px;
 }
 
-.expensas-kpi-card {
-  background: var(--blanco);
-  border: 1px solid var(--borde-tarjeta);
-  border-radius: 12px;
-  padding: 16px;
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  box-sizing: border-box;
-}
-
-.expensas-kpi-icon {
-  width: 42px;
-  height: 42px;
-  min-width: 42px;
-  border-radius: 50%;
-  background: var(--fondo-icono-resumen);
-  color: var(--verde);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.expensas-kpi-card > div:last-child {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-}
-
-.expensas-kpi-label {
-  font-size: 12px;
-  color: var(--texto-secundario);
-  margin-bottom: 3px;
-}
-
-.expensas-kpi-card strong {
-  font-size: 19px;
-  color: var(--texto-principal);
-}
-
-.expensas-kpi-info {
-  font-size: 12px;
-  color: var(--texto-secundario);
-  margin-top: 3px;
-}
-
 .expensas-progreso {
   width: 100%;
   height: 6px;
@@ -228,13 +182,13 @@
 }
 
 .expensas-badge-curso {
-  color: var(--color-aviso-azul);
-  background: var(--fondo-aviso-azul);
+    color: var(--color-aviso-azul) !important;
+    background: var(--fondo-aviso-azul) !important;
 }
 
 .expensas-badge-cerrada {
-  color: var(--color-aviso-verde);
-  background: var(--fondo-aviso-verde);
+  color: var(--color-aviso-verde) !important;
+  background: var(--fondo-aviso-verde) !important;
 }
 
 .expensas-tabla-acciones {
@@ -288,23 +242,6 @@
 }
 
 /* ---- panel de detalle ---- */
-
-.expensas-detalle {
-  background: var(--blanco);
-  border: 1px solid var(--borde-tarjeta);
-  border-radius: 12px;
-  padding: 18px;
-  display: flex;
-  flex-direction: column;
-}
-
-.expensas-detalle-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 10px;
-}
 
 .expensas-detalle-header h2 {
   font-size: 15px;

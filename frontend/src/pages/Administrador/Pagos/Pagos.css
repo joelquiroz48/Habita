@@ -264,36 +264,6 @@
       PANEL DE DETALLE
 ========================= */
 
-.pagos-detalle {
-  background: var(--blanco);
-  border: 1px solid var(--borde-tarjeta);
-  border-radius: 12px;
-  padding: 18px;
-  display: flex;
-  flex-direction: column;
-}
-
-.pagos-detalle-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-
-.pagos-detalle-header h2 {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--texto-principal);
-}
-
-.pagos-detalle-cerrar {
-  border: none;
-  background: transparent;
-  color: var(--texto-icono);
-  cursor: pointer;
-  display: flex;
-}
-
 .pagos-detalle-fila {
   display: flex;
   justify-content: space-between;

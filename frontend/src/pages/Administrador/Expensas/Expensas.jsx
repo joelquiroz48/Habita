@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 
 import "./Expensas.css";
+import Panel from "../../../components/Panel/Panel";
 import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
 
 // =========================
@@ -299,14 +300,15 @@ function Expensas() {
 
                 {/* DETALLE */}
 
-                <aside className="expensas-detalle">
-
-                    <div className="expensas-detalle-header">
-                        <h2>Detalle de {detalle.periodo}</h2>
+                <Panel
+                    className="expensas-detalle"
+                    titulo={`Detalle de ${detalle.periodo}`}
+                    accion={
                         <span className={`expensas-badge ${badgeClase(detalle.estado)}`}>
                             {detalle.estado}
                         </span>
-                    </div>
+                    }
+                >
 
                     <p className="expensas-detalle-linea">
                         Vencimiento: <strong>{detalle.vencimiento}</strong>
@@ -355,7 +357,7 @@ function Expensas() {
                         Anular expensa
                     </button>
 
-                </aside>
+                </Panel>
 
             </div>
 

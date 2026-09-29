@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 
 import "./Pagos.css";
+import Panel from "../../../components/Panel/Panel";
 import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
 
 // =========================
@@ -292,10 +293,10 @@ function Pagos() {
                 {/* DETALLE */}
 
                 {detalleAbierto && (
-                    <aside className="pagos-detalle">
-
-                        <div className="pagos-detalle-header">
-                            <h2>Detalle del pago</h2>
+                    <Panel
+                        className="pagos-detalle"
+                        titulo="Detalle del pago"
+                        accion={
                             <button
                                 className="pagos-detalle-cerrar"
                                 onClick={() => setDetalleAbierto(false)}
@@ -303,8 +304,8 @@ function Pagos() {
                             >
                                 <X size={18} />
                             </button>
-                        </div>
-
+                        }
+                    >
                         <span className={`pagos-badge ${badgeClase(pagoSeleccionado.estado)}`}>
                             {pagoSeleccionado.estado}
                         </span>
@@ -313,37 +314,47 @@ function Pagos() {
                             <span>Residente</span>
                             <strong>{pagoSeleccionado.residente}</strong>
                         </div>
+
                         <div className="pagos-detalle-fila">
                             <span>Unidad</span>
                             <strong>{pagoSeleccionado.unidad}</strong>
                         </div>
+
                         <div className="pagos-detalle-fila">
                             <span>Período</span>
                             <strong>{pagoSeleccionado.periodo}</strong>
                         </div>
+
                         <div className="pagos-detalle-fila">
                             <span>Importe</span>
                             <strong>{formatearMonto(pagoSeleccionado.importe)}</strong>
                         </div>
+
                         <div className="pagos-detalle-fila">
                             <span>Fecha de pago</span>
                             <strong>{pagoSeleccionado.fecha} - {pagoSeleccionado.hora}</strong>
                         </div>
 
                         <p className="pagos-detalle-subtitulo">Método de pago</p>
+
                         <div className="pagos-detalle-metodo">
                             {(() => {
                                 const Icono = iconosMetodo[pagoSeleccionado.metodo];
                                 return <Icono size={18} />;
                             })()}
+
                             <span>
                                 {pagoSeleccionado.metodoLabel}
-                                {pagoSeleccionado.metodoSub && ` - ${pagoSeleccionado.metodoSub}`}
+                                {pagoSeleccionado.metodoSub &&
+                                    ` - ${pagoSeleccionado.metodoSub}`}
                             </span>
                         </div>
 
                         <p className="pagos-detalle-subtitulo">N° de transacción</p>
-                        <p className="pagos-detalle-transaccion">{pagoSeleccionado.transaccion}</p>
+
+                        <p className="pagos-detalle-transaccion">
+                            {pagoSeleccionado.transaccion}
+                        </p>
 
                         <div className="pagos-detalle-fila">
                             <span>Estado</span>
@@ -351,13 +362,16 @@ function Pagos() {
                         </div>
 
                         <h3>Comprobante</h3>
+
                         <button className="pagos-btn-comprobante">
                             <Download size={15} />
                             Descargar comprobante
                         </button>
-                        <span className="pagos-detalle-archivo">PDF - 124 KB</span>
 
-                    </aside>
+                        <span className="pagos-detalle-archivo">
+                            PDF - 124 KB
+                        </span>
+                    </Panel>
                 )}
 
             </div>

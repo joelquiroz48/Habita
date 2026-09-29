@@ -278,26 +278,6 @@
       COLUMNA LATERAL
 ========================= */
 
-.reservas-lateral {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.reservas-panel-card {
-  background: var(--blanco);
-  border: 1px solid var(--borde-tarjeta);
-  border-radius: 12px;
-  padding: 16px;
-}
-
-.reservas-panel-card h2 {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--texto-principal);
-  margin-bottom: 12px;
-}
-
 /* ---- calendario ---- */
 
 .reservas-calendario-nav {

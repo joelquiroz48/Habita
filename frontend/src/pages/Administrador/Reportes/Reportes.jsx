@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 
 import "./Reportes.css";
+import Panel from "../../../components/Panel/Panel";
 import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
 
 // =========================
@@ -230,12 +231,17 @@ function Reportes() {
 
             <section className="reportes-graficos-grid">
 
-                <article className="reportes-panel-card">
-                    <h2>Recaudación mensual</h2>
-
+                <Panel titulo="Recaudación mensual">
                     <div className="reportes-leyenda-barras">
-                        <span><span className="reportes-punto recaudado" /> Recaudado</span>
-                        <span><span className="reportes-punto pendiente" /> Pendiente</span>
+                        <span>
+                            <span className="reportes-punto recaudado" />
+                            Recaudado
+                        </span>
+
+                        <span>
+                            <span className="reportes-punto pendiente" />
+                            Pendiente
+                        </span>
                     </div>
 
                     <div className="reportes-barras-chart">
@@ -254,13 +260,19 @@ function Reportes() {
                                     <div className="reportes-barra-pista">
                                         <div
                                             className="reportes-barra-segmento pendiente"
-                                            style={{ height: `${(item.pendiente / MAX_ESCALA) * 100}%` }}
+                                            style={{
+                                                height: `${(item.pendiente / MAX_ESCALA) * 100}%`
+                                            }}
                                         />
+
                                         <div
                                             className="reportes-barra-segmento recaudado"
-                                            style={{ height: `${(item.recaudado / MAX_ESCALA) * 100}%` }}
+                                            style={{
+                                                height: `${(item.recaudado / MAX_ESCALA) * 100}%`
+                                            }}
                                         />
                                     </div>
+
                                     <span>{item.mes}</span>
                                 </div>
                             ))}
@@ -270,17 +282,21 @@ function Reportes() {
                     <div className="reportes-insight">
                         <FileText size={14} />
                         La recaudación de mayo aumentó un 12.5% respecto al mes anterior.
-                        <ChevronRight size={14} className="reportes-insight-flecha" />
+                        <ChevronRight size={14} className="reportes-insight-flecha"/>
                     </div>
-                </article>
+                </Panel>
 
-                <article className="reportes-panel-card">
-                    <h2>Reclamos por estado</h2>
-
+                <Panel titulo="Reclamos por estado">
                     <div className="reportes-donut-wrap">
                         <div
                             className="reportes-donut"
-                            style={{ background: armarGradienteDonut(reclamosPorEstado, totalReclamosEstado, "estado") }}
+                            style={{
+                                background: armarGradienteDonut(
+                                    reclamosPorEstado,
+                                    totalReclamosEstado,
+                                    "estado"
+                                )
+                            }}
                         >
                             <div className="reportes-donut-centro">
                                 <strong>{totalReclamosEstado}</strong>
@@ -291,10 +307,18 @@ function Reportes() {
                         <ul className="reportes-donut-leyenda">
                             {reclamosPorEstado.map((item) => (
                                 <li key={item.nombre}>
-                                    <span className={`reportes-punto estado-${item.claseColor}`} />
-                                    <span className="reportes-leyenda-label">{item.nombre}</span>
+                                    <span className={`reportes-punto estado-${item.claseColor}`}/>
+
+                                    <span className="reportes-leyenda-label">
+                                        {item.nombre}
+                                    </span>
+
                                     <span className="reportes-leyenda-valor">
-                                        {item.cantidad} ({Math.round((item.cantidad / totalReclamosEstado) * 100)}%)
+                                        {item.cantidad} (
+                                        {Math.round(
+                                            (item.cantidad / totalReclamosEstado) * 100
+                                        )}
+                                        %)
                                     </span>
                                 </li>
                             ))}
@@ -304,17 +328,21 @@ function Reportes() {
                     <div className="reportes-insight">
                         <FileText size={14} />
                         El 41% de los reclamos se encuentran en proceso.
-                        <ChevronRight size={14} className="reportes-insight-flecha" />
+                        <ChevronRight size={14} className="reportes-insight-flecha"/>
                     </div>
-                </article>
+                </Panel>
 
-                <article className="reportes-panel-card">
-                    <h2>Reclamos por categoría</h2>
-
+                <Panel titulo="Reclamos por categoría">
                     <div className="reportes-donut-wrap">
                         <div
                             className="reportes-donut"
-                            style={{ background: armarGradienteDonut(reclamosPorCategoria, totalReclamosCategoria, "cat") }}
+                            style={{
+                                background: armarGradienteDonut(
+                                    reclamosPorCategoria,
+                                    totalReclamosCategoria,
+                                    "cat"
+                                )
+                            }}
                         >
                             <div className="reportes-donut-centro" />
                         </div>
@@ -322,10 +350,16 @@ function Reportes() {
                         <ul className="reportes-donut-leyenda">
                             {reclamosPorCategoria.map((item) => (
                                 <li key={item.nombre}>
-                                    <span className={`reportes-punto cat-${item.claseColor}`} />
-                                    <span className="reportes-leyenda-label">{item.nombre}</span>
+                                    <span className={`reportes-punto cat-${item.claseColor}`}/>
+                                    <span className="reportes-leyenda-label">
+                                        {item.nombre}
+                                    </span>
                                     <span className="reportes-leyenda-valor">
-                                        {item.cantidad} ({Math.round((item.cantidad / totalReclamosCategoria) * 100)}%)
+                                        {item.cantidad} (
+                                        {Math.round(
+                                            (item.cantidad / totalReclamosCategoria) * 100
+                                        )}
+                                        %)
                                     </span>
                                 </li>
                             ))}
@@ -335,9 +369,9 @@ function Reportes() {
                     <div className="reportes-insight">
                         <FileText size={14} />
                         Mantenimiento es la categoría con más reclamos.
-                        <ChevronRight size={14} className="reportes-insight-flecha" />
+                        <ChevronRight size={14} className="reportes-insight-flecha"/>
                     </div>
-                </article>
+                </Panel>
 
             </section>
 
@@ -345,22 +379,25 @@ function Reportes() {
 
             <section className="reportes-inferior-grid">
 
-                <article className="reportes-panel-card">
-                    <h2>Actividad reciente</h2>
-
+                <Panel titulo="Actividad reciente">
                     <div className="reportes-actividad-lista">
                         {actividadReciente.map((item, index) => {
                             const Icono = item.icon;
+
                             return (
                                 <div className="reportes-actividad-fila" key={index}>
                                     <span className={`reportes-actividad-icon ${item.clase}`}>
                                         <Icono size={16} />
                                     </span>
+
                                     <span className="reportes-actividad-texto">
                                         <strong>{item.titulo}</strong>
                                         <small>{item.subtitulo}</small>
                                     </span>
-                                    <span className="reportes-actividad-fecha">{item.fecha}</span>
+
+                                    <span className="reportes-actividad-fecha">
+                                        {item.fecha}
+                                    </span>
                                 </div>
                             );
                         })}
@@ -370,11 +407,9 @@ function Reportes() {
                         Ver toda la actividad
                         <ChevronRight size={14} />
                     </a>
-                </article>
+                </Panel>
 
-                <article className="reportes-panel-card">
-                    <h2>Resumen general del período</h2>
-
+                <Panel titulo="Resumen general del período">
                     <div className="reportes-tabla-resumen">
                         <div className="reportes-tabla-resumen-header">
                             <span>Métrica</span>
@@ -385,8 +420,16 @@ function Reportes() {
                         {resumenGeneral.map((fila) => (
                             <div className="reportes-tabla-resumen-fila" key={fila.metrica}>
                                 <span>{fila.metrica}</span>
-                                <span className="reportes-tabla-resumen-valor">{fila.valor}</span>
-                                <span className={`reportes-tendencia ${fila.positivo ? "positiva" : "negativa"}`}>
+
+                                <span className="reportes-tabla-resumen-valor">
+                                    {fila.valor}
+                                </span>
+
+                                <span
+                                    className={`reportes-tendencia ${
+                                        fila.positivo ? "positiva" : "negativa"
+                                    }`}
+                                >
                                     <ArrowUp size={12} />
                                     {fila.variacion}
                                 </span>
@@ -398,7 +441,7 @@ function Reportes() {
                         Ver reporte completo
                         <ChevronRight size={14} />
                     </a>
-                </article>
+                </Panel>
 
             </section>
 

@@ -4,7 +4,6 @@ import {
     Clock,
     CheckCircle2,
     XCircle,
-    Plus,
     ChevronDown,
     Search,
     Eye,
@@ -20,6 +19,7 @@ import {
 } from "lucide-react";
 
 import "./Reservas.css";
+import Panel from "../../../components/Panel/Panel";
 import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
 
 // =========================
@@ -348,16 +348,14 @@ function Reservas() {
 
                     {/* CALENDARIO */}
 
-                    <div className="reservas-panel-card">
-                        <div className="reservas-calendario-header">
-                            <h2>Calendario de reservas</h2>
-                        </div>
-
+                    <Panel titulo="Calendario de reservas">
                         <div className="reservas-calendario-nav">
                             <button aria-label="Mes anterior">
                                 <ChevronLeft size={16} />
                             </button>
+
                             <strong>Mayo 2024</strong>
+
                             <button aria-label="Mes siguiente">
                                 <ChevronRight size={16} />
                             </button>
@@ -374,27 +372,29 @@ function Reservas() {
                                 {semana.map((celda, j) => (
                                     <span
                                         key={j}
-                                        className={`reservas-calendario-dia ${celda.fuera ? "fuera" : ""} ${celda.destacado ? "destacado" : ""}`}
+                                        className={`reservas-calendario-dia ${
+                                            celda.fuera ? "fuera" : ""
+                                        } ${celda.destacado ? "destacado" : ""}`}
                                     >
                                         {celda.dia}
                                     </span>
                                 ))}
                             </div>
                         ))}
-                    </div>
+                    </Panel>
 
                     {/* PROXIMA RESERVA */}
 
-                    <div className="reservas-panel-card">
-                        <h2>Próxima reserva</h2>
-
+                    <Panel titulo="Próxima reserva">
                         <div className="reservas-proxima">
                             <span className={`reservas-icono ${claseEspacio[proximaReserva.espacio]}`}>
                                 <Armchair size={18} />
                             </span>
 
                             <div className="reservas-proxima-info">
-                                <strong>{proximaReserva.espacio} - {proximaReserva.ubicacion}</strong>
+                                <strong>
+                                    {proximaReserva.espacio} - {proximaReserva.ubicacion}
+                                </strong>
 
                                 <span>
                                     <Calendar size={13} />
@@ -413,14 +413,14 @@ function Reservas() {
                             </div>
                         </div>
 
-                        <button className="reservas-btn-detalle">Ver detalle</button>
-                    </div>
+                        <button className="reservas-btn-detalle">
+                            Ver detalle
+                        </button>
+                    </Panel>
 
                     {/* ESPACIOS MAS RESERVADOS */}
 
-                    <div className="reservas-panel-card">
-                        <h2>Espacios más reservados</h2>
-
+                    <Panel titulo="Espacios más reservados">
                         <div className="reservas-barras-lista">
                             {espaciosMasReservados.map((espacio) => (
                                 <div className="reservas-barra-fila" key={espacio.nombre}>
@@ -428,10 +428,15 @@ function Reservas() {
                                         <span>{espacio.nombre}</span>
                                         <strong>{espacio.cantidad}</strong>
                                     </div>
+
                                     <div className="reservas-barra-pista">
                                         <div
                                             className="reservas-barra-relleno"
-                                            style={{ width: `${(espacio.cantidad / maxReservasEspacio) * 100}%` }}
+                                            style={{
+                                                width: `${
+                                                    (espacio.cantidad / maxReservasEspacio) * 100
+                                                }%`
+                                            }}
                                         />
                                     </div>
                                 </div>
@@ -442,7 +447,7 @@ function Reservas() {
                             Ver reporte completo
                             <ChevronRight size={14} />
                         </a>
-                    </div>
+                    </Panel>
 
                 </aside>
 

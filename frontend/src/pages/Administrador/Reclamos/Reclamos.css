@@ -259,22 +259,6 @@
         RESUMEN LATERAL
 ========================= */
 
-.reclamos-resumen-lateral {
-  background: var(--blanco);
-  border: 1px solid var(--borde-tarjeta);
-  border-radius: 12px;
-  padding: 18px;
-  display: flex;
-  flex-direction: column;
-}
-
-.reclamos-resumen-lateral h2 {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--texto-principal);
-  margin-bottom: 14px;
-}
-
 .reclamos-resumen-lateral h3 {
   font-size: 12px;
   font-weight: 600;

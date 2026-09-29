@@ -300,36 +300,6 @@
       PANEL DE DETALLE
 ========================= */
 
-.comunicados-detalle {
-  background: var(--blanco);
-  border: 1px solid var(--borde-tarjeta);
-  border-radius: 12px;
-  padding: 18px;
-  display: flex;
-  flex-direction: column;
-}
-
-.comunicados-detalle-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-
-.comunicados-detalle-header h2 {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--texto-principal);
-}
-
-.comunicados-detalle-cerrar {
-  border: none;
-  background: transparent;
-  color: var(--texto-icono);
-  cursor: pointer;
-  display: flex;
-}
-
 .comunicados-detalle-titulo {
   display: flex;
   align-items: center;

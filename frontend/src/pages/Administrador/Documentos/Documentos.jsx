@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 
 import "./Documentos.css";
+import Panel from "../../../components/Panel/Panel";
 
 // =========================
 // DATOS DE EJEMPLO
@@ -288,17 +289,21 @@ function Documentos() {
 
                 <aside className="documentos-lateral">
 
-                    <div className="documentos-panel-card">
-                        <h2>Categorías</h2>
-
+                    <Panel titulo="Categorías">
                         <div className="documentos-categorias-lista">
                             {categorias.map((cat) => (
                                 <div className="documentos-categoria-fila" key={cat.nombre}>
                                     <span className={`documentos-carpeta-icon ${cat.clase}`}>
                                         <Folder size={15} />
                                     </span>
-                                    <span className="documentos-categoria-nombre">{cat.nombre}</span>
-                                    <span className="documentos-categoria-valor">{cat.cantidad}</span>
+
+                                    <span className="documentos-categoria-nombre">
+                                        {cat.nombre}
+                                    </span>
+
+                                    <span className="documentos-categoria-valor">
+                                        {cat.cantidad}
+                                    </span>
                                 </div>
                             ))}
                         </div>
@@ -307,11 +312,9 @@ function Documentos() {
                             Ver todas las categorías
                             <ChevronRight size={14} />
                         </button>
-                    </div>
+                    </Panel>
 
-                    <div className="documentos-panel-card">
-                        <h2>Almacenamiento</h2>
-
+                    <Panel titulo="Almacenamiento">
                         <div className="documentos-almacenamiento-info">
                             <span>Utilizado</span>
                             <strong>{almacenamiento.usado} de {almacenamiento.total}</strong>
@@ -320,24 +323,28 @@ function Documentos() {
                         <div className="documentos-progreso">
                             <div
                                 className="documentos-progreso-relleno"
-                                style={{ width: `${almacenamiento.porcentaje}%` }}
+                                style={{
+                                    width: `${almacenamiento.porcentaje}%`
+                                }}
                             />
                         </div>
-                        <span className="documentos-progreso-porcentaje">{almacenamiento.porcentaje}%</span>
+
+                        <span className="documentos-progreso-porcentaje">
+                            {almacenamiento.porcentaje}%
+                        </span>
 
                         <button className="documentos-btn-gestionar">
                             <HardDrive size={15} />
                             Gestionar almacenamiento
                             <ChevronRight size={14} />
                         </button>
-                    </div>
+                    </Panel>
 
-                    <div className="documentos-panel-card">
-                        <h2>Acciones rápidas</h2>
-
+                    <Panel titulo="Acciones rápidas">
                         <div className="documentos-acciones-lista">
                             {accionesRapidas.map((accion) => {
                                 const Icono = accion.icon;
+
                                 return (
                                     <button className="documentos-accion-fila" key={accion.label}>
                                         <Icono size={16} />
@@ -346,7 +353,7 @@ function Documentos() {
                                 );
                             })}
                         </div>
-                    </div>
+                    </Panel>
 
                 </aside>
 

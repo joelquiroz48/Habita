@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 
 import "./Reclamos.css";
+import Panel from "../../../components/Panel/Panel";
 import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
 
 // =========================
@@ -271,14 +272,16 @@ function Reclamos() {
 
                 {/* RESUMEN */}
 
-                <aside className="reclamos-resumen-lateral">
-
-                    <h2>Resumen de reclamos</h2>
-
+                <Panel className="reclamos-resumen-lateral" titulo="Resumen de reclamos">
                     <div className="reclamos-donut-wrap">
                         <div
                             className="reclamos-donut"
-                            style={{ background: armarGradienteDonut(resumenEstados, totalReclamos) }}
+                            style={{
+                                background: armarGradienteDonut(
+                                    resumenEstados,
+                                    totalReclamos
+                                )
+                            }}
                         >
                             <div className="reclamos-donut-centro" />
                         </div>
@@ -286,10 +289,18 @@ function Reclamos() {
                         <ul className="reclamos-donut-leyenda">
                             {resumenEstados.map((item) => (
                                 <li key={item.estado}>
-                                    <span className={`reclamos-leyenda-punto ${item.claseColor}`} />
-                                    <span className="reclamos-leyenda-label">{item.estado}</span>
+                                    <span className={`reclamos-leyenda-punto ${item.claseColor}`}/>
+
+                                    <span className="reclamos-leyenda-label">
+                                        {item.estado}
+                                    </span>
+
                                     <span className="reclamos-leyenda-valor">
-                                        {item.cantidad} ({Math.round((item.cantidad / totalReclamos) * 100)}%)
+                                        {item.cantidad} (
+                                        {Math.round(
+                                            (item.cantidad / totalReclamos) * 100
+                                        )}
+                                        %)
                                     </span>
                                 </li>
                             ))}
@@ -301,13 +312,25 @@ function Reclamos() {
                     <div className="reclamos-categorias-lista">
                         {categoriasFrecuentes.map((cat) => {
                             const Icono = cat.icon;
+
                             return (
-                                <div className="reclamos-categoria-fila" key={cat.nombre}>
-                                    <span className={`reclamos-categoria-icon ${cat.claseColor}`}>
+                                <div
+                                    className="reclamos-categoria-fila"
+                                    key={cat.nombre}
+                                >
+                                    <span
+                                        className={`reclamos-categoria-icon ${cat.claseColor}`}
+                                    >
                                         <Icono size={16} />
                                     </span>
-                                    <span className="reclamos-categoria-nombre">{cat.nombre}</span>
-                                    <span className="reclamos-categoria-valor">{cat.cantidad}</span>
+
+                                    <span className="reclamos-categoria-nombre">
+                                        {cat.nombre}
+                                    </span>
+
+                                    <span className="reclamos-categoria-valor">
+                                        {cat.cantidad}
+                                    </span>
                                 </div>
                             );
                         })}
@@ -317,8 +340,7 @@ function Reclamos() {
                         <BarChart3 size={15} />
                         Ver reportes
                     </button>
-
-                </aside>
+                </Panel>
 
             </div>
 

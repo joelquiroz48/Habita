@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 
 import "./Inicio.css";
+import Panel from "../../../components/Panel/Panel";
 import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
 
 // =========================
@@ -277,17 +278,17 @@ function Dashboard() {
 
             {/* GRAFICOS */}
 
-            <section className="admin-graficos-grid">
+            <section className="admin-fila-superior">
 
-                <article className="admin-panel-card">
-                    <div className="admin-panel-header">
-                        <h2>Recaudación mensual</h2>
+                <Panel
+                    titulo="Recaudación mensual"
+                    accion={
                         <button className="admin-selector-anio">
                             Este año
                             <ChevronDown size={15} />
                         </button>
-                    </div>
-
+                    }
+                >
                     <div className="admin-barras-chart">
                         <div className="admin-barras-eje-y">
                             <span>$6M</span>
@@ -302,21 +303,20 @@ function Dashboard() {
                                     <div className="admin-barra-pista">
                                         <div
                                             className="admin-barra"
-                                            style={{ height: `${(item.valor / MAX_RECAUDACION) * 100}%` }}
+                                            style={{
+                                                height: `${(item.valor / MAX_RECAUDACION) * 100}%`
+                                            }}
                                         />
                                     </div>
+
                                     <span>{item.mes}</span>
                                 </div>
                             ))}
                         </div>
                     </div>
-                </article>
+                </Panel>
 
-                <article className="admin-panel-card">
-                    <div className="admin-panel-header">
-                        <h2>Reclamos por estado</h2>
-                    </div>
-
+                <Panel titulo="Reclamos por estado">
                     <div className="admin-donut-wrap">
                         <div
                             className="admin-donut"
@@ -338,20 +338,15 @@ function Dashboard() {
                             ))}
                         </ul>
                     </div>
-                </article>
+                </Panel>
 
             </section>
 
             {/* LISTADOS */}
 
-            <section className="admin-listados-grid">
+            <section className="admin-fila-central">
 
-                <article className="admin-panel-card">
-                    <div className="admin-panel-header">
-                        <h2>Últimos reclamos</h2>
-                        <Link to="/administrador/reclamos">Ver todos</Link>
-                    </div>
-
+                <Panel titulo="Últimos reclamos" accion={<Link to="/administrador/reclamos">Ver todos</Link>}>
                     <div className="admin-tabla-lista">
                         {ultimosReclamos.map((reclamo, index) => (
                             <div className="admin-tabla-fila" key={index}>
@@ -364,14 +359,9 @@ function Dashboard() {
                             </div>
                         ))}
                     </div>
-                </article>
+                </Panel>
 
-                <article className="admin-panel-card">
-                    <div className="admin-panel-header">
-                        <h2>Últimos pagos</h2>
-                        <Link to="/administrador/pagos">Ver todos</Link>
-                    </div>
-
+                <Panel titulo="Últimos pagos" accion={<Link to="/administrador/pagos">Ver todos</Link>}>
                     <div className="admin-tabla-lista">
                         {ultimosPagos.map((pago, index) => (
                             <div className="admin-tabla-fila" key={index}>
@@ -384,45 +374,44 @@ function Dashboard() {
                             </div>
                         ))}
                     </div>
-                </article>
+                </Panel>
 
             </section>
 
             {/* TARJETAS INFERIORES */}
 
-            <section className="admin-inferior-grid">
+            <section className="admin-fila-inferior">
 
-                <article className="admin-panel-card admin-inferior-card">
-                    <div className="admin-inferior-icon">
-                        <CalendarClock />
+                <Panel>
+                    <div className="admin-inferior-card">
+                        <div className="admin-inferior-icon">
+                            <CalendarClock />
+                        </div>
+                        <div className="admin-inferior-contenido">
+                            <h3>Próxima reunión</h3>
+                            <strong>{proximaReunion.titulo}</strong>
+                            <span>{proximaReunion.fecha}</span>
+                            <span>{proximaReunion.lugar}</span>
+                            <button className="admin-btn-secundario">Ver detalles</button>
+                        </div>
                     </div>
-                    <div className="admin-inferior-contenido">
-                        <h3>Próxima reunión</h3>
-                        <strong>{proximaReunion.titulo}</strong>
-                        <span>{proximaReunion.fecha}</span>
-                        <span>{proximaReunion.lugar}</span>
-                        <button className="admin-btn-secundario">Ver detalles</button>
-                    </div>
-                </article>
+                </Panel>
 
-                <article className="admin-panel-card admin-inferior-card">
-                    <div className="admin-inferior-icon">
-                        <Megaphone />
+                <Panel>
+                    <div className="admin-inferior-card">
+                        <div className="admin-inferior-icon">
+                            <Megaphone />
+                        </div>
+                        <div className="admin-inferior-contenido">
+                            <h3>Comunicado destacado</h3>
+                            <strong>{comunicadoDestacado.titulo}</strong>
+                            <span>{comunicadoDestacado.descripcion}</span>
+                            <button className="admin-btn-secundario">Ver comunicado</button>
+                        </div>
                     </div>
-                    <div className="admin-inferior-contenido">
-                        <h3>Comunicado destacado</h3>
-                        <strong>{comunicadoDestacado.titulo}</strong>
-                        <span>{comunicadoDestacado.descripcion}</span>
-                        <button className="admin-btn-secundario">Ver comunicado</button>
-                    </div>
-                </article>
+                </Panel>
 
-                <article className="admin-panel-card">
-                    <div className="admin-panel-header">
-                        <h2>Documentos recientes</h2>
-                        <Link to="/administrador/documentos">Ver todos</Link>
-                    </div>
-
+                <Panel titulo="Documentos recientes" accion={<Link to="/administrador/documentos">Ver todos</Link>}>
                     <div className="admin-documentos-lista">
                         {documentosRecientes.map((doc, index) => (
                             <div className="admin-documento-fila" key={index}>
@@ -434,7 +423,7 @@ function Dashboard() {
                             </div>
                         ))}
                     </div>
-                </article>
+                </Panel>
 
             </section>
         </main>

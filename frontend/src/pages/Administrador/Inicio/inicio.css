@@ -11,26 +11,6 @@
 }
 
 /* =========================
-        ENCABEZADO
-========================= */
-
-.admin-encabezado {
-  margin-bottom: 20px;
-}
-
-.admin-encabezado h1 {
-  font-size: 22px;
-  font-weight: 700;
-  color: var(--texto-principal);
-}
-
-.admin-encabezado p {
-  font-size: 13px;
-  color: var(--texto-secundario);
-  margin-top: 2px;
-}
-
-/* =========================
       TARJETAS DE KPI
 ========================= */
 
@@ -74,47 +54,14 @@
 }
 
 /* =========================
-      PANELES (base)
-========================= */
-
-.admin-panel-card {
-  background: var(--blanco);
-  border: 1px solid var(--borde-tarjeta);
-  border-radius: 12px;
-  padding: 18px;
-  min-width: 0;
-  box-sizing: border-box;
-}
-
-.admin-panel-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 14px;
-}
-
-.admin-panel-header h2 {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--texto-principal);
-}
-
-.admin-panel-header a {
-  color: var(--verde-hover);
-  font-size: 12px;
-  font-weight: 500;
-  text-decoration: none;
-}
-
-/* =========================
           GRAFICOS
 ========================= */
 
-.admin-graficos-grid {
+.admin-fila-superior {
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 14px;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
 }
 
 .admin-selector-anio {
@@ -267,11 +214,11 @@
           LISTADOS
 ========================= */
 
-.admin-listados-grid {
+.admin-fila-central {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 14px;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
 }
 
 .admin-tabla-lista {
@@ -341,10 +288,10 @@
       TARJETAS INFERIORES
 ========================= */
 
-.admin-inferior-grid {
+.admin-fila-inferior {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 14px;
+  gap: 16px;
 }
 
 .admin-inferior-card {
@@ -459,9 +406,9 @@
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .admin-graficos-grid,
-  .admin-listados-grid,
-  .admin-inferior-grid {
+  .admin-fila-superior,
+  .admin-fila-central,
+  .admin-fila-inferior {
     grid-template-columns: 1fr;
   }
 }

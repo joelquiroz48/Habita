@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 
 import "./Comunicados.css";
+import Panel from "../../../components/Panel/Panel";
 
 // =========================
 // DATOS DE EJEMPLO
@@ -275,10 +276,10 @@ function Comunicados() {
                 {/* DETALLE */}
 
                 {detalleAbierto && (
-                    <aside className="comunicados-detalle">
-
-                        <div className="comunicados-detalle-header">
-                            <h2>Detalle del comunicado</h2>
+                    <Panel
+                        className="comunicados-detalle"
+                        titulo="Detalle del comunicado"
+                        accion={
                             <button
                                 className="comunicados-detalle-cerrar"
                                 onClick={() => setDetalleAbierto(false)}
@@ -286,9 +287,13 @@ function Comunicados() {
                             >
                                 <X size={18} />
                             </button>
-                        </div>
-
-                        <span className={`comunicados-badge ${estadoBadgeClase(seleccionado.estado)}`}>
+                        }
+                    >
+                        <span
+                            className={`comunicados-badge ${estadoBadgeClase(
+                                seleccionado.estado
+                            )}`}
+                        >
                             {seleccionado.estado}
                         </span>
 
@@ -299,6 +304,7 @@ function Comunicados() {
                                     return <Icono size={20} />;
                                 })()}
                             </span>
+
                             <strong>{seleccionado.titulo}</strong>
                         </div>
 
@@ -308,44 +314,54 @@ function Comunicados() {
                                 {seleccionado.tipo}
                             </span>
                         </div>
+
                         <div className="comunicados-detalle-fila">
                             <span>Fecha de publicación</span>
                             <strong>{seleccionado.fecha}</strong>
                         </div>
+
                         <div className="comunicados-detalle-fila">
                             <span>Publicado por</span>
                             <strong>{seleccionado.publicadoPor}</strong>
                         </div>
+
                         <div className="comunicados-detalle-fila">
                             <span>Audiencia</span>
                             <strong>{seleccionado.audiencia}</strong>
                         </div>
 
                         <h3>Resumen</h3>
-                        <p className="comunicados-resumen-texto">{seleccionado.resumen}</p>
+
+                        <p className="comunicados-resumen-texto">
+                            {seleccionado.resumen}
+                        </p>
 
                         <h3>Adjuntos</h3>
+
                         {seleccionado.adjunto ? (
                             <div className="comunicados-adjunto">
                                 <Paperclip size={16} />
+
                                 <div className="comunicados-adjunto-info">
                                     <strong>{seleccionado.adjunto.nombre}</strong>
                                     <span>PDF - {seleccionado.adjunto.tamano}</span>
                                 </div>
+
                                 <button aria-label="Descargar adjunto">
                                     <Download size={16} />
                                 </button>
                             </div>
                         ) : (
-                            <p className="comunicados-sin-adjunto">Sin archivos adjuntos.</p>
+                            <p className="comunicados-sin-adjunto">
+                                Sin archivos adjuntos.
+                            </p>
                         )}
 
                         <button className="comunicados-btn-editar">
                             <Pencil size={15} />
                             Editar comunicado
                         </button>
-
-                    </aside>
+                    </Panel>
                 )}
 
             </div>
