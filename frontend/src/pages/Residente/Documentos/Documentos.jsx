@@ -131,10 +131,6 @@ const categoriasExplorar = [
 ];
 
 
-/* =========================
-          COMPONENTE
-========================= */
-
 function Documentos() {
 
     useEffect(() => {

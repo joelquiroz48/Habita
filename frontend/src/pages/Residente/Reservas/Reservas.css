@@ -223,10 +223,6 @@
     border-color: var(--verde);
 }
 
-.input-icono {
-    position: relative;
-}
-
 .btn-solicitar {
     width: 100%;
     height: 30px;
@@ -593,10 +589,6 @@
         flex-direction: column;
         align-items: flex-start;
         gap: 2px;
-    }
-
-    .panel-reservas-header {
-        align-items: flex-start;
     }
 
     .calendario-mes {

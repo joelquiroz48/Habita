@@ -17,7 +17,7 @@ import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
 import Panel from "../../../components/Panel/Panel";
 
 /* =========================
-        DATOS DE EJEMPLO
+    DATOS DE EJEMPLO
 ========================= */
 
 const expensaActual = {
@@ -28,7 +28,6 @@ const expensaActual = {
     medioPago: "Tarjeta de crédito",
     terminacion: "**** 4242",
 };
-
 
 const detalleExpensa = [
     {
@@ -52,7 +51,6 @@ const detalleExpensa = [
         monto: "$ 4.730",
     },
 ];
-
 
 const historialExpensas = [
     {
@@ -92,6 +90,10 @@ const historialExpensas = [
         estado: "Pagada",
     },
 ];
+
+{/* =========================
+       TARJETAS RESUMEN
+========================== */}
 
 const resumenExpensas = [
     {
@@ -147,6 +149,7 @@ const resumenExpensas = [
         ),
     },
 ];
+
 
 function Expensas() {
 

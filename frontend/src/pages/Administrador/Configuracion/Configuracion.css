@@ -210,13 +210,6 @@
   margin-bottom: 12px;
 }
 
-.configuracion-tarjeta h3 {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--texto-principal);
-  margin-bottom: 6px;
-}
-
 .configuracion-tarjeta p {
   font-size: 12px;
   color: var(--texto-secundario);

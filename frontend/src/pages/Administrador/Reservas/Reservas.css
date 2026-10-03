@@ -383,10 +383,6 @@
     padding: 20px;
   }
 
-  .reservas-cabecera {
-    flex-direction: column;
-  }
-
   .reservas-resumen {
     grid-template-columns: 1fr;
   }

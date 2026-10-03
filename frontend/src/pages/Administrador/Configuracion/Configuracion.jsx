@@ -16,9 +16,9 @@ import {
 import "./Configuracion.css";
 import Panel from "../../../components/Panel/Panel";
 
-// =========================
-// DATOS DE EJEMPLO
-// =========================
+{/* =========================
+       DATOS EJEMPLOS
+========================== */}
 
 const tabs = ["General", "Expensas", "Pagos", "Comunicación", "Seguridad", "Integraciones"];
 

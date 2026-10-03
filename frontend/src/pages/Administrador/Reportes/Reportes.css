@@ -2,7 +2,6 @@
   padding: 28px 32px;
 
   --reportes-color-purpura: #7c5cbf;
-  --reportes-fondo-purpura: #efe9fb;
 
   --reportes-color-estado-pendiente: var(--color-aviso-amarillo);
   --reportes-color-estado-proceso: var(--color-aviso-azul);
@@ -88,10 +87,6 @@
 
 .reportes-tendencia.negativa {
   color: var(--color-aviso-rojo);
-}
-
-.reportes-tendencia.negativa svg {
-  transform: none;
 }
 
 /* =========================
@@ -318,20 +313,6 @@
 
 .reportes-tabla-resumen-valor {
   font-weight: 600;
-}
-
-/* --- link centrado --- */
-
-.reportes-link-centrado {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  margin-top: 14px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--verde-hover);
-  text-decoration: none;
 }
 
 /* =========================

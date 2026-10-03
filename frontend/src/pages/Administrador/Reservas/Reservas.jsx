@@ -23,9 +23,9 @@ import Panel from "../../../components/Panel/Panel";
 import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
 import Tabla from "../../../components/Tabla/Tabla";
 
-// =========================
-// DATOS DE EJEMPLO
-// =========================
+{/* =========================
+       DATOS EJEMPLOS
+========================== */}
 
 const kpis = {
     reservasMes: 28,
@@ -120,7 +120,6 @@ const estadoPorTab = {
     "Canceladas": "Cancelada",
 };
 
-// Calendario de Mayo 2024, armado a mano (estatico, no calcula el mes real)
 const semanasCalendario = [
     [{ dia: 29, fuera: true }, { dia: 30, fuera: true }, { dia: 1 }, { dia: 2 }, { dia: 3 }, { dia: 4 }, { dia: 5 }],
     [{ dia: 6 }, { dia: 7 }, { dia: 8 }, { dia: 9 }, { dia: 10 }, { dia: 11 }, { dia: 12 }],
@@ -141,6 +140,10 @@ const espaciosMasReservados = [
     { nombre: "Sala de reuniones", cantidad: 3 },
 ];
 const maxReservasEspacio = Math.max(...espaciosMasReservados.map((e) => e.cantidad));
+
+{/* =========================
+       TARJETAS RESUMEN
+========================== */}
 
 const resumenTarjetas = [
     {

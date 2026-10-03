@@ -7,7 +7,6 @@
 ========================= */
 
 .expensas-resumen {
-  flex: 1;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 14px;
@@ -178,12 +177,6 @@
 }
 
 /* ---- panel de detalle ---- */
-
-.expensas-detalle-header h2 {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--texto-principal);
-}
 
 .expensas-detalle-linea {
   font-size: 12px;

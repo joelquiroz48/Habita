@@ -100,7 +100,6 @@
     min-width: 0;
     display: flex;
     flex-direction: column;
-    min-width: 0;
     padding-top: 10px;
 }
 
@@ -674,10 +673,6 @@
         grid-template-columns: 1fr;
     }
 
-    .tabla-expensas {
-        overflow-x: auto;
-    }
-
     .tabla-header,
     .tabla-fila {
         min-width: 700px;
@@ -686,10 +681,6 @@
 
 
 @media (max-width: 500px) {
-
-    .expensas {
-        width: 100%;
-    }
 
     .historial-header {
         align-items: flex-start;

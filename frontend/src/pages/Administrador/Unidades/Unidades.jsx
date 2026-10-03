@@ -1,18 +1,12 @@
 import { useEffect } from "react";
-import {
-    Search,
-    ChevronDown,
-    Plus,
-    Pencil,
-    MoreVertical,
-} from "lucide-react";
+import {Search, ChevronDown, Plus, Pencil, MoreVertical} from "lucide-react";
 
 import "./Unidades.css";
 import Tabla from "../../../components/Tabla/Tabla";
 
-// =========================
-// DATOS DE EJEMPLO
-// =========================
+{/* =========================
+       DATOS EJEMPLO
+========================== */}
 
 const unidades = [
     { unidad: "1A", torrePiso: "Torre A - Piso 1", tipo: "3 amb.", responsable: "Martín Gómez", estado: "Activa" },
@@ -73,9 +67,11 @@ const columnas = [
     },
 ];
 
+
 function badgeClase(estado) {
     return estado === "Activa" ? "unidades-badge-activa" : "unidades-badge-disponible";
 }
+
 
 function Unidades() {
 

@@ -22,78 +22,9 @@ import Panel from "../../../components/Panel/Panel";
 import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
 import TablaReportes from "../../../components/TablaReportes/TablaReportes";
 
-// =========================
-// DATOS DE EJEMPLO
-// =========================
-
-const resumenTarjetas = [
-    {
-        icono: Wallet,
-        titulo: "Recaudado en el período",
-        valor: "$ 4.251.200",
-        contenido: (
-            <span className="reportes-tendencia positiva">
-                <ArrowUp size={12} />
-                12.5% vs. mes anterior
-            </span>
-        ),
-    },
-    {
-        icono: CreditCard,
-        titulo: "Pagos realizados",
-        valor: "78",
-        contenido: (
-            <span className="reportes-tendencia positiva">
-                <ArrowUp size={12} />
-                6.8% vs. mes anterior
-            </span>
-        ),
-    },
-    {
-        icono: AlertTriangle,
-        titulo: "Reclamos totales",
-        valor: "64",
-        contenido: (
-            <span className="reportes-tendencia negativa">
-                <ArrowUp size={12} />
-                8.3% vs. mes anterior
-            </span>
-        ),
-    },
-    {
-        icono: CheckCircle2,
-        titulo: "Reclamos resueltos",
-        valor: "20",
-        contenido: (
-            <span className="reportes-tendencia positiva">
-                <ArrowUp size={12} />
-                25% vs. mes anterior
-            </span>
-        ),
-    },
-    {
-        icono: Users,
-        titulo: "Nuevos residentes",
-        valor: "12",
-        contenido: (
-            <span className="reportes-tendencia positiva">
-                <ArrowUp size={12} />
-                9.1% vs. mes anterior
-            </span>
-        ),
-    },
-    {
-        icono: CalendarCheck,
-        titulo: "Reservas realizadas",
-        valor: "28",
-        contenido: (
-            <span className="reportes-tendencia positiva">
-                <ArrowUp size={12} />
-                12% vs. mes anterior
-            </span>
-        ),
-    },
-];
+{/* =========================
+       DATOS EJEMPLOS
+========================== */}
 
 const recaudacionMensual = [
     { mes: "Mar 2026", recaudado: 4720000, pendiente: 142000 },
@@ -229,6 +160,79 @@ const columnasResumen = [
     },
 ];
 
+{/* =========================
+       TARJETAS RESUMEN
+========================== */}
+
+const resumenTarjetas = [
+    {
+        icono: Wallet,
+        titulo: "Recaudado en el período",
+        valor: "$ 4.251.200",
+        contenido: (
+            <span className="reportes-tendencia positiva">
+                <ArrowUp size={12} />
+                12.5% vs. mes anterior
+            </span>
+        ),
+    },
+    {
+        icono: CreditCard,
+        titulo: "Pagos realizados",
+        valor: "78",
+        contenido: (
+            <span className="reportes-tendencia positiva">
+                <ArrowUp size={12} />
+                6.8% vs. mes anterior
+            </span>
+        ),
+    },
+    {
+        icono: AlertTriangle,
+        titulo: "Reclamos totales",
+        valor: "64",
+        contenido: (
+            <span className="reportes-tendencia negativa">
+                <ArrowUp size={12} />
+                8.3% vs. mes anterior
+            </span>
+        ),
+    },
+    {
+        icono: CheckCircle2,
+        titulo: "Reclamos resueltos",
+        valor: "20",
+        contenido: (
+            <span className="reportes-tendencia positiva">
+                <ArrowUp size={12} />
+                25% vs. mes anterior
+            </span>
+        ),
+    },
+    {
+        icono: Users,
+        titulo: "Nuevos residentes",
+        valor: "12",
+        contenido: (
+            <span className="reportes-tendencia positiva">
+                <ArrowUp size={12} />
+                9.1% vs. mes anterior
+            </span>
+        ),
+    },
+    {
+        icono: CalendarCheck,
+        titulo: "Reservas realizadas",
+        valor: "28",
+        contenido: (
+            <span className="reportes-tendencia positiva">
+                <ArrowUp size={12} />
+                12% vs. mes anterior
+            </span>
+        ),
+    },
+];
+
 function Reportes() {
 
     useEffect(() => {
@@ -278,10 +282,6 @@ function Reportes() {
                     Exportar reporte
                 </button>
             </div>
-
-            {/* KPIS */}
-
-            
 
             {/* GRAFICOS */}
 

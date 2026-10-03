@@ -1,20 +1,12 @@
 import { useEffect } from "react";
-import {
-    Search,
-    ChevronDown,
-    Plus,
-    Pencil,
-    MoreVertical,
-    ChevronLeft,
-    ChevronRight,
-} from "lucide-react";
+import {Search, ChevronDown, Plus, Pencil, MoreVertical} from "lucide-react";
 
 import "./Residentes.css";
 import Tabla from "../../../components/Tabla/Tabla";
 
-// =========================
-// DATOS DE EJEMPLO
-// =========================
+{/* =========================
+       DATOS EJEMPLO
+========================== */}
 
 const residentes = [
     { nombre: "Nicolás Paz", unidad: "5B", email: "nicolas.paz@email.com", telefono: "11 2345 6789", estado: "Activo" },
@@ -81,9 +73,11 @@ const columnas = [
     }
 ];
 
+
 function badgeClase(estado) {
     return estado === "Activo" ? "residentes-badge-activo" : "residentes-badge-invitado";
 }
+
 
 function Residentes() {
 

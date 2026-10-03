@@ -254,12 +254,6 @@
     accent-color: var(--verde-medio);
 }
 
-.register .link {
-    color: var(--verde-medio);
-    font-weight: 600;
-}
-
-
 /* ---------- Botón ingresar ---------- */
 
 .register .boton-ingresar {
@@ -325,7 +319,6 @@
 
     .register .panel-derecho {
         justify-content: center;
-        padding-right: 0;
     }
 
     .register .campos-telefono-dni {

@@ -22,9 +22,9 @@ import Panel from "../../../components/Panel/Panel";
 import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
 import Tabla from "../../../components/Tabla/Tabla";
 
-// =========================
-// DATOS DE EJEMPLO
-// =========================
+{/* =========================
+       DATOS EJEMPLOS
+========================== */}
 
 const kpis = {
     total: 64,
@@ -59,6 +59,10 @@ const categoriasFrecuentes = [
     { nombre: "Otros", cantidad: 10, icon: MoreHorizontal, claseColor: "otros" },
 ];
 
+{/* =========================
+       TARJETAS RESUMEN
+========================== */}
+
 const resumenTarjetas = [
     {
         icono: ClipboardList,
@@ -89,6 +93,7 @@ const resumenTarjetas = [
         claseIcono: "verde",
     },
 ];
+
 
 function armarGradienteDonut(datos, total) {
     let acumulado = 0;

@@ -21,9 +21,9 @@ import Panel from "../../../components/Panel/Panel";
 import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
 import Tabla from "../../../components/Tabla/Tabla";
 
-// =========================
-// DATOS DE EJEMPLO
-// =========================
+{/* =========================
+       DATOS EJEMPLOS
+========================== */}
 
 const kpis = {
     totalRecaudado: 4251200,
@@ -76,6 +76,10 @@ const iconosMetodo = {
     transferencia: Landmark,
     efectivo: Banknote,
 };
+
+{/* =========================
+       TARJETAS RESUMEN
+========================== */}
 
 const resumenTarjetas = [
     {

@@ -18,9 +18,9 @@ import Panel from "../../../components/Panel/Panel";
 import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
 import TablaReportes from "../../../components/TablaReportes/TablaReportes";
 
-// =========================
-// DATOS DE EJEMPLO
-// =========================
+{/* =========================
+        DATOS EJEMPLO
+========================== */}
 
 const kpis = {
     residentes: {
@@ -156,6 +156,64 @@ const documentosRecientes = [
     },
 ];
 
+const columnasReclamos = [
+    {
+        clave: "titulo",
+        ancho: "minmax(0, 1.6fr)",
+        className: "admin-tabla-titulo",
+    },
+    {
+        clave: "estado",
+        ancho: "auto",
+        render: (estado) => (
+            <span className={`admin-badge ${badgeClase(estado)}`}>
+                {estado}
+            </span>
+        ),
+    },
+    {
+        clave: "ubicacion",
+        ancho: "minmax(0, 1fr)",
+        className: "admin-tabla-secundario",
+    },
+    {
+        clave: "fecha",
+        ancho: "auto",
+        className: "admin-tabla-fecha",
+    },
+];
+
+const columnasPagos = [
+    {
+        clave: "unidad",
+        ancho: "minmax(0, 1.6fr)",
+        className: "admin-tabla-titulo",
+    },
+    {
+        clave: "monto",
+        ancho: "minmax(0, 1fr)",
+        className: "admin-tabla-secundario",
+    },
+    {
+        clave: "fecha",
+        ancho: "auto",
+        className: "admin-tabla-fecha",
+    },
+    {
+        clave: "estado",
+        ancho: "auto",
+        render: (estado) => (
+            <span className={`admin-badge ${badgeClase(estado)}`}>
+                {estado}
+            </span>
+        ),
+    },
+];
+
+{/* =========================
+       TARJETAS RESUMEN
+========================== */}
+
 const resumenTarjetas = [
     {
         icono: Users,
@@ -229,59 +287,6 @@ const resumenTarjetas = [
     },
 ];
 
-const columnasReclamos = [
-    {
-        clave: "titulo",
-        ancho: "minmax(0, 1.6fr)",
-        className: "admin-tabla-titulo",
-    },
-    {
-        clave: "estado",
-        ancho: "auto",
-        render: (estado) => (
-            <span className={`admin-badge ${badgeClase(estado)}`}>
-                {estado}
-            </span>
-        ),
-    },
-    {
-        clave: "ubicacion",
-        ancho: "minmax(0, 1fr)",
-        className: "admin-tabla-secundario",
-    },
-    {
-        clave: "fecha",
-        ancho: "auto",
-        className: "admin-tabla-fecha",
-    },
-];
-
-const columnasPagos = [
-    {
-        clave: "unidad",
-        ancho: "minmax(0, 1.6fr)",
-        className: "admin-tabla-titulo",
-    },
-    {
-        clave: "monto",
-        ancho: "minmax(0, 1fr)",
-        className: "admin-tabla-secundario",
-    },
-    {
-        clave: "fecha",
-        ancho: "auto",
-        className: "admin-tabla-fecha",
-    },
-    {
-        clave: "estado",
-        ancho: "auto",
-        render: (estado) => (
-            <span className={`admin-badge ${badgeClase(estado)}`}>
-                {estado}
-            </span>
-        ),
-    },
-];
 
 function badgeClase(estado) {
     switch (estado) {
@@ -296,6 +301,7 @@ function badgeClase(estado) {
             return "";
     }
 }
+
 
 function Dashboard() {
 

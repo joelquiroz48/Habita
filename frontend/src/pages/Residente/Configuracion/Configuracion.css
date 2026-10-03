@@ -101,20 +101,14 @@
           SWITCH
 ========================= */
 
-.switch {
+.configuracion .switch {
     position: relative;
     width: 34px;
     height: 19px;
     flex-shrink: 0;
 }
 
-.switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-.switch span {
+.configuracion .switch span {
     position: absolute;
     inset: 0;
     border-radius: 20px;
@@ -123,7 +117,7 @@
     transition: 0.2s;
 }
 
-.switch span::before {
+.configuracion .switch span::before {
     content: "";
     position: absolute;
     width: 13px;
@@ -131,14 +125,15 @@
     top: 3px;
     left: 3px;
     border-radius: 50%;
+    background: var(--blanco);
     transition: 0.2s;
 }
 
-.switch input:checked + span {
+.configuracion .switch.activo {
     background: var(--verde);
 }
 
-.switch input:checked + span::before {
+.configuracion .switch.activo span::before {
     transform: translateX(15px);
 }
 
@@ -245,17 +240,14 @@
 .btn-logout {
     width: 100%;
     height: 31px;
+    border: 1px solid var(--borde-secundario);
     border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 6px;
-    font-size: 13px;
-}
-
-.btn-logout {
-    border: 1px solid var(--borde-secundario);
     color: var(--texto-secundario);
+    font-size: 13px;
 }
 
 .btn-logout:hover {

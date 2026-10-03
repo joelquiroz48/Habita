@@ -133,27 +133,27 @@
     flex-wrap: wrap;
   }
 
-  .residentes-tabla-header,
-  .residentes-tabla-fila {
-    grid-template-columns: 1fr 1fr;
+  .residentes-tabla .tabla-header,
+  .residentes-tabla .tabla-fila {
+    grid-template-columns: 1fr 1fr !important;
     row-gap: 4px;
   }
 
-  .residentes-tabla-header span:nth-child(3),
-  .residentes-tabla-header span:nth-child(4) {
+  .residentes-tabla .tabla-header span:nth-child(3),
+  .residentes-tabla .tabla-header span:nth-child(4) {
     display: none;
   }
 
-  .residentes-tabla-fila .residentes-email,
-  .residentes-tabla-fila span:nth-child(4) {
+  .residentes-tabla .tabla-fila .residentes-email,
+  .residentes-tabla .tabla-fila span:nth-child(4) {
     display: none;
   }
 
-  .residentes-paginacion {
+  .residentes-tabla .tabla-paginacion {
     flex-wrap: wrap;
   }
 
-  .residentes-paginacion-info {
+  .residentes-tabla .tabla-paginacion-info {
     margin-left: 0;
     width: 100%;
   }

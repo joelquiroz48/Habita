@@ -4,7 +4,6 @@ import {
     DollarSign,
     Users,
     PiggyBank,
-    Plus,
     ChevronDown,
     Search,
     Eye,
@@ -20,9 +19,9 @@ import Panel from "../../../components/Panel/Panel";
 import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
 import Tabla from "../../../components/Tabla/Tabla";
 
-// =========================
-// DATOS DE EJEMPLO
-// =========================
+{/* =========================
+       DATOS EJEMPLO
+========================== */}
 
 const expensas = [
     {
@@ -121,6 +120,11 @@ function Expensas() {
     }, []);
 
     const expensaActual = expensas[0];
+
+    {/* =========================
+            TARJETAS RESUMEN
+    ========================== */}
+
     const resumenTarjetas = [
         {
             icono: Calendar,
@@ -157,8 +161,11 @@ function Expensas() {
             ),
         },
     ];
+
     const detalle = expensas.find((e) => e.periodo === periodoSeleccionado);
+    
     const pendiente = detalle.importe - detalle.recaudado;
+    
     const columnas = [
         {
             clave: "indicador",
