@@ -189,15 +189,6 @@
   color: var(--texto-icono);
 }
 
-.pagos-tabla .tabla-paginacion {
-  padding: 0 18px 14px;
-  margin-top: 16px;
-}
-
-.pagos-tabla .tabla-paginacion-info {
-  font-size: 12px;
-}
-
 /* =========================
       PANEL DE DETALLE
 ========================= */

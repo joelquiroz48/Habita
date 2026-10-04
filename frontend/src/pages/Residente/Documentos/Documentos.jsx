@@ -19,6 +19,7 @@ import {
 
 import "./Documentos.css";
 import Panel from "../../../components/Panel/Panel";
+import Tabla from "../../../components/Tabla/Tabla";
 
 /* =========================
         DATOS DE EJEMPLO
@@ -91,6 +92,56 @@ const documentosRecientes = [
     },
 ];
 
+const columnasDocumentosRecientes = [
+    {
+        clave: "nombre",
+        titulo: "Documento",
+        ancho: "2fr",
+        render: (documento) => (
+            <span className="documento-nombre">
+                <span className={`documento-tipo ${documento.tipo}`}>
+                    {documento.tipo === "pdf" && <span>PDF</span>}
+                    {documento.tipo === "excel" && <FileSpreadsheet />}
+                    {documento.tipo === "word" && <FileText />}
+                    {documento.tipo === "money" && <CircleDollarSign />}
+                </span>
+                <span>{documento.nombre}</span>
+            </span>
+        ),
+    },
+    {
+        clave: "categoria",
+        titulo: "Categoría",
+        ancho: "1.1fr",
+        render: (documento) => (
+            <small
+                className={`categoria-badge ${documento.categoria
+                    .toLowerCase()
+                    .replaceAll(" ", "-")}`}
+            >
+                {documento.categoria}
+            </small>
+        ),
+    },
+    {
+        clave: "fecha",
+        titulo: "Fecha",
+        ancho: "0.8fr",
+        clase: "fecha-documento",
+    },
+    {
+        clave: "acciones",
+        titulo: "Acciones",
+        ancho: "70px",
+        render: () => (
+            <span className="acciones-documento">
+                <button title="Descargar" aria-label="Descargar"><Download /></button>
+                <button title="Ver documento" aria-label="Ver documento"><Eye /></button>
+            </span>
+        ),
+    },
+];
+
 
 const categoriasExplorar = [
     {
@@ -154,70 +205,12 @@ function Documentos() {
 
                     {/* DOCUMENTOS RECIENTES*/}
 
-                    <Panel
-                        titulo="Documentos recientes"
-                        accion={
-                            <button className="link-documentos">Ver todos</button>
-                        }
-                        className="recientes-documentos"
-                    >
-                        <div className="tabla-documentos">
-                            <div className="tabla-documentos-header">
-                                <span>Documento</span>
-                                <span>Categoría</span>
-                                <span>Fecha</span>
-                                <span>Acciones</span>
-                            </div>
-
-                            {documentosRecientes.map((documento, index) => (
-                                <div className="tabla-documento-fila" key={index}>
-                                    {/* DOCUMENTO */}
-                                    <div className="documento-nombre">
-                                        <div className={`documento-tipo ${documento.tipo}`}>
-                                            {documento.tipo === "pdf" && (
-                                                <span>PDF</span>
-                                            )}
-
-                                            {documento.tipo === "excel" && (
-                                                <FileSpreadsheet />
-                                            )}
-
-                                            {documento.tipo === "word" && (
-                                                <FileText />
-                                            )}
-
-                                            {documento.tipo === "money" && (
-                                                <CircleDollarSign />
-                                            )}
-                                        </div>
-
-                                        <span>{documento.nombre}</span>
-                                    </div>
-
-                                    {/* CATEGORÍA */}
-                                    <span>
-                                        <small
-                                            className={`categoria-badge ${documento.categoria
-                                                .toLowerCase()
-                                                .replaceAll(" ", "-")}`}
-                                        >
-                                            {documento.categoria}
-                                        </small>
-                                    </span>
-
-                                    {/* FECHA */}
-                                    <span className="fecha-documento">{documento.fecha}</span>
-
-                                    {/* ACCIONES */}
-                                    <div className="acciones-documento">
-                                        <button title="Descargar"><Download /></button>
-
-                                        <button title="Ver documento"><Eye /></button>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </Panel>
+                    <Tabla
+                        columnas={columnasDocumentosRecientes}
+                        datos={documentosRecientes}
+                        etiqueta="documentos"
+                        className="documentos-recientes-tabla"
+                    />
 
                     {/* EXPLORAR POR CATEGORÍA */}
 

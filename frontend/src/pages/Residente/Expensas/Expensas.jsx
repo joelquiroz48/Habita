@@ -15,6 +15,7 @@ import {
 import "./Expensas.css";
 import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
 import Panel from "../../../components/Panel/Panel";
+import Tabla from "../../../components/Tabla/Tabla";
 
 /* =========================
     DATOS DE EJEMPLO
@@ -88,6 +89,55 @@ const historialExpensas = [
         importe: "$ 41.650",
         vencimiento: "10/04/2026",
         estado: "Pagada",
+    },
+];
+
+const columnasHistorialExpensas = [
+    { clave: "periodo", titulo: "Período", ancho: "1.2fr" },
+    {
+        clave: "importe",
+        titulo: "Importe",
+        ancho: "1fr",
+        render: (expensa) => <strong>{expensa.importe}</strong>,
+    },
+    { clave: "vencimiento", titulo: "Vencimiento", ancho: "1.2fr" },
+    {
+        clave: "estado",
+        titulo: "Estado",
+        ancho: "1.3fr",
+        render: (expensa) => (
+            <small className={
+                expensa.estado === "Pagada"
+                    ? "estado-pagada"
+                    : "estado-pendiente-expensa"
+            }>
+                {expensa.estado}
+            </small>
+        ),
+    },
+    {
+        clave: "acciones",
+        titulo: "Acciones",
+        ancho: "2.3fr",
+        render: () => (
+            <span className="acciones-expensa">
+                <button title="Descargar" aria-label="Descargar">
+                    <Download />
+                    Descargar
+                </button>
+                <button title="Ver detalle" aria-label="Ver detalle">
+                    <Eye />
+                    Ver detalle
+                </button>
+                <button
+                    className="accion-menu"
+                    title="Más opciones"
+                    aria-label="Más opciones"
+                >
+                    ⋮
+                </button>
+            </span>
+        ),
     },
 ];
 
@@ -239,83 +289,13 @@ function Expensas() {
 
                     {/* HISTORIAL */}
 
-                    <Panel className="historial-expensas">
-                        <div className="historial-header">
-
-                            <div className="filtros-expensas">
-                                <button className="activo">Todas</button>
-
-                                <button>Pendientes</button>
-
-                                <button>Pagadas</button>
-                            </div>
-
-                            <button className="filtro-fecha">
-                                <CalendarDays />
-                                Últimos 12 meses
-                                <ChevronRight />
-                            </button>
-
-                        </div>
-
-                        <div className="tabla-expensas">
-
-                            <div className="tabla-header">
-                                <span>Período</span>
-                                <span>Importe</span>
-                                <span>Vencimiento</span>
-                                <span>Estado</span>
-                                <span>Acciones</span>
-                            </div>
-
-                            {historialExpensas.map((expensa) => (
-                                <div className="tabla-fila" key={expensa.id}>
-                                    <span>{expensa.periodo}</span>
-
-                                    <strong>{expensa.importe}</strong>
-
-                                    <span>{expensa.vencimiento}</span>
-
-                                    <span>
-                                        <small className={
-                                                expensa.estado === "Pagada"
-                                                    ? "estado-pagada"
-                                                    : "estado-pendiente-expensa"
-                                            }
-                                        >
-                                            {expensa.estado}
-                                        </small>
-                                    </span>
-
-                                    <div className="acciones-expensa">
-                                        <button title="Descargar">
-                                            <Download />
-                                            Descargar
-                                        </button>
-
-                                        <button title="Ver detalle">
-                                            <Eye />
-                                            Ver detalle
-                                        </button>
-
-                                        <button
-                                            className="accion-menu"
-                                            title="Más opciones"
-                                        >
-                                            ⋮
-                                        </button>
-                                    </div>
-                                </div>
-                            ))}
-
-                        </div>
-
-                        <div className="paginacion-expensas">
-                            <span>1 de 2</span>
-
-                            <button> <ChevronRight /></button>
-                        </div>
-                    </Panel>
+                    <Tabla
+                        columnas={columnasHistorialExpensas}
+                        datos={historialExpensas}
+                        filasPorPagina={5}
+                        etiqueta="expensas"
+                        className="historial-tabla"
+                    />
 
                 </section>
 
