@@ -13,6 +13,7 @@ import {
     House,
     Wallet,
     Calendar,
+    MessageSquareWarning,
     Megaphone,
     Folder,
 } from "lucide-react";
@@ -29,6 +30,10 @@ const informacionHeader = {
     "/reservas": {
         titulo: "Reservas",
         descripcion: "Reservá y gestioná los espacios comunes de tu comunidad",
+    },
+    "/reclamos": {
+        titulo: "Reclamos",
+        descripcion: "Reportá problemas y consultá el estado de tus reclamos",
     },
     "/avisos": {
         titulo: "Avisos",
@@ -52,6 +57,7 @@ const itemsMenu = [
     { to: "/inicio", icon: House, label: "Inicio" },
     { to: "/expensas", icon: Wallet, label: "Mis expensas" },
     { to: "/reservas", icon: Calendar, label: "Reservas" },
+    { to: "/reclamos", icon: MessageSquareWarning, label: "Reclamos" },
     { to: "/avisos", icon: Megaphone, label: "Avisos" },
     { to: "/documentos", icon: Folder, label: "Documentos" },
 ];
