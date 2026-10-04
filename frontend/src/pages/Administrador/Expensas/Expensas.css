@@ -6,64 +6,10 @@
       CABECERA + KPIS
 ========================= */
 
-.expensas-cabecera {
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
-  margin-bottom: 18px;
-}
-
-.expensas-kpi-grid {
-  flex: 1;
+.expensas-resumen {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 14px;
-}
-
-.expensas-kpi-card {
-  background: var(--blanco);
-  border: 1px solid var(--borde-tarjeta);
-  border-radius: 12px;
-  padding: 16px;
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  box-sizing: border-box;
-}
-
-.expensas-kpi-icon {
-  width: 42px;
-  height: 42px;
-  min-width: 42px;
-  border-radius: 50%;
-  background: var(--fondo-icono-resumen);
-  color: var(--verde);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.expensas-kpi-card > div:last-child {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-}
-
-.expensas-kpi-label {
-  font-size: 12px;
-  color: var(--texto-secundario);
-  margin-bottom: 3px;
-}
-
-.expensas-kpi-card strong {
-  font-size: 19px;
-  color: var(--texto-principal);
-}
-
-.expensas-kpi-info {
-  font-size: 12px;
-  color: var(--texto-secundario);
-  margin-top: 3px;
 }
 
 .expensas-progreso {
@@ -79,26 +25,6 @@
   height: 100%;
   background: var(--verde);
   border-radius: 4px;
-}
-
-.expensas-btn-nuevo {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  border: none;
-  border-radius: 8px;
-  background: var(--verde);
-  color: var(--blanco);
-  font-size: 13px;
-  font-weight: 600;
-  padding: 10px 16px;
-  cursor: pointer;
-  white-space: nowrap;
-  margin-top: 2px;
-}
-
-.expensas-btn-nuevo:hover {
-  background: var(--verde-hover);
 }
 
 /* =========================
@@ -134,11 +60,18 @@
     CONTENIDO (listado + detalle)
 ========================= */
 
-.expensas-contenido {
-  display: grid;
-  grid-template-columns: 1fr 320px;
+.pagina-administrador .expensas-contenido {
+  display: flex;
+  flex-direction: column;
   gap: 16px;
-  align-items: start;
+}
+
+.pagina-administrador .expensas-listado,
+.pagina-administrador .expensas-tabla,
+.pagina-administrador .expensas-detalle {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 /* ---- listado ---- */
@@ -185,55 +118,26 @@
   color: var(--texto-principal);
 }
 
-.expensas-tabla-card {
-  background: var(--blanco);
-  border: 1px solid var(--borde-tarjeta);
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-.expensas-tabla-header,
-.expensas-tabla-fila {
-  display: grid;
-  grid-template-columns: 20px 1fr 1fr 1fr 1.3fr 0.8fr 0.7fr;
-  align-items: center;
+.expensas-tabla .tabla-header,
+.expensas-tabla .tabla-fila {
   gap: 10px;
   padding: 14px 18px;
   width: 100%;
   box-sizing: border-box;
 }
 
-.expensas-tabla-header {
-  border-bottom: 1px solid var(--borde-secundario);
-}
-
-.expensas-tabla-header span {
+.expensas-tabla .tabla-header span {
   font-size: 12px;
   font-weight: 600;
   color: var(--texto-secundario);
   text-align: left;
 }
 
-.expensas-tabla-fila {
-  border: none;
-  border-bottom: 1px solid var(--separador);
+.expensas-tabla .tabla-fila {
   background: transparent;
-  font-size: 13px;
-  color: var(--texto-principal);
-  cursor: pointer;
-  text-align: left;
-  font-family: inherit;
 }
 
-.expensas-tabla-body .expensas-tabla-fila:last-child {
-  border-bottom: none;
-}
-
-.expensas-tabla-fila:hover {
-  background: var(--fondo);
-}
-
-.expensas-tabla-fila.seleccionada {
+.expensas-tabla .tabla-fila.seleccionada {
   background: var(--celeste-claro);
 }
 
@@ -255,13 +159,13 @@
 }
 
 .expensas-badge-curso {
-  color: var(--color-aviso-azul);
-  background: var(--fondo-aviso-azul);
+    color: var(--color-aviso-azul) !important;
+    background: var(--fondo-azul-suave) !important;
 }
 
 .expensas-badge-cerrada {
-  color: var(--color-aviso-verde);
-  background: var(--fondo-aviso-verde);
+  color: var(--color-aviso-verde) !important;
+  background: var(--fondo-verde-suave) !important;
 }
 
 .expensas-tabla-acciones {
@@ -270,74 +174,16 @@
   color: var(--texto-icono);
 }
 
-/* ---- paginacion ---- */
-
-.expensas-paginacion {
-  display: flex;
-  align-items: center;
-  gap: 6px;
+.expensas-tabla .tabla-paginacion {
+  padding: 0 18px 14px;
   margin-top: 16px;
-  flex-wrap: wrap;
 }
 
-.expensas-pagina,
-.expensas-pagina-flecha {
-  min-width: 30px;
-  height: 30px;
-  border: 1px solid var(--borde-secundario);
-  border-radius: 7px;
-  background: var(--blanco);
-  color: var(--texto-secundario);
-  font-size: 13px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  padding: 0 6px;
-}
-
-.expensas-pagina.activa {
-  border-color: var(--verde);
-  color: var(--verde);
-  font-weight: 600;
-}
-
-.expensas-pagina-puntos {
-  color: var(--texto-secundario);
-  font-size: 13px;
-  padding: 0 2px;
-}
-
-.expensas-paginacion-info {
-  margin-left: auto;
+.expensas-tabla .tabla-paginacion-info {
   font-size: 12px;
-  color: var(--texto-secundario);
 }
 
 /* ---- panel de detalle ---- */
-
-.expensas-detalle {
-  background: var(--blanco);
-  border: 1px solid var(--borde-tarjeta);
-  border-radius: 12px;
-  padding: 18px;
-  display: flex;
-  flex-direction: column;
-}
-
-.expensas-detalle-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 10px;
-}
-
-.expensas-detalle-header h2 {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--texto-principal);
-}
 
 .expensas-detalle-linea {
   font-size: 12px;
@@ -357,6 +203,26 @@
   text-transform: none;
   margin-top: 16px;
   margin-bottom: 8px;
+}
+
+.expensas-detalle-columnas {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.expensas-detalle-seccion {
+  min-width: 0;
+}
+
+.expensas-detalle-acciones {
+  margin-top: 18px;
+}
+
+.expensas-acciones-lista {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
 }
 
 .expensas-resumen-fila {
@@ -430,13 +296,10 @@
 ========================= */
 
 @media (max-width: 1200px) {
-  .expensas-kpi-grid {
+  .expensas-resumen {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .expensas-contenido {
-    grid-template-columns: 1fr;
-  }
 }
 
 @media (max-width: 800px) {
@@ -444,23 +307,24 @@
     padding: 20px;
   }
 
-  .expensas-cabecera {
-    flex-direction: column;
-  }
-
-  .expensas-kpi-grid {
+  .expensas-resumen {
     grid-template-columns: 1fr;
   }
 
-  .expensas-tabla-header,
-  .expensas-tabla-fila {
-    grid-template-columns: 20px 1fr 1fr;
+  .expensas-detalle-columnas,
+  .expensas-acciones-lista {
+    grid-template-columns: 1fr;
   }
 
-  .expensas-tabla-header span:nth-child(4),
-  .expensas-tabla-header span:nth-child(5),
-  .expensas-tabla-fila span:nth-child(4),
-  .expensas-tabla-fila span:nth-child(5) {
+  .expensas-tabla .tabla-header,
+  .expensas-tabla .tabla-fila {
+    grid-template-columns: 20px 1fr 1fr 0.8fr 0.7fr !important;
+  }
+
+  .expensas-tabla .tabla-header > span:nth-child(4),
+  .expensas-tabla .tabla-header > span:nth-child(5),
+  .expensas-tabla .tabla-fila > span:nth-child(4),
+  .expensas-tabla .tabla-fila > span:nth-child(5) {
     display: none;
   }
 }

@@ -15,6 +15,10 @@ import {
 import "./Configuracion.css";
 import Panel from "../../../components/Panel/Panel";
 
+{/* =========================
+       DATOS EJEMPLOS
+========================== */}
+
 const configuraciones = [
     {
         clave: "espaciosDisponibles",
@@ -35,6 +39,7 @@ const configuraciones = [
         descripcion: "Pedir confirmación antes de cancelar una reserva.",
     },
 ];
+
 
 function Configuracion() {
     useEffect(() => {

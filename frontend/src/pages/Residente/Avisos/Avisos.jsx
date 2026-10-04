@@ -21,9 +21,9 @@ import "./Avisos.css";
 import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
 import Panel from "../../../components/Panel/Panel";
 
-// =========================
-// DATOS DE EJEMPLO
-// =========================
+{/* =========================
+       DATOS EJEMPLOS
+========================== */}
 
 const resumen = {
     noLeidos: 4,
@@ -145,6 +145,10 @@ const categorias = [
     { nombre: "Servicios", cantidad: 1 },
 ];
 
+{/* =========================
+       TARJETAS RESUMEN
+========================== */}
+
 const resumenAvisos = [
     {
         icono: Bell,
@@ -177,6 +181,7 @@ const resumenAvisos = [
         ),
     },
 ];
+
 
 function Avisos() {
     useEffect(() => {

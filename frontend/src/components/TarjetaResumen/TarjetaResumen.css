@@ -1,8 +1,3 @@
-.resumen-contenido {
-    display: flex;
-    flex-direction: column;
-}
-
 .resumen-tarjeta {
     display: flex;
     align-items: flex-start;
@@ -21,7 +16,7 @@
     height: 44px;
     border-radius: 50%;
     color: var(--verde);
-    background: var(--fondo-icono-resumen);
+    background: var(--fondo-icono);
 }
 
 .resumen-contenido {

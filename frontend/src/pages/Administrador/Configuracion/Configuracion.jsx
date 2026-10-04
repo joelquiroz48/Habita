@@ -14,10 +14,11 @@ import {
 } from "lucide-react";
 
 import "./Configuracion.css";
+import Panel from "../../../components/Panel/Panel";
 
-// =========================
-// DATOS DE EJEMPLO
-// =========================
+{/* =========================
+       DATOS EJEMPLOS
+========================== */}
 
 const tabs = ["General", "Expensas", "Pagos", "Comunicación", "Seguridad", "Integraciones"];
 
@@ -128,55 +129,57 @@ function Configuracion() {
 
             <div className="configuracion-fila-superior">
 
-                <section className="configuracion-panel-card">
-                    <h2>Datos del consorcio</h2>
-
+                <Panel titulo="Datos del consorcio">
                     <div className="configuracion-datos-grid">
-
                         <div className="configuracion-logo-col">
                             <div className="configuracion-logo-placeholder">
                                 <Building2 size={32} />
                             </div>
-                            <button className="configuracion-btn-secundario">Cambiar logo</button>
+
+                            <button className="configuracion-btn-secundario">
+                                Cambiar logo
+                            </button>
                         </div>
 
                         <div className="configuracion-campos-grid">
                             <label>
                                 Nombre del consorcio
-                                <input type="text" defaultValue={datosConsorcio.nombre} />
+                                <input type="text" defaultValue={datosConsorcio.nombre}/>
                             </label>
+
                             <label>
                                 CUIT
-                                <input type="text" defaultValue={datosConsorcio.cuit} />
+                                <input type="text" defaultValue={datosConsorcio.cuit}/>
                             </label>
+
                             <label>
                                 Dirección
-                                <input type="text" defaultValue={datosConsorcio.direccion} />
+                                <input type="text" defaultValue={datosConsorcio.direccion}/>
                             </label>
+
                             <label>
                                 Teléfono
-                                <input type="text" defaultValue={datosConsorcio.telefono} />
+                                <input type="text" defaultValue={datosConsorcio.telefono}/>
                             </label>
+
                             <label>
                                 Email
-                                <input type="email" defaultValue={datosConsorcio.email} />
+                                <input type="email" defaultValue={datosConsorcio.email}/>
                             </label>
+
                             <label>
                                 Sitio web
-                                <input type="text" defaultValue={datosConsorcio.sitioWeb} />
+                                <input type="text" defaultValue={datosConsorcio.sitioWeb}/>
                             </label>
                         </div>
-
                     </div>
 
                     <div className="configuracion-guardar-fila">
                         <button className="configuracion-btn-guardar">Guardar cambios</button>
                     </div>
-                </section>
+                </Panel>
 
-                <section className="configuracion-panel-card">
-                    <h2>Información general</h2>
-
+                <Panel titulo="Información general">
                     <div className="configuracion-info-lista">
                         {infoGeneral.map((item) => (
                             <div className="configuracion-info-fila" key={item.label}>
@@ -190,7 +193,7 @@ function Configuracion() {
                         <Pencil size={15} />
                         Editar información
                     </button>
-                </section>
+                </Panel>
 
             </div>
 
@@ -202,12 +205,12 @@ function Configuracion() {
                     const BotonIcono = tarjeta.botonIcon;
 
                     return (
-                        <article className="configuracion-tarjeta" key={tarjeta.titulo}>
-                            <div className="configuracion-tarjeta-icon">
-                                <Icono size={20} />
-                            </div>
-
-                            <h3>{tarjeta.titulo}</h3>
+                        <Panel
+                            className="configuracion-tarjeta"
+                            key={tarjeta.titulo}
+                            icono={<Icono size={20} />}
+                            titulo={tarjeta.titulo}
+                        >
                             <p>{tarjeta.descripcion}</p>
 
                             <div className="configuracion-tarjeta-stats">
@@ -223,51 +226,55 @@ function Configuracion() {
                                 <BotonIcono size={15} />
                                 {tarjeta.boton}
                             </button>
-                        </article>
+                        </Panel>
                     );
                 })}
             </section>
 
             {/* NOTIFICACIONES */}
 
-            <section className="configuracion-notificaciones">
+            <Panel>
+                <div className="configuracion-notificaciones">
+                    <div className="configuracion-notif-encabezado">
+                        <div className="configuracion-tarjeta-icon">
+                            <Bell size={20} />
+                        </div>
 
-                <div className="configuracion-notif-encabezado">
-                    <div className="configuracion-tarjeta-icon">
-                        <Bell size={20} />
+                        <div>
+                            <h3>Notificaciones del sistema</h3>
+                            <p>Elegí qué notificaciones querés recibir y cómo.</p>
+                        </div>
                     </div>
-                    <div>
-                        <h3>Notificaciones del sistema</h3>
-                        <p>Elegí qué notificaciones querés recibir y cómo.</p>
+
+                    <div className="configuracion-notif-lista">
+                        {notificaciones.map((n) => (
+                            <label className="configuracion-notif-fila" key={n.id}>
+                                <button
+                                    type="button"
+                                    className={`configuracion-checkbox ${
+                                        n.activo ? "activo" : ""
+                                    }`}
+                                    onClick={() => alternarNotificacion(n.id)}
+                                    aria-pressed={n.activo}
+                                    aria-label={n.label}
+                                >
+                                    {n.activo && <Check size={13} />}
+                                </button>
+
+                                <div>
+                                    <strong>{n.label}</strong>
+                                    <span>{n.descripcion}</span>
+                                </div>
+                            </label>
+                        ))}
                     </div>
+
+                    <button className="configuracion-btn-secundario">
+                        <Bell size={15} />
+                        Configurar notificaciones
+                    </button>
                 </div>
-
-                <div className="configuracion-notif-lista">
-                    {notificaciones.map((n) => (
-                        <label className="configuracion-notif-fila" key={n.id}>
-                            <button
-                                type="button"
-                                className={`configuracion-checkbox ${n.activo ? "activo" : ""}`}
-                                onClick={() => alternarNotificacion(n.id)}
-                                aria-pressed={n.activo}
-                                aria-label={n.label}
-                            >
-                                {n.activo && <Check size={13} />}
-                            </button>
-                            <div>
-                                <strong>{n.label}</strong>
-                                <span>{n.descripcion}</span>
-                            </div>
-                        </label>
-                    ))}
-                </div>
-
-                <button className="configuracion-btn-secundario">
-                    <Bell size={15} />
-                    Configurar notificaciones
-                </button>
-
-            </section>
+            </Panel>
 
         </main>
     );

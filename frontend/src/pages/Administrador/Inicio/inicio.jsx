@@ -8,17 +8,19 @@ import {
     ChevronDown,
     ArrowUp,
     ArrowDown,
-    ChevronRight,
     CalendarClock,
     Megaphone,
     FileText,
 } from "lucide-react";
 
 import "./Inicio.css";
+import Panel from "../../../components/Panel/Panel";
+import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
+import TablaReportes from "../../../components/TablaReportes/TablaReportes";
 
-// =========================
-// DATOS DE EJEMPLO
-// =========================
+{/* =========================
+        DATOS EJEMPLO
+========================== */}
 
 const kpis = {
     residentes: {
@@ -75,7 +77,6 @@ const reclamosPorEstado = [
 
 const totalReclamos = reclamosPorEstado.reduce((acc, r) => acc + r.cantidad, 0);
 
-// Genera los porcentajes acumulados para el conic-gradient del donut
 function armarGradienteDonut(datos) {
     let acumulado = 0;
     const segmentos = datos.map((d) => {
@@ -155,6 +156,138 @@ const documentosRecientes = [
     },
 ];
 
+const columnasReclamos = [
+    {
+        clave: "titulo",
+        ancho: "minmax(0, 1.6fr)",
+        className: "admin-tabla-titulo",
+    },
+    {
+        clave: "estado",
+        ancho: "auto",
+        render: (estado) => (
+            <span className={`admin-badge ${badgeClase(estado)}`}>
+                {estado}
+            </span>
+        ),
+    },
+    {
+        clave: "ubicacion",
+        ancho: "minmax(0, 1fr)",
+        className: "admin-tabla-secundario",
+    },
+    {
+        clave: "fecha",
+        ancho: "auto",
+        className: "admin-tabla-fecha",
+    },
+];
+
+const columnasPagos = [
+    {
+        clave: "unidad",
+        ancho: "minmax(0, 1.6fr)",
+        className: "admin-tabla-titulo",
+    },
+    {
+        clave: "monto",
+        ancho: "minmax(0, 1fr)",
+        className: "admin-tabla-secundario",
+    },
+    {
+        clave: "fecha",
+        ancho: "auto",
+        className: "admin-tabla-fecha",
+    },
+    {
+        clave: "estado",
+        ancho: "auto",
+        render: (estado) => (
+            <span className={`admin-badge ${badgeClase(estado)}`}>
+                {estado}
+            </span>
+        ),
+    },
+];
+
+{/* =========================
+       TARJETAS RESUMEN
+========================== */}
+
+const resumenTarjetas = [
+    {
+        icono: Users,
+        titulo: kpis.residentes.label,
+        valor: kpis.residentes.valor,
+        contenido: (
+            <>
+                <span className="admin-info">
+                    {kpis.residentes.info}
+                </span>
+                <span className="admin-tendencia positiva">
+                    <ArrowUp size={12} />
+                    {kpis.residentes.tendencia}
+                </span>
+            </>
+        ),
+    },
+    {
+        icono: Building2,
+        titulo: kpis.unidades.label,
+        valor: kpis.unidades.valor,
+        contenido: (
+            <>
+                <span className="admin-info">
+                    {kpis.unidades.info}
+                </span>
+                <span className="admin-tendencia">
+                    {kpis.unidades.tendencia}
+                </span>
+            </>
+        ),
+    },
+    {
+        icono: DollarSign,
+        titulo: kpis.expensas.label,
+        valor: kpis.expensas.valor,
+        contenido: (
+            <>
+                <span className="admin-info">
+                    {kpis.expensas.info}
+                </span>
+
+                <div className="admin-progreso">
+                    <div
+                        className="admin-progreso-relleno"
+                        style={{ width: `${kpis.expensas.progreso}%` }}
+                    />
+                </div>
+
+                <span className="admin-info">
+                    {kpis.expensas.progreso}% del total
+                </span>
+            </>
+        ),
+    },
+    {
+        icono: MessageSquare,
+        titulo: kpis.reclamos.label,
+        valor: kpis.reclamos.valor,
+        contenido: (
+            <>
+                <span className="admin-info">
+                    {kpis.reclamos.info}
+                </span>
+                <span className="admin-tendencia negativa">
+                    <ArrowDown size={12} />
+                    {kpis.reclamos.tendencia}
+                </span>
+            </>
+        ),
+    },
+];
+
+
 function badgeClase(estado) {
     switch (estado) {
         case "Pendiente":
@@ -169,6 +302,7 @@ function badgeClase(estado) {
     }
 }
 
+
 function Dashboard() {
 
     useEffect(() => {
@@ -178,89 +312,43 @@ function Dashboard() {
     return (
         <main className="admin-dashboard">
 
-            {/* ENCABEZADO */}
+            {/* =========================
+                  RESUMEN SUPERIOR
+            ========================= */}
 
+            <section className="admin-resumen">
+                {resumenTarjetas.map((item, index) => {
+                    const Icono = item.icono;
 
-
-            {/* TARJETAS DE KPI */}
-
-            <section className="admin-kpi-grid">
-
-                <article className="admin-kpi-card">
-                    <div className="admin-kpi-icon">
-                        <Users />
-                    </div>
-                    <div>
-                        <span className="admin-kpi-label">{kpis.residentes.label}</span>
-                        <strong>{kpis.residentes.valor}</strong>
-                        <span className="admin-kpi-info">{kpis.residentes.info}</span>
-                        <span className="admin-kpi-tendencia positiva">
-                            <ArrowUp size={12} />
-                            {kpis.residentes.tendencia}
-                        </span>
-                    </div>
-                </article>
-
-                <article className="admin-kpi-card">
-                    <div className="admin-kpi-icon">
-                        <Building2 />
-                    </div>
-                    <div>
-                        <span className="admin-kpi-label">{kpis.unidades.label}</span>
-                        <strong>{kpis.unidades.valor}</strong>
-                        <span className="admin-kpi-info">{kpis.unidades.info}</span>
-                        <span className="admin-kpi-tendencia">{kpis.unidades.tendencia}</span>
-                    </div>
-                </article>
-
-                <article className="admin-kpi-card">
-                    <div className="admin-kpi-icon">
-                        <DollarSign />
-                    </div>
-                    <div>
-                        <span className="admin-kpi-label">{kpis.expensas.label}</span>
-                        <strong>{kpis.expensas.valor}</strong>
-                        <span className="admin-kpi-info">{kpis.expensas.info}</span>
-                        <div className="admin-progreso">
-                            <div
-                                className="admin-progreso-relleno"
-                                style={{ width: `${kpis.expensas.progreso}%` }}
-                            />
-                        </div>
-                        <span className="admin-kpi-info">{kpis.expensas.progreso}% del total</span>
-                    </div>
-                </article>
-
-                <article className="admin-kpi-card">
-                    <div className="admin-kpi-icon">
-                        <MessageSquare />
-                    </div>
-                    <div>
-                        <span className="admin-kpi-label">{kpis.reclamos.label}</span>
-                        <strong>{kpis.reclamos.valor}</strong>
-                        <span className="admin-kpi-info">{kpis.reclamos.info}</span>
-                        <span className="admin-kpi-tendencia positiva">
-                            <ArrowDown size={12} />
-                            {kpis.reclamos.tendencia}
-                        </span>
-                    </div>
-                </article>
-
+                    return (
+                        <TarjetaResumen
+                            key={index}
+                            icono={<Icono />}
+                            titulo={item.titulo}
+                            valor={item.valor}
+                            contenido={item.contenido}
+                        />
+                    );
+                })}
             </section>
+
+            {/* =========================
+                CONTENIDO PRINCIPAL
+            ========================= */}
 
             {/* GRAFICOS */}
 
-            <section className="admin-graficos-grid">
+            <section className="admin-fila-superior">
 
-                <article className="admin-panel-card">
-                    <div className="admin-panel-header">
-                        <h2>Recaudación mensual</h2>
+                <Panel
+                    titulo="Recaudación mensual"
+                    accion={
                         <button className="admin-selector-anio">
                             Este año
                             <ChevronDown size={15} />
                         </button>
-                    </div>
-
+                    }
+                >
                     <div className="admin-barras-chart">
                         <div className="admin-barras-eje-y">
                             <span>$6M</span>
@@ -275,21 +363,20 @@ function Dashboard() {
                                     <div className="admin-barra-pista">
                                         <div
                                             className="admin-barra"
-                                            style={{ height: `${(item.valor / MAX_RECAUDACION) * 100}%` }}
+                                            style={{
+                                                height: `${(item.valor / MAX_RECAUDACION) * 100}%`
+                                            }}
                                         />
                                     </div>
+
                                     <span>{item.mes}</span>
                                 </div>
                             ))}
                         </div>
                     </div>
-                </article>
+                </Panel>
 
-                <article className="admin-panel-card">
-                    <div className="admin-panel-header">
-                        <h2>Reclamos por estado</h2>
-                    </div>
-
+                <Panel titulo="Reclamos por estado">
                     <div className="admin-donut-wrap">
                         <div
                             className="admin-donut"
@@ -311,91 +398,68 @@ function Dashboard() {
                             ))}
                         </ul>
                     </div>
-                </article>
+                </Panel>
 
             </section>
 
             {/* LISTADOS */}
 
-            <section className="admin-listados-grid">
+            <section className="admin-fila-central">
 
-                <article className="admin-panel-card">
-                    <div className="admin-panel-header">
-                        <h2>Últimos reclamos</h2>
-                        <Link to="/administrador/reclamos">Ver todos</Link>
-                    </div>
+                <Panel titulo="Últimos reclamos" accion={<Link to="/administrador/reclamos">Ver todos</Link>}>
+                    <TablaReportes
+                        columnas={columnasReclamos}
+                        datos={ultimosReclamos}
+                        obtenerClave={(reclamo) =>
+                            `${reclamo.titulo}-${reclamo.fecha}`
+                        }
+                    />
+                </Panel>
 
-                    <div className="admin-tabla-lista">
-                        {ultimosReclamos.map((reclamo, index) => (
-                            <div className="admin-tabla-fila" key={index}>
-                                <span className="admin-tabla-titulo">{reclamo.titulo}</span>
-                                <span className={`admin-badge ${badgeClase(reclamo.estado)}`}>
-                                    {reclamo.estado}
-                                </span>
-                                <span className="admin-tabla-secundario">{reclamo.ubicacion}</span>
-                                <span className="admin-tabla-fecha">{reclamo.fecha}</span>
-                            </div>
-                        ))}
-                    </div>
-                </article>
-
-                <article className="admin-panel-card">
-                    <div className="admin-panel-header">
-                        <h2>Últimos pagos</h2>
-                        <Link to="/administrador/pagos">Ver todos</Link>
-                    </div>
-
-                    <div className="admin-tabla-lista">
-                        {ultimosPagos.map((pago, index) => (
-                            <div className="admin-tabla-fila" key={index}>
-                                <span className="admin-tabla-titulo">{pago.unidad}</span>
-                                <span className="admin-tabla-secundario">{pago.monto}</span>
-                                <span className="admin-tabla-fecha">{pago.fecha}</span>
-                                <span className={`admin-badge ${badgeClase(pago.estado)}`}>
-                                    {pago.estado}
-                                </span>
-                            </div>
-                        ))}
-                    </div>
-                </article>
+                <Panel titulo="Últimos pagos" accion={<Link to="/administrador/pagos">Ver todos</Link>}>
+                    <TablaReportes
+                        columnas={columnasPagos}
+                        datos={ultimosPagos}
+                        obtenerClave={(pago) => `${pago.unidad}-${pago.fecha}`}
+                    />
+                </Panel>
 
             </section>
 
             {/* TARJETAS INFERIORES */}
 
-            <section className="admin-inferior-grid">
+            <section className="admin-fila-inferior">
 
-                <article className="admin-panel-card admin-inferior-card">
-                    <div className="admin-inferior-icon">
-                        <CalendarClock />
+                <Panel>
+                    <div className="admin-inferior-card">
+                        <div className="admin-inferior-icon">
+                            <CalendarClock />
+                        </div>
+                        <div className="admin-inferior-contenido">
+                            <h3>Próxima reunión</h3>
+                            <strong>{proximaReunion.titulo}</strong>
+                            <span>{proximaReunion.fecha}</span>
+                            <span>{proximaReunion.lugar}</span>
+                            <button className="admin-btn-secundario">Ver detalles</button>
+                        </div>
                     </div>
-                    <div className="admin-inferior-contenido">
-                        <h3>Próxima reunión</h3>
-                        <strong>{proximaReunion.titulo}</strong>
-                        <span>{proximaReunion.fecha}</span>
-                        <span>{proximaReunion.lugar}</span>
-                        <button className="admin-btn-secundario">Ver detalles</button>
-                    </div>
-                </article>
+                </Panel>
 
-                <article className="admin-panel-card admin-inferior-card">
-                    <div className="admin-inferior-icon">
-                        <Megaphone />
+                <Panel>
+                    <div className="admin-inferior-card">
+                        <div className="admin-inferior-icon">
+                            <Megaphone />
+                        </div>
+                        <div className="admin-inferior-contenido">
+                            <h3>Comunicado destacado</h3>
+                            <strong>{comunicadoDestacado.titulo}</strong>
+                            <span>{comunicadoDestacado.descripcion}</span>
+                            <button className="admin-btn-secundario">Ver comunicado</button>
+                        </div>
                     </div>
-                    <div className="admin-inferior-contenido">
-                        <h3>Comunicado destacado</h3>
-                        <strong>{comunicadoDestacado.titulo}</strong>
-                        <span>{comunicadoDestacado.descripcion}</span>
-                        <button className="admin-btn-secundario">Ver comunicado</button>
-                    </div>
-                </article>
+                </Panel>
 
-                <article className="admin-panel-card">
-                    <div className="admin-panel-header">
-                        <h2>Documentos recientes</h2>
-                        <Link to="/administrador/documentos">Ver todos</Link>
-                    </div>
-
+                <Panel titulo="Documentos recientes" accion={<Link to="/administrador/documentos">Ver todos</Link>}>
                     <div className="admin-documentos-lista">
                         {documentosRecientes.map((doc, index) => (
                             <div className="admin-documento-fila" key={index}>
@@ -407,7 +471,7 @@ function Dashboard() {
                             </div>
                         ))}
                     </div>
-                </article>
+                </Panel>
 
             </section>
         </main>

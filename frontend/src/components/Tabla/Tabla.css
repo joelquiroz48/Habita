@@ -1,0 +1,112 @@
+/* =========================
+          TABLA
+========================= */
+
+.tabla-card {
+    background: var(--blanco);
+    border: 1px solid var(--borde-tarjeta);
+    border-radius: 12px;
+    overflow-x: auto;
+}
+
+.tabla-header,
+.tabla-fila {
+    display: grid;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 20px;
+    min-width: max-content;
+}
+
+.tabla-header {
+    border-bottom: 1px solid var(--borde-secundario);
+}
+
+.tabla-header span {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--texto-secundario);
+}
+
+.tabla-fila {
+    border-bottom: 1px solid var(--separador);
+    font-size: 13px;
+    color: var(--texto-principal);
+}
+
+.tabla-header > span,
+.tabla-fila > span {
+    min-width: 0;
+}
+
+.tabla-fila.clickeable {
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+}
+
+.tabla-fila.clickeable:hover {
+    background: var(--fondo);
+}
+
+.tabla-fila.clickeable:focus-visible {
+    outline: 2px solid var(--verde);
+    outline-offset: -2px;
+}
+
+.tabla-body .tabla-fila:last-child {
+    border-bottom: none;
+}
+
+.tabla-vacia {
+    padding: 24px 20px;
+    color: var(--texto-secundario);
+    font-size: 13px;
+    text-align: center;
+}
+
+/* =========================
+        PAGINACIÓN
+========================= */
+
+.tabla-paginacion {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 18px 15px 14px 0;
+    padding-left: 10px;
+}
+
+.tabla-pagina,
+.tabla-pagina-flecha {
+    width: 30px;
+    height: 30px;
+    border: 1px solid var(--borde-secundario);
+    border-radius: 7px;
+    background: var(--blanco);
+    color: var(--texto-secundario);
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.tabla-pagina.activa {
+    border-color: var(--verde);
+    color: var(--verde);
+    font-weight: 600;
+}
+
+.tabla-pagina-flecha:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.tabla-paginacion-info {
+    margin-left: auto;
+    font-size: 12px;
+    color: var(--texto-secundario);
+}

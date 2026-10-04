@@ -11,7 +11,6 @@ import {
     Lightbulb,
     Droplets,
     MessageCircle,
-    ChevronRight,
     Clock3,
     CircleDollarSign,
 } from "lucide-react";
@@ -21,9 +20,9 @@ import "./Inicio.css";
 import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
 import Panel from "../../../components/Panel/Panel";
 
-// =========================
-// DATOS DE EJEMPLO
-// =========================
+{/* =========================
+       DATOS EJEMPLO
+========================== */}
 
 const resumen = {
     expensas: {
@@ -140,6 +139,10 @@ const eventos = [
     },
 ];
 
+{/* =========================
+       TARJETAS RESUMEN
+========================== */}
+
 const resumenTarjetas = [
     {
         icono: WalletCards,
@@ -204,6 +207,7 @@ const resumenTarjetas = [
         ),
     },
 ];
+
 
 function Inicio() {
 

@@ -4,12 +4,10 @@ import {
     DollarSign,
     Users,
     PiggyBank,
-    Plus,
     ChevronDown,
     Search,
     Eye,
     MoreVertical,
-    ChevronLeft,
     ChevronRight,
     Pencil,
     Download,
@@ -17,10 +15,13 @@ import {
 } from "lucide-react";
 
 import "./Expensas.css";
+import Panel from "../../../components/Panel/Panel";
+import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
+import Tabla from "../../../components/Tabla/Tabla";
 
-// =========================
-// DATOS DE EJEMPLO
-// =========================
+{/* =========================
+       DATOS EJEMPLO
+========================== */}
 
 const expensas = [
     {
@@ -101,8 +102,6 @@ const expensas = [
 ];
 
 const totalUnidadesConExpensa = 96;
-const totalPeriodos = 47;
-const paginas = [1, 2, 3, 4, 5];
 
 function formatearMonto(numero) {
     return `$ ${numero.toLocaleString("es-AR")}`;
@@ -121,85 +120,141 @@ function Expensas() {
     }, []);
 
     const expensaActual = expensas[0];
+
+    {/* =========================
+            TARJETAS RESUMEN
+    ========================== */}
+
+    const resumenTarjetas = [
+        {
+            icono: Calendar,
+            titulo: "Expensa actual",
+            valor: expensaActual.periodo,
+            contenido: <span>Período vigente</span>,
+        },
+        {
+            icono: DollarSign,
+            titulo: "Importe total",
+            valor: formatearMonto(expensaActual.importe),
+            contenido: <span>Total a recaudar</span>,
+        },
+        {
+            icono: Users,
+            titulo: "Unidades",
+            valor: totalUnidadesConExpensa,
+            contenido: <span>Con expensa</span>,
+        },
+        {
+            icono: PiggyBank,
+            titulo: "Recaudado",
+            valor: formatearMonto(expensaActual.recaudado),
+            contenido: (
+                <>
+                    <div className="expensas-progreso">
+                        <div
+                            className="expensas-progreso-relleno"
+                            style={{ width: `${expensaActual.porcentaje}%` }}
+                        />
+                    </div>
+                    <span>{expensaActual.porcentaje}% del total</span>
+                </>
+            ),
+        },
+    ];
+
     const detalle = expensas.find((e) => e.periodo === periodoSeleccionado);
+    
     const pendiente = detalle.importe - detalle.recaudado;
+    
+    const columnas = [
+        {
+            clave: "indicador",
+            titulo: "",
+            ancho: "20px",
+            clase: "expensas-chevron",
+            render: (item) => item.periodo === periodoSeleccionado && <ChevronRight size={15} />,
+        },
+        {
+            clave: "periodo",
+            titulo: "Período",
+            ancho: "1fr",
+            clase: "expensas-periodo",
+        },
+        {
+            clave: "vencimiento",
+            titulo: "Vencimiento",
+            ancho: "1fr",
+        },
+        {
+            clave: "importe",
+            titulo: "Importe total",
+            ancho: "1fr",
+            render: (item) => formatearMonto(item.importe),
+        },
+        {
+            clave: "recaudado",
+            titulo: "Recaudado",
+            ancho: "1.3fr",
+            render: (item) => `${formatearMonto(item.recaudado)} (${item.porcentaje}%)`,
+        },
+        {
+            clave: "estado",
+            titulo: "Estado",
+            ancho: "0.8fr",
+            render: (item) => (
+                <span className={`expensas-badge ${badgeClase(item.estado)}`}>
+                    {item.estado}
+                </span>
+            ),
+        },
+        {
+            clave: "acciones",
+            titulo: "Acciones",
+            ancho: "0.7fr",
+            render: () => (
+                <span className="expensas-tabla-acciones">
+                    <span aria-label="Ver detalle">
+                        <Eye size={16} />
+                    </span>
+                    <span aria-label="Más opciones">
+                        <MoreVertical size={16} />
+                    </span>
+                </span>
+            ),
+        },
+    ];
 
     return (
-        <main className="expensas">
+        <main className="expensas pagina-administrador">
 
-            {/* CABECERA CON KPIS */}
+            {/* =========================
+                  RESUMEN SUPERIOR
+            ========================= */}
 
-            <div className="expensas-cabecera">
+            <section className="expensas-resumen">
+                {resumenTarjetas.map((item, index) => {
+                    const Icono = item.icono;
 
-                <section className="expensas-kpi-grid">
+                    return (
+                        <TarjetaResumen
+                            key={index}
+                            icono={<Icono />}
+                            titulo={item.titulo}
+                            valor={item.valor}
+                            contenido={item.contenido}
+                        />
+                    );
+                })}
+            </section>
 
-                    <article className="expensas-kpi-card">
-                        <div className="expensas-kpi-icon">
-                            <Calendar />
-                        </div>
-                        <div>
-                            <span className="expensas-kpi-label">Expensa actual</span>
-                            <strong>{expensaActual.periodo}</strong>
-                            <span className="expensas-kpi-info">Período vigente</span>
-                        </div>
-                    </article>
-
-                    <article className="expensas-kpi-card">
-                        <div className="expensas-kpi-icon">
-                            <DollarSign />
-                        </div>
-                        <div>
-                            <span className="expensas-kpi-label">Importe total</span>
-                            <strong>{formatearMonto(expensaActual.importe)}</strong>
-                            <span className="expensas-kpi-info">Total a recaudar</span>
-                        </div>
-                    </article>
-
-                    <article className="expensas-kpi-card">
-                        <div className="expensas-kpi-icon">
-                            <Users />
-                        </div>
-                        <div>
-                            <span className="expensas-kpi-label">Unidades</span>
-                            <strong>{totalUnidadesConExpensa}</strong>
-                            <span className="expensas-kpi-info">Con expensa</span>
-                        </div>
-                    </article>
-
-                    <article className="expensas-kpi-card">
-                        <div className="expensas-kpi-icon">
-                            <PiggyBank />
-                        </div>
-                        <div>
-                            <span className="expensas-kpi-label">Recaudado</span>
-                            <strong>{formatearMonto(expensaActual.recaudado)}</strong>
-                            <div className="expensas-progreso">
-                                <div
-                                    className="expensas-progreso-relleno"
-                                    style={{ width: `${expensaActual.porcentaje}%` }}
-                                />
-                            </div>
-                            <span className="expensas-kpi-info">{expensaActual.porcentaje}% del total</span>
-                        </div>
-                    </article>
-
-                </section>
-
-                <button className="expensas-btn-nuevo">
-                    <Plus size={16} />
-                    Nueva expensa
-                </button>
-
-            </div>
-
-            {/* TABS */}
+            {/* =========================
+                CONTENIDO PRINCIPAL
+            ========================= */}
 
             <div className="expensas-tabs">
                 <button className="expensas-tab activo">Listado de expensas</button>
                 <button className="expensas-tab">Conceptos y categorías</button>
             </div>
-
-            {/* CONTENIDO PRINCIPAL */}
 
             <div className="expensas-contenido">
 
@@ -225,94 +280,28 @@ function Expensas() {
                         </div>
                     </div>
 
-                    <div className="expensas-tabla-card">
-                        <div className="expensas-tabla-header">
-                            <span></span>
-                            <span>Período</span>
-                            <span>Vencimiento</span>
-                            <span>Importe total</span>
-                            <span>Recaudado</span>
-                            <span>Estado</span>
-                            <span>Acciones</span>
-                        </div>
-
-                        <div className="expensas-tabla-body">
-                            {expensas.map((item) => {
-                                const seleccionada = item.periodo === periodoSeleccionado;
-
-                                return (
-                                    <button
-                                        key={item.periodo}
-                                        className={`expensas-tabla-fila ${seleccionada ? "seleccionada" : ""}`}
-                                        onClick={() => setPeriodoSeleccionado(item.periodo)}
-                                    >
-                                        <span className="expensas-chevron">
-                                            {seleccionada && <ChevronRight size={15} />}
-                                        </span>
-                                        <span className="expensas-periodo">{item.periodo}</span>
-                                        <span>{item.vencimiento}</span>
-                                        <span>{formatearMonto(item.importe)}</span>
-                                        <span>
-                                            {formatearMonto(item.recaudado)} ({item.porcentaje}%)
-                                        </span>
-
-                                        <span className={`expensas-badge ${badgeClase(item.estado)}`}>
-                                            {item.estado}
-                                        </span>
-
-                                        <span className="expensas-tabla-acciones">
-                                            <span aria-label="Ver detalle">
-                                                <Eye size={16} />
-                                            </span>
-                                            <span aria-label="Más opciones">
-                                                <MoreVertical size={16} />
-                                            </span>
-                                        </span>
-                                    </button>
-                                );
-                            })}
-                        </div>
-                    </div>
-
-                    <div className="expensas-paginacion">
-                        <button className="expensas-pagina-flecha" aria-label="Página anterior">
-                            <ChevronLeft size={16} />
-                        </button>
-
-                        {paginas.map((pagina) => (
-                            <button
-                                key={pagina}
-                                className={`expensas-pagina ${pagina === 1 ? "activa" : ""}`}
-                            >
-                                {pagina}
-                            </button>
-                        ))}
-
-                        <span className="expensas-pagina-puntos">...</span>
-
-                        <button className="expensas-pagina">10</button>
-
-                        <button className="expensas-pagina-flecha" aria-label="Página siguiente">
-                            <ChevronRight size={16} />
-                        </button>
-
-                        <span className="expensas-paginacion-info">
-                            Mostrando 1 a {expensas.length} de {totalPeriodos} períodos
-                        </span>
-                    </div>
+                    <Tabla
+                        columnas={columnas}
+                        datos={expensas}
+                        etiqueta="períodos"
+                        className="expensas-tabla"
+                        onFilaClick={(item) => setPeriodoSeleccionado(item.periodo)}
+                        claseFila={(item) => item.periodo === periodoSeleccionado ? "seleccionada" : ""}
+                    />
 
                 </section>
 
                 {/* DETALLE */}
 
-                <aside className="expensas-detalle">
-
-                    <div className="expensas-detalle-header">
-                        <h2>Detalle de {detalle.periodo}</h2>
+                <Panel
+                    className="expensas-detalle"
+                    titulo={`Detalle de ${detalle.periodo}`}
+                    accion={
                         <span className={`expensas-badge ${badgeClase(detalle.estado)}`}>
                             {detalle.estado}
                         </span>
-                    </div>
+                    }
+                >
 
                     <p className="expensas-detalle-linea">
                         Vencimiento: <strong>{detalle.vencimiento}</strong>
@@ -321,47 +310,57 @@ function Expensas() {
                         Estado: <strong>{detalle.estado}</strong>
                     </p>
 
-                    <h3>Resumen</h3>
-                    <div className="expensas-resumen-fila">
-                        <span>Importe total</span>
-                        <span>{formatearMonto(detalle.importe)}</span>
-                    </div>
-                    <div className="expensas-resumen-fila">
-                        <span>Recaudado</span>
-                        <span>{formatearMonto(detalle.recaudado)}</span>
-                    </div>
-                    <div className="expensas-resumen-fila">
-                        <span>Pendiente</span>
-                        <span className="expensas-pendiente">{formatearMonto(pendiente)}</span>
-                    </div>
-                    <div className="expensas-resumen-fila">
-                        <span>Porcentaje recaudado</span>
-                        <span className="expensas-porcentaje">{detalle.porcentaje}%</span>
+                    <div className="expensas-detalle-columnas">
+                        <section className="expensas-detalle-seccion">
+                            <h3>Resumen</h3>
+                            <div className="expensas-resumen-fila">
+                                <span>Importe total</span>
+                                <span>{formatearMonto(detalle.importe)}</span>
+                            </div>
+                            <div className="expensas-resumen-fila">
+                                <span>Recaudado</span>
+                                <span>{formatearMonto(detalle.recaudado)}</span>
+                            </div>
+                            <div className="expensas-resumen-fila">
+                                <span>Pendiente</span>
+                                <span className="expensas-pendiente">{formatearMonto(pendiente)}</span>
+                            </div>
+                            <div className="expensas-resumen-fila">
+                                <span>Porcentaje recaudado</span>
+                                <span className="expensas-porcentaje">{detalle.porcentaje}%</span>
+                            </div>
+                        </section>
+
+                        <section className="expensas-detalle-seccion">
+                            <h3>Conceptos</h3>
+                            {detalle.conceptos.map((concepto) => (
+                                <div className="expensas-resumen-fila" key={concepto.nombre}>
+                                    <span>{concepto.nombre}</span>
+                                    <span>{formatearMonto(concepto.monto)}</span>
+                                </div>
+                            ))}
+                        </section>
                     </div>
 
-                    <h3>Conceptos</h3>
-                    {detalle.conceptos.map((concepto) => (
-                        <div className="expensas-resumen-fila" key={concepto.nombre}>
-                            <span>{concepto.nombre}</span>
-                            <span>{formatearMonto(concepto.monto)}</span>
+                    <section className="expensas-detalle-acciones">
+                        <h3>Acciones</h3>
+                        <div className="expensas-acciones-lista">
+                            <button className="expensas-btn-accion principal">
+                                <Pencil size={15} />
+                                Editar expensa
+                            </button>
+                            <button className="expensas-btn-accion secundario">
+                                <Download size={15} />
+                                Descargar boleta
+                            </button>
+                            <button className="expensas-btn-accion peligro">
+                                <Trash2 size={15} />
+                                Anular expensa
+                            </button>
                         </div>
-                    ))}
+                    </section>
 
-                    <h3>Acciones</h3>
-                    <button className="expensas-btn-accion principal">
-                        <Pencil size={15} />
-                        Editar expensa
-                    </button>
-                    <button className="expensas-btn-accion secundario">
-                        <Download size={15} />
-                        Descargar boleta
-                    </button>
-                    <button className="expensas-btn-accion peligro">
-                        <Trash2 size={15} />
-                        Anular expensa
-                    </button>
-
-                </aside>
+                </Panel>
 
             </div>
 

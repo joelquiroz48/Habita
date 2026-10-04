@@ -100,12 +100,12 @@
 }
 
 .estado-confirmada {
-    background: var(--fondo-confirmada);
+    background: var(--fondo-verde-suave);
     color: var(--color-pendiente);
 }
 
 .estado-pendiente {
-    background: var(--fondo-pendiente);
+    background: var(--fondo-azul-suave);
     color: var(--color-pendiente-azul);
 }
 
@@ -221,10 +221,6 @@
 .campo-reserva select:focus,
 .campo-reserva input:focus {
     border-color: var(--verde);
-}
-
-.input-icono {
-    position: relative;
 }
 
 .btn-solicitar {
@@ -406,7 +402,7 @@
     height: 38px;
     flex-shrink: 0;
     border-radius: 5px;
-    background: var(--fondo-icono-panel);
+    background: var(--fondo-icono);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -449,12 +445,12 @@
 
 .evento-confirmado {
     color: var(--color-pendiente);
-    background: var(--fondo-confirmada);
+    background: var(--fondo-verde-suave);
 }
 
 .evento-pendiente {
     color: var(--color-pendiente-azul);
-    background: var(--fondo-pendiente);
+    background: var(--fondo-azul-suave);
 }
 
 .link-calendario {
@@ -494,7 +490,7 @@
     height: 27px;
     min-width: 27px;
     border-radius: 50%;
-    background: var(--fondo-icono-panel);
+    background: var(--fondo-icono);
     color: var(--verde);
     display: flex;
     align-items: center;
@@ -593,10 +589,6 @@
         flex-direction: column;
         align-items: flex-start;
         gap: 2px;
-    }
-
-    .panel-reservas-header {
-        align-items: flex-start;
     }
 
     .calendario-mes {

@@ -23,7 +23,7 @@
 
 .badge-pendiente {
     color: var(--color-pendiente);
-    background: var(--fondo-badge-pendiente);
+    background: var(--fondo-verde-suave);
 }
 
 /* =========================
@@ -75,20 +75,6 @@
 
 .btn-principal:hover {
   background: var(--verde-hover);
-}
-
-.btn-secundario {
-  width: 100%;
-  height: 30px;
-  border: 1px solid var(--borde-secundario);
-  border-radius: 7px;
-  color: var(--texto-secundario);
-  font-size: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 7px;
-  margin-top: 8px;
 }
 
 /* =========================
@@ -151,16 +137,6 @@
   border-radius: 4px;
 }
 
-.link-abajo {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 8px;
-  color: var(--verde-hover);
-  font-size: 12px;
-  font-weight: 500;
-}
-
 /* =========================
             AVISOS
 ========================= */
@@ -192,7 +168,7 @@
 }
 
 .aviso-icon.verde {
-  background: var(--fondo-aviso-verde);
+  background: var(--fondo-verde-suave);
   color: var(--color-aviso-verde);
 }
 
@@ -202,7 +178,7 @@
 }
 
 .aviso-icon.azul {
-  background: var(--fondo-aviso-azul);
+  background: var(--fondo-azul-suave);
   color: var(--color-aviso-azul);
 }
 
@@ -273,12 +249,12 @@
 }
 
 .documento-icon.doc {
-  background: var(--fondo-documento-doc);
+  background: var(--fondo-azul-suave);
   color: var(--color-documento-doc);
 }
 
 .documento-icon.money {
-  background: var(--fondo-documento-money);
+  background: var(--fondo-verde-suave);
   color: var(--color-documento-money);
 }
 

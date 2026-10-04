@@ -35,21 +35,6 @@
           PANELES
 ========================= */
 
-.configuracion-panel-card {
-  background: var(--blanco);
-  border: 1px solid var(--borde-tarjeta);
-  border-radius: 12px;
-  padding: 20px;
-  box-sizing: border-box;
-}
-
-.configuracion-panel-card h2 {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--texto-principal);
-  margin-bottom: 16px;
-}
-
 .configuracion-fila-superior {
   display: grid;
   grid-template-columns: 1.7fr 1fr;
@@ -217,19 +202,12 @@
   height: 42px;
   min-width: 42px;
   border-radius: 50%;
-  background: var(--fondo-icono-resumen);
+  background: var(--fondo-icono);
   color: var(--verde);
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 12px;
-}
-
-.configuracion-tarjeta h3 {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--texto-principal);
-  margin-bottom: 6px;
 }
 
 .configuracion-tarjeta p {
@@ -262,14 +240,10 @@
 ========================= */
 
 .configuracion-notificaciones {
-  background: var(--blanco);
-  border: 1px solid var(--borde-tarjeta);
-  border-radius: 12px;
-  padding: 20px;
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1fr 2fr auto;
+    gap: 24px;
+    align-items: center;
 }
 
 .configuracion-notif-encabezado {
@@ -295,6 +269,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
+  justify-self: center;
   gap: 10px;
   min-width: 260px;
 }
@@ -370,7 +345,12 @@
   }
 
   .configuracion-notificaciones {
-    flex-direction: column;
-    align-items: flex-start;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin-bottom: 10px;
+  }
+
+  .configuracion-notif-lista {
+    width: 100%;
   }
 }

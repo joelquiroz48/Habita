@@ -1,19 +1,12 @@
 import { useEffect } from "react";
-import {
-    Search,
-    ChevronDown,
-    Plus,
-    Pencil,
-    MoreVertical,
-    ChevronLeft,
-    ChevronRight,
-} from "lucide-react";
+import {Search, ChevronDown, Plus, Pencil, MoreVertical} from "lucide-react";
 
 import "./Residentes.css";
+import Tabla from "../../../components/Tabla/Tabla";
 
-// =========================
-// DATOS DE EJEMPLO
-// =========================
+{/* =========================
+       DATOS EJEMPLO
+========================== */}
 
 const residentes = [
     { nombre: "Nicolás Paz", unidad: "5B", email: "nicolas.paz@email.com", telefono: "11 2345 6789", estado: "Activo" },
@@ -23,13 +16,68 @@ const residentes = [
     { nombre: "Pedro Martínez", unidad: "2D", email: "pedro.martinez@email.com", telefono: "11 6789 0123", estado: "Activo" },
 ];
 
-const totalResidentes = 128;
-const paginas = [1, 2, 3, 4, 5];
-const paginaActiva = 1;
+const columnas = [
+    {
+        clave: "nombre",
+        titulo: "Nombre",
+        ancho: "minmax(140px, 1.2fr)",
+        clase: "residentes-nombre"
+    },
+    {
+        clave: "unidad",
+        titulo: "Unidad",
+        ancho: "minmax(80px, 0.7fr)"
+    },
+    {
+        clave: "email",
+        titulo: "Email",
+        ancho: "minmax(180px, 1.5fr)",
+        clase: "residentes-email"
+    },
+    {
+        clave: "telefono",
+        titulo: "Teléfono",
+        ancho: "minmax(120px, 1fr)"
+    },
+    {
+        clave: "estado",
+        titulo: "Estado",
+        ancho: "minmax(110px, 0.8fr)",
+        render: (residente) => (
+            <span className={`residentes-badge ${badgeClase(residente.estado)}`}>
+                {residente.estado}
+            </span>
+        )
+    },
+    {
+        clave: "acciones",
+        titulo: "Acciones",
+        ancho: "90px",
+        render: (residente) => (
+            <div className="residentes-tabla-acciones">
+                <button
+                    aria-label={`Editar residente ${residente.nombre}`}
+                    onClick={() => editarResidente(residente)}
+                >
+                    <Pencil size={16} />
+                </button>
+
+                <button
+                    aria-label={`Más opciones para ${residente.nombre}`}
+                    onClick={() => abrirOpciones(residente)}
+                >
+                    <MoreVertical size={16} />
+                </button>
+            </div>
+        )
+    }
+];
+
 
 function badgeClase(estado) {
     return estado === "Activo" ? "residentes-badge-activo" : "residentes-badge-invitado";
 }
+
 
 function Residentes() {
 
@@ -66,65 +114,12 @@ function Residentes() {
 
             {/* TABLA */}
 
-            <section className="residentes-tabla-card">
-                <div className="residentes-tabla-header">
-                    <span>Nombre</span>
-                    <span>Unidad</span>
-                    <span>Email</span>
-                    <span>Teléfono</span>
-                    <span>Estado</span>
-                    <span>Acciones</span>
-                </div>
-
-                <div className="residentes-tabla-body">
-                    {residentes.map((residente, index) => (
-                        <div className="residentes-tabla-fila" key={index}>
-                            <span className="residentes-nombre">{residente.nombre}</span>
-                            <span>{residente.unidad}</span>
-                            <span className="residentes-email">{residente.email}</span>
-                            <span>{residente.telefono}</span>
-
-                            <span className={`residentes-badge ${badgeClase(residente.estado)}`}>
-                                {residente.estado}
-                            </span>
-
-                            <span className="residentes-tabla-acciones">
-                                <button aria-label="Editar residente">
-                                    <Pencil size={16} />
-                                </button>
-                                <button aria-label="Más opciones">
-                                    <MoreVertical size={16} />
-                                </button>
-                            </span>
-                        </div>
-                    ))}
-                </div>
-            </section>
-
-            {/* PAGINACION */}
-
-            <section className="residentes-paginacion">
-                <button className="residentes-pagina-flecha" aria-label="Página anterior">
-                    <ChevronLeft size={16} />
-                </button>
-
-                {paginas.map((pagina) => (
-                    <button
-                        key={pagina}
-                        className={`residentes-pagina ${pagina === paginaActiva ? "activa" : ""}`}
-                    >
-                        {pagina}
-                    </button>
-                ))}
-
-                <button className="residentes-pagina-flecha" aria-label="Página siguiente">
-                    <ChevronRight size={16} />
-                </button>
-
-                <span className="residentes-paginacion-info">
-                    Mostrando 1 a {residentes.length} de {totalResidentes} residentes
-                </span>
-            </section>
+            <Tabla
+                columnas={columnas}
+                datos={residentes}
+                etiqueta="residentes"
+                className="residentes-tabla"
+            />
 
         </main>
     );

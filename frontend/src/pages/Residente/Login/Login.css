@@ -9,7 +9,7 @@
     background-image:
         linear-gradient(
             to right,
-            var(--gradiente-fondo) 0%,
+            var(--fondo) 0%,
             var(--gradiente-fondo-medio) 20%,
             var(--gradiente-fondo-suave) 40%,
             var(--transparente) 60%
@@ -339,7 +339,6 @@
 
     .login .panel-derecho {
         justify-content: center;
-        padding-right: 0;
     }
 
 }

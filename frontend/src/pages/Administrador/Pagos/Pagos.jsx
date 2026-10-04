@@ -9,7 +9,6 @@ import {
     Search,
     Eye,
     MoreVertical,
-    ChevronLeft,
     ChevronRight,
     X,
     CreditCard,
@@ -18,10 +17,13 @@ import {
 } from "lucide-react";
 
 import "./Pagos.css";
+import Panel from "../../../components/Panel/Panel";
+import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
+import Tabla from "../../../components/Tabla/Tabla";
 
-// =========================
-// DATOS DE EJEMPLO
-// =========================
+{/* =========================
+       DATOS EJEMPLOS
+========================== */}
 
 const kpis = {
     totalRecaudado: 4251200,
@@ -68,15 +70,53 @@ const pagos = [
     },
 ];
 
-const totalPagos = 78;
-const paginas = [1, 2, 3, 4, 5];
-
 const iconosMetodo = {
     tarjeta: CreditCard,
     billetera: Wallet,
     transferencia: Landmark,
     efectivo: Banknote,
 };
+
+{/* =========================
+       TARJETAS RESUMEN
+========================== */}
+
+const resumenTarjetas = [
+    {
+        icono: Wallet,
+        titulo: "Total recaudado",
+        valor: formatearMonto(kpis.totalRecaudado),
+        contenido: <span>Este mes</span>,
+    },
+    {
+        icono: Download,
+        titulo: "Pagos realizados",
+        valor: kpis.pagosRealizados,
+        contenido: <span>Este mes</span>,
+    },
+    {
+        icono: Clock,
+        titulo: "Pendientes",
+        valor: kpis.pendientes,
+        contenido: <span>Este mes</span>,
+    },
+    {
+        icono: CheckCircle2,
+        titulo: "Pagos confirmados",
+        valor: `${kpis.tasaExito}%`,
+        contenido: (
+            <>
+                <div className="pagos-progreso">
+                    <div
+                        className="pagos-progreso-relleno"
+                        style={{ width: `${kpis.tasaExito}%` }}
+                    />
+                </div>
+                <span>Tasa de éxito</span>
+            </>
+        ),
+    },
+];
 
 function formatearMonto(numero) {
     return `$ ${numero.toLocaleString("es-AR")}`;
@@ -102,64 +142,96 @@ function Pagos() {
         setDetalleAbierto(true);
     }
 
+    const columnas = [
+        {
+            clave: "indicador",
+            titulo: "",
+            ancho: "20px",
+            render: (pago) => pagoSeleccionado.transaccion === pago.transaccion && detalleAbierto
+                ? <ChevronRight size={15} />
+                : null,
+        },
+        { clave: "fecha", titulo: "Fecha", ancho: "0.9fr" },
+        { clave: "residente", titulo: "Residente", ancho: "1.1fr", clase: "pagos-residente" },
+        { clave: "unidad", titulo: "Unidad", ancho: "0.6fr" },
+        { clave: "periodo", titulo: "Período", ancho: "0.9fr" },
+        {
+            clave: "importe",
+            titulo: "Importe",
+            ancho: "0.9fr",
+            render: (pago) => formatearMonto(pago.importe),
+        },
+        {
+            clave: "metodo",
+            titulo: "Método de pago",
+            ancho: "1.3fr",
+            render: (pago) => {
+                const Icono = iconosMetodo[pago.metodo];
+
+                return (
+                    <span className="pagos-metodo">
+                        <Icono size={16} />
+                        <span>
+                            {pago.metodoLabel}
+                            {pago.metodoSub && <small>{pago.metodoSub}</small>}
+                        </span>
+                    </span>
+                );
+            },
+        },
+        {
+            clave: "estado",
+            titulo: "Estado",
+            ancho: "0.9fr",
+            render: (pago) => (
+                <span className={`pagos-badge ${badgeClase(pago.estado)}`}>
+                    {pago.estado}
+                </span>
+            ),
+        },
+        {
+            clave: "comprobante",
+            titulo: "Comprobante",
+            ancho: "0.8fr",
+            render: () => (
+                <span className="pagos-tabla-acciones">
+                    <span aria-label="Ver comprobante">
+                        <Eye size={16} />
+                    </span>
+                    <span aria-label="Más opciones">
+                        <MoreVertical size={16} />
+                    </span>
+                </span>
+            ),
+        },
+    ];
+
     return (
         <main className="pagos">
 
-            {/* KPIS */}
+            {/* =========================
+                  RESUMEN SUPERIOR
+            ========================= */}
 
-            <section className="pagos-kpi-grid">
+            <section className="pagos-resumen">
+                {resumenTarjetas.map((item, index) => {
+                    const Icono = item.icono;
 
-                <article className="pagos-kpi-card">
-                    <div className="pagos-kpi-icon">
-                        <Wallet />
-                    </div>
-                    <div>
-                        <span className="pagos-kpi-label">Total recaudado</span>
-                        <strong>{formatearMonto(kpis.totalRecaudado)}</strong>
-                        <span className="pagos-kpi-info">Este mes</span>
-                    </div>
-                </article>
-
-                <article className="pagos-kpi-card">
-                    <div className="pagos-kpi-icon">
-                        <Download />
-                    </div>
-                    <div>
-                        <span className="pagos-kpi-label">Pagos realizados</span>
-                        <strong>{kpis.pagosRealizados}</strong>
-                        <span className="pagos-kpi-info">Este mes</span>
-                    </div>
-                </article>
-
-                <article className="pagos-kpi-card">
-                    <div className="pagos-kpi-icon">
-                        <Clock />
-                    </div>
-                    <div>
-                        <span className="pagos-kpi-label">Pendientes</span>
-                        <strong>{kpis.pendientes}</strong>
-                        <span className="pagos-kpi-info">Este mes</span>
-                    </div>
-                </article>
-
-                <article className="pagos-kpi-card">
-                    <div className="pagos-kpi-icon">
-                        <CheckCircle2 />
-                    </div>
-                    <div>
-                        <span className="pagos-kpi-label">Pagos confirmados</span>
-                        <strong>{kpis.tasaExito}%</strong>
-                        <div className="pagos-progreso">
-                            <div
-                                className="pagos-progreso-relleno"
-                                style={{ width: `${kpis.tasaExito}%` }}
-                            />
-                        </div>
-                        <span className="pagos-kpi-info">Tasa de éxito</span>
-                    </div>
-                </article>
-
+                    return (
+                        <TarjetaResumen
+                            key={index}
+                            icono={<Icono />}
+                            titulo={item.titulo}
+                            valor={item.valor}
+                            contenido={item.contenido}
+                        />
+                    );
+                })}
             </section>
+
+            {/* =========================
+                CONTENIDO PRINCIPAL
+            ========================= */}
 
             {/* FILTROS */}
 
@@ -197,99 +269,28 @@ function Pagos() {
 
                 <section className="pagos-listado">
 
-                    <div className="pagos-tabla-card">
-                        <div className="pagos-tabla-header">
-                            <span>Fecha</span>
-                            <span>Residente</span>
-                            <span>Unidad</span>
-                            <span>Período</span>
-                            <span>Importe</span>
-                            <span>Método de pago</span>
-                            <span>Estado</span>
-                            <span>Comprobante</span>
-                        </div>
-
-                        <div className="pagos-tabla-body">
-                            {pagos.map((pago, index) => {
-                                const Icono = iconosMetodo[pago.metodo];
-                                const seleccionado = pagoSeleccionado.transaccion === pago.transaccion;
-
-                                return (
-                                    <button
-                                        key={index}
-                                        className={`pagos-tabla-fila ${seleccionado && detalleAbierto ? "seleccionada" : ""}`}
-                                        onClick={() => abrirDetalle(pago)}
-                                    >
-                                        <span>{pago.fecha}</span>
-                                        <span className="pagos-residente">{pago.residente}</span>
-                                        <span>{pago.unidad}</span>
-                                        <span>{pago.periodo}</span>
-                                        <span>{formatearMonto(pago.importe)}</span>
-
-                                        <span className="pagos-metodo">
-                                            <Icono size={16} />
-                                            <span>
-                                                {pago.metodoLabel}
-                                                {pago.metodoSub && (
-                                                    <small>{pago.metodoSub}</small>
-                                                )}
-                                            </span>
-                                        </span>
-
-                                        <span className={`pagos-badge ${badgeClase(pago.estado)}`}>
-                                            {pago.estado}
-                                        </span>
-
-                                        <span className="pagos-tabla-acciones">
-                                            <span aria-label="Ver comprobante">
-                                                <Eye size={16} />
-                                            </span>
-                                            <span aria-label="Más opciones">
-                                                <MoreVertical size={16} />
-                                            </span>
-                                        </span>
-                                    </button>
-                                );
-                            })}
-                        </div>
-                    </div>
-
-                    <div className="pagos-paginacion">
-                        <button className="pagos-pagina-flecha" aria-label="Página anterior">
-                            <ChevronLeft size={16} />
-                        </button>
-
-                        {paginas.map((pagina) => (
-                            <button
-                                key={pagina}
-                                className={`pagos-pagina ${pagina === 1 ? "activa" : ""}`}
-                            >
-                                {pagina}
-                            </button>
-                        ))}
-
-                        <span className="pagos-pagina-puntos">...</span>
-
-                        <button className="pagos-pagina">10</button>
-
-                        <button className="pagos-pagina-flecha" aria-label="Página siguiente">
-                            <ChevronRight size={16} />
-                        </button>
-
-                        <span className="pagos-paginacion-info">
-                            Mostrando 1 a {pagos.length} de {totalPagos} pagos
-                        </span>
-                    </div>
+                    <Tabla
+                        columnas={columnas}
+                        datos={pagos}
+                        etiqueta="pagos"
+                        className="pagos-tabla"
+                        onFilaClick={abrirDetalle}
+                        claseFila={(pago) =>
+                            pagoSeleccionado.transaccion === pago.transaccion && detalleAbierto
+                                ? "seleccionada"
+                                : ""
+                        }
+                    />
 
                 </section>
 
                 {/* DETALLE */}
 
                 {detalleAbierto && (
-                    <aside className="pagos-detalle">
-
-                        <div className="pagos-detalle-header">
-                            <h2>Detalle del pago</h2>
+                    <Panel
+                        className="pagos-detalle"
+                        titulo="Detalle del pago"
+                        accion={
                             <button
                                 className="pagos-detalle-cerrar"
                                 onClick={() => setDetalleAbierto(false)}
@@ -297,8 +298,8 @@ function Pagos() {
                             >
                                 <X size={18} />
                             </button>
-                        </div>
-
+                        }
+                    >
                         <span className={`pagos-badge ${badgeClase(pagoSeleccionado.estado)}`}>
                             {pagoSeleccionado.estado}
                         </span>
@@ -307,37 +308,47 @@ function Pagos() {
                             <span>Residente</span>
                             <strong>{pagoSeleccionado.residente}</strong>
                         </div>
+
                         <div className="pagos-detalle-fila">
                             <span>Unidad</span>
                             <strong>{pagoSeleccionado.unidad}</strong>
                         </div>
+
                         <div className="pagos-detalle-fila">
                             <span>Período</span>
                             <strong>{pagoSeleccionado.periodo}</strong>
                         </div>
+
                         <div className="pagos-detalle-fila">
                             <span>Importe</span>
                             <strong>{formatearMonto(pagoSeleccionado.importe)}</strong>
                         </div>
+
                         <div className="pagos-detalle-fila">
                             <span>Fecha de pago</span>
                             <strong>{pagoSeleccionado.fecha} - {pagoSeleccionado.hora}</strong>
                         </div>
 
                         <p className="pagos-detalle-subtitulo">Método de pago</p>
+
                         <div className="pagos-detalle-metodo">
                             {(() => {
                                 const Icono = iconosMetodo[pagoSeleccionado.metodo];
                                 return <Icono size={18} />;
                             })()}
+
                             <span>
                                 {pagoSeleccionado.metodoLabel}
-                                {pagoSeleccionado.metodoSub && ` - ${pagoSeleccionado.metodoSub}`}
+                                {pagoSeleccionado.metodoSub &&
+                                    ` - ${pagoSeleccionado.metodoSub}`}
                             </span>
                         </div>
 
                         <p className="pagos-detalle-subtitulo">N° de transacción</p>
-                        <p className="pagos-detalle-transaccion">{pagoSeleccionado.transaccion}</p>
+
+                        <p className="pagos-detalle-transaccion">
+                            {pagoSeleccionado.transaccion}
+                        </p>
 
                         <div className="pagos-detalle-fila">
                             <span>Estado</span>
@@ -345,13 +356,16 @@ function Pagos() {
                         </div>
 
                         <h3>Comprobante</h3>
+
                         <button className="pagos-btn-comprobante">
                             <Download size={15} />
                             Descargar comprobante
                         </button>
-                        <span className="pagos-detalle-archivo">PDF - 124 KB</span>
 
-                    </aside>
+                        <span className="pagos-detalle-archivo">
+                            PDF - 124 KB
+                        </span>
+                    </Panel>
                 )}
 
             </div>

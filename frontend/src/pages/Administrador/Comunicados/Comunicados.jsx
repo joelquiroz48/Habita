@@ -2,13 +2,12 @@ import { useEffect, useState } from "react";
 import {
     Calendar,
     ChevronDown,
+    ChevronRight,
     Search,
     Plus,
     Eye,
     Pencil,
     MoreVertical,
-    ChevronLeft,
-    ChevronRight,
     X,
     Droplet,
     Wrench,
@@ -22,10 +21,12 @@ import {
 } from "lucide-react";
 
 import "./Comunicados.css";
+import Panel from "../../../components/Panel/Panel";
+import Tabla from "../../../components/Tabla/Tabla";
 
-// =========================
-// DATOS DE EJEMPLO
-// =========================
+{/* =========================
+       DATOS EJEMPLOS
+========================== */}
 
 const comunicados = [
     {
@@ -121,7 +122,6 @@ const comunicados = [
 ];
 
 const totalComunicados = 57;
-const paginas = [1, 2, 3, 4, 5];
 
 function estadoBadgeClase(estado) {
     if (estado === "Publicado") return "comunicados-badge-publicado";
@@ -142,6 +142,80 @@ function Comunicados() {
         setSeleccionado(comunicado);
         setDetalleAbierto(true);
     }
+
+    const columnas = [
+        {
+            clave: "indicador",
+            titulo: "",
+            ancho: "20px",
+            clase: "comunicados-indicador",
+            render: (item) =>
+                seleccionado.id === item.id && detalleAbierto
+                    ? <ChevronRight size={15} />
+                    : null,
+        },
+        {
+            clave: "titulo",
+            titulo: "Título",
+            ancho: "2.2fr",
+            clase: "comunicados-titulo-celda",
+        },
+        {
+            clave: "tipo",
+            titulo: "Tipo",
+            ancho: "1fr",
+            render: (item) => (
+                <span className={`comunicados-tipo-badge ${item.claseColor}`}>
+                    {item.tipo}
+                </span>
+            ),
+        },
+        {
+            clave: "fecha",
+            titulo: (
+                <span className="comunicados-th-fecha">
+                    Fecha de publicación
+                    <ArrowDown size={13} />
+                </span>
+            ),
+            ancho: "1.3fr",
+            render: (item) => (
+                <span className="comunicados-fecha-celda">
+                    <span>{item.fecha}</span>
+                    <small>por Admin</small>
+                </span>
+            ),
+        },
+        { clave: "audiencia", titulo: "Audiencia", ancho: "1.1fr" },
+        {
+            clave: "estado",
+            titulo: "Estado",
+            ancho: "0.9fr",
+            render: (item) => (
+                <span className={`comunicados-badge ${estadoBadgeClase(item.estado)}`}>
+                    {item.estado}
+                </span>
+            ),
+        },
+        {
+            clave: "acciones",
+            titulo: "Acciones",
+            ancho: "0.9fr",
+            render: () => (
+                <span className="comunicados-tabla-acciones">
+                    <span aria-label="Ver comunicado">
+                        <Eye size={16} />
+                    </span>
+                    <span aria-label="Editar comunicado">
+                        <Pencil size={16} />
+                    </span>
+                    <span aria-label="Más opciones">
+                        <MoreVertical size={16} />
+                    </span>
+                </span>
+            ),
+        },
+    ];
 
     return (
         <main className="comunicados">
@@ -177,108 +251,28 @@ function Comunicados() {
 
                 <section className="comunicados-listado">
 
-                    <div className="comunicados-tabla-card">
-                        <div className="comunicados-tabla-header">
-                            <span>Título</span>
-                            <span>Tipo</span>
-                            <span className="comunicados-th-fecha">
-                                Fecha de publicación
-                                <ArrowDown size={13} />
-                            </span>
-                            <span>Audiencia</span>
-                            <span>Estado</span>
-                            <span>Acciones</span>
-                        </div>
-
-                        <div className="comunicados-tabla-body">
-                            {comunicados.map((item) => {
-                                const Icono = item.icon;
-                                const seleccionadaFila = seleccionado.id === item.id;
-
-                                return (
-                                    <button
-                                        key={item.id}
-                                        className={`comunicados-tabla-fila ${seleccionadaFila && detalleAbierto ? "seleccionada" : ""}`}
-                                        onClick={() => abrirDetalle(item)}
-                                    >
-                                        <span className="comunicados-titulo-celda">
-                                            <span className={`comunicados-icono ${item.claseColor}`}>
-                                                <Icono size={17} />
-                                            </span>
-                                            <span className="comunicados-titulo-texto">
-                                                <strong>{item.titulo}</strong>
-                                                <small>{item.resumenCorto}</small>
-                                            </span>
-                                        </span>
-
-                                        <span className={`comunicados-tipo-badge ${item.claseColor}`}>
-                                            {item.tipo}
-                                        </span>
-
-                                        <span className="comunicados-fecha-celda">
-                                            <span>{item.fecha}</span>
-                                            <small>por Admin</small>
-                                        </span>
-
-                                        <span>{item.audiencia}</span>
-
-                                        <span className={`comunicados-badge ${estadoBadgeClase(item.estado)}`}>
-                                            {item.estado}
-                                        </span>
-
-                                        <span className="comunicados-tabla-acciones">
-                                            <span aria-label="Ver comunicado">
-                                                <Eye size={16} />
-                                            </span>
-                                            <span aria-label="Editar comunicado">
-                                                <Pencil size={16} />
-                                            </span>
-                                            <span aria-label="Más opciones">
-                                                <MoreVertical size={16} />
-                                            </span>
-                                        </span>
-                                    </button>
-                                );
-                            })}
-                        </div>
-                    </div>
-
-                    <div className="comunicados-paginacion">
-                        <button className="comunicados-pagina-flecha" aria-label="Página anterior">
-                            <ChevronLeft size={16} />
-                        </button>
-
-                        {paginas.map((pagina) => (
-                            <button
-                                key={pagina}
-                                className={`comunicados-pagina ${pagina === 1 ? "activa" : ""}`}
-                            >
-                                {pagina}
-                            </button>
-                        ))}
-
-                        <span className="comunicados-pagina-puntos">...</span>
-
-                        <button className="comunicados-pagina">10</button>
-
-                        <button className="comunicados-pagina-flecha" aria-label="Página siguiente">
-                            <ChevronRight size={16} />
-                        </button>
-
-                        <span className="comunicados-paginacion-info">
-                            Mostrando 1 a {comunicados.length} de {totalComunicados} comunicados
-                        </span>
-                    </div>
+                    <Tabla
+                        columnas={columnas}
+                        datos={comunicados}
+                        etiqueta="comunicados"
+                        className="comunicados-tabla"
+                        onFilaClick={abrirDetalle}
+                        claseFila={(item) =>
+                            seleccionado.id === item.id && detalleAbierto
+                                ? "seleccionada"
+                                : ""
+                        }
+                    />
 
                 </section>
 
                 {/* DETALLE */}
 
                 {detalleAbierto && (
-                    <aside className="comunicados-detalle">
-
-                        <div className="comunicados-detalle-header">
-                            <h2>Detalle del comunicado</h2>
+                    <Panel
+                        className="comunicados-detalle"
+                        titulo="Detalle del comunicado"
+                        accion={
                             <button
                                 className="comunicados-detalle-cerrar"
                                 onClick={() => setDetalleAbierto(false)}
@@ -286,9 +280,13 @@ function Comunicados() {
                             >
                                 <X size={18} />
                             </button>
-                        </div>
-
-                        <span className={`comunicados-badge ${estadoBadgeClase(seleccionado.estado)}`}>
+                        }
+                    >
+                        <span
+                            className={`comunicados-badge ${estadoBadgeClase(
+                                seleccionado.estado
+                            )}`}
+                        >
                             {seleccionado.estado}
                         </span>
 
@@ -299,6 +297,7 @@ function Comunicados() {
                                     return <Icono size={20} />;
                                 })()}
                             </span>
+
                             <strong>{seleccionado.titulo}</strong>
                         </div>
 
@@ -308,44 +307,54 @@ function Comunicados() {
                                 {seleccionado.tipo}
                             </span>
                         </div>
+
                         <div className="comunicados-detalle-fila">
                             <span>Fecha de publicación</span>
                             <strong>{seleccionado.fecha}</strong>
                         </div>
+
                         <div className="comunicados-detalle-fila">
                             <span>Publicado por</span>
                             <strong>{seleccionado.publicadoPor}</strong>
                         </div>
+
                         <div className="comunicados-detalle-fila">
                             <span>Audiencia</span>
                             <strong>{seleccionado.audiencia}</strong>
                         </div>
 
                         <h3>Resumen</h3>
-                        <p className="comunicados-resumen-texto">{seleccionado.resumen}</p>
+
+                        <p className="comunicados-resumen-texto">
+                            {seleccionado.resumen}
+                        </p>
 
                         <h3>Adjuntos</h3>
+
                         {seleccionado.adjunto ? (
                             <div className="comunicados-adjunto">
                                 <Paperclip size={16} />
+
                                 <div className="comunicados-adjunto-info">
                                     <strong>{seleccionado.adjunto.nombre}</strong>
                                     <span>PDF - {seleccionado.adjunto.tamano}</span>
                                 </div>
+
                                 <button aria-label="Descargar adjunto">
                                     <Download size={16} />
                                 </button>
                             </div>
                         ) : (
-                            <p className="comunicados-sin-adjunto">Sin archivos adjuntos.</p>
+                            <p className="comunicados-sin-adjunto">
+                                Sin archivos adjuntos.
+                            </p>
                         )}
 
                         <button className="comunicados-btn-editar">
                             <Pencil size={15} />
                             Editar comunicado
                         </button>
-
-                    </aside>
+                    </Panel>
                 )}
 
             </div>

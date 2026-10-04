@@ -17,6 +17,10 @@ import {
 import "./Perfil.css";
 import Panel from "../../../components/Panel/Panel";
 
+{/* =========================
+       DATOS EJEMPLOS
+========================== */}
+
 const preferencias = [
     {
         clave: "avisos",
@@ -34,6 +38,7 @@ const preferencias = [
         descripcion: "Confirmaciones y recordatorios de reservas",
     },
 ];
+
 
 function Perfil() {
 

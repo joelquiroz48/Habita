@@ -1,19 +1,12 @@
 import { useEffect } from "react";
-import {
-    Search,
-    ChevronDown,
-    Plus,
-    Pencil,
-    MoreVertical,
-    ChevronLeft,
-    ChevronRight,
-} from "lucide-react";
+import {Search, ChevronDown, Plus, Pencil, MoreVertical} from "lucide-react";
 
 import "./Unidades.css";
+import Tabla from "../../../components/Tabla/Tabla";
 
-// =========================
-// DATOS DE EJEMPLO
-// =========================
+{/* =========================
+       DATOS EJEMPLO
+========================== */}
 
 const unidades = [
     { unidad: "1A", torrePiso: "Torre A - Piso 1", tipo: "3 amb.", responsable: "Martín Gómez", estado: "Activa" },
@@ -24,13 +17,61 @@ const unidades = [
     { unidad: "5B", torrePiso: "Torre B - Piso 5", tipo: "2 amb.", responsable: "Nicolás Paz", estado: "Activa" },
 ];
 
-const totalUnidades = 96;
-const paginas = [1, 2, 3, 4, 5];
-const paginaActiva = 1;
+const columnas = [
+    {
+        clave: "unidad",
+        titulo: "Unidad",
+        ancho: "0.7fr",
+        clase: "unidades-nombre",
+    },
+    {
+        clave: "torrePiso",
+        titulo: "Torre / Piso",
+        ancho: "1.2fr",
+    },
+    {
+        clave: "tipo",
+        titulo: "Tipo",
+        ancho: "0.8fr",
+    },
+    {
+        clave: "responsable",
+        titulo: "Propietario / Responsable",
+        ancho: "1.4fr",
+        clase: "unidades-responsable",
+    },
+    {
+        clave: "estado",
+        titulo: "Estado",
+        ancho: "0.9fr",
+        render: (unidad) => (
+            <span className={`unidades-badge ${badgeClase(unidad.estado)}`}>
+                {unidad.estado}
+            </span>
+        ),
+    },
+    {
+        clave: "acciones",
+        titulo: "Acciones",
+        ancho: "0.8fr",
+        render: (unidad) => (
+            <div className="unidades-tabla-acciones">
+                <button aria-label={`Editar unidad ${unidad.unidad}`}>
+                    <Pencil size={16} />
+                </button>
+                <button aria-label={`Más opciones para ${unidad.unidad}`}>
+                    <MoreVertical size={16} />
+                </button>
+            </div>
+        ),
+    },
+];
+
 
 function badgeClase(estado) {
     return estado === "Activa" ? "unidades-badge-activa" : "unidades-badge-disponible";
 }
+
 
 function Unidades() {
 
@@ -65,67 +106,12 @@ function Unidades() {
                 </button>
             </section>
 
-            {/* TABLA */}
-
-            <section className="unidades-tabla-card">
-                <div className="unidades-tabla-header">
-                    <span>Unidad</span>
-                    <span>Torre / Piso</span>
-                    <span>Tipo</span>
-                    <span>Propietario / Responsable</span>
-                    <span>Estado</span>
-                    <span>Acciones</span>
-                </div>
-
-                <div className="unidades-tabla-body">
-                    {unidades.map((unidad, index) => (
-                        <div className="unidades-tabla-fila" key={index}>
-                            <span className="unidades-nombre">{unidad.unidad}</span>
-                            <span>{unidad.torrePiso}</span>
-                            <span>{unidad.tipo}</span>
-                            <span className="unidades-responsable">{unidad.responsable}</span>
-
-                            <span className={`unidades-badge ${badgeClase(unidad.estado)}`}>
-                                {unidad.estado}
-                            </span>
-
-                            <span className="unidades-tabla-acciones">
-                                <button aria-label="Editar unidad">
-                                    <Pencil size={16} />
-                                </button>
-                                <button aria-label="Más opciones">
-                                    <MoreVertical size={16} />
-                                </button>
-                            </span>
-                        </div>
-                    ))}
-                </div>
-            </section>
-
-            {/* PAGINACION */}
-
-            <section className="unidades-paginacion">
-                <button className="unidades-pagina-flecha" aria-label="Página anterior">
-                    <ChevronLeft size={16} />
-                </button>
-
-                {paginas.map((pagina) => (
-                    <button
-                        key={pagina}
-                        className={`unidades-pagina ${pagina === paginaActiva ? "activa" : ""}`}
-                    >
-                        {pagina}
-                    </button>
-                ))}
-
-                <button className="unidades-pagina-flecha" aria-label="Página siguiente">
-                    <ChevronRight size={16} />
-                </button>
-
-                <span className="unidades-paginacion-info">
-                    Mostrando 1 a {unidades.length} de {totalUnidades} unidades
-                </span>
-            </section>
+            <Tabla
+                columnas={columnas}
+                datos={unidades}
+                etiqueta="unidades"
+                className="unidades-tabla"
+            />
 
         </main>
     );

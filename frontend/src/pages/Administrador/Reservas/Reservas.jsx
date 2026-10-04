@@ -4,7 +4,6 @@ import {
     Clock,
     CheckCircle2,
     XCircle,
-    Plus,
     ChevronDown,
     Search,
     Eye,
@@ -20,10 +19,13 @@ import {
 } from "lucide-react";
 
 import "./Reservas.css";
+import Panel from "../../../components/Panel/Panel";
+import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
+import Tabla from "../../../components/Tabla/Tabla";
 
-// =========================
-// DATOS DE EJEMPLO
-// =========================
+{/* =========================
+       DATOS EJEMPLOS
+========================== */}
 
 const kpis = {
     reservasMes: 28,
@@ -110,9 +112,6 @@ const reservas = [
     },
 ];
 
-const totalReservas = 28;
-const paginas = [1, 2, 3, 4];
-
 const tabs = ["Todas", "Pendientes", "Confirmadas", "Canceladas"];
 
 const estadoPorTab = {
@@ -121,7 +120,6 @@ const estadoPorTab = {
     "Canceladas": "Cancelada",
 };
 
-// Calendario de Mayo 2024, armado a mano (estatico, no calcula el mes real)
 const semanasCalendario = [
     [{ dia: 29, fuera: true }, { dia: 30, fuera: true }, { dia: 1 }, { dia: 2 }, { dia: 3 }, { dia: 4 }, { dia: 5 }],
     [{ dia: 6 }, { dia: 7 }, { dia: 8 }, { dia: 9 }, { dia: 10 }, { dia: 11 }, { dia: 12 }],
@@ -143,11 +141,106 @@ const espaciosMasReservados = [
 ];
 const maxReservasEspacio = Math.max(...espaciosMasReservados.map((e) => e.cantidad));
 
+{/* =========================
+       TARJETAS RESUMEN
+========================== */}
+
+const resumenTarjetas = [
+    {
+        icono: Calendar,
+        titulo: "Reservas este mes",
+        valor: kpis.reservasMes,
+        contenido: <span className="reservas-tendencia">↑ {kpis.tendencia}</span>,
+    },
+    {
+        icono: Clock,
+        titulo: "Pendientes",
+        valor: kpis.pendientes,
+        contenido: <span>Por confirmar</span>,
+    },
+    {
+        icono: CheckCircle2,
+        titulo: "Confirmadas",
+        valor: kpis.confirmadas,
+        contenido: <span>Este mes</span>,
+    },
+    {
+        icono: XCircle,
+        titulo: "Canceladas",
+        valor: kpis.canceladas,
+        contenido: <span>Este mes</span>,
+    },
+];
+
 function badgeClase(estado) {
     if (estado === "Confirmada") return "reservas-badge-confirmada";
     if (estado === "Pendiente") return "reservas-badge-pendiente";
     return "reservas-badge-cancelada";
 }
+
+const columnas = [
+    {
+        clave: "fecha",
+        titulo: "Fecha y hora",
+        ancho: "1fr",
+        render: (reserva) => (
+            <span className="reservas-fecha-celda">
+                <span>
+                    {reserva.fecha}
+                    <small>{reserva.horario}</small>
+                </span>
+            </span>
+        ),
+    },
+    {
+        clave: "espacio",
+        titulo: "Espacio",
+        ancho: "1.2fr",
+        render: (reserva) => {
+            const Icono = iconosEspacio[reserva.espacio];
+
+            return (
+                <span className="reservas-espacio-celda">
+                    <span className={`reservas-icono ${claseEspacio[reserva.espacio]}`}>
+                        <Icono size={16} />
+                    </span>
+                    <span>
+                        <strong>{reserva.espacio}</strong>
+                        <small>{reserva.ubicacion}</small>
+                    </span>
+                </span>
+            );
+        },
+    },
+    { clave: "residente", titulo: "Residente", ancho: "1fr" },
+    { clave: "unidad", titulo: "Unidad", ancho: "0.6fr" },
+    {
+        clave: "estado",
+        titulo: "Estado",
+        ancho: "0.9fr",
+        render: (reserva) => (
+            <span className={`reservas-badge ${badgeClase(reserva.estado)}`}>
+                {reserva.estado}
+            </span>
+        ),
+    },
+    { clave: "creada", titulo: "Creada el", ancho: "1fr", clase: "reservas-creada" },
+    {
+        clave: "acciones",
+        titulo: "Acciones",
+        ancho: "0.7fr",
+        render: () => (
+            <span className="reservas-tabla-acciones">
+                <button aria-label="Ver reserva">
+                    <Eye size={16} />
+                </button>
+                <button aria-label="Más opciones">
+                    <MoreVertical size={16} />
+                </button>
+            </span>
+        ),
+    },
+];
 
 function Reservas() {
 
@@ -162,64 +255,27 @@ function Reservas() {
         : reservas.filter((r) => r.estado === estadoPorTab[tabActiva]);
 
     return (
-        <main className="reservas">
+        <main className="reservas pagina-administrador">
 
-            {/* CABECERA CON BOTON */}
+            {/* =========================
+                  RESUMEN SUPERIOR
+            ========================= */}
 
-            <div className="reservas-cabecera">
-                <section className="reservas-kpi-grid">
+            <section className="reservas-resumen">
+                {resumenTarjetas.map((item, index) => {
+                    const Icono = item.icono;
 
-                    <article className="reservas-kpi-card">
-                        <div className="reservas-kpi-icon verde">
-                            <Calendar />
-                        </div>
-                        <div>
-                            <span className="reservas-kpi-label">Reservas este mes</span>
-                            <strong>{kpis.reservasMes}</strong>
-                            <span className="reservas-tendencia">↑ {kpis.tendencia}</span>
-                        </div>
-                    </article>
-
-                    <article className="reservas-kpi-card">
-                        <div className="reservas-kpi-icon amarillo">
-                            <Clock />
-                        </div>
-                        <div>
-                            <span className="reservas-kpi-label">Pendientes</span>
-                            <strong>{kpis.pendientes}</strong>
-                            <span className="reservas-kpi-info">Por confirmar</span>
-                        </div>
-                    </article>
-
-                    <article className="reservas-kpi-card">
-                        <div className="reservas-kpi-icon azul">
-                            <CheckCircle2 />
-                        </div>
-                        <div>
-                            <span className="reservas-kpi-label">Confirmadas</span>
-                            <strong>{kpis.confirmadas}</strong>
-                            <span className="reservas-kpi-info">Este mes</span>
-                        </div>
-                    </article>
-
-                    <article className="reservas-kpi-card">
-                        <div className="reservas-kpi-icon purpura">
-                            <XCircle />
-                        </div>
-                        <div>
-                            <span className="reservas-kpi-label">Canceladas</span>
-                            <strong>{kpis.canceladas}</strong>
-                            <span className="reservas-kpi-info">Este mes</span>
-                        </div>
-                    </article>
-
-                </section>
-
-                <button className="reservas-btn-nuevo">
-                    <Plus size={16} />
-                    Nueva reserva
-                </button>
-            </div>
+                    return (
+                        <TarjetaResumen
+                            key={index}
+                            icono={<Icono />}
+                            titulo={item.titulo}
+                            valor={item.valor}
+                            contenido={item.contenido}
+                        />
+                    );
+                })}
+            </section>
 
             {/* FILTROS */}
 
@@ -264,109 +320,29 @@ function Reservas() {
                         ))}
                     </div>
 
-                    <div className="reservas-tabla-card">
-                        <div className="reservas-tabla-header">
-                            <span>Fecha y hora</span>
-                            <span>Espacio</span>
-                            <span>Residente</span>
-                            <span>Unidad</span>
-                            <span>Estado</span>
-                            <span>Creada el</span>
-                            <span>Acciones</span>
-                        </div>
-
-                        <div className="reservas-tabla-body">
-                            {reservasFiltradas.map((reserva, index) => {
-                                const Icono = iconosEspacio[reserva.espacio];
-
-                                return (
-                                    <div className="reservas-tabla-fila" key={index}>
-                                        <span className="reservas-fecha-celda">
-                                            <Calendar size={14} />
-                                            <span>
-                                                {reserva.fecha}
-                                                <small>{reserva.horario}</small>
-                                            </span>
-                                        </span>
-
-                                        <span className="reservas-espacio-celda">
-                                            <span className={`reservas-icono ${claseEspacio[reserva.espacio]}`}>
-                                                <Icono size={16} />
-                                            </span>
-                                            <span>
-                                                <strong>{reserva.espacio}</strong>
-                                                <small>{reserva.ubicacion}</small>
-                                            </span>
-                                        </span>
-
-                                        <span>{reserva.residente}</span>
-                                        <span>{reserva.unidad}</span>
-
-                                        <span className={`reservas-badge ${badgeClase(reserva.estado)}`}>
-                                            {reserva.estado}
-                                        </span>
-
-                                        <span className="reservas-creada">{reserva.creada}</span>
-
-                                        <span className="reservas-tabla-acciones">
-                                            <button aria-label="Ver reserva">
-                                                <Eye size={16} />
-                                            </button>
-                                            <button aria-label="Más opciones">
-                                                <MoreVertical size={16} />
-                                            </button>
-                                        </span>
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    </div>
-
-                    <div className="reservas-paginacion">
-                        <button className="reservas-pagina-flecha" aria-label="Página anterior">
-                            <ChevronLeft size={16} />
-                        </button>
-
-                        {paginas.map((pagina) => (
-                            <button
-                                key={pagina}
-                                className={`reservas-pagina ${pagina === 1 ? "activa" : ""}`}
-                            >
-                                {pagina}
-                            </button>
-                        ))}
-
-                        <span className="reservas-pagina-puntos">...</span>
-
-                        <button className="reservas-pagina">6</button>
-
-                        <button className="reservas-pagina-flecha" aria-label="Página siguiente">
-                            <ChevronRight size={16} />
-                        </button>
-
-                        <span className="reservas-paginacion-info">
-                            Mostrando 1 a {reservas.length} de {totalReservas} reservas
-                        </span>
-                    </div>
+                    <Tabla
+                        columnas={columnas}
+                        datos={reservasFiltradas}
+                        etiqueta="reservas"
+                        className="reservas-tabla"
+                    />
 
                 </section>
 
-                {/* COLUMNA LATERAL */}
+                {/* PANELES DE APOYO */}
 
-                <aside className="reservas-lateral">
+                <section className="reservas-paneles">
 
                     {/* CALENDARIO */}
 
-                    <div className="reservas-panel-card">
-                        <div className="reservas-calendario-header">
-                            <h2>Calendario de reservas</h2>
-                        </div>
-
+                    <Panel titulo="Calendario de reservas">
                         <div className="reservas-calendario-nav">
                             <button aria-label="Mes anterior">
                                 <ChevronLeft size={16} />
                             </button>
+
                             <strong>Mayo 2024</strong>
+
                             <button aria-label="Mes siguiente">
                                 <ChevronRight size={16} />
                             </button>
@@ -383,27 +359,29 @@ function Reservas() {
                                 {semana.map((celda, j) => (
                                     <span
                                         key={j}
-                                        className={`reservas-calendario-dia ${celda.fuera ? "fuera" : ""} ${celda.destacado ? "destacado" : ""}`}
+                                        className={`reservas-calendario-dia ${
+                                            celda.fuera ? "fuera" : ""
+                                        } ${celda.destacado ? "destacado" : ""}`}
                                     >
                                         {celda.dia}
                                     </span>
                                 ))}
                             </div>
                         ))}
-                    </div>
+                    </Panel>
 
                     {/* PROXIMA RESERVA */}
 
-                    <div className="reservas-panel-card">
-                        <h2>Próxima reserva</h2>
-
+                    <Panel titulo="Próxima reserva">
                         <div className="reservas-proxima">
                             <span className={`reservas-icono ${claseEspacio[proximaReserva.espacio]}`}>
                                 <Armchair size={18} />
                             </span>
 
                             <div className="reservas-proxima-info">
-                                <strong>{proximaReserva.espacio} - {proximaReserva.ubicacion}</strong>
+                                <strong>
+                                    {proximaReserva.espacio} - {proximaReserva.ubicacion}
+                                </strong>
 
                                 <span>
                                     <Calendar size={13} />
@@ -422,14 +400,14 @@ function Reservas() {
                             </div>
                         </div>
 
-                        <button className="reservas-btn-detalle">Ver detalle</button>
-                    </div>
+                        <button className="reservas-btn-detalle">
+                            Ver detalle
+                        </button>
+                    </Panel>
 
                     {/* ESPACIOS MAS RESERVADOS */}
 
-                    <div className="reservas-panel-card">
-                        <h2>Espacios más reservados</h2>
-
+                    <Panel titulo="Espacios más reservados">
                         <div className="reservas-barras-lista">
                             {espaciosMasReservados.map((espacio) => (
                                 <div className="reservas-barra-fila" key={espacio.nombre}>
@@ -437,10 +415,15 @@ function Reservas() {
                                         <span>{espacio.nombre}</span>
                                         <strong>{espacio.cantidad}</strong>
                                     </div>
+
                                     <div className="reservas-barra-pista">
                                         <div
                                             className="reservas-barra-relleno"
-                                            style={{ width: `${(espacio.cantidad / maxReservasEspacio) * 100}%` }}
+                                            style={{
+                                                width: `${
+                                                    (espacio.cantidad / maxReservasEspacio) * 100
+                                                }%`
+                                            }}
                                         />
                                     </div>
                                 </div>
@@ -451,9 +434,9 @@ function Reservas() {
                             Ver reporte completo
                             <ChevronRight size={14} />
                         </a>
-                    </div>
+                    </Panel>
 
-                </aside>
+                </section>
 
             </div>
 

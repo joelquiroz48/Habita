@@ -73,42 +73,6 @@
           TABLA
 ========================= */
 
-.residentes-tabla-card {
-  background: var(--blanco);
-  border: 1px solid var(--borde-tarjeta);
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-.residentes-tabla-header,
-.residentes-tabla-fila {
-  display: grid;
-  grid-template-columns: 1.3fr 0.7fr 1.6fr 1.1fr 0.8fr 0.8fr;
-  align-items: center;
-  gap: 12px;
-  padding: 14px 20px;
-}
-
-.residentes-tabla-header {
-  border-bottom: 1px solid var(--borde-secundario);
-}
-
-.residentes-tabla-header span {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--texto-secundario);
-}
-
-.residentes-tabla-fila {
-  border-bottom: 1px solid var(--separador);
-  font-size: 13px;
-  color: var(--texto-principal);
-}
-
-.residentes-tabla-body .residentes-tabla-fila:last-child {
-  border-bottom: none;
-}
-
 .residentes-nombre {
   font-weight: 600;
 }
@@ -130,7 +94,7 @@
 
 .residentes-badge-activo {
   color: var(--color-aviso-verde);
-  background: var(--fondo-aviso-verde);
+  background: var(--fondo-verde-suave);
 }
 
 .residentes-badge-invitado {
@@ -157,44 +121,6 @@
 }
 
 /* =========================
-        PAGINACION
-========================= */
-
-.residentes-paginacion {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-top: 18px;
-}
-
-.residentes-pagina,
-.residentes-pagina-flecha {
-  width: 30px;
-  height: 30px;
-  border: 1px solid var(--borde-secundario);
-  border-radius: 7px;
-  background: var(--blanco);
-  color: var(--texto-secundario);
-  font-size: 13px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-
-.residentes-pagina.activa {
-  border-color: var(--verde);
-  color: var(--verde);
-  font-weight: 600;
-}
-
-.residentes-paginacion-info {
-  margin-left: auto;
-  font-size: 12px;
-  color: var(--texto-secundario);
-}
-
-/* =========================
         RESPONSIVE
 ========================= */
 
@@ -207,27 +133,27 @@
     flex-wrap: wrap;
   }
 
-  .residentes-tabla-header,
-  .residentes-tabla-fila {
-    grid-template-columns: 1fr 1fr;
+  .residentes-tabla .tabla-header,
+  .residentes-tabla .tabla-fila {
+    grid-template-columns: 1fr 1fr !important;
     row-gap: 4px;
   }
 
-  .residentes-tabla-header span:nth-child(3),
-  .residentes-tabla-header span:nth-child(4) {
+  .residentes-tabla .tabla-header span:nth-child(3),
+  .residentes-tabla .tabla-header span:nth-child(4) {
     display: none;
   }
 
-  .residentes-tabla-fila .residentes-email,
-  .residentes-tabla-fila span:nth-child(4) {
+  .residentes-tabla .tabla-fila .residentes-email,
+  .residentes-tabla .tabla-fila span:nth-child(4) {
     display: none;
   }
 
-  .residentes-paginacion {
+  .residentes-tabla .tabla-paginacion {
     flex-wrap: wrap;
   }
 
-  .residentes-paginacion-info {
+  .residentes-tabla .tabla-paginacion-info {
     margin-left: 0;
     width: 100%;
   }

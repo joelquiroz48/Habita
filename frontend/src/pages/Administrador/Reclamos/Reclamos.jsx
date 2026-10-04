@@ -9,8 +9,6 @@ import {
     Download,
     Eye,
     MoreVertical,
-    ChevronLeft,
-    ChevronRight,
     Wrench,
     Sparkles,
     ArrowUpDown,
@@ -20,10 +18,13 @@ import {
 } from "lucide-react";
 
 import "./Reclamos.css";
+import Panel from "../../../components/Panel/Panel";
+import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
+import Tabla from "../../../components/Tabla/Tabla";
 
-// =========================
-// DATOS DE EJEMPLO
-// =========================
+{/* =========================
+       DATOS EJEMPLOS
+========================== */}
 
 const kpis = {
     total: 64,
@@ -43,7 +44,6 @@ const reclamos = [
 ];
 
 const totalReclamos = 64;
-const paginas = [1, 2, 3, 4, 5];
 
 const resumenEstados = [
     { estado: "Pendientes", cantidad: 18, claseColor: "pendiente" },
@@ -58,6 +58,42 @@ const categoriasFrecuentes = [
     { nombre: "Iluminación", cantidad: 8, icon: Lightbulb, claseColor: "iluminacion" },
     { nombre: "Otros", cantidad: 10, icon: MoreHorizontal, claseColor: "otros" },
 ];
+
+{/* =========================
+       TARJETAS RESUMEN
+========================== */}
+
+const resumenTarjetas = [
+    {
+        icono: ClipboardList,
+        titulo: "Total de reclamos",
+        valor: kpis.total,
+        contenido: <span>Este mes</span>,
+        claseIcono: "verde",
+    },
+    {
+        icono: Clock,
+        titulo: "Pendientes",
+        valor: kpis.pendientes,
+        contenido: <span>Esperando respuesta</span>,
+        claseIcono: "amarillo",
+    },
+    {
+        icono: Settings2,
+        titulo: "En proceso",
+        valor: kpis.enProceso,
+        contenido: <span>En tratamiento</span>,
+        claseIcono: "azul",
+    },
+    {
+        icono: CheckCircle2,
+        titulo: "Resueltos",
+        valor: kpis.resueltos,
+        contenido: <span>Este mes</span>,
+        claseIcono: "verde",
+    },
+];
+
 
 function armarGradienteDonut(datos, total) {
     let acumulado = 0;
@@ -94,6 +130,59 @@ function prioridadBadgeClase(prioridad) {
     return "reclamos-prioridad-baja";
 }
 
+const columnas = [
+    { clave: "id", titulo: "ID", ancho: "1fr", clase: "reclamos-id" },
+    { clave: "fecha", titulo: "Fecha", ancho: "0.9fr" },
+    { clave: "residente", titulo: "Residente", ancho: "1.1fr", clase: "reclamos-residente" },
+    { clave: "unidad", titulo: "Unidad", ancho: "0.6fr" },
+    {
+        clave: "categoria",
+        titulo: "Categoría",
+        ancho: "1fr",
+        render: (reclamo) => (
+            <span className={`reclamos-cat-badge ${categoriaBadgeClase(reclamo.categoria)}`}>
+                {reclamo.categoria}
+            </span>
+        ),
+    },
+    { clave: "asunto", titulo: "Asunto", ancho: "1.5fr", clase: "reclamos-asunto" },
+    {
+        clave: "estado",
+        titulo: "Estado",
+        ancho: "0.9fr",
+        render: (reclamo) => (
+            <span className={`reclamos-badge ${estadoBadgeClase(reclamo.estado)}`}>
+                {reclamo.estado}
+            </span>
+        ),
+    },
+    {
+        clave: "prioridad",
+        titulo: "Prioridad",
+        ancho: "0.8fr",
+        render: (reclamo) => (
+            <span className={`reclamos-badge ${prioridadBadgeClase(reclamo.prioridad)}`}>
+                {reclamo.prioridad}
+            </span>
+        ),
+    },
+    {
+        clave: "acciones",
+        titulo: "Acciones",
+        ancho: "0.7fr",
+        render: () => (
+            <span className="reclamos-tabla-acciones">
+                <button aria-label="Ver reclamo">
+                    <Eye size={16} />
+                </button>
+                <button aria-label="Más opciones">
+                    <MoreVertical size={16} />
+                </button>
+            </span>
+        ),
+    },
+];
+
 function Reclamos() {
 
     useEffect(() => {
@@ -103,57 +192,29 @@ function Reclamos() {
     return (
         <main className="reclamos">
 
-            {/* KPIS */}
+            {/* =========================
+                  RESUMEN SUPERIOR
+            ========================= */}
 
-            <section className="reclamos-kpi-grid">
+            <section className="reclamos-resumen">
+                {resumenTarjetas.map((item, index) => {
+                    const Icono = item.icono;
 
-                <article className="reclamos-kpi-card">
-                    <div className="reclamos-kpi-icon verde">
-                        <ClipboardList />
-                    </div>
-                    <div>
-                        <span className="reclamos-kpi-label">Total de reclamos</span>
-                        <strong>{kpis.total}</strong>
-                        <span className="reclamos-kpi-info">Este mes</span>
-                    </div>
-                </article>
-
-                <article className="reclamos-kpi-card">
-                    <div className="reclamos-kpi-icon amarillo">
-                        <Clock />
-                    </div>
-                    <div>
-                        <span className="reclamos-kpi-label">Pendientes</span>
-                        <strong>{kpis.pendientes}</strong>
-                        <span className="reclamos-kpi-info">Esperando respuesta</span>
-                    </div>
-                </article>
-
-                <article className="reclamos-kpi-card">
-                    <div className="reclamos-kpi-icon azul">
-                        <Settings2 />
-                    </div>
-                    <div>
-                        <span className="reclamos-kpi-label">En proceso</span>
-                        <strong>{kpis.enProceso}</strong>
-                        <span className="reclamos-kpi-info">En tratamiento</span>
-                    </div>
-                </article>
-
-                <article className="reclamos-kpi-card">
-                    <div className="reclamos-kpi-icon verde">
-                        <CheckCircle2 />
-                    </div>
-                    <div>
-                        <span className="reclamos-kpi-label">Resueltos</span>
-                        <strong>{kpis.resueltos}</strong>
-                        <span className="reclamos-kpi-info">Este mes</span>
-                    </div>
-                </article>
-
+                    return (
+                        <TarjetaResumen
+                            key={index}
+                            icono={<Icono />}
+                            titulo={item.titulo}
+                            valor={item.valor}
+                            contenido={item.contenido}
+                        />
+                    );
+                })}
             </section>
 
-            {/* FILTROS */}
+            {/* =========================
+                CONTENIDO PRINCIPAL
+            ========================= */}
 
             <div className="reclamos-filtros">
                 <button className="reclamos-filtro">
@@ -188,133 +249,90 @@ function Reclamos() {
 
                 <section className="reclamos-listado">
 
-                    <div className="reclamos-tabla-card">
-                        <div className="reclamos-tabla-header">
-                            <span>ID</span>
-                            <span>Fecha</span>
-                            <span>Residente</span>
-                            <span>Unidad</span>
-                            <span>Categoría</span>
-                            <span>Asunto</span>
-                            <span>Estado</span>
-                            <span>Prioridad</span>
-                            <span>Acciones</span>
-                        </div>
-
-                        <div className="reclamos-tabla-body">
-                            {reclamos.map((reclamo) => (
-                                <div className="reclamos-tabla-fila" key={reclamo.id}>
-                                    <span className="reclamos-id">{reclamo.id}</span>
-                                    <span>{reclamo.fecha}</span>
-                                    <span className="reclamos-residente">{reclamo.residente}</span>
-                                    <span>{reclamo.unidad}</span>
-
-                                    <span className={`reclamos-cat-badge ${categoriaBadgeClase(reclamo.categoria)}`}>
-                                        {reclamo.categoria}
-                                    </span>
-
-                                    <span className="reclamos-asunto">{reclamo.asunto}</span>
-
-                                    <span className={`reclamos-badge ${estadoBadgeClase(reclamo.estado)}`}>
-                                        {reclamo.estado}
-                                    </span>
-
-                                    <span className={`reclamos-badge ${prioridadBadgeClase(reclamo.prioridad)}`}>
-                                        {reclamo.prioridad}
-                                    </span>
-
-                                    <span className="reclamos-tabla-acciones">
-                                        <button aria-label="Ver reclamo">
-                                            <Eye size={16} />
-                                        </button>
-                                        <button aria-label="Más opciones">
-                                            <MoreVertical size={16} />
-                                        </button>
-                                    </span>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-
-                    <div className="reclamos-paginacion">
-                        <button className="reclamos-pagina-flecha" aria-label="Página anterior">
-                            <ChevronLeft size={16} />
-                        </button>
-
-                        {paginas.map((pagina) => (
-                            <button
-                                key={pagina}
-                                className={`reclamos-pagina ${pagina === 1 ? "activa" : ""}`}
-                            >
-                                {pagina}
-                            </button>
-                        ))}
-
-                        <span className="reclamos-pagina-puntos">...</span>
-
-                        <button className="reclamos-pagina">10</button>
-
-                        <button className="reclamos-pagina-flecha" aria-label="Página siguiente">
-                            <ChevronRight size={16} />
-                        </button>
-
-                        <span className="reclamos-paginacion-info">
-                            Mostrando 1 a {reclamos.length} de {totalReclamos} reclamos
-                        </span>
-                    </div>
+                    <Tabla
+                        columnas={columnas}
+                        datos={reclamos}
+                        etiqueta="reclamos"
+                        className="reclamos-tabla"
+                    />
 
                 </section>
 
                 {/* RESUMEN */}
 
-                <aside className="reclamos-resumen">
+                <Panel className="reclamos-resumen-panel" titulo="Resumen de reclamos">
+                    <div className="reclamos-resumen-contenido">
+                        <div className="reclamos-donut-wrap">
+                            <div
+                                className="reclamos-donut"
+                                style={{
+                                    background: armarGradienteDonut(
+                                        resumenEstados,
+                                        totalReclamos
+                                    )
+                                }}
+                            >
+                                <div className="reclamos-donut-centro" />
+                            </div>
 
-                    <h2>Resumen de reclamos</h2>
+                            <ul className="reclamos-donut-leyenda">
+                                {resumenEstados.map((item) => (
+                                    <li key={item.estado}>
+                                        <span className={`reclamos-leyenda-punto ${item.claseColor}`}/>
 
-                    <div className="reclamos-donut-wrap">
-                        <div
-                            className="reclamos-donut"
-                            style={{ background: armarGradienteDonut(resumenEstados, totalReclamos) }}
-                        >
-                            <div className="reclamos-donut-centro" />
+                                        <span className="reclamos-leyenda-label">
+                                            {item.estado}
+                                        </span>
+
+                                        <span className="reclamos-leyenda-valor">
+                                            {item.cantidad} (
+                                            {Math.round(
+                                                (item.cantidad / totalReclamos) * 100
+                                            )}
+                                            %)
+                                        </span>
+                                    </li>
+                                ))}
+                            </ul>
                         </div>
 
-                        <ul className="reclamos-donut-leyenda">
-                            {resumenEstados.map((item) => (
-                                <li key={item.estado}>
-                                    <span className={`reclamos-leyenda-punto ${item.claseColor}`} />
-                                    <span className="reclamos-leyenda-label">{item.estado}</span>
-                                    <span className="reclamos-leyenda-valor">
-                                        {item.cantidad} ({Math.round((item.cantidad / totalReclamos) * 100)}%)
-                                    </span>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
+                        <div className="reclamos-categorias">
+                            <h3>Categorías más frecuentes</h3>
 
-                    <h3>Categorías más frecuentes</h3>
+                            <div className="reclamos-categorias-lista">
+                                {categoriasFrecuentes.map((cat) => {
+                                    const Icono = cat.icon;
 
-                    <div className="reclamos-categorias-lista">
-                        {categoriasFrecuentes.map((cat) => {
-                            const Icono = cat.icon;
-                            return (
-                                <div className="reclamos-categoria-fila" key={cat.nombre}>
-                                    <span className={`reclamos-categoria-icon ${cat.claseColor}`}>
-                                        <Icono size={16} />
-                                    </span>
-                                    <span className="reclamos-categoria-nombre">{cat.nombre}</span>
-                                    <span className="reclamos-categoria-valor">{cat.cantidad}</span>
-                                </div>
-                            );
-                        })}
+                                    return (
+                                        <div
+                                            className="reclamos-categoria-fila"
+                                            key={cat.nombre}
+                                        >
+                                            <span
+                                                className={`reclamos-categoria-icon ${cat.claseColor}`}
+                                            >
+                                                <Icono size={16} />
+                                            </span>
+
+                                            <span className="reclamos-categoria-nombre">
+                                                {cat.nombre}
+                                            </span>
+
+                                            <span className="reclamos-categoria-valor">
+                                                {cat.cantidad}
+                                            </span>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </div>
                     </div>
 
                     <button className="reclamos-btn-reportes">
                         <BarChart3 size={15} />
                         Ver reportes
                     </button>
-
-                </aside>
+                </Panel>
 
             </div>
 

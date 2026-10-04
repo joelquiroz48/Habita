@@ -1,0 +1,55 @@
+
+.tabla-reportes-contenedor {
+    width: 100%;
+    min-width: 0;
+    overflow-x: auto;
+}
+
+.tabla-reportes {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.tabla-reportes-encabezado,
+.tabla-reportes-fila {
+    display: grid;
+    align-items: center;
+    gap: 10px;
+}
+
+.tabla-reportes-encabezado {
+    padding: 9px 0;
+    border-bottom: 1px solid var(--separador);
+    color: var(--texto-secundario);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.tabla-reportes-fila {
+    padding: 9px 0;
+    border-bottom: 1px solid var(--separador);
+    font-size: 13px;
+}
+
+.tabla-reportes-fila:last-child {
+    border-bottom: none;
+}
+
+.tabla-reportes-celda {
+    min-width: 0;
+}
+
+.tabla-reportes-vacia {
+    padding: 20px 0;
+    color: var(--texto-secundario);
+    font-size: 13px;
+    text-align: center;
+}
+
+@media (max-width: 600px) {
+    .tabla-reportes-encabezado,
+    .tabla-reportes-fila {
+        gap: 8px;
+    }
+}

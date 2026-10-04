@@ -62,11 +62,6 @@
     border-color: #f7d5d5;
 }
 
-.aviso-destacado.recordatorio {
-    background: #fffaf0;
-    border-color: #f5e2b5;
-}
-
 .aviso-destacado-icon {
     width: 40px;
     height: 40px;
@@ -81,11 +76,6 @@
 .importante .aviso-destacado-icon {
     background: #fde4e4;
     color: #df4848;
-}
-
-.recordatorio .aviso-destacado-icon {
-    background: #fff0c9;
-    color: #d89c17;
 }
 
 .aviso-destacado-contenido {
@@ -110,10 +100,6 @@
     color: #df4848;
 }
 
-.recordatorio .aviso-tipo {
-    color: #c99717;
-}
-
 .aviso-punto {
     width: 6px;
     height: 6px;
@@ -123,10 +109,6 @@
 
 .importante .aviso-punto {
     background: #df4848;
-}
-
-.recordatorio .aviso-punto {
-    background: #e8ad19;
 }
 
 .aviso-destacado h3 {
@@ -208,14 +190,8 @@
 }
 
 .aviso-lista-icon.verde {
-    background: var(--fondo-aviso-verde);
+    background: var(--fondo-verde-suave);
     color: var(--color-aviso-verde);
-}
-
-.aviso-lista-icon.azul,
-.aviso-resumen-icon.azul {
-    background: var(--fondo-aviso-azul);
-    color: var(--color-aviso-azul);
 }
 
 .aviso-lista-icon.violeta {
@@ -293,23 +269,6 @@
 
 
 /* =========================
-          PANELES
-========================= */
-
-.avisos-panel {
-    border: 1px solid var(--borde-tarjeta);
-    border-radius: 12px;
-    padding: 14px;
-}
-
-.avisos-panel h2 {
-    margin: 0 0 10px;
-    font-size: 16px;
-    font-weight: 600;
-}
-
-
-/* =========================
           BUSCADOR
 ========================= */
 
@@ -363,7 +322,7 @@
 }
 
 .filtros-lista button:hover {
-    background: var(--fondo-icono-resumen);
+    background: var(--fondo-icono);
 }
 
 .filtros-lista .filtro-activo {
@@ -437,15 +396,6 @@
     .avisos-contenido {
         grid-template-columns: 1fr;
     }
-
-    .avisos-lateral {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-    }
-
-    .avisos-asistente {
-        grid-column: span 2;
-    }
 }
 
 @media (max-width: 700px) {
@@ -456,15 +406,6 @@
 
     .avisos-resumen {
         grid-template-columns: 1fr;
-    }
-
-    .avisos-lateral {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .avisos-asistente {
-        width: 100%;
     }
 
     .aviso-destacado {

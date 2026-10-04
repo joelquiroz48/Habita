@@ -21,36 +21,8 @@ import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
 import Panel from "../../../components/Panel/Panel";
 
 /* =========================
-        DATOS DE EJEMPLO
+      DATOS DE EJEMPLO
 ========================= */
-
-const resumenReservas = [
-    {
-        titulo: "Reservas activas",
-        valor: "3",
-        detalle: "2 confirmada · 1 pendiente",
-        icono: CalendarDays,
-    },
-    {
-        titulo: "Próxima reserva",
-        valor: "18/09/26",
-        detalle: "SUM · 18:00 a 22:00",
-        icono: CalendarDays,
-    },
-    {
-        titulo: "Espacios disponibles hoy",
-        valor: "4",
-        detalle: "SUM, Parrilla, Laundry, Sala de reuniones",
-        icono: Users,
-    },
-    {
-        titulo: "Historial del mes",
-        valor: "5",
-        detalle: "Reservas realizadas",
-        icono: Clock3,
-    },
-];
-
 
 const reservasActivas = [
     {
@@ -135,10 +107,37 @@ const eventos = [
     },
 ];
 
+{/* =========================
+       TARJETAS RESUMEN
+========================== */}
 
-/* =========================
-          COMPONENTE
-========================= */
+const resumenReservas = [
+    {
+        titulo: "Reservas activas",
+        valor: "3",
+        detalle: "2 confirmada · 1 pendiente",
+        icono: CalendarDays,
+    },
+    {
+        titulo: "Próxima reserva",
+        valor: "18/09/26",
+        detalle: "SUM · 18:00 a 22:00",
+        icono: CalendarDays,
+    },
+    {
+        titulo: "Espacios disponibles hoy",
+        valor: "4",
+        detalle: "SUM, Parrilla, Laundry, Sala de reuniones",
+        icono: Users,
+    },
+    {
+        titulo: "Historial del mes",
+        valor: "5",
+        detalle: "Reservas realizadas",
+        icono: Clock3,
+    },
+];
+
 
 function Reservas() {
 

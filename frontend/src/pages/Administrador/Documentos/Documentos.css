@@ -2,13 +2,13 @@
   padding: 28px 32px;
 
   --doc-color-reglamentos: var(--color-documento-doc);
-  --doc-fondo-reglamentos: var(--fondo-documento-doc);
+  --doc-fondo-reglamentos: var(--fondo-azul-suave);
   --doc-color-actas: var(--color-aviso-verde);
-  --doc-fondo-actas: var(--fondo-aviso-verde);
+  --doc-fondo-actas: var(--fondo-verde-suave);
   --doc-color-finanzas: var(--color-aviso-amarillo);
   --doc-fondo-finanzas: var(--fondo-aviso-amarillo);
   --doc-color-contratos: var(--color-aviso-azul);
-  --doc-fondo-contratos: var(--fondo-aviso-azul);
+  --doc-fondo-contratos: var(--fondo-azul-suave);
   --doc-color-mantenimiento: var(--color-evento);
   --doc-fondo-mantenimiento: #e5f6f4;
   --doc-color-seguros: var(--color-documento-pdf);
@@ -16,7 +16,7 @@
   --doc-color-planos: #7c5cbf;
   --doc-fondo-planos: #efe9fb;
   --doc-color-otros: var(--texto-secundario);
-  --doc-fondo-otros: var(--fondo-icono-panel);
+  --doc-fondo-otros: var(--fondo-icono);
 
   --doc-color-a: #5a67d8;
   --doc-fondo-a: #e6e8fb;
@@ -104,26 +104,14 @@
         CONTENIDO
 ========================= */
 
-.documentos-contenido {
-  display: grid;
-  grid-template-columns: 1fr 300px;
+.pagina-administrador .documentos-contenido {
+  display: flex;
+  flex-direction: column;
   gap: 16px;
-  align-items: start;
 }
 
-.documentos-tabla-card {
-  background: var(--blanco);
-  border: 1px solid var(--borde-tarjeta);
-  border-radius: 12px;
-  overflow: hidden;
-  overflow-x: auto;
-}
-
-.documentos-tabla-header,
-.documentos-tabla-fila {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1.4fr 0.8fr 0.7fr 0.7fr;
-  align-items: center;
+.documentos-tabla .tabla-header,
+.documentos-tabla .tabla-fila {
   gap: 12px;
   padding: 13px 18px;
   width: 100%;
@@ -131,30 +119,10 @@
   min-width: 780px;
 }
 
-.documentos-tabla-header {
-  border-bottom: 1px solid var(--borde-secundario);
-}
-
-.documentos-tabla-header span {
+.documentos-tabla .tabla-header > span {
   font-size: 12px;
   font-weight: 600;
   color: var(--texto-secundario);
-}
-
-.documentos-th-nombre {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.documentos-tabla-fila {
-  border-bottom: 1px solid var(--separador);
-  font-size: 13px;
-  color: var(--texto-principal);
-}
-
-.documentos-tabla-body .documentos-tabla-fila:last-child {
-  border-bottom: none;
 }
 
 .documentos-nombre-celda {
@@ -177,8 +145,8 @@
 }
 
 .documentos-icono-archivo.pdf { background: var(--fondo-documento-pdf); color: var(--color-documento-pdf); }
-.documentos-icono-archivo.xlsx { background: var(--fondo-documento-money); color: var(--color-documento-money); }
-.documentos-icono-archivo.docx { background: var(--fondo-documento-doc); color: var(--color-documento-doc); }
+.documentos-icono-archivo.xlsx { background: var(--fondo-verde-suave); color: var(--color-documento-money); }
+.documentos-icono-archivo.docx { background: var(--fondo-azul-suave); color: var(--color-documento-doc); }
 .documentos-icono-archivo.jpg { background: var(--doc-fondo-planos); color: var(--doc-color-planos); }
 
 .documentos-nombre-texto {
@@ -188,9 +156,13 @@
 }
 
 .documentos-nombre-texto strong {
+  display: block;
   font-size: 13px;
   color: var(--texto-principal);
   font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .documentos-nombre-texto small {
@@ -243,12 +215,16 @@
 .documentos-subido-celda span:last-child {
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
 .documentos-subido-celda strong {
   font-size: 12px;
   color: var(--texto-principal);
   font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .documentos-subido-celda small {
@@ -276,72 +252,23 @@
   padding: 0;
 }
 
-/* ---- paginacion ---- */
-
-.documentos-paginacion {
-  display: flex;
-  align-items: center;
-  gap: 6px;
+.documentos-tabla .tabla-paginacion {
+  padding: 0 18px 13px;
   margin-top: 16px;
-  flex-wrap: wrap;
 }
 
-.documentos-pagina,
-.documentos-pagina-flecha {
-  min-width: 30px;
-  height: 30px;
-  border: 1px solid var(--borde-secundario);
-  border-radius: 7px;
-  background: var(--blanco);
-  color: var(--texto-secundario);
-  font-size: 13px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  padding: 0 6px;
-}
-
-.documentos-pagina.activa {
-  border-color: var(--verde);
-  color: var(--verde);
-  font-weight: 600;
-}
-
-.documentos-pagina-puntos {
-  color: var(--texto-secundario);
-  font-size: 13px;
-  padding: 0 2px;
-}
-
-.documentos-paginacion-info {
-  margin-left: auto;
+.documentos-tabla .tabla-paginacion-info {
   font-size: 12px;
-  color: var(--texto-secundario);
 }
 
 /* =========================
-      COLUMNA LATERAL
+         PANELES
 ========================= */
 
-.documentos-lateral {
-  display: flex;
-  flex-direction: column;
+.documentos-paneles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 14px;
-}
-
-.documentos-panel-card {
-  background: var(--blanco);
-  border: 1px solid var(--borde-tarjeta);
-  border-radius: 12px;
-  padding: 16px;
-}
-
-.documentos-panel-card h2 {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--texto-principal);
-  margin-bottom: 12px;
 }
 
 .documentos-categorias-lista {
@@ -498,13 +425,19 @@
 ========================= */
 
 @media (max-width: 1200px) {
-  .documentos-contenido {
-    grid-template-columns: 1fr;
+  .documentos-paneles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (max-width: 800px) {
   .documentos {
     padding: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .documentos-paneles {
+    grid-template-columns: 1fr;
   }
 }

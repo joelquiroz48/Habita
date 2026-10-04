@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import {
     Calendar,
     ChevronDown,
@@ -17,61 +18,13 @@ import {
 } from "lucide-react";
 
 import "./Reportes.css";
+import Panel from "../../../components/Panel/Panel";
+import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
+import TablaReportes from "../../../components/TablaReportes/TablaReportes";
 
-// =========================
-// DATOS DE EJEMPLO
-// =========================
-
-const kpis = [
-    {
-        label: "Recaudado en el período",
-        valor: "$ 4.251.200",
-        variacion: "12.5%",
-        positivo: true,
-        icon: Wallet,
-        clase: "verde",
-    },
-    {
-        label: "Pagos realizados",
-        valor: "78",
-        variacion: "6.8%",
-        positivo: true,
-        icon: CreditCard,
-        clase: "azul",
-    },
-    {
-        label: "Reclamos totales",
-        valor: "64",
-        variacion: "8.3%",
-        positivo: false,
-        icon: AlertTriangle,
-        clase: "amarillo",
-    },
-    {
-        label: "Reclamos resueltos",
-        valor: "20",
-        variacion: "25%",
-        positivo: true,
-        icon: CheckCircle2,
-        clase: "azul",
-    },
-    {
-        label: "Nuevos residentes",
-        valor: "12",
-        variacion: "9.1%",
-        positivo: true,
-        icon: Users,
-        clase: "amarillo",
-    },
-    {
-        label: "Reservas realizadas",
-        valor: "28",
-        variacion: "12%",
-        positivo: true,
-        icon: CalendarCheck,
-        clase: "azul",
-    },
-];
+{/* =========================
+       DATOS EJEMPLOS
+========================== */}
 
 const recaudacionMensual = [
     { mes: "Mar 2026", recaudado: 4720000, pendiente: 142000 },
@@ -153,6 +106,133 @@ const resumenGeneral = [
     { metrica: "Nuevos residentes", valor: "12", variacion: "9.1%", positivo: true },
 ];
 
+const columnasActividad = [
+    {
+        clave: "titulo",
+        titulo: "Actividad",
+        ancho: "minmax(0, 1fr)",
+        render: (_, item) => {
+
+            return (
+                <div className="reportes-actividad-contenido">
+                    <span className="reportes-actividad-texto">
+                        <strong>{item.titulo}</strong>
+                        <small>{item.subtitulo}</small>
+                    </span>
+                </div>
+            );
+        },
+    },
+    {
+        clave: "fecha",
+        titulo: "Fecha",
+        ancho: "auto",
+        className: "reportes-actividad-fecha",
+    },
+];
+
+const columnasResumen = [
+    {
+        clave: "metrica",
+        titulo: "Métrica",
+        ancho: "minmax(0, 1.5fr)",
+    },
+    {
+        clave: "valor",
+        titulo: "Valor",
+        ancho: "minmax(70px, 1fr)",
+        className: "reportes-tabla-resumen-valor",
+    },
+    {
+        clave: "variacion",
+        titulo: "Vs. mes anterior",
+        ancho: "minmax(120px, 1fr)",
+        render: (_, fila) => (
+            <span
+                className={`reportes-tendencia ${
+                    fila.positivo ? "positiva" : "negativa"
+                }`}
+            >
+                <ArrowUp size={12} />
+                {fila.variacion}
+            </span>
+        ),
+    },
+];
+
+{/* =========================
+       TARJETAS RESUMEN
+========================== */}
+
+const resumenTarjetas = [
+    {
+        icono: Wallet,
+        titulo: "Recaudado en el período",
+        valor: "$ 4.251.200",
+        contenido: (
+            <span className="reportes-tendencia positiva">
+                <ArrowUp size={12} />
+                12.5% vs. mes anterior
+            </span>
+        ),
+    },
+    {
+        icono: CreditCard,
+        titulo: "Pagos realizados",
+        valor: "78",
+        contenido: (
+            <span className="reportes-tendencia positiva">
+                <ArrowUp size={12} />
+                6.8% vs. mes anterior
+            </span>
+        ),
+    },
+    {
+        icono: AlertTriangle,
+        titulo: "Reclamos totales",
+        valor: "64",
+        contenido: (
+            <span className="reportes-tendencia negativa">
+                <ArrowUp size={12} />
+                8.3% vs. mes anterior
+            </span>
+        ),
+    },
+    {
+        icono: CheckCircle2,
+        titulo: "Reclamos resueltos",
+        valor: "20",
+        contenido: (
+            <span className="reportes-tendencia positiva">
+                <ArrowUp size={12} />
+                25% vs. mes anterior
+            </span>
+        ),
+    },
+    {
+        icono: Users,
+        titulo: "Nuevos residentes",
+        valor: "12",
+        contenido: (
+            <span className="reportes-tendencia positiva">
+                <ArrowUp size={12} />
+                9.1% vs. mes anterior
+            </span>
+        ),
+    },
+    {
+        icono: CalendarCheck,
+        titulo: "Reservas realizadas",
+        valor: "28",
+        contenido: (
+            <span className="reportes-tendencia positiva">
+                <ArrowUp size={12} />
+                12% vs. mes anterior
+            </span>
+        ),
+    },
+];
+
 function Reportes() {
 
     useEffect(() => {
@@ -161,6 +241,22 @@ function Reportes() {
 
     return (
         <main className="reportes">
+
+            <section className="reportes-resumen">
+                {resumenTarjetas.map((item, index) => {
+                    const Icono = item.icono;
+
+                    return (
+                        <TarjetaResumen
+                            key={index}
+                            icono={<Icono size={19} />}
+                            titulo={item.titulo}
+                            valor={item.valor}
+                            contenido={item.contenido}
+                        />
+                    );
+                })}
+            </section>
 
             {/* FILTROS */}
 
@@ -187,39 +283,21 @@ function Reportes() {
                 </button>
             </div>
 
-            {/* KPIS */}
-
-            <section className="reportes-kpi-grid">
-                {kpis.map((kpi) => {
-                    const Icono = kpi.icon;
-                    return (
-                        <article className="reportes-kpi-card" key={kpi.label}>
-                            <div className={`reportes-kpi-icon ${kpi.clase}`}>
-                                <Icono size={19} />
-                            </div>
-                            <div>
-                                <span className="reportes-kpi-label">{kpi.label}</span>
-                                <strong>{kpi.valor}</strong>
-                                <span className={`reportes-tendencia ${kpi.positivo ? "positiva" : "negativa"}`}>
-                                    <ArrowUp size={12} />
-                                    {kpi.variacion} vs. mes anterior
-                                </span>
-                            </div>
-                        </article>
-                    );
-                })}
-            </section>
-
             {/* GRAFICOS */}
 
             <section className="reportes-graficos-grid">
 
-                <article className="reportes-panel-card">
-                    <h2>Recaudación mensual</h2>
-
+                <Panel titulo="Recaudación mensual">
                     <div className="reportes-leyenda-barras">
-                        <span><span className="reportes-punto recaudado" /> Recaudado</span>
-                        <span><span className="reportes-punto pendiente" /> Pendiente</span>
+                        <span>
+                            <span className="reportes-punto recaudado" />
+                            Recaudado
+                        </span>
+
+                        <span>
+                            <span className="reportes-punto pendiente" />
+                            Pendiente
+                        </span>
                     </div>
 
                     <div className="reportes-barras-chart">
@@ -238,13 +316,19 @@ function Reportes() {
                                     <div className="reportes-barra-pista">
                                         <div
                                             className="reportes-barra-segmento pendiente"
-                                            style={{ height: `${(item.pendiente / MAX_ESCALA) * 100}%` }}
+                                            style={{
+                                                height: `${(item.pendiente / MAX_ESCALA) * 100}%`
+                                            }}
                                         />
+
                                         <div
                                             className="reportes-barra-segmento recaudado"
-                                            style={{ height: `${(item.recaudado / MAX_ESCALA) * 100}%` }}
+                                            style={{
+                                                height: `${(item.recaudado / MAX_ESCALA) * 100}%`
+                                            }}
                                         />
                                     </div>
+
                                     <span>{item.mes}</span>
                                 </div>
                             ))}
@@ -254,17 +338,21 @@ function Reportes() {
                     <div className="reportes-insight">
                         <FileText size={14} />
                         La recaudación de mayo aumentó un 12.5% respecto al mes anterior.
-                        <ChevronRight size={14} className="reportes-insight-flecha" />
+                        <ChevronRight size={14} className="reportes-insight-flecha"/>
                     </div>
-                </article>
+                </Panel>
 
-                <article className="reportes-panel-card">
-                    <h2>Reclamos por estado</h2>
-
+                <Panel titulo="Reclamos por estado">
                     <div className="reportes-donut-wrap">
                         <div
                             className="reportes-donut"
-                            style={{ background: armarGradienteDonut(reclamosPorEstado, totalReclamosEstado, "estado") }}
+                            style={{
+                                background: armarGradienteDonut(
+                                    reclamosPorEstado,
+                                    totalReclamosEstado,
+                                    "estado"
+                                )
+                            }}
                         >
                             <div className="reportes-donut-centro">
                                 <strong>{totalReclamosEstado}</strong>
@@ -275,10 +363,18 @@ function Reportes() {
                         <ul className="reportes-donut-leyenda">
                             {reclamosPorEstado.map((item) => (
                                 <li key={item.nombre}>
-                                    <span className={`reportes-punto estado-${item.claseColor}`} />
-                                    <span className="reportes-leyenda-label">{item.nombre}</span>
+                                    <span className={`reportes-punto estado-${item.claseColor}`}/>
+
+                                    <span className="reportes-leyenda-label">
+                                        {item.nombre}
+                                    </span>
+
                                     <span className="reportes-leyenda-valor">
-                                        {item.cantidad} ({Math.round((item.cantidad / totalReclamosEstado) * 100)}%)
+                                        {item.cantidad} (
+                                        {Math.round(
+                                            (item.cantidad / totalReclamosEstado) * 100
+                                        )}
+                                        %)
                                     </span>
                                 </li>
                             ))}
@@ -288,17 +384,21 @@ function Reportes() {
                     <div className="reportes-insight">
                         <FileText size={14} />
                         El 41% de los reclamos se encuentran en proceso.
-                        <ChevronRight size={14} className="reportes-insight-flecha" />
+                        <ChevronRight size={14} className="reportes-insight-flecha"/>
                     </div>
-                </article>
+                </Panel>
 
-                <article className="reportes-panel-card">
-                    <h2>Reclamos por categoría</h2>
-
+                <Panel titulo="Reclamos por categoría">
                     <div className="reportes-donut-wrap">
                         <div
                             className="reportes-donut"
-                            style={{ background: armarGradienteDonut(reclamosPorCategoria, totalReclamosCategoria, "cat") }}
+                            style={{
+                                background: armarGradienteDonut(
+                                    reclamosPorCategoria,
+                                    totalReclamosCategoria,
+                                    "cat"
+                                )
+                            }}
                         >
                             <div className="reportes-donut-centro" />
                         </div>
@@ -306,10 +406,16 @@ function Reportes() {
                         <ul className="reportes-donut-leyenda">
                             {reclamosPorCategoria.map((item) => (
                                 <li key={item.nombre}>
-                                    <span className={`reportes-punto cat-${item.claseColor}`} />
-                                    <span className="reportes-leyenda-label">{item.nombre}</span>
+                                    <span className={`reportes-punto cat-${item.claseColor}`}/>
+                                    <span className="reportes-leyenda-label">
+                                        {item.nombre}
+                                    </span>
                                     <span className="reportes-leyenda-valor">
-                                        {item.cantidad} ({Math.round((item.cantidad / totalReclamosCategoria) * 100)}%)
+                                        {item.cantidad} (
+                                        {Math.round(
+                                            (item.cantidad / totalReclamosCategoria) * 100
+                                        )}
+                                        %)
                                     </span>
                                 </li>
                             ))}
@@ -319,9 +425,9 @@ function Reportes() {
                     <div className="reportes-insight">
                         <FileText size={14} />
                         Mantenimiento es la categoría con más reclamos.
-                        <ChevronRight size={14} className="reportes-insight-flecha" />
+                        <ChevronRight size={14} className="reportes-insight-flecha"/>
                     </div>
-                </article>
+                </Panel>
 
             </section>
 
@@ -329,60 +435,22 @@ function Reportes() {
 
             <section className="reportes-inferior-grid">
 
-                <article className="reportes-panel-card">
-                    <h2>Actividad reciente</h2>
+                <Panel titulo="Actividad reciente" accion={<Link to="/administrador/reportes">Ver todo</Link>}>
+                    <TablaReportes
+                        columnas={columnasActividad}
+                        datos={actividadReciente}
+                        obtenerClave={(item) => `${item.titulo}-${item.fecha}`}
+                    />
+                </Panel>
 
-                    <div className="reportes-actividad-lista">
-                        {actividadReciente.map((item, index) => {
-                            const Icono = item.icon;
-                            return (
-                                <div className="reportes-actividad-fila" key={index}>
-                                    <span className={`reportes-actividad-icon ${item.clase}`}>
-                                        <Icono size={16} />
-                                    </span>
-                                    <span className="reportes-actividad-texto">
-                                        <strong>{item.titulo}</strong>
-                                        <small>{item.subtitulo}</small>
-                                    </span>
-                                    <span className="reportes-actividad-fecha">{item.fecha}</span>
-                                </div>
-                            );
-                        })}
-                    </div>
-
-                    <a href="#" className="reportes-link-centrado">
-                        Ver toda la actividad
-                        <ChevronRight size={14} />
-                    </a>
-                </article>
-
-                <article className="reportes-panel-card">
-                    <h2>Resumen general del período</h2>
-
-                    <div className="reportes-tabla-resumen">
-                        <div className="reportes-tabla-resumen-header">
-                            <span>Métrica</span>
-                            <span>Valor</span>
-                            <span>Vs. mes anterior</span>
-                        </div>
-
-                        {resumenGeneral.map((fila) => (
-                            <div className="reportes-tabla-resumen-fila" key={fila.metrica}>
-                                <span>{fila.metrica}</span>
-                                <span className="reportes-tabla-resumen-valor">{fila.valor}</span>
-                                <span className={`reportes-tendencia ${fila.positivo ? "positiva" : "negativa"}`}>
-                                    <ArrowUp size={12} />
-                                    {fila.variacion}
-                                </span>
-                            </div>
-                        ))}
-                    </div>
-
-                    <a href="#" className="reportes-link-centrado">
-                        Ver reporte completo
-                        <ChevronRight size={14} />
-                    </a>
-                </article>
+                <Panel titulo="Resumen general del período" accion={<Link to="/administrador/reportes">Ver todo</Link>}>
+                    <TablaReportes
+                        columnas={columnasResumen}
+                        datos={resumenGeneral}
+                        obtenerClave={(fila) => fila.metrica}
+                        mostrarEncabezado
+                    />
+                </Panel>
 
             </section>
 

@@ -5,90 +5,23 @@
   --admin-color-pendiente: var(--color-aviso-amarillo);
   --admin-fondo-pendiente: var(--fondo-aviso-amarillo);
   --admin-color-proceso: var(--color-aviso-azul);
-  --admin-fondo-proceso: var(--fondo-aviso-azul);
+  --admin-fondo-proceso: var(--fondo-azul-suave);
   --admin-color-resuelto: var(--color-aviso-verde);
-  --admin-fondo-resuelto: var(--fondo-aviso-verde);
-}
-
-/* =========================
-        ENCABEZADO
-========================= */
-
-.admin-encabezado {
-  margin-bottom: 20px;
-}
-
-.admin-encabezado h1 {
-  font-size: 22px;
-  font-weight: 700;
-  color: var(--texto-principal);
-}
-
-.admin-encabezado p {
-  font-size: 13px;
-  color: var(--texto-secundario);
-  margin-top: 2px;
+  --admin-fondo-resuelto: var(--fondo-verde-suave);
 }
 
 /* =========================
       TARJETAS DE KPI
 ========================= */
 
-.admin-kpi-grid {
+.admin-resumen {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 14px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
-.admin-kpi-card {
-  background: var(--blanco);
-  border: 1px solid var(--borde-tarjeta);
-  border-radius: 12px;
-  padding: 18px;
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
-  box-sizing: border-box;
-}
-
-.admin-kpi-icon {
-  width: 44px;
-  height: 44px;
-  min-width: 44px;
-  border-radius: 50%;
-  background: var(--fondo-icono-resumen);
-  color: var(--verde);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.admin-kpi-card > div:last-child {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-}
-
-.admin-kpi-label {
-  font-size: 13px;
-  color: var(--texto-secundario);
-  margin-bottom: 4px;
-}
-
-.admin-kpi-card strong {
-  font-size: 22px;
-  color: var(--texto-principal);
-  line-height: 1.2;
-}
-
-.admin-kpi-info {
-  font-size: 12px;
-  color: var(--texto-secundario);
-  margin-top: 3px;
-}
-
-.admin-kpi-tendencia {
+.admin-tendencia {
   display: flex;
   align-items: center;
   gap: 3px;
@@ -97,8 +30,12 @@
   margin-top: 6px;
 }
 
-.admin-kpi-tendencia.positiva {
+.admin-tendencia.positiva {
   color: var(--color-aviso-verde);
+}
+
+.admin-tendencia.negativa {
+  color: var(--color-aviso-rojo);
 }
 
 .admin-progreso {
@@ -117,47 +54,14 @@
 }
 
 /* =========================
-      PANELES (base)
-========================= */
-
-.admin-panel-card {
-  background: var(--blanco);
-  border: 1px solid var(--borde-tarjeta);
-  border-radius: 12px;
-  padding: 18px;
-  min-width: 0;
-  box-sizing: border-box;
-}
-
-.admin-panel-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 14px;
-}
-
-.admin-panel-header h2 {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--texto-principal);
-}
-
-.admin-panel-header a {
-  color: var(--verde-hover);
-  font-size: 12px;
-  font-weight: 500;
-  text-decoration: none;
-}
-
-/* =========================
           GRAFICOS
 ========================= */
 
-.admin-graficos-grid {
+.admin-fila-superior {
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 14px;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
 }
 
 .admin-selector-anio {
@@ -310,30 +214,11 @@
           LISTADOS
 ========================= */
 
-.admin-listados-grid {
+.admin-fila-central {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 14px;
-  margin-bottom: 14px;
-}
-
-.admin-tabla-lista {
-  display: flex;
-  flex-direction: column;
-}
-
-.admin-tabla-fila {
-  display: grid;
-  grid-template-columns: 1.6fr auto 1fr auto;
-  align-items: center;
-  gap: 10px;
-  padding: 9px 0;
-  border-bottom: 1px solid var(--separador);
-  font-size: 13px;
-}
-
-.admin-tabla-fila:last-child {
-  border-bottom: none;
+  margin-bottom: 16px;
 }
 
 .admin-tabla-titulo {
@@ -384,10 +269,10 @@
       TARJETAS INFERIORES
 ========================= */
 
-.admin-inferior-grid {
+.admin-fila-inferior {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 14px;
+  gap: 16px;
 }
 
 .admin-inferior-card {
@@ -400,7 +285,7 @@
   height: 40px;
   min-width: 40px;
   border-radius: 50%;
-  background: var(--fondo-icono-resumen);
+  background: var(--fondo-icono);
   color: var(--verde);
   display: flex;
   align-items: center;
@@ -498,13 +383,13 @@
 ========================= */
 
 @media (max-width: 1200px) {
-  .admin-kpi-grid {
+  .admin-resumen {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .admin-graficos-grid,
-  .admin-listados-grid,
-  .admin-inferior-grid {
+  .admin-fila-superior,
+  .admin-fila-central,
+  .admin-fila-inferior {
     grid-template-columns: 1fr;
   }
 }
@@ -514,13 +399,8 @@
     padding: 20px;
   }
 
-  .admin-kpi-grid {
+  .admin-resumen {
     grid-template-columns: 1fr;
-  }
-
-  .admin-tabla-fila {
-    grid-template-columns: 1fr;
-    gap: 4px;
   }
 
   .admin-tabla-fecha {

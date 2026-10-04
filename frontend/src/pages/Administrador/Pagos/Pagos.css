@@ -6,57 +6,11 @@
           KPIS
 ========================= */
 
-.pagos-kpi-grid {
+.pagos-resumen {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 14px;
   margin-bottom: 18px;
-}
-
-.pagos-kpi-card {
-  background: var(--blanco);
-  border: 1px solid var(--borde-tarjeta);
-  border-radius: 12px;
-  padding: 16px;
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  box-sizing: border-box;
-}
-
-.pagos-kpi-icon {
-  width: 42px;
-  height: 42px;
-  min-width: 42px;
-  border-radius: 50%;
-  background: var(--fondo-icono-resumen);
-  color: var(--verde);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.pagos-kpi-card > div:last-child {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-}
-
-.pagos-kpi-label {
-  font-size: 12px;
-  color: var(--texto-secundario);
-  margin-bottom: 3px;
-}
-
-.pagos-kpi-card strong {
-  font-size: 19px;
-  color: var(--texto-principal);
-}
-
-.pagos-kpi-info {
-  font-size: 12px;
-  color: var(--texto-secundario);
-  margin-top: 3px;
 }
 
 .pagos-progreso {
@@ -146,29 +100,21 @@
 ========================= */
 
 .pagos-contenido {
-  display: grid;
-  grid-template-columns: 1fr 300px;
+  display: flex;
+  flex-direction: column;
   gap: 16px;
-  align-items: start;
 }
 
-.pagos-contenido.sin-detalle {
-  grid-template-columns: 1fr;
+.pagos-listado,
+.pagos-tabla,
+.pagos-detalle {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
-.pagos-tabla-card {
-  background: var(--blanco);
-  border: 1px solid var(--borde-tarjeta);
-  border-radius: 12px;
-  overflow: hidden;
-  overflow-x: auto;
-}
-
-.pagos-tabla-header,
-.pagos-tabla-fila {
-  display: grid;
-  grid-template-columns: 0.9fr 1.1fr 0.6fr 0.9fr 0.9fr 1.3fr 0.9fr 0.8fr;
-  align-items: center;
+.pagos-tabla .tabla-header,
+.pagos-tabla .tabla-fila {
   gap: 10px;
   padding: 13px 18px;
   width: 100%;
@@ -176,37 +122,18 @@
   min-width: 780px;
 }
 
-.pagos-tabla-header {
-  border-bottom: 1px solid var(--borde-secundario);
-}
-
-.pagos-tabla-header span {
+.pagos-tabla .tabla-header span {
   font-size: 12px;
   font-weight: 600;
   color: var(--texto-secundario);
   text-align: left;
 }
 
-.pagos-tabla-fila {
-  border: none;
-  border-bottom: 1px solid var(--separador);
+.pagos-tabla .tabla-fila {
   background: transparent;
-  font-size: 13px;
-  color: var(--texto-principal);
-  cursor: pointer;
-  text-align: left;
-  font-family: inherit;
 }
 
-.pagos-tabla-body .pagos-tabla-fila:last-child {
-  border-bottom: none;
-}
-
-.pagos-tabla-fila:hover {
-  background: var(--fondo);
-}
-
-.pagos-tabla-fila.seleccionada {
+.pagos-tabla .tabla-fila.seleccionada {
   background: var(--celeste-claro);
 }
 
@@ -243,7 +170,7 @@
 
 .pagos-badge-confirmado {
   color: var(--color-aviso-verde);
-  background: var(--fondo-aviso-verde);
+  background: var(--fondo-verde-suave);
 }
 
 .pagos-badge-pendiente {
@@ -262,83 +189,9 @@
   color: var(--texto-icono);
 }
 
-/* ---- paginacion ---- */
-
-.pagos-paginacion {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-top: 16px;
-  flex-wrap: wrap;
-}
-
-.pagos-pagina,
-.pagos-pagina-flecha {
-  min-width: 30px;
-  height: 30px;
-  border: 1px solid var(--borde-secundario);
-  border-radius: 7px;
-  background: var(--blanco);
-  color: var(--texto-secundario);
-  font-size: 13px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  padding: 0 6px;
-}
-
-.pagos-pagina.activa {
-  border-color: var(--verde);
-  color: var(--verde);
-  font-weight: 600;
-}
-
-.pagos-pagina-puntos {
-  color: var(--texto-secundario);
-  font-size: 13px;
-  padding: 0 2px;
-}
-
-.pagos-paginacion-info {
-  margin-left: auto;
-  font-size: 12px;
-  color: var(--texto-secundario);
-}
-
 /* =========================
       PANEL DE DETALLE
 ========================= */
-
-.pagos-detalle {
-  background: var(--blanco);
-  border: 1px solid var(--borde-tarjeta);
-  border-radius: 12px;
-  padding: 18px;
-  display: flex;
-  flex-direction: column;
-}
-
-.pagos-detalle-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-
-.pagos-detalle-header h2 {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--texto-principal);
-}
-
-.pagos-detalle-cerrar {
-  border: none;
-  background: transparent;
-  color: var(--texto-icono);
-  cursor: pointer;
-  display: flex;
-}
 
 .pagos-detalle-fila {
   display: flex;
@@ -419,14 +272,10 @@
 ========================= */
 
 @media (max-width: 1200px) {
-  .pagos-kpi-grid {
+  .pagos-resumen {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .pagos-contenido,
-  .pagos-contenido.sin-detalle {
-    grid-template-columns: 1fr;
-  }
 }
 
 @media (max-width: 800px) {
@@ -434,7 +283,7 @@
     padding: 20px;
   }
 
-  .pagos-kpi-grid {
+  .pagos-resumen {
     grid-template-columns: 1fr;
   }
 }
