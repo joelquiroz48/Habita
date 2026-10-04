@@ -100,14 +100,17 @@
 ========================= */
 
 .pagos-contenido {
-  display: grid;
-  grid-template-columns: 1fr 300px;
+  display: flex;
+  flex-direction: column;
   gap: 16px;
-  align-items: start;
 }
 
-.pagos-contenido.sin-detalle {
-  grid-template-columns: 1fr;
+.pagos-listado,
+.pagos-tabla,
+.pagos-detalle {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 .pagos-tabla .tabla-header,
@@ -282,10 +285,6 @@
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .pagos-contenido,
-  .pagos-contenido.sin-detalle {
-    grid-template-columns: 1fr;
-  }
 }
 
 @media (max-width: 800px) {

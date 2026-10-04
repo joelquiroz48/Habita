@@ -6,7 +6,7 @@ import "./Tabla.css";
 const Tabla = ({
     columnas,
     datos,
-    filasPorPagina = 4,
+    filasPorPagina = 5,
     etiqueta = "registros",
     className = "",
     onFilaClick,

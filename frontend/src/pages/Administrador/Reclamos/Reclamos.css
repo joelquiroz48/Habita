@@ -108,10 +108,17 @@
 ========================= */
 
 .reclamos-contenido {
-  display: grid;
-  grid-template-columns: 1fr 320px;
+  display: flex;
+  flex-direction: column;
   gap: 16px;
-  align-items: start;
+}
+
+.reclamos-listado,
+.reclamos-tabla,
+.reclamos-resumen-panel {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 .reclamos-tabla .tabla-header,
@@ -187,27 +194,33 @@
 }
 
 /* =========================
-        RESUMEN LATERAL
+        RESUMEN
 ========================= */
 
-.reclamos-resumen-lateral h3 {
-  font-size: 12px;
+.reclamos-resumen-panel h3 {
+  font-size: 14px;
   font-weight: 600;
-  color: var(--texto-secundario);
-  margin-top: 18px;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+}
+
+.reclamos-resumen-contenido {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  align-items: center;
 }
 
 .reclamos-donut-wrap {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 14px;
 }
 
 .reclamos-donut {
-  width: 96px;
-  height: 96px;
-  min-width: 96px;
+  width: 170px;
+  height: 170px;
+  min-width: 170px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -215,8 +228,8 @@
 }
 
 .reclamos-donut-centro {
-  width: 56px;
-  height: 56px;
+  width: 112px;
+  height: 112px;
   border-radius: 50%;
   background: var(--blanco);
 }
@@ -232,7 +245,7 @@
   display: flex;
   align-items: center;
   gap: 7px;
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .reclamos-leyenda-punto {
@@ -252,7 +265,6 @@
 
 .reclamos-leyenda-valor {
   font-weight: 600;
-  color: var(--texto-principal);
 }
 
 .reclamos-categorias-lista {
@@ -265,13 +277,13 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .reclamos-categoria-icon {
-  width: 30px;
-  height: 30px;
-  min-width: 30px;
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -286,12 +298,11 @@
 
 .reclamos-categoria-nombre {
   flex: 1;
-  color: var(--texto-principal);
 }
 
 .reclamos-categoria-valor {
+  padding-right: 15px;
   font-weight: 600;
-  color: var(--texto-principal);
 }
 
 .reclamos-btn-reportes {
@@ -324,9 +335,6 @@
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .reclamos-contenido {
-    grid-template-columns: 1fr;
-  }
 }
 
 @media (max-width: 800px) {
@@ -336,5 +344,22 @@
 
   .reclamos-resumen {
     grid-template-columns: 1fr;
+  }
+
+  .reclamos-resumen-contenido {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .reclamos-donut {
+    width: 140px;
+    height: 140px;
+    min-width: 140px;
+  }
+
+  .reclamos-donut-centro {
+    width: 92px;
+    height: 92px;
   }
 }

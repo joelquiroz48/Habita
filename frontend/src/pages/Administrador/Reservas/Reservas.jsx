@@ -255,7 +255,7 @@ function Reservas() {
         : reservas.filter((r) => r.estado === estadoPorTab[tabActiva]);
 
     return (
-        <main className="reservas">
+        <main className="reservas pagina-administrador">
 
             {/* =========================
                   RESUMEN SUPERIOR
@@ -329,9 +329,9 @@ function Reservas() {
 
                 </section>
 
-                {/* COLUMNA LATERAL */}
+                {/* PANELES DE APOYO */}
 
-                <aside className="reservas-lateral">
+                <section className="reservas-paneles">
 
                     {/* CALENDARIO */}
 
@@ -436,7 +436,7 @@ function Reservas() {
                         </a>
                     </Panel>
 
-                </aside>
+                </section>
 
             </div>
 

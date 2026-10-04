@@ -225,7 +225,7 @@ function Expensas() {
     ];
 
     return (
-        <main className="expensas">
+        <main className="expensas pagina-administrador">
 
             {/* =========================
                   RESUMEN SUPERIOR
@@ -255,8 +255,6 @@ function Expensas() {
                 <button className="expensas-tab activo">Listado de expensas</button>
                 <button className="expensas-tab">Conceptos y categorías</button>
             </div>
-
-            {/* CONTENIDO PRINCIPAL */}
 
             <div className="expensas-contenido">
 
@@ -312,45 +310,55 @@ function Expensas() {
                         Estado: <strong>{detalle.estado}</strong>
                     </p>
 
-                    <h3>Resumen</h3>
-                    <div className="expensas-resumen-fila">
-                        <span>Importe total</span>
-                        <span>{formatearMonto(detalle.importe)}</span>
-                    </div>
-                    <div className="expensas-resumen-fila">
-                        <span>Recaudado</span>
-                        <span>{formatearMonto(detalle.recaudado)}</span>
-                    </div>
-                    <div className="expensas-resumen-fila">
-                        <span>Pendiente</span>
-                        <span className="expensas-pendiente">{formatearMonto(pendiente)}</span>
-                    </div>
-                    <div className="expensas-resumen-fila">
-                        <span>Porcentaje recaudado</span>
-                        <span className="expensas-porcentaje">{detalle.porcentaje}%</span>
+                    <div className="expensas-detalle-columnas">
+                        <section className="expensas-detalle-seccion">
+                            <h3>Resumen</h3>
+                            <div className="expensas-resumen-fila">
+                                <span>Importe total</span>
+                                <span>{formatearMonto(detalle.importe)}</span>
+                            </div>
+                            <div className="expensas-resumen-fila">
+                                <span>Recaudado</span>
+                                <span>{formatearMonto(detalle.recaudado)}</span>
+                            </div>
+                            <div className="expensas-resumen-fila">
+                                <span>Pendiente</span>
+                                <span className="expensas-pendiente">{formatearMonto(pendiente)}</span>
+                            </div>
+                            <div className="expensas-resumen-fila">
+                                <span>Porcentaje recaudado</span>
+                                <span className="expensas-porcentaje">{detalle.porcentaje}%</span>
+                            </div>
+                        </section>
+
+                        <section className="expensas-detalle-seccion">
+                            <h3>Conceptos</h3>
+                            {detalle.conceptos.map((concepto) => (
+                                <div className="expensas-resumen-fila" key={concepto.nombre}>
+                                    <span>{concepto.nombre}</span>
+                                    <span>{formatearMonto(concepto.monto)}</span>
+                                </div>
+                            ))}
+                        </section>
                     </div>
 
-                    <h3>Conceptos</h3>
-                    {detalle.conceptos.map((concepto) => (
-                        <div className="expensas-resumen-fila" key={concepto.nombre}>
-                            <span>{concepto.nombre}</span>
-                            <span>{formatearMonto(concepto.monto)}</span>
+                    <section className="expensas-detalle-acciones">
+                        <h3>Acciones</h3>
+                        <div className="expensas-acciones-lista">
+                            <button className="expensas-btn-accion principal">
+                                <Pencil size={15} />
+                                Editar expensa
+                            </button>
+                            <button className="expensas-btn-accion secundario">
+                                <Download size={15} />
+                                Descargar boleta
+                            </button>
+                            <button className="expensas-btn-accion peligro">
+                                <Trash2 size={15} />
+                                Anular expensa
+                            </button>
                         </div>
-                    ))}
-
-                    <h3>Acciones</h3>
-                    <button className="expensas-btn-accion principal">
-                        <Pencil size={15} />
-                        Editar expensa
-                    </button>
-                    <button className="expensas-btn-accion secundario">
-                        <Download size={15} />
-                        Descargar boleta
-                    </button>
-                    <button className="expensas-btn-accion peligro">
-                        <Trash2 size={15} />
-                        Anular expensa
-                    </button>
+                    </section>
 
                 </Panel>
 

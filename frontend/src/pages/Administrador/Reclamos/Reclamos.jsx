@@ -260,68 +260,72 @@ function Reclamos() {
 
                 {/* RESUMEN */}
 
-                <Panel className="reclamos-resumen-lateral" titulo="Resumen de reclamos">
-                    <div className="reclamos-donut-wrap">
-                        <div
-                            className="reclamos-donut"
-                            style={{
-                                background: armarGradienteDonut(
-                                    resumenEstados,
-                                    totalReclamos
-                                )
-                            }}
-                        >
-                            <div className="reclamos-donut-centro" />
+                <Panel className="reclamos-resumen-panel" titulo="Resumen de reclamos">
+                    <div className="reclamos-resumen-contenido">
+                        <div className="reclamos-donut-wrap">
+                            <div
+                                className="reclamos-donut"
+                                style={{
+                                    background: armarGradienteDonut(
+                                        resumenEstados,
+                                        totalReclamos
+                                    )
+                                }}
+                            >
+                                <div className="reclamos-donut-centro" />
+                            </div>
+
+                            <ul className="reclamos-donut-leyenda">
+                                {resumenEstados.map((item) => (
+                                    <li key={item.estado}>
+                                        <span className={`reclamos-leyenda-punto ${item.claseColor}`}/>
+
+                                        <span className="reclamos-leyenda-label">
+                                            {item.estado}
+                                        </span>
+
+                                        <span className="reclamos-leyenda-valor">
+                                            {item.cantidad} (
+                                            {Math.round(
+                                                (item.cantidad / totalReclamos) * 100
+                                            )}
+                                            %)
+                                        </span>
+                                    </li>
+                                ))}
+                            </ul>
                         </div>
 
-                        <ul className="reclamos-donut-leyenda">
-                            {resumenEstados.map((item) => (
-                                <li key={item.estado}>
-                                    <span className={`reclamos-leyenda-punto ${item.claseColor}`}/>
+                        <div className="reclamos-categorias">
+                            <h3>Categorías más frecuentes</h3>
 
-                                    <span className="reclamos-leyenda-label">
-                                        {item.estado}
-                                    </span>
+                            <div className="reclamos-categorias-lista">
+                                {categoriasFrecuentes.map((cat) => {
+                                    const Icono = cat.icon;
 
-                                    <span className="reclamos-leyenda-valor">
-                                        {item.cantidad} (
-                                        {Math.round(
-                                            (item.cantidad / totalReclamos) * 100
-                                        )}
-                                        %)
-                                    </span>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
+                                    return (
+                                        <div
+                                            className="reclamos-categoria-fila"
+                                            key={cat.nombre}
+                                        >
+                                            <span
+                                                className={`reclamos-categoria-icon ${cat.claseColor}`}
+                                            >
+                                                <Icono size={16} />
+                                            </span>
 
-                    <h3>Categorías más frecuentes</h3>
+                                            <span className="reclamos-categoria-nombre">
+                                                {cat.nombre}
+                                            </span>
 
-                    <div className="reclamos-categorias-lista">
-                        {categoriasFrecuentes.map((cat) => {
-                            const Icono = cat.icon;
-
-                            return (
-                                <div
-                                    className="reclamos-categoria-fila"
-                                    key={cat.nombre}
-                                >
-                                    <span
-                                        className={`reclamos-categoria-icon ${cat.claseColor}`}
-                                    >
-                                        <Icono size={16} />
-                                    </span>
-
-                                    <span className="reclamos-categoria-nombre">
-                                        {cat.nombre}
-                                    </span>
-
-                                    <span className="reclamos-categoria-valor">
-                                        {cat.cantidad}
-                                    </span>
-                                </div>
-                            );
-                        })}
+                                            <span className="reclamos-categoria-valor">
+                                                {cat.cantidad}
+                                            </span>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </div>
                     </div>
 
                     <button className="reclamos-btn-reportes">

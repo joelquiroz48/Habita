@@ -218,7 +218,7 @@ function Documentos() {
     }, []);
 
     return (
-        <main className="documentos">
+        <main className="documentos pagina-administrador">
 
             {/* CABECERA */}
 
@@ -268,9 +268,9 @@ function Documentos() {
 
                 </section>
 
-                {/* COLUMNA LATERAL */}
+                {/* PANELES DE APOYO */}
 
-                <aside className="documentos-lateral">
+                <section className="documentos-paneles">
 
                     <Panel titulo="Categorías">
                         <div className="documentos-categorias-lista">
@@ -338,7 +338,7 @@ function Documentos() {
                         </div>
                     </Panel>
 
-                </aside>
+                </section>
 
             </div>
 

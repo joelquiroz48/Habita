@@ -104,11 +104,10 @@
         CONTENIDO
 ========================= */
 
-.documentos-contenido {
-  display: grid;
-  grid-template-columns: 1fr 300px;
+.pagina-administrador .documentos-contenido {
+  display: flex;
+  flex-direction: column;
   gap: 16px;
-  align-items: start;
 }
 
 .documentos-tabla .tabla-header,
@@ -263,12 +262,12 @@
 }
 
 /* =========================
-      COLUMNA LATERAL
+         PANELES
 ========================= */
 
-.documentos-lateral {
-  display: flex;
-  flex-direction: column;
+.documentos-paneles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 14px;
 }
 
@@ -426,13 +425,19 @@
 ========================= */
 
 @media (max-width: 1200px) {
-  .documentos-contenido {
-    grid-template-columns: 1fr;
+  .documentos-paneles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (max-width: 800px) {
   .documentos {
     padding: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .documentos-paneles {
+    grid-template-columns: 1fr;
   }
 }

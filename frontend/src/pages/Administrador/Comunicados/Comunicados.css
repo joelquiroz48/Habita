@@ -95,14 +95,17 @@
 ========================= */
 
 .comunicados-contenido {
-  display: grid;
-  grid-template-columns: 1fr 320px;
+  display: flex;
+  flex-direction: column;
   gap: 16px;
-  align-items: start;
 }
 
-.comunicados-contenido.sin-detalle {
-  grid-template-columns: 1fr;
+.comunicados-listado,
+.comunicados-tabla,
+.comunicados-detalle {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 .comunicados-tabla .tabla-header,
@@ -317,13 +320,6 @@
 /* =========================
         RESPONSIVE
 ========================= */
-
-@media (max-width: 1200px) {
-  .comunicados-contenido,
-  .comunicados-contenido.sin-detalle {
-    grid-template-columns: 1fr;
-  }
-}
 
 @media (max-width: 800px) {
   .comunicados {

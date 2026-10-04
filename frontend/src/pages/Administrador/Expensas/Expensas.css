@@ -60,11 +60,18 @@
     CONTENIDO (listado + detalle)
 ========================= */
 
-.expensas-contenido {
-  display: grid;
-  grid-template-columns: 1fr 320px;
+.pagina-administrador .expensas-contenido {
+  display: flex;
+  flex-direction: column;
   gap: 16px;
-  align-items: start;
+}
+
+.pagina-administrador .expensas-listado,
+.pagina-administrador .expensas-tabla,
+.pagina-administrador .expensas-detalle {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 /* ---- listado ---- */
@@ -198,6 +205,26 @@
   margin-bottom: 8px;
 }
 
+.expensas-detalle-columnas {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.expensas-detalle-seccion {
+  min-width: 0;
+}
+
+.expensas-detalle-acciones {
+  margin-top: 18px;
+}
+
+.expensas-acciones-lista {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
 .expensas-resumen-fila {
   display: flex;
   justify-content: space-between;
@@ -273,9 +300,6 @@
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .expensas-contenido {
-    grid-template-columns: 1fr;
-  }
 }
 
 @media (max-width: 800px) {
@@ -284,6 +308,11 @@
   }
 
   .expensas-resumen {
+    grid-template-columns: 1fr;
+  }
+
+  .expensas-detalle-columnas,
+  .expensas-acciones-lista {
     grid-template-columns: 1fr;
   }
 
