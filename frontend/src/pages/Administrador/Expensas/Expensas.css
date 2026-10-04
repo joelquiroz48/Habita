@@ -160,12 +160,12 @@
 
 .expensas-badge-curso {
     color: var(--color-aviso-azul) !important;
-    background: var(--fondo-aviso-azul) !important;
+    background: var(--fondo-azul-suave) !important;
 }
 
 .expensas-badge-cerrada {
   color: var(--color-aviso-verde) !important;
-  background: var(--fondo-aviso-verde) !important;
+  background: var(--fondo-verde-suave) !important;
 }
 
 .expensas-tabla-acciones {

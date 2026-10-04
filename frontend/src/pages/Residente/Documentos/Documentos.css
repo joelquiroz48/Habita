@@ -41,12 +41,12 @@
 ========================= */
 
 .explorar-icono.verde {
-    background: var(--fondo-icono-panel);
+    background: var(--fondo-icono);
     color: var(--verde);
 }
 
 .explorar-icono.azul {
-    background: var(--fondo-aviso-azul);
+    background: var(--fondo-azul-suave);
     color: var(--color-aviso-azul);
 }
 
@@ -144,17 +144,17 @@
 }
 
 .documento-tipo.excel {
-    background: var(--fondo-documento-money);
+    background: var(--fondo-verde-suave);
     color: var(--color-documento-money);
 }
 
 .documento-tipo.word {
-    background: var(--fondo-documento-doc);
+    background: var(--fondo-azul-suave);
     color: var(--color-documento-doc);
 }
 
 .documento-tipo.money {
-    background: var(--fondo-documento-money);
+    background: var(--fondo-verde-suave);
     color: var(--color-documento-money);
 }
 
@@ -172,7 +172,7 @@
 }
 
 .categoria-badge.asambleas {
-    background: var(--fondo-pendiente);
+    background: var(--fondo-azul-suave);
     color: var(--color-pendiente-azul);
 }
 
@@ -182,7 +182,7 @@
 }
 
 .categoria-badge.reglamentos {
-    background: var(--fondo-confirmada);
+    background: var(--fondo-verde-suave);
     color: var(--color-pendiente);
 }
 

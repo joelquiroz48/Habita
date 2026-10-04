@@ -5,14 +5,14 @@
   --reclamos-color-pendiente: var(--color-aviso-amarillo);
   --reclamos-fondo-pendiente: var(--fondo-aviso-amarillo);
   --reclamos-color-proceso: var(--color-aviso-azul);
-  --reclamos-fondo-proceso: var(--fondo-aviso-azul);
+  --reclamos-fondo-proceso: var(--fondo-azul-suave);
   --reclamos-color-resuelto: var(--color-aviso-verde);
-  --reclamos-fondo-resuelto: var(--fondo-aviso-verde);
+  --reclamos-fondo-resuelto: var(--fondo-verde-suave);
 
   --reclamos-color-mantenimiento: var(--color-documento-doc);
-  --reclamos-fondo-mantenimiento: var(--fondo-documento-doc);
+  --reclamos-fondo-mantenimiento: var(--fondo-azul-suave);
   --reclamos-color-limpieza: var(--color-aviso-verde);
-  --reclamos-fondo-limpieza: var(--fondo-aviso-verde);
+  --reclamos-fondo-limpieza: var(--fondo-verde-suave);
   --reclamos-color-ascensores: #7c5cbf;
   --reclamos-fondo-ascensores: #efe9fb;
   --reclamos-color-iluminacion: var(--color-aviso-amarillo);
@@ -22,7 +22,7 @@
   --reclamos-color-seguridad: var(--color-documento-pdf);
   --reclamos-fondo-seguridad: var(--fondo-documento-pdf);
   --reclamos-color-otros: var(--texto-secundario);
-  --reclamos-fondo-otros: var(--fondo-icono-panel);
+  --reclamos-fondo-otros: var(--fondo-icono);
 }
 
 /* =========================
@@ -173,7 +173,7 @@
 
 .reclamos-prioridad-alta { color: var(--color-documento-pdf); background: var(--fondo-documento-pdf); }
 .reclamos-prioridad-media { color: var(--color-aviso-amarillo); background: var(--fondo-aviso-amarillo); }
-.reclamos-prioridad-baja { color: var(--color-aviso-verde); background: var(--fondo-aviso-verde); }
+.reclamos-prioridad-baja { color: var(--color-aviso-verde); background: var(--fondo-verde-suave); }
 
 .reclamos-tabla-acciones {
   display: flex;

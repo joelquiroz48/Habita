@@ -94,7 +94,7 @@
 
 .residentes-badge-activo {
   color: var(--color-aviso-verde);
-  background: var(--fondo-aviso-verde);
+  background: var(--fondo-verde-suave);
 }
 
 .residentes-badge-invitado {

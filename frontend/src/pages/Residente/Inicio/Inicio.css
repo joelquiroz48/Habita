@@ -23,7 +23,7 @@
 
 .badge-pendiente {
     color: var(--color-pendiente);
-    background: var(--fondo-badge-pendiente);
+    background: var(--fondo-verde-suave);
 }
 
 /* =========================
@@ -168,7 +168,7 @@
 }
 
 .aviso-icon.verde {
-  background: var(--fondo-aviso-verde);
+  background: var(--fondo-verde-suave);
   color: var(--color-aviso-verde);
 }
 
@@ -178,7 +178,7 @@
 }
 
 .aviso-icon.azul {
-  background: var(--fondo-aviso-azul);
+  background: var(--fondo-azul-suave);
   color: var(--color-aviso-azul);
 }
 
@@ -249,12 +249,12 @@
 }
 
 .documento-icon.doc {
-  background: var(--fondo-documento-doc);
+  background: var(--fondo-azul-suave);
   color: var(--color-documento-doc);
 }
 
 .documento-icon.money {
-  background: var(--fondo-documento-money);
+  background: var(--fondo-verde-suave);
   color: var(--color-documento-money);
 }
 

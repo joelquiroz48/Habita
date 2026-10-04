@@ -50,7 +50,7 @@
     height: 31px;
     min-width: 31px;
     border-radius: 7px;
-    background: var(--fondo-icono-panel);
+    background: var(--fondo-icono);
     color: var(--texto-icono);
     display: flex;
     align-items: center;

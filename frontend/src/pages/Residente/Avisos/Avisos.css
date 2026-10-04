@@ -190,7 +190,7 @@
 }
 
 .aviso-lista-icon.verde {
-    background: var(--fondo-aviso-verde);
+    background: var(--fondo-verde-suave);
     color: var(--color-aviso-verde);
 }
 
@@ -322,7 +322,7 @@
 }
 
 .filtros-lista button:hover {
-    background: var(--fondo-icono-resumen);
+    background: var(--fondo-icono);
 }
 
 .filtros-lista .filtro-activo {

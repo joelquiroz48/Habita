@@ -287,7 +287,7 @@
 .tarjeta-guardada em {
     padding: 3px 5px;
     border-radius: 4px;
-    background: var(--fondo-confirmada);
+    background: var(--fondo-verde-suave);
     color: var(--color-pendiente);
     font-size: 10px;
     font-style: normal;
@@ -351,7 +351,7 @@
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background: var(--fondo-icono-panel);
+    background: var(--fondo-icono);
     color: var(--verde);
 }
 
@@ -509,7 +509,7 @@
 .tabla-header {
     min-height: 32px;
     padding: 0 9px;
-    background: var(--fondo-icono-panel);
+    background: var(--fondo-icono);
     border-top: 1px solid var(--borde-input);
     border-bottom: 1px solid var(--borde-input);
 }
@@ -552,7 +552,7 @@
 }
 
 .estado-pagada {
-    background: var(--fondo-confirmada);
+    background: var(--fondo-verde-suave);
     color: var(--color-pendiente);
 }
 

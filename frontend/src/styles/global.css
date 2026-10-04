@@ -38,26 +38,17 @@
 
     /* ------ GRADIENTE DEL FONDO ------ */
 
-    --gradiente-fondo: #FAFBFC;
     --gradiente-fondo-medio: rgba(250, 251, 252, 0.8);
     --gradiente-fondo-suave: rgba(250, 251, 252, 0.3);
     --transparente: transparent;
 
     /* Fondos */
-    --fondo-icono-resumen: #e9f5f3;
-    --fondo-icono-panel: #edf5f5;
-
-    --fondo-badge-pendiente: #e6f5ef;
-    --fondo-confirmada: #e8f5ee;
-    --fondo-pendiente: #e8f4fb;
-
-    --fondo-aviso-verde: #eaf6ef;
+    --fondo-icono: #eaf5f4;
+    --fondo-verde-suave: #e9f5ef;
+    --fondo-azul-suave: #e9f5fc;
     --fondo-aviso-amarillo: #fff5e6;
-    --fondo-aviso-azul: #eaf5fc;
 
     --fondo-documento-pdf: #fff0f0;
-    --fondo-documento-doc: #eaf4fc;
-    --fondo-documento-money: #eaf7ed;
 
     /* Colores de estado */
     --color-vencimiento: #e87524;

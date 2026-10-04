@@ -2,13 +2,13 @@
   padding: 28px 32px;
 
   --doc-color-reglamentos: var(--color-documento-doc);
-  --doc-fondo-reglamentos: var(--fondo-documento-doc);
+  --doc-fondo-reglamentos: var(--fondo-azul-suave);
   --doc-color-actas: var(--color-aviso-verde);
-  --doc-fondo-actas: var(--fondo-aviso-verde);
+  --doc-fondo-actas: var(--fondo-verde-suave);
   --doc-color-finanzas: var(--color-aviso-amarillo);
   --doc-fondo-finanzas: var(--fondo-aviso-amarillo);
   --doc-color-contratos: var(--color-aviso-azul);
-  --doc-fondo-contratos: var(--fondo-aviso-azul);
+  --doc-fondo-contratos: var(--fondo-azul-suave);
   --doc-color-mantenimiento: var(--color-evento);
   --doc-fondo-mantenimiento: #e5f6f4;
   --doc-color-seguros: var(--color-documento-pdf);
@@ -16,7 +16,7 @@
   --doc-color-planos: #7c5cbf;
   --doc-fondo-planos: #efe9fb;
   --doc-color-otros: var(--texto-secundario);
-  --doc-fondo-otros: var(--fondo-icono-panel);
+  --doc-fondo-otros: var(--fondo-icono);
 
   --doc-color-a: #5a67d8;
   --doc-fondo-a: #e6e8fb;
@@ -145,8 +145,8 @@
 }
 
 .documentos-icono-archivo.pdf { background: var(--fondo-documento-pdf); color: var(--color-documento-pdf); }
-.documentos-icono-archivo.xlsx { background: var(--fondo-documento-money); color: var(--color-documento-money); }
-.documentos-icono-archivo.docx { background: var(--fondo-documento-doc); color: var(--color-documento-doc); }
+.documentos-icono-archivo.xlsx { background: var(--fondo-verde-suave); color: var(--color-documento-money); }
+.documentos-icono-archivo.docx { background: var(--fondo-azul-suave); color: var(--color-documento-doc); }
 .documentos-icono-archivo.jpg { background: var(--doc-fondo-planos); color: var(--doc-color-planos); }
 
 .documentos-nombre-texto {

@@ -5,9 +5,9 @@
   --admin-color-pendiente: var(--color-aviso-amarillo);
   --admin-fondo-pendiente: var(--fondo-aviso-amarillo);
   --admin-color-proceso: var(--color-aviso-azul);
-  --admin-fondo-proceso: var(--fondo-aviso-azul);
+  --admin-fondo-proceso: var(--fondo-azul-suave);
   --admin-color-resuelto: var(--color-aviso-verde);
-  --admin-fondo-resuelto: var(--fondo-aviso-verde);
+  --admin-fondo-resuelto: var(--fondo-verde-suave);
 }
 
 /* =========================
@@ -285,7 +285,7 @@
   height: 40px;
   min-width: 40px;
   border-radius: 50%;
-  background: var(--fondo-icono-resumen);
+  background: var(--fondo-icono);
   color: var(--verde);
   display: flex;
   align-items: center;

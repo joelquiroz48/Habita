@@ -2,9 +2,9 @@
   padding: 28px 32px;
 
   --comunicados-color-aviso: var(--color-aviso-azul);
-  --comunicados-fondo-aviso: var(--fondo-aviso-azul);
+  --comunicados-fondo-aviso: var(--fondo-azul-suave);
   --comunicados-color-mantenimiento: var(--color-aviso-verde);
-  --comunicados-fondo-mantenimiento: var(--fondo-aviso-verde);
+  --comunicados-fondo-mantenimiento: var(--fondo-verde-suave);
   --comunicados-color-reunion: #7c5cbf;
   --comunicados-fondo-reunion: #efe9fb;
   --comunicados-color-obra: var(--color-vencimiento);
@@ -15,11 +15,11 @@
   --comunicados-fondo-novedad: var(--fondo-documento-pdf);
 
   --comunicados-color-publicado: var(--color-aviso-verde);
-  --comunicados-fondo-publicado: var(--fondo-aviso-verde);
+  --comunicados-fondo-publicado: var(--fondo-verde-suave);
   --comunicados-color-programado: var(--color-vencimiento);
   --comunicados-fondo-programado: #fdece0;
   --comunicados-color-borrador: var(--texto-secundario);
-  --comunicados-fondo-borrador: var(--fondo-icono-panel);
+  --comunicados-fondo-borrador: var(--fondo-icono);
 }
 
 /* =========================

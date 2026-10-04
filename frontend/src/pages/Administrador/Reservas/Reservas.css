@@ -163,9 +163,9 @@
   justify-content: center;
 }
 
-.reservas-icono.sum { background: var(--fondo-aviso-verde); color: var(--color-aviso-verde); }
+.reservas-icono.sum { background: var(--fondo-verde-suave); color: var(--color-aviso-verde); }
 .reservas-icono.parrilla { background: var(--fondo-aviso-amarillo); color: var(--color-vencimiento); }
-.reservas-icono.gimnasio { background: var(--fondo-aviso-azul); color: var(--color-aviso-azul); }
+.reservas-icono.gimnasio { background: var(--fondo-azul-suave); color: var(--color-aviso-azul); }
 .reservas-icono.sala { background: var(--reservas-fondo-purpura); color: var(--reservas-color-purpura); }
 
 .reservas-espacio-celda strong {
@@ -187,7 +187,7 @@
   font-weight: 600;
 }
 
-.reservas-badge-confirmada { color: var(--color-aviso-verde); background: var(--fondo-aviso-verde); }
+.reservas-badge-confirmada { color: var(--color-aviso-verde); background: var(--fondo-verde-suave); }
 .reservas-badge-pendiente { color: var(--color-aviso-amarillo); background: var(--fondo-aviso-amarillo); }
 .reservas-badge-cancelada { color: var(--color-documento-pdf); background: var(--fondo-documento-pdf); }
 

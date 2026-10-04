@@ -202,7 +202,7 @@
   height: 42px;
   min-width: 42px;
   border-radius: 50%;
-  background: var(--fondo-icono-resumen);
+  background: var(--fondo-icono);
   color: var(--verde);
   display: flex;
   align-items: center;

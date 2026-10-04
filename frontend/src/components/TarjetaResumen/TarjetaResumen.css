@@ -16,7 +16,7 @@
     height: 44px;
     border-radius: 50%;
     color: var(--verde);
-    background: var(--fondo-icono-resumen);
+    background: var(--fondo-icono);
 }
 
 .resumen-contenido {

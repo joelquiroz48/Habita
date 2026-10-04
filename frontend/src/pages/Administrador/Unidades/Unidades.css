@@ -94,12 +94,12 @@
 
 .unidades-badge-activa {
   color: var(--color-aviso-verde);
-  background: var(--fondo-aviso-verde);
+  background: var(--fondo-verde-suave);
 }
 
 .unidades-badge-disponible {
   color: var(--color-aviso-azul);
-  background: var(--fondo-aviso-azul);
+  background: var(--fondo-azul-suave);
 }
 
 .unidades-tabla-acciones {
