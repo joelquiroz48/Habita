@@ -5,6 +5,7 @@ import Register from "./pages/Residente/Register/Register";
 import Inicio from "./pages/Residente/Inicio/Inicio";
 import Expensas from "./pages/Residente/Expensas/Expensas";
 import Reservas from "./pages/Residente/Reservas/Reservas";
+import Reclamos from "./pages/Residente/Reclamos/Reclamos";
 import Avisos from "./pages/Residente/Avisos/Avisos";
 import Documentos from "./pages/Residente/Documentos/Documentos";
 import Perfil from "./pages/Residente/Perfil/Perfil";
@@ -53,6 +54,13 @@ function App() {
                 <Route path="/reservas" element={
                         <Layout>
                             <Reservas />
+                        </Layout>
+                    }
+                />
+                
+                <Route path="/reclamos" element={
+                        <Layout>
+                            <Reclamos />
                         </Layout>
                     }
                 />

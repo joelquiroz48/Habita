@@ -108,5 +108,6 @@
 .tabla-paginacion-info {
     margin-left: auto;
     font-size: 12px;
+	font-weight: 500;
     color: var(--texto-secundario);
 }

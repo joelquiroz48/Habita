@@ -6,12 +6,13 @@ import "./Tabla.css";
 const Tabla = ({
     columnas,
     datos,
-    filasPorPagina = 5,
     etiqueta = "registros",
     className = "",
     onFilaClick,
     claseFila = () => ""
 }) => {
+    const filasPorPagina = 5;
+
     const [paginaActiva, setPaginaActiva] = useState(1);
 
     const totalPaginas = Math.ceil(datos.length / filasPorPagina);
@@ -32,6 +33,16 @@ const Tabla = ({
         (_, index) => index + 1
     );
 
+    const inicioPaginas = Math.min(
+        paginaActiva - 1,
+        Math.max(0, totalPaginas - 4)
+    );
+
+    const paginasVisibles = paginas.slice(
+        inicioPaginas,
+        inicioPaginas + 4
+    );
+
     const distribucionColumnas = columnas
         .map((columna) => {
             const ancho = columna.ancho || "1fr";
@@ -43,10 +54,7 @@ const Tabla = ({
 
     return (
         <section className={`tabla-card ${className}`}>
-            <div
-                className="tabla-header"
-                style={{ gridTemplateColumns: distribucionColumnas }}
-            >
+            <div className="tabla-header" style={{ gridTemplateColumns: distribucionColumnas }}>
                 {columnas.map((columna) => (
                     <span key={columna.clave}>
                         {columna.titulo}
@@ -71,10 +79,7 @@ const Tabla = ({
                         tabIndex={onFilaClick ? 0 : undefined}
                     >
                         {columnas.map((columna) => (
-                            <span
-                                className={columna.clase || ""}
-                                key={columna.clave}
-                            >
+                            <span className={columna.clase || ""} key={columna.clave}>
                                 {columna.render
                                     ? columna.render(dato)
                                     : dato[columna.clave]}
@@ -101,7 +106,7 @@ const Tabla = ({
                         <ChevronLeft size={16} />
                     </button>
 
-                    {paginas.map((pagina) => (
+                    {paginasVisibles.map((pagina) => (
                         <button
                             key={pagina}
                             className={`tabla-pagina ${
