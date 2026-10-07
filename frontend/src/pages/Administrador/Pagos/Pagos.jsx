@@ -4,21 +4,14 @@ import {
     Download,
     Clock,
     CheckCircle2,
-    Calendar,
-    ChevronDown,
-    Search,
-    Eye,
-    MoreVertical,
     X,
-    CreditCard,
-    Landmark,
-    Banknote,
 } from "lucide-react";
 
 import "./Pagos.css";
 import Panel from "../../../components/Panel/Panel";
 import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
 import Tabla from "../../../components/Tabla/Tabla";
+import Navegador from "../../../components/Navegador/Navegador";
 
 {/* =========================
        DATOS EJEMPLOS
@@ -69,13 +62,6 @@ const pagos = [
     },
 ];
 
-const iconosMetodo = {
-    tarjeta: CreditCard,
-    billetera: Wallet,
-    transferencia: Landmark,
-    efectivo: Banknote,
-};
-
 {/* =========================
        TARJETAS RESUMEN
 ========================== */}
@@ -117,6 +103,19 @@ const resumenTarjetas = [
     },
 ];
 
+const filtros=[
+    {
+        key: "estado",
+        label: "Todos los estados",
+        options: ["Confirmado", "Pendiente", "Para confirmar", "Rechazado"],
+    },
+    {
+        key: "periodo",
+        label: "Todos los periodos",
+        options: ["Enero", "Febrero", "Julio", "Agosto", "Septiebre"],
+    },
+];
+
 function formatearMonto(numero) {
     return `$ ${numero.toLocaleString("es-AR")}`;
 }
@@ -131,6 +130,8 @@ function Pagos() {
 
     const [pagoSeleccionado, setPagoSeleccionado] = useState(pagos[0]);
     const [detalleAbierto, setDetalleAbierto] = useState(true);
+
+    const [pagosListado, setPagosListado] = useState(pagos);
 
     useEffect(() => {
         document.title = "Habita | Pagos";
@@ -191,47 +192,30 @@ function Pagos() {
                 CONTENIDO PRINCIPAL
             ========================= */}
 
-            {/* FILTROS */}
-
-            <div className="pagos-filtros">
-                <button className="pagos-filtro">
-                    <Calendar size={15} />
-                    01/08/2026 - 10/09/2026
-                    <ChevronDown size={15} />
-                </button>
-
-                <button className="pagos-filtro">
-                    Todos los métodos
-                    <ChevronDown size={15} />
-                </button>
-
-                <button className="pagos-filtro">
-                    Todos los estados
-                    <ChevronDown size={15} />
-                </button>
-
-                <div className="pagos-buscador">
-                    <Search size={16} />
-                    <input type="text" placeholder="Buscar pago..." />
-                </div>
-                
-            </div>
-
             {/* CONTENIDO */}
 
             <div className={`pagos-contenido ${detalleAbierto ? "" : "sin-detalle"}`}>
 
                 <section className="pagos-listado">
 
-                    <Tabla
-                        columnas={columnas}
-                        datos={pagos}
-                        etiqueta="pagos"
-                        className="pagos-tabla"
-                        onFilaClick={abrirDetalle}
-                        seleccionable
-                        filaSeleccionada={detalleAbierto ? pagoSeleccionado : null}
-                    />
+                    <Navegador
+                        data={pagosListado}
+                        searchKey="residente"
+                        searchPlaceholder="Buscar pago..."
+                        filters={filtros}
+                    >
+                        {(PagosFiltrados) => (
+                            <Tabla
+                                columnas={columnas}
+                                datos={PagosFiltrados}
+                                etiqueta="pagos"
+                                className="pagos-tabla"
+                                onFilaClick={abrirDetalle}
+                                seleccionable
+                                filaSeleccionada={detalleAbierto ? pagoSeleccionado : null}
+                            />
+                                )}
+                    </Navegador>
 
                 </section>
 
@@ -278,21 +262,6 @@ function Pagos() {
                         <div className="pagos-detalle-fila">
                             <span>Fecha de pago</span>
                             <strong>{pagoSeleccionado.fecha} - {pagoSeleccionado.hora}</strong>
-                        </div>
-
-                        <p className="pagos-detalle-subtitulo">Método de pago</p>
-
-                        <div className="pagos-detalle-metodo">
-                            {(() => {
-                                const Icono = iconosMetodo[pagoSeleccionado.metodo];
-                                return <Icono size={18} />;
-                            })()}
-
-                            <span>
-                                {pagoSeleccionado.metodoLabel}
-                                {pagoSeleccionado.metodoSub &&
-                                    ` - ${pagoSeleccionado.metodoSub}`}
-                            </span>
                         </div>
 
                         <p className="pagos-detalle-subtitulo">N° de transacción</p>

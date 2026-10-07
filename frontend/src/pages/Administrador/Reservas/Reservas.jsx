@@ -1,11 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
     Calendar,
     Clock,
     CheckCircle2,
     XCircle,
-    ChevronDown,
-    Search,
     ChevronRight,
 } from "lucide-react";
 
@@ -13,6 +11,7 @@ import "./Reservas.css";
 import Panel from "../../../components/Panel/Panel";
 import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
 import Tabla from "../../../components/Tabla/Tabla";
+import Navegador from "../../../components/Navegador/Navegador";
 
 {/* =========================
        DATOS EJEMPLOS
@@ -178,7 +177,27 @@ const columnas = [
     { clave: "creada", titulo: "Creada el", ancho: "1fr", clase: "reservas-creada" },
 ];
 
+const filtros=[
+    {
+        key: "estado",
+        label: "Todos los estados",
+        options: ["Confirmada", "Pendiente", "Cancelada", "Rechazada", "Finalizada"],
+    },
+    {
+        key: "espacio",
+        label: "Todos los espacios",
+        options: ["Sum", "Parrilla", "Gimnasio", "Sala de reuniones"],
+    },
+    {
+        key: "fecha",
+        label: "Todos los periodos",
+        options: ["Enero", "Febrero"],
+    },
+];
+
 function Reservas() {
+
+    const [reservasListado, setReservasListado] = useState(reservas);
 
     useEffect(() => {
         document.title = "Habita | Reservas";
@@ -207,77 +226,51 @@ function Reservas() {
                 })}
             </section>
 
-            {/* PANELES DE APOYO */}
-
-            <section className="reservas-paneles">
-
-                {/* ESPACIOS MAS RESERVADOS */}
-
-                <Panel titulo="Espacios más reservados">
-                    <div className="reservas-barras-lista">
-                        {espaciosMasReservados.map((espacio) => (
-                            <div className="reservas-barra-fila" key={espacio.nombre}>
-                                <div className="reservas-barra-header">
-                                    <span>{espacio.nombre}</span>
-                                    <strong>{espacio.cantidad}</strong>
-                                </div>
-
-                                <div className="reservas-barra-pista">
-                                    <div
-                                        className="reservas-barra-relleno"
-                                        style={{
-                                            width: `${
-                                                (espacio.cantidad / maxReservasEspacio) * 100
-                                            }%`
-                                        }}
-                                    />
-                                </div>
+            <Panel titulo="Espacios más reservados" className="reservas-panel">
+                <div className="reservas-barras-lista">
+                    {espaciosMasReservados.map((espacio) => (
+                        <div className="reservas-barra-fila" key={espacio.nombre}>
+                            <div className="reservas-barra-header">
+                                <span>{espacio.nombre}</span>
+                                <strong>{espacio.cantidad}</strong>
                             </div>
-                        ))}
-                    </div>
 
-                    <a href="#" className="reservas-link-reporte">
-                        Ver reporte completo
-                        <ChevronRight size={14} />
-                    </a>
-                </Panel>
-
-            </section>
-
-            {/* FILTROS */}
-
-            <div className="reservas-filtros">
-                <button className="reservas-filtro">
-                    Todos los espacios
-                    <ChevronDown size={15} />
-                </button>
-
-                <button className="reservas-filtro">
-                    Todos los estados
-                    <ChevronDown size={15} />
-                </button>
-
-                <button className="reservas-filtro">
-                    <Calendar size={15} />
-                    01/05/2024 - 31/05/2024
-                    <ChevronDown size={15} />
-                </button>
-
-                <div className="reservas-buscador">
-                    <Search size={16} />
-                    <input type="text" placeholder="Buscar reserva, residente o unidad..." />
+                            <div className="reservas-barra-pista">
+                                <div
+                                    className="reservas-barra-relleno"
+                                    style={{
+                                        width: `${
+                                            (espacio.cantidad / maxReservasEspacio) * 100
+                                        }%`
+                                    }}
+                                />
+                            </div>
+                        </div>
+                    ))}
                 </div>
-            </div>
 
-            {/* CONTENIDO */}
+                <a href="#" className="reservas-link-reporte">
+                    Ver reporte completo
+                    <ChevronRight size={14} />
+                </a>
+            </Panel>
 
-            <Tabla
-                columnas={columnas}
-                datos={reservas}
-                etiqueta="reservas"
-                className="reservas-tabla"
-                seleccionable
-            />
+            <Navegador
+                data={reservasListado}
+                searchKey="espacio"
+                searchPlaceholder="Buscar reserva..."
+                filters={filtros}
+            >
+                {(ReservasFiltradas) => (
+                    <Tabla
+                        columnas={columnas}
+                        datos={ReservasFiltradas}
+                        etiqueta="reservas"
+                        className="reservas-tabla"
+                        seleccionable
+                    />
+                        )}
+            </Navegador>            
 
         </main>
     );

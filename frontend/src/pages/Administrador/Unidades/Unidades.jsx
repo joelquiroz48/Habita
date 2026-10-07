@@ -1,20 +1,22 @@
-import { useEffect } from "react";
-import {Search, ChevronDown, Plus, Pencil, MoreVertical} from "lucide-react";
+import { useEffect, useState } from "react";
+import {Pencil} from "lucide-react";
 
 import "./Unidades.css";
 import Tabla from "../../../components/Tabla/Tabla";
 
-{/* =========================
-       DATOS EJEMPLO
-========================== */}
+import Navegador from "../../../components/Navegador/Navegador";
 
 const unidades = [
-    { unidad: "1A", torrePiso: "Torre A - Piso 1", tipo: "3 amb.", responsable: "Martín Gómez", estado: "Activa" },
-    { unidad: "1B", torrePiso: "Torre A - Piso 1", tipo: "2 amb.", responsable: "Carla Romero", estado: "Activa" },
-    { unidad: "2A", torrePiso: "Torre A - Piso 2", tipo: "3 amb.", responsable: "Juan López", estado: "Activa" },
-    { unidad: "2B", torrePiso: "Torre A - Piso 2", tipo: "2 amb.", responsable: "---", estado: "Disponible" },
-    { unidad: "2C", torrePiso: "Torre A - Piso 2", tipo: "3 amb.", responsable: "Pedro Martínez", estado: "Activa" },
-    { unidad: "5B", torrePiso: "Torre B - Piso 5", tipo: "2 amb.", responsable: "Nicolás Paz", estado: "Activa" },
+    { unidad: "1A", torre: "Torre A", piso: 1, tipo: "3 amb.", responsable: "Martín Gómez", estado: "Activa" },
+    { unidad: "1B", torre: "Torre A", piso: 1, tipo: "2 amb.", responsable: "Carla Romero", estado: "Activa" },
+    { unidad: "2A", torre: "Torre A", piso: 2, tipo: "3 amb.", responsable: "Juan López", estado: "Activa" },
+    { unidad: "2B", torre: "Torre A", piso: 2, tipo: "2 amb.", responsable: "---", estado: "Disponible" },
+    { unidad: "2C", torre: "Torre A", piso: 2, tipo: "3 amb.", responsable: "Pedro Martínez", estado: "Activa" },
+    { unidad: "5B", torre: "Torre B", piso: 5, tipo: "2 amb.", responsable: "Nicolás Paz", estado: "Activa" },
+    { unidad: "3A", torre: "Torre A", piso: 3, tipo: "4 amb.", responsable: "Lucía Fernández", estado: "Activa" },
+    { unidad: "3B", torre: "Torre B", piso: 3, tipo: "2 amb.", responsable: "---", estado: "Disponible" },
+    { unidad: "4A", torre: "Torre B", piso: 4, tipo: "3 amb.", responsable: "Sofía Díaz", estado: "Activa" },
+    { unidad: "1C", torre: "Torre C", piso: 1, tipo: "2 amb.", responsable: "---", estado: "Disponible" },
 ];
 
 const columnas = [
@@ -28,6 +30,7 @@ const columnas = [
         clave: "torrePiso",
         titulo: "Torre / Piso",
         ancho: "1.2fr",
+        render: (unidad) => `${unidad.torre} - Piso ${unidad.piso}`,
     },
     {
         clave: "tipo",
@@ -52,13 +55,25 @@ const columnas = [
     },
 ];
 
+const filtros=[
+    {
+        key: "torre",
+        label: "Todas las torres",
+        options: ["Torre A", "Torre B", "Torre C"],
+    },
+    {
+        key: "estado",
+        label: "Todos los estados",
+        options: ["Activa", "Disponible"],
+    },
+];
 
 function badgeClase(estado) {
     return estado === "Activa" ? "unidades-badge-activa" : "unidades-badge-disponible";
 }
 
-
 function Unidades() {
+    const [unidadesListado, setUnidadesListado] = useState(unidades);
 
     useEffect(() => {
         document.title = "Habita | Unidades";
@@ -66,42 +81,27 @@ function Unidades() {
 
     return (
         <main className="unidades">
-
-            {/* BARRA DE ACCIONES */}
-
-            <section className="unidades-acciones">
-                <div className="unidades-buscador">
-                    <Search size={17} />
-                    <input type="text" placeholder="Buscar unidad..." />
-                </div>
-
-                <button className="unidades-filtro">
-                    Todos los torres
-                    <ChevronDown size={15} />
-                </button>
-
-                <button className="unidades-filtro">
-                    Todos los estados
-                    <ChevronDown size={15} />
-                </button>
-
-                <button className="unidades-btn-nuevo">
-                    <Plus size={16} />
-                    Nueva unidad
-                </button>
-            </section>
-
-            <Tabla
-                columnas={columnas}
-                datos={unidades}
-                etiqueta="unidades"
-                className="unidades-tabla"
-                mostrarAcciones
-                opcionesAcciones={[
-                    { label: "Editar", icon: Pencil },
-                ]}
-            />
-
+            <Navegador
+                data={unidadesListado}
+                searchKey="unidad"
+                searchPlaceholder="Buscar por unidad..."
+                filters={filtros}
+                onNew={() => {}}
+                newButtonText="Agregar unidad"
+            >
+                {(unidadesFiltradas) => (
+                    <Tabla
+                        columnas={columnas}
+                        datos={unidadesFiltradas}
+                        etiqueta="unidades"
+                        className="unidades-tabla"
+                        mostrarAcciones
+                        opcionesAcciones={[
+                            { label: "Editar", icon: Pencil },
+                        ]}
+                    />
+                )}
+            </Navegador>
         </main>
     );
 }

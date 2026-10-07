@@ -4,19 +4,14 @@ import {
     DollarSign,
     Users,
     PiggyBank,
-    ChevronDown,
-    Search,
-    Eye,
-    MoreVertical,
-    Pencil,
     Download,
-    Trash2,
 } from "lucide-react";
 
 import "./Expensas.css";
 import Panel from "../../../components/Panel/Panel";
 import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
 import Tabla from "../../../components/Tabla/Tabla";
+import Navegador from "../../../components/Navegador/Navegador";
 
 {/* =========================
        DATOS EJEMPLO
@@ -113,6 +108,7 @@ function badgeClase(estado) {
 function Expensas() {
 
     const [periodoSeleccionado, setPeriodoSeleccionado] = useState(expensas[0].periodo);
+    const [expensasListado, setExpensasListado] = useState(expensas);
 
     useEffect(() => {
         document.title = "Habita | Expensas";
@@ -235,33 +231,25 @@ function Expensas() {
 
             {/* LISTADO */}
 
-            <div className="expensas-filtros">
-                <button className="expensas-filtro">
-                    <Calendar size={15} />
-                    Todos los períodos
-                    <ChevronDown size={15} />
-                </button>
+            <Navegador
+                data={expensasListado}
+                searchKey="periodo"
+                searchPlaceholder="Buscar periodo..."
+            >
+                {(expensasFiltrados) => (
+                    <Tabla
+                        columnas={columnas}
+                        datos={expensasFiltrados}
+                        etiqueta="períodos"
+                        className="expensas-tabla"
+                        onFilaClick={(item) => setPeriodoSeleccionado(item.periodo)}
+                        seleccionable
+                        filaSeleccionada={detalle}
+                    />
+                        )}
+            </Navegador>
 
-                <button className="expensas-filtro">
-                    Todos los estados
-                    <ChevronDown size={15} />
-                </button>
-
-                <div className="expensas-buscador">
-                    <Search size={16} />
-                    <input type="text" placeholder="Buscar período..." />
-                </div>
-            </div>
-
-            <Tabla
-                columnas={columnas}
-                datos={expensas}
-                etiqueta="períodos"
-                className="expensas-tabla"
-                onFilaClick={(item) => setPeriodoSeleccionado(item.periodo)}
-                seleccionable
-                filaSeleccionada={detalle}
-            />
+            
 
             {/* DETALLE */}
 

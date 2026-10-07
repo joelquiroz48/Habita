@@ -1,20 +1,14 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
     ClipboardList,
     Clock,
     Settings2,
     CheckCircle2,
-    ChevronDown,
-    Search,
-    Download,
-    Eye,
-    MoreVertical,
     Wrench,
     Sparkles,
     ArrowUpDown,
     Lightbulb,
     MoreHorizontal,
-    BarChart3,
 } from "lucide-react";
 
 import "./Reclamos.css";
@@ -22,6 +16,7 @@ import armarGradienteDonut from "../../../utils/armarGradienteDonut";
 import Panel from "../../../components/Panel/Panel";
 import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
 import Tabla from "../../../components/Tabla/Tabla";
+import Navegador from "../../../components/Navegador/Navegador";
 
 {/* =========================
        DATOS EJEMPLOS
@@ -117,6 +112,7 @@ function estadoBadgeClase(estado) {
 const columnas = [
     { clave: "id", titulo: "ID", ancho: "1fr", clase: "reclamos-id" },
     { clave: "fecha", titulo: "Fecha", ancho: "0.9fr" },
+    { clave: "asunto", titulo: "Asunto", ancho: "1.5fr", clase: "reclamos-asunto" },
     { clave: "residente", titulo: "Residente", ancho: "1.1fr", clase: "reclamos-residente" },
     { clave: "unidad", titulo: "Unidad", ancho: "0.6fr" },
     {
@@ -129,7 +125,6 @@ const columnas = [
             </span>
         ),
     },
-    { clave: "asunto", titulo: "Asunto", ancho: "1.5fr", clase: "reclamos-asunto" },
     {
         clave: "estado",
         titulo: "Estado",
@@ -142,7 +137,27 @@ const columnas = [
     },
 ];
 
+const filtros=[
+    {
+        key: "estado",
+        label: "Todos los estados",
+        options: ["Resuelto", "Pendiente", "En proceso"],
+    },
+    {
+        key: "categoria",
+        label: "Todas las categorias",
+        options: ["Mantenimiento", "Limpieza", "Ascensores", "Iluminación", "Espacios comunes", "Seguridad", "Otros"],
+    },
+    {
+        key: "unidad",
+        label: "Todos los edificios",
+        options: ["A", "B", "C", "D"],
+    },
+];
+
 function Reclamos() {
+
+    const [reclamosListado, setReclamosListado] = useState(reclamos);
 
     useEffect(() => {
         document.title = "Habita | Reclamos";
@@ -175,6 +190,23 @@ function Reclamos() {
                 CONTENIDO PRINCIPAL
             ========================= */}
 
+            <Navegador
+                data={reclamosListado}
+                searchKey="asunto"
+                searchPlaceholder="Buscar reclamo..."
+                filters={filtros}
+            >
+                {(ReclamosFiltrados) => (
+                    <Tabla
+                        columnas={columnas}
+                        datos={ReclamosFiltrados}
+                        etiqueta="reclamos"
+                        className="reclamos-tabla"
+                        seleccionable
+                    />
+                        )}
+            </Navegador>
+            
             {/* RESUMEN */}
 
             <Panel className="reclamos-resumen-panel" titulo="Resumen de reclamos">
@@ -245,46 +277,6 @@ function Reclamos() {
                     </div>
                 </div>
             </Panel>
-
-            <div className="reclamos-filtros">
-                <button className="reclamos-filtro">
-                    Todos los estados
-                    <ChevronDown size={15} />
-                </button>
-
-                <button className="reclamos-filtro">
-                    Todas las categorías
-                    <ChevronDown size={15} />
-                </button>
-
-                <button className="reclamos-filtro">
-                    Todos los edificios
-                    <ChevronDown size={15} />
-                </button>
-
-                <div className="reclamos-buscador">
-                    <Search size={16} />
-                    <input type="text" placeholder="Buscar reclamo..." />
-                </div>
-            </div>
-
-            {/* CONTENIDO */}
-
-            <div className="reclamos-contenido">
-
-                <section className="reclamos-listado">
-
-                    <Tabla
-                        columnas={columnas}
-                        datos={reclamos}
-                        etiqueta="reclamos"
-                        className="reclamos-tabla"
-                        seleccionable
-                    />
-
-                </section>
-
-            </div>
 
         </main>
     );

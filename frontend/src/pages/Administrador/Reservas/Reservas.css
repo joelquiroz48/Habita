@@ -20,54 +20,6 @@
 }
 
 /* =========================
-          FILTROS
-========================= */
-
-.reservas-filtros {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 16px;
-  flex-wrap: wrap;
-}
-
-.reservas-filtro {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  border: 1px solid var(--borde-input);
-  border-radius: 8px;
-  background: var(--blanco);
-  color: var(--texto-secundario);
-  font-size: 13px;
-  padding: 9px 12px;
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-.reservas-buscador {
-  flex: 1;
-  min-width: 160px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  border: 1px solid var(--borde-input);
-  border-radius: 8px;
-  background: var(--blanco);
-  padding: 9px 12px;
-  color: var(--texto-icono);
-}
-
-.reservas-buscador input {
-  border: none;
-  outline: none;
-  flex: 1;
-  font-size: 13px;
-  font-family: inherit;
-  color: var(--texto-principal);
-}
-
-/* =========================
         CONTENIDO
 ========================= */
 
@@ -111,7 +63,7 @@
 
 /* ---- espacios mas reservados ---- */
 
-.reservas-paneles {
+.reservas-panel {
   margin-bottom: 15px;
 }
 

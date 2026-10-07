@@ -1,8 +1,9 @@
-import { useEffect } from "react";
-import { Search, ChevronDown, Plus, Pencil } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Pencil } from "lucide-react";
 
 import "./Residentes.css";
 import Tabla from "../../../components/Tabla/Tabla";
+import Navegador from "../../../components/Navegador/Navegador";
 
 {/* =========================
        DATOS EJEMPLO
@@ -51,6 +52,13 @@ const columnas = [
     }
 ];
 
+const filtros=[
+    {
+        key: "estado",
+        label: "Todos los estados",
+        options: ["Activo", "Inactivo"],
+    },
+];
 
 function badgeClase(estado) {
     return estado === "Activo" ? "residentes-badge-activo" : "residentes-badge-invitado";
@@ -59,6 +67,8 @@ function badgeClase(estado) {
 
 function Residentes() {
 
+    const [residentesListado, setResidentesListado] = useState(residentes);
+
     useEffect(() => {
         document.title = "Habita | Residentes";
     }, []);
@@ -66,42 +76,27 @@ function Residentes() {
     return (
         <main className="residentes">
 
-            {/* BARRA DE ACCIONES */}
-
-            <section className="residentes-acciones">
-                <div className="residentes-buscador">
-                    <Search size={17} />
-                    <input type="text" placeholder="Buscar residente..." />
-                </div>
-
-                <button className="residentes-filtro">
-                    Todos los estados
-                    <ChevronDown size={15} />
-                </button>
-
-                <button className="residentes-filtro">
-                    Todas las unidades
-                    <ChevronDown size={15} />
-                </button>
-
-                <button className="residentes-btn-nuevo">
-                    <Plus size={16} />
-                    Nuevo residente
-                </button>
-            </section>
-
-            {/* TABLA */}
-
-            <Tabla
-                columnas={columnas}
-                datos={residentes}
-                etiqueta="residentes"
-                className="residentes-tabla"
-                mostrarAcciones
-                opcionesAcciones={[
-                    { label: "Editar", icon: Pencil },
-                ]}
-            />
+            <Navegador
+                data={residentesListado}
+                searchKey="nombre"
+                searchPlaceholder="Buscar residente..."
+                filters={filtros}
+                onNew={() => {}}
+                newButtonText="Agregar residente"
+            >
+                {(ResidentesFiltrados) => (
+                    <Tabla
+                        columnas={columnas}
+                        datos={ResidentesFiltrados}
+                        etiqueta="residentes"
+                        className="residentes-tabla"
+                        mostrarAcciones
+                        opcionesAcciones={[
+                            { label: "Editar", icon: Pencil },
+                        ]}
+                    />
+                        )}
+            </Navegador>
 
         </main>
     );

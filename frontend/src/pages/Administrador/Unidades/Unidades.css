@@ -1,74 +1,3 @@
-.unidades {
-  padding: 28px 32px;
-}
-
-/* =========================
-        ACCIONES
-========================= */
-
-.unidades-acciones {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 18px;
-}
-
-.unidades-buscador {
-  flex: 1;
-  max-width: 340px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  border: 1px solid var(--borde-input);
-  border-radius: 8px;
-  background: var(--blanco);
-  padding: 9px 12px;
-  color: var(--texto-icono);
-}
-
-.unidades-buscador input {
-  border: none;
-  outline: none;
-  flex: 1;
-  font-size: 13px;
-  font-family: inherit;
-  color: var(--texto-principal);
-}
-
-.unidades-filtro {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  border: 1px solid var(--borde-input);
-  border-radius: 8px;
-  background: var(--blanco);
-  color: var(--texto-secundario);
-  font-size: 13px;
-  padding: 9px 12px;
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-.unidades-btn-nuevo {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  border: none;
-  border-radius: 8px;
-  background: var(--verde);
-  color: var(--blanco);
-  font-size: 13px;
-  font-weight: 600;
-  padding: 10px 16px;
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-.unidades-btn-nuevo:hover {
-  background: var(--verde-hover);
-}
-
 /* =========================
           TABLA
 ========================= */
@@ -102,4 +31,3 @@
 /* =========================
         RESPONSIVE
 ========================= */
-

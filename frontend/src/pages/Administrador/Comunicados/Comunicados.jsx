@@ -1,12 +1,6 @@
 import { useEffect, useState } from "react";
 import {
-    Calendar,
-    ChevronDown,
-    Search,
-    Plus,
-    Eye,
     Pencil,
-    MoreVertical,
     X,
     Droplet,
     Wrench,
@@ -14,7 +8,6 @@ import {
     Hammer,
     Car,
     Star,
-    ArrowDown,
     Paperclip,
     Download,
 } from "lucide-react";
@@ -22,6 +15,7 @@ import {
 import "./Comunicados.css";
 import Panel from "../../../components/Panel/Panel";
 import Tabla from "../../../components/Tabla/Tabla";
+import Navegador from "../../../components/Navegador/Navegador";
 
 {/* =========================
        DATOS EJEMPLOS
@@ -120,7 +114,18 @@ const comunicados = [
     },
 ];
 
-const totalComunicados = 57;
+const filtros=[
+    {
+        key: "estado",
+        label: "Todos los estados",
+        options: ["Publicado", "Borrador"],
+    },
+    {
+        key: "fecha",
+        label: "Todos los periodos",
+        options: ["Enero", "Febrero", "Marzo"],
+    },
+];
 
 function estadoBadgeClase(estado) {
     if (estado === "Publicado") return "comunicados-badge-publicado";
@@ -132,6 +137,8 @@ function Comunicados() {
 
     const [seleccionado, setSeleccionado] = useState(comunicados[0]);
     const [detalleAbierto, setDetalleAbierto] = useState(true);
+    
+    const [comunicadosListado, setComunicadosListado] = useState(comunicados);
 
     useEffect(() => {
         document.title = "Habita | Comunicados";
@@ -189,46 +196,30 @@ function Comunicados() {
     return (
         <main className="comunicados">
 
-            {/* FILTROS */}
-
-            <div className="comunicados-filtros">
-                <button className="comunicados-filtro">
-                    <Calendar size={15} />
-                    Todos los períodos
-                    <ChevronDown size={15} />
-                </button>
-
-                <button className="comunicados-filtro">
-                    Todos los estados
-                    <ChevronDown size={15} />
-                </button>
-
-                <div className="comunicados-buscador">
-                    <Search size={16} />
-                    <input type="text" placeholder="Buscar comunicado..." />
-                </div>
-
-                <button className="comunicados-btn-nuevo">
-                    <Plus size={16} />
-                    Nuevo comunicado
-                </button>
-            </div>
-
-            {/* CONTENIDO */}
-
             <div className={`comunicados-contenido ${detalleAbierto ? "" : "sin-detalle"}`}>
 
                 <section className="comunicados-listado">
 
-                    <Tabla
-                        columnas={columnas}
-                        datos={comunicados}
-                        etiqueta="comunicados"
-                        className="comunicados-tabla"
-                        onFilaClick={abrirDetalle}
-                        seleccionable
-                        filaSeleccionada={detalleAbierto ? seleccionado : null}
-                    />
+                    <Navegador
+                        data={comunicadosListado}
+                        searchKey="titulo"
+                        searchPlaceholder="Buscar comunicado..."
+                        filters={filtros}
+                        onNew={() => {}}
+                        newButtonText="Crear comunicado"
+                    >
+                        {(ComunicadosFiltrados) => (
+                            <Tabla
+                                columnas={columnas}
+                                datos={ComunicadosFiltrados}
+                                etiqueta="comunicados"
+                                className="comunicados-tabla"
+                                onFilaClick={abrirDetalle}
+                                seleccionable
+                                filaSeleccionada={detalleAbierto ? seleccionado : null}
+                            />
+                                )}
+                    </Navegador>
 
                 </section>
 

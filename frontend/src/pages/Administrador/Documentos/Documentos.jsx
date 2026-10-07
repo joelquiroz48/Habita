@@ -1,17 +1,12 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
-    Search,
-    Folder,
-    Calendar,
-    SlidersHorizontal,
-    Upload,
-    ChevronDown,
     Download,
     Eye,
 } from "lucide-react";
 
 import "./Documentos.css";
 import Tabla from "../../../components/Tabla/Tabla";
+import Navegador from "../../../components/Navegador/Navegador";
 
 {/* =========================
        DATOS EJEMPLOS
@@ -151,7 +146,22 @@ const columnas = [
     { clave: "fecha", titulo: "Fecha", ancho: "0.8fr", clase: "documentos-fecha" },
 ];
 
+const filtros=[
+    {
+        key: "categoria",
+        label: "Todos las categorias",
+        options: ["Reglamentos", "Asambleas", "Obras y mejoras", "Finanzas", "Actas", "Seguros", "Otros"],
+    },
+    {
+        key: "fecha",
+        label: "Todos los periodos",
+        options: ["Enero", "Febrero", "Marzo"],
+    },
+];
+
 function Documentos() {
+    
+    const [documentosListado, setDocumentosdListado] = useState(documentos);
 
     useEffect(() => {
         document.title = "Habita | Documentos";
@@ -160,53 +170,28 @@ function Documentos() {
     return (
         <main className="documentos pagina-administrador">
 
-            {/* CABECERA */}
-
-            <div className="documentos-cabecera">
-                <div className="documentos-filtros">
-                    <div className="documentos-buscador">
-                        <Search size={16} />
-                        <input type="text" placeholder="Buscar documentos..." />
-                    </div>
-
-                    <button className="documentos-filtro">
-                        <Folder size={15} />
-                        Todas las categorías
-                        <ChevronDown size={15} />
-                    </button>
-
-                    <button className="documentos-filtro">
-                        <Calendar size={15} />
-                        Todos los períodos
-                        <ChevronDown size={15} />
-                    </button>
-
-                    <button className="documentos-filtro">
-                        <SlidersHorizontal size={15} />
-                        Filtros
-                    </button>
-                </div>
-
-                <button className="documentos-btn-subir">
-                    <Upload size={16} />
-                    Subir documento
-                </button>
-            </div>
-
-            {/* CONTENIDO */}
-
-            <Tabla
-                columnas={columnas}
-                datos={documentos}
-                etiqueta="documentos"
-                className="documentos-tabla"
-                mostrarAcciones
-                opcionesAcciones={[
-                    { label: "Vista previa", icon: Eye },
-                    { label: "Descargar", icon: Download },
-                ]}
-            />
-
+            <Navegador
+                data={documentosListado}
+                searchKey="nombre"
+                searchPlaceholder="Buscar documento..."
+                filters={filtros}
+                onNew={() => {}}
+                newButtonText="Subir documento"
+            >
+                {(DocumentosFiltrados) => (
+                    <Tabla
+                        columnas={columnas}
+                        datos={DocumentosFiltrados}
+                        etiqueta="documentos"
+                        className="documentos-tabla"
+                        mostrarAcciones
+                        opcionesAcciones={[
+                            { label: "Vista previa", icon: Eye },
+                            { label: "Descargar", icon: Download },
+                        ]}
+                    />
+                        )}
+            </Navegador>
 
         </main>
     );

@@ -1,0 +1,113 @@
+.navegador {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.navegador-buscador {
+    flex: 1;
+    max-width: 340px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid var(--borde-input);
+    border-radius: 8px;
+    background: var(--blanco);
+    padding: 9px 12px;
+    color: var(--texto-icono);
+}
+
+.navegador-buscador input {
+    border: none;
+    flex: 1;
+    font-size: 13px;
+    font-family: inherit;
+}
+
+.navegador-buscador input:focus-visible {
+    outline: none;
+}
+
+.navegador-filtro {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid var(--borde-input);
+    border-radius: 8px;
+    background: var(--blanco);
+    color: var(--texto-secundario);
+    font-size: 13px;
+    padding: 0 12px;
+    white-space: nowrap;
+}
+
+.navegador-filtro-etiqueta {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    clip-path: inset(50%);
+}
+
+.navegador-filtro select {
+    min-width: 0;
+    padding: 9px 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+    appearance: none;
+}
+
+.navegador-filtro svg {
+    flex: 0 0 auto;
+    pointer-events: none;
+}
+
+.navegador-btn-nuevo {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-left: auto;
+    border: none;
+    border-radius: 8px;
+    background: var(--verde);
+    color: var(--blanco);
+    font-size: 13px;
+    font-family: inherit;
+    padding: 9px 12px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.navegador-btn-nuevo:hover {
+    background: var(--verde-hover);
+}
+
+.navegador-btn-nuevo:focus-visible,
+.navegador-filtro:focus-within,
+.navegador-buscador:focus-within {
+    outline: 2px solid var(--verde);
+    outline-offset: 2px;
+}
+
+@media (max-width: 720px) {
+    .navegador {
+        flex-wrap: wrap;
+    }
+
+    .navegador-buscador {
+        flex-basis: 100%;
+        max-width: none;
+    }
+
+    .navegador-btn-nuevo {
+        margin-left: auto;
+    }
+}
