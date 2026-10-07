@@ -1,3 +1,4 @@
+import ChatWidget from "../../components/Layout/ChatWidget/ChatWidget";
 import { useEffect } from "react";
 import {
     WalletCards,
@@ -452,27 +453,13 @@ function Inicio() {
                 </article>
 
                 {/* ASISTENTE */}
-
                 <article className="panel-card asistente-card">
                     <div className="panel-header">
                         <h2>Asistente Habita</h2>
                     </div>
 
-                    <p>
-                        Tu asistente inteligente siempre
-                        disponible para ayudarte.
-                    </p>
-
-                    <div className="preguntas">
-                        <button>¿Cómo reservo el SUM?</button>
-                        <button>¿Dónde veo mis expensas?</button>
-                        <button>Quiero reportar un problema</button>
-                    </div>
-
-                    <button className="btn-asistente">
-                        <MessageCircle size={17} />
-                        Chatear con Habita
-                    </button>
+                    {/* La interfaz de chat se acopla exactamente a este panel */}
+                    <ChatWidget />
                 </article>
 
             </section>

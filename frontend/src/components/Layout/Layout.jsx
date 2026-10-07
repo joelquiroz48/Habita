@@ -5,6 +5,7 @@ import iconPerfil from "../../assets/img/foto-perfil.png";
 import iconLogo from "../../assets/img/icon.png";
 
 import {ChevronDown, Menu, Bell, House, Wallet, Calendar, Megaphone, Folder, MessageCircleMore } from "lucide-react";
+import ChatWidget from "./ChatWidget/ChatWidget";
 
 
 function Layout({ children }) {

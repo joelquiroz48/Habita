@@ -1,0 +1,190 @@
+/* Contenedor del Widget: ocupa el 100% de la tarjeta o espacio donde se ubique */
+.chat-widget-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Ventana de chat adaptada al contenedor */
+.chat-window {
+    width: 100%;
+    height: 380px;
+    background: var(--blanco);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid var(--borde-tarjeta);
+}
+
+/* Encabezado */
+.chat-header {
+    background-color: var(--verde);
+    color: var(--negro);
+    padding: 10px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chat-titulo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.chat-icon-head {
+    width: 0px;
+    height: 0px;
+}
+
+.btn-cerrar {
+    background: transparent;
+    border: none;
+    color: var(--texto-principal);
+    /* 🎨 Cambia el color aquí (ej: #08363C o var(--verde)) */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 4px;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+/* Asegura que el icono Lucide use el color del botón */
+.btn-cerrar svg {
+    stroke: currentColor;
+}
+
+.btn-cerrar:hover {
+    color: var(--verde-hover);
+    /* 🌟 Color al pasar el mouse */
+    transform: scale(1.1);
+}
+/* Lista de mensajes */
+.chat-messages {
+    flex: 1;
+    padding: 12px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background-color: var(--fondo);
+}
+
+.mensaje {
+    max-width: 85%;
+    padding: 8px 12px;
+    border-radius: 10px;
+    font-size: 13px;
+    line-height: 1.4;
+    word-break: break-word;
+}
+
+.msj-chat {
+    background-color: var(--celeste);
+    color: var(--texto-principal);
+    align-self: flex-start;
+    border-bottom-left-radius: 2px;
+}
+
+.msj-usr {
+    background-color: var(--verde);
+    color: var(--blanco);
+    align-self: flex-end;
+    border-bottom-right-radius: 2px;
+}
+
+/* Input y botón enviar */
+.chat-input-area {
+    display: flex;
+    padding: 8px;
+    border-top: 1px solid var(--borde-tarjeta);
+    background: var(--blanco);
+    gap: 6px;
+}
+
+.chat-input-area input {
+    flex: 1;
+    border: 1px solid var(--borde-input);
+    border-radius: 6px;
+    padding: 7px 10px;
+    font-size: 13px;
+    outline: none;
+}
+
+.chat-input-area input:focus {
+    border-color: var(--verde);
+}
+
+.btn-enviar {
+    background: var(--verde);
+    color: var(--blanco);
+    border: none;
+    border-radius: 6px;
+    padding: 7px 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.btn-enviar:hover {
+    background-color: var(--verde-hover);
+}
+
+/* Contenedor principal de la tarjeta inicial */
+.tarjeta-inicial-asistente {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 10px;
+}
+
+/* Alinea la imagen y el texto uno al lado del otro */
+.contenido-asistente {
+    display: flex;
+    align-items: center;
+    /* 🎯 Alinea la imagen y el texto al centro vertical */
+    gap: 15px;
+}
+
+/* Tamaño de la imagen */
+.img-asistente {
+    width: 100px;
+    height: auto;
+}
+
+/* Estilo del texto */
+.texto-asistente p {
+    font-size: 14px;
+    font-weight: 500;
+    /* ✏️ Le da un poco más de grosor a la fuente */
+    color: var(--texto-principal);
+    /* 🎨 Usa el color de texto principal para destacar más */
+    line-height: 1.4;
+    margin: 0;
+}
+
+/* Botón inferior a lo ancho */
+.btn-hablar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 10px;
+    background-color: var(--verde);
+    color: var(--blanco);
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-hablar:hover {
+    background-color: var(--verde-hover);
+}
