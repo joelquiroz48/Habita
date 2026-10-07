@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
 import {
     Users,
     Building2,
@@ -8,15 +7,18 @@ import {
     ChevronDown,
     ArrowUp,
     ArrowDown,
-    CalendarClock,
+    CheckCircle2,
+    AlertCircle,
+    Calendar,
     Megaphone,
-    FileText,
+    Download,
 } from "lucide-react";
 
 import "./Inicio.css";
 import Panel from "../../../components/Panel/Panel";
 import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
 import TablaReportes from "../../../components/TablaReportes/TablaReportes";
+import armarGradienteDonut from "../../../utils/armarGradienteDonut";
 
 {/* =========================
         DATOS EJEMPLO
@@ -70,141 +72,112 @@ const recaudacionMensual = [
 const MAX_RECAUDACION = 6; // millones, define la escala del eje Y
 
 const reclamosPorEstado = [
-    { estado: "Pendiente", cantidad: 12, claseColor: "pendiente" },
-    { estado: "En proceso", cantidad: 7, claseColor: "proceso" },
-    { estado: "Resuelto", cantidad: 25, claseColor: "resuelto" },
+    { nombre: "Pendientes", cantidad: 18, claseColor: "pendiente" },
+    { nombre: "En proceso", cantidad: 26, claseColor: "proceso" },
+    { nombre: "Resueltos", cantidad: 20, claseColor: "resuelto" },
 ];
+const totalReclamosEstado = reclamosPorEstado.reduce((acc, r) => acc + r.cantidad, 0);
 
-const totalReclamos = reclamosPorEstado.reduce((acc, r) => acc + r.cantidad, 0);
+const reclamosPorCategoria = [
+    { nombre: "Mantenimiento", cantidad: 22, claseColor: "mantenimiento" },
+    { nombre: "Limpieza", cantidad: 15, claseColor: "limpieza" },
+    { nombre: "Ascensores", cantidad: 10, claseColor: "ascensores" },
+    { nombre: "Iluminación", cantidad: 8, claseColor: "iluminacion" },
+    { nombre: "Seguridad", cantidad: 6, claseColor: "seguridad" },
+    { nombre: "Otros", cantidad: 4, claseColor: "otros" },
+];
+const totalReclamosCategoria = reclamosPorCategoria.reduce((acc, r) => acc + r.cantidad, 0);
 
-function armarGradienteDonut(datos) {
-    let acumulado = 0;
-    const segmentos = datos.map((d) => {
-        const desde = acumulado;
-        const porcentaje = (d.cantidad / totalReclamos) * 100;
-        acumulado += porcentaje;
-        return `var(--admin-color-${d.claseColor}) ${desde}% ${acumulado}%`;
-    });
-    return `conic-gradient(${segmentos.join(", ")})`;
-}
-
-const ultimosReclamos = [
+const actividadReciente = [
     {
-        titulo: "Fuga de agua en cochera",
-        estado: "Pendiente",
-        ubicacion: "Torre A - Piso 1",
-        fecha: "Hoy 10:30",
+        icon: CheckCircle2,
+        clase: "verde",
+        titulo: "Pago recibido de Nicolás Paz - Unidad 5B",
+        subtitulo: "Expensa Agosto 2026",
+        fecha: "01/09/2026 10:24",
     },
     {
-        titulo: "Luz de pasillo quemada",
-        estado: "En proceso",
-        ubicacion: "Torre B - Piso 5",
-        fecha: "Hoy 08:15",
+        icon: AlertCircle,
+        clase: "amarillo",
+        titulo: "Nuevo reclamo de Nicolás Paz - Unidad 5B",
+        subtitulo: "Fuga de agua en cocina",
+        fecha: "01/09/2026 10:30",
     },
     {
-        titulo: "Ascensor fuera de servicio",
-        estado: "Pendiente",
-        ubicacion: "Torre A - Piso 1",
-        fecha: "Ayer 14:45",
+        icon: Megaphone,
+        clase: "azul",
+        titulo: "Comunicado publicado: Corte de luz programado",
+        subtitulo: "Publicado por Administrador",
+        fecha: "01/09/2026 10:30",
     },
     {
-        titulo: "Pintura en paredes",
-        estado: "Resuelto",
-        ubicacion: "Torre C - Piso 2",
-        fecha: "28/08/2026",
-    },
-    {
-        titulo: "Puerta de ingreso suelta",
-        estado: "Pendiente",
-        ubicacion: "Torre A - Piso 2",
-        fecha: "27/08/2026",
+        icon: Calendar,
+        clase: "teal",
+        titulo: "Nueva reserva en SUM",
+        subtitulo: "Reservado por María Gómez - Unidad 3A",
+        fecha: "01/09/2026 10:15",
     },
 ];
 
-const ultimosPagos = [
-    { unidad: "Unidad 5B", monto: "$ 45.230", fecha: "01/09/2026", estado: "Aprobado" },
-    { unidad: "Unidad 2A", monto: "$ 45.230", fecha: "01/09/2026", estado: "Aprobado" },
-    { unidad: "Unidad 7C", monto: "$ 45.230", fecha: "31/08/2026", estado: "Aprobado" },
-    { unidad: "Unidad 1B", monto: "$ 45.230", fecha: "31/08/2026", estado: "Pendiente" },
-    { unidad: "Unidad 2D", monto: "$ 45.230", fecha: "30/08/2026", estado: "Aprobado" },
+const resumenGeneral = [
+    { metrica: "Recaudación total", valor: "$ 35.420", variacion: "12.5%", positivo: true },
+    { metrica: "Pagos realizados", valor: "78", variacion: "6.8%", positivo: true },
+    { metrica: "Reclamos totales", valor: "64", variacion: "8.3%", positivo: false },
+    { metrica: "Reclamos resueltos", valor: "20", variacion: "25%", positivo: true },
+    { metrica: "Reservas realizadas", valor: "46", variacion: "15.2%", positivo: true },
+    { metrica: "Comunicados publicados", valor: "6", variacion: "20%", positivo: true },
+    { metrica: "Nuevos residentes", valor: "12", variacion: "9.1%", positivo: true },
 ];
 
-const proximaReunion = {
-    titulo: "Asamblea ordinaria",
-    fecha: "15 de septiembre de 2026 - 20:00 hs",
-    lugar: "Salón de usos múltiples",
-};
-
-const comunicadoDestacado = {
-    titulo: "Corte de luz programado",
-    descripcion:
-        "El martes 22/09 habrá un corte de luz de 9:00 a 13:00 por tareas de EDENOR en todo el edificio.",
-};
-
-const documentosRecientes = [
-    {
-        nombre: "Reglamento de Copropiedad",
-        fecha: "12/08/2026",
-    },
-    {
-        nombre: "Acta Asamblea Ordinaria 08/2026",
-        fecha: "10/08/2026",
-    },
-    {
-        nombre: "Recibo expensas 08/2026",
-        fecha: "10/08/2026",
-    },
-];
-
-const columnasReclamos = [
+const columnasActividad = [
     {
         clave: "titulo",
-        ancho: "minmax(0, 1.6fr)",
-        className: "admin-tabla-titulo",
-    },
-    {
-        clave: "estado",
-        ancho: "auto",
-        render: (estado) => (
-            <span className={`admin-badge ${badgeClase(estado)}`}>
-                {estado}
-            </span>
-        ),
-    },
-    {
-        clave: "ubicacion",
+        titulo: "Actividad",
         ancho: "minmax(0, 1fr)",
-        className: "admin-tabla-secundario",
+        render: (_, item) => {
+
+            return (
+                <div className="reportes-actividad-contenido">
+                    <span className="reportes-actividad-texto">
+                        <strong>{item.titulo}</strong>
+                        <small>{item.subtitulo}</small>
+                    </span>
+                </div>
+            );
+        },
     },
     {
         clave: "fecha",
+        titulo: "Fecha",
         ancho: "auto",
-        className: "admin-tabla-fecha",
+        className: "reportes-actividad-fecha",
     },
 ];
 
-const columnasPagos = [
+const columnasResumen = [
     {
-        clave: "unidad",
-        ancho: "minmax(0, 1.6fr)",
-        className: "admin-tabla-titulo",
+        clave: "metrica",
+        titulo: "Métrica",
+        ancho: "minmax(0, 1.5fr)",
     },
     {
-        clave: "monto",
-        ancho: "minmax(0, 1fr)",
-        className: "admin-tabla-secundario",
+        clave: "valor",
+        titulo: "Valor",
+        ancho: "minmax(70px, 1fr)",
+        className: "reportes-tabla-resumen-valor",
     },
     {
-        clave: "fecha",
-        ancho: "auto",
-        className: "admin-tabla-fecha",
-    },
-    {
-        clave: "estado",
-        ancho: "auto",
-        render: (estado) => (
-            <span className={`admin-badge ${badgeClase(estado)}`}>
-                {estado}
+        clave: "variacion",
+        titulo: "Vs. mes anterior",
+        ancho: "minmax(120px, 1fr)",
+        render: (_, fila) => (
+            <span
+                className={`reportes-tendencia ${
+                    fila.positivo ? "positiva" : "negativa"
+                }`}
+            >
+                <ArrowUp size={12} />
+                {fila.variacion}
             </span>
         ),
     },
@@ -278,30 +251,25 @@ const resumenTarjetas = [
                 <span className="admin-info">
                     {kpis.reclamos.info}
                 </span>
-                <span className="admin-tendencia negativa">
-                    <ArrowDown size={12} />
+                <span className="admin-tendencia positiva">
+                    <ArrowUp size={12} />
                     {kpis.reclamos.tendencia}
                 </span>
             </>
         ),
     },
+    {
+        icono: Users,
+        titulo: "Nuevos residentes",
+        valor: "12",
+        contenido: (
+            <span className="admin-tendencia positiva">
+                <ArrowUp size={12} />
+                9.1% vs. mes anterior
+            </span>
+        ),
+    },
 ];
-
-
-function badgeClase(estado) {
-    switch (estado) {
-        case "Pendiente":
-            return "admin-badge-pendiente";
-        case "En proceso":
-            return "admin-badge-proceso";
-        case "Resuelto":
-        case "Aprobado":
-            return "admin-badge-resuelto";
-        default:
-            return "";
-    }
-}
-
 
 function Dashboard() {
 
@@ -335,11 +303,15 @@ function Dashboard() {
             {/* =========================
                 CONTENIDO PRINCIPAL
             ========================= */}
+                
+            <button className="reportes-btn-exportar">
+                <Download size={15} />
+                Exportar reporte
+            </button>
 
             {/* GRAFICOS */}
 
-            <section className="admin-fila-superior">
-
+            <section className="admin-graficos">
                 <Panel
                     titulo="Recaudación mensual"
                     accion={
@@ -376,101 +348,94 @@ function Dashboard() {
                     </div>
                 </Panel>
 
-                <Panel titulo="Reclamos por estado">
-                    <div className="admin-donut-wrap">
-                        <div
-                            className="admin-donut"
-                            style={{ background: armarGradienteDonut(reclamosPorEstado) }}
-                        >
-                            <div className="admin-donut-centro">
-                                <strong>{totalReclamos}</strong>
-                                <span>Total</span>
+                <div className="admin-fila-superior">
+                    <Panel titulo="Reclamos por estado">
+                        <div className="reportes-donut-wrap">
+                            <div
+                                className="reportes-donut"
+                                style={{
+                                    background: armarGradienteDonut(
+                                        reclamosPorEstado,
+                                        "reportes-color-estado"
+                                    )
+                                }}
+                            >
+                                <div className="reportes-donut-centro">
+                                    <strong>{totalReclamosEstado}</strong>
+                                    <span>Total</span>
+                                </div>
                             </div>
+
+                            <ul className="reportes-donut-leyenda">
+                                {reclamosPorEstado.map((item) => (
+                                    <li key={item.nombre}>
+                                        <span className={`reportes-punto estado-${item.claseColor}`} />
+                                        <span className="reportes-leyenda-label">{item.nombre}</span>
+                                        <span className="reportes-leyenda-valor">
+                                            {item.cantidad} (
+                                            {Math.round((item.cantidad / totalReclamosEstado) * 100)}%)
+                                        </span>
+                                    </li>
+                                ))}
+                            </ul>
                         </div>
+                    </Panel>
 
-                        <ul className="admin-donut-leyenda">
-                            {reclamosPorEstado.map((item) => (
-                                <li key={item.estado}>
-                                    <span className={`admin-leyenda-punto ${item.claseColor}`} />
-                                    <span className="admin-leyenda-label">{item.estado}</span>
-                                    <span className="admin-leyenda-valor">{item.cantidad}</span>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                </Panel>
+                    <Panel titulo="Reclamos por categoría">
+                        <div className="reportes-donut-wrap">
+                            <div
+                                className="reportes-donut"
+                                style={{
+                                    background: armarGradienteDonut(
+                                        reclamosPorCategoria,
+                                        "reportes-color-cat"
+                                    )
+                                }}
+                            >
+                                <div className="reportes-donut-centro">
+                                    <strong>{totalReclamosCategoria}</strong>
+                                    <span>Total</span>
+                                </div>
+                            </div>
 
+                            <ul className="reportes-donut-leyenda">
+                                {reclamosPorCategoria.map((item) => (
+                                    <li key={item.nombre}>
+                                        <span className={`reportes-punto cat-${item.claseColor}`} />
+                                        <span className="reportes-leyenda-label">
+                                            {item.nombre}
+                                        </span>
+                                        <span className="reportes-leyenda-valor">
+                                            {item.cantidad} (
+                                            {Math.round((item.cantidad / totalReclamosCategoria) * 100)}%)
+                                        </span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    </Panel>
+                </div>
             </section>
 
-            {/* LISTADOS */}
+            {/* ACTIVIDAD + RESUMEN */}
 
-            <section className="admin-fila-central">
+            <section className="reportes-inferior-grid">
 
-                <Panel titulo="Últimos reclamos" accion={<Link to="/administrador/reclamos">Ver todos</Link>}>
+                <Panel titulo="Actividad reciente">
                     <TablaReportes
-                        columnas={columnasReclamos}
-                        datos={ultimosReclamos}
-                        obtenerClave={(reclamo) =>
-                            `${reclamo.titulo}-${reclamo.fecha}`
-                        }
+                        columnas={columnasActividad}
+                        datos={actividadReciente}
+                        obtenerClave={(item) => `${item.titulo}-${item.fecha}`}
                     />
                 </Panel>
 
-                <Panel titulo="Últimos pagos" accion={<Link to="/administrador/pagos">Ver todos</Link>}>
+                <Panel titulo="Resumen general del período">
                     <TablaReportes
-                        columnas={columnasPagos}
-                        datos={ultimosPagos}
-                        obtenerClave={(pago) => `${pago.unidad}-${pago.fecha}`}
+                        columnas={columnasResumen}
+                        datos={resumenGeneral}
+                        obtenerClave={(fila) => fila.metrica}
+                        mostrarEncabezado
                     />
-                </Panel>
-
-            </section>
-
-            {/* TARJETAS INFERIORES */}
-
-            <section className="admin-fila-inferior">
-
-                <Panel>
-                    <div className="admin-inferior-card">
-                        <div className="admin-inferior-icon">
-                            <CalendarClock />
-                        </div>
-                        <div className="admin-inferior-contenido">
-                            <h3>Próxima reunión</h3>
-                            <strong>{proximaReunion.titulo}</strong>
-                            <span>{proximaReunion.fecha}</span>
-                            <span>{proximaReunion.lugar}</span>
-                            <button className="admin-btn-secundario">Ver detalles</button>
-                        </div>
-                    </div>
-                </Panel>
-
-                <Panel>
-                    <div className="admin-inferior-card">
-                        <div className="admin-inferior-icon">
-                            <Megaphone />
-                        </div>
-                        <div className="admin-inferior-contenido">
-                            <h3>Comunicado destacado</h3>
-                            <strong>{comunicadoDestacado.titulo}</strong>
-                            <span>{comunicadoDestacado.descripcion}</span>
-                            <button className="admin-btn-secundario">Ver comunicado</button>
-                        </div>
-                    </div>
-                </Panel>
-
-                <Panel titulo="Documentos recientes" accion={<Link to="/administrador/documentos">Ver todos</Link>}>
-                    <div className="admin-documentos-lista">
-                        {documentosRecientes.map((doc, index) => (
-                            <div className="admin-documento-fila" key={index}>
-                                <span className="admin-documento-icon">
-                                    <FileText size={16} />
-                                </span>
-                                <span className="admin-documento-nombre">{doc.nombre}</span>
-                                <span className="admin-documento-fecha">{doc.fecha}</span>
-                            </div>
-                        ))}
-                    </div>
                 </Panel>
 
             </section>

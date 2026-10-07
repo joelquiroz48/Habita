@@ -212,14 +212,11 @@ function Expensas() {
             titulo: "Acciones",
             ancho: "0.7fr",
             render: () => (
-                <span className="expensas-tabla-acciones">
-                    <span aria-label="Ver detalle">
-                        <Eye size={16} />
-                    </span>
-                    <span aria-label="Más opciones">
+                <div className="expensas-tabla-acciones">
+                    <button>
                         <MoreVertical size={16} />
-                    </span>
-                </span>
+                    </button>
+                </div>
             ),
         },
     ];

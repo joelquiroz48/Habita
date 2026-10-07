@@ -156,9 +156,6 @@ const columnas = [
         ancho: "2fr",
         render: (doc) => (
             <span className="documentos-nombre-celda">
-                <span className={`documentos-icono-archivo ${doc.icon}`}>
-                    {doc.icon.toUpperCase()}
-                </span>
                 <span className="documentos-nombre-texto">
                     <strong>{doc.nombre}</strong>
                     <small>{doc.subtitulo}</small>
@@ -176,33 +173,13 @@ const columnas = [
             </span>
         ),
     },
-    {
-        clave: "subidoPor",
-        titulo: "Subido por",
-        ancho: "1.4fr",
-        render: (doc) => (
-            <span className="documentos-subido-celda">
-                <span className={`documentos-avatar ${doc.avatar}`}>
-                    {doc.iniciales}
-                </span>
-                <span>
-                    <strong>{doc.subidoPor}</strong>
-                    <small>{doc.rol}</small>
-                </span>
-            </span>
-        ),
-    },
     { clave: "fecha", titulo: "Fecha", ancho: "0.8fr", clase: "documentos-fecha" },
-    { clave: "tamano", titulo: "Tamaño", ancho: "0.7fr", clase: "documentos-tamano" },
     {
         clave: "acciones",
         titulo: "Acciones",
         ancho: "0.7fr",
         render: () => (
             <span className="documentos-tabla-acciones">
-                <button aria-label="Descargar">
-                    <Download size={16} />
-                </button>
                 <button aria-label="Más opciones">
                     <MoreVertical size={16} />
                 </button>
@@ -265,78 +242,6 @@ function Documentos() {
                         etiqueta="documentos"
                         className="documentos-tabla"
                     />
-
-                </section>
-
-                {/* PANELES DE APOYO */}
-
-                <section className="documentos-paneles">
-
-                    <Panel titulo="Categorías">
-                        <div className="documentos-categorias-lista">
-                            {categorias.map((cat) => (
-                                <div className="documentos-categoria-fila" key={cat.nombre}>
-                                    <span className={`documentos-carpeta-icon ${cat.clase}`}>
-                                        <Folder size={15} />
-                                    </span>
-
-                                    <span className="documentos-categoria-nombre">
-                                        {cat.nombre}
-                                    </span>
-
-                                    <span className="documentos-categoria-valor">
-                                        {cat.cantidad}
-                                    </span>
-                                </div>
-                            ))}
-                        </div>
-
-                        <button className="documentos-btn-ver-todas">
-                            Ver todas las categorías
-                            <ChevronRight size={14} />
-                        </button>
-                    </Panel>
-
-                    <Panel titulo="Almacenamiento">
-                        <div className="documentos-almacenamiento-info">
-                            <span>Utilizado</span>
-                            <strong>{almacenamiento.usado} de {almacenamiento.total}</strong>
-                        </div>
-
-                        <div className="documentos-progreso">
-                            <div
-                                className="documentos-progreso-relleno"
-                                style={{
-                                    width: `${almacenamiento.porcentaje}%`
-                                }}
-                            />
-                        </div>
-
-                        <span className="documentos-progreso-porcentaje">
-                            {almacenamiento.porcentaje}%
-                        </span>
-
-                        <button className="documentos-btn-gestionar">
-                            <HardDrive size={15} />
-                            Gestionar almacenamiento
-                            <ChevronRight size={14} />
-                        </button>
-                    </Panel>
-
-                    <Panel titulo="Acciones rápidas">
-                        <div className="documentos-acciones-lista">
-                            {accionesRapidas.map((accion) => {
-                                const Icono = accion.icon;
-
-                                return (
-                                    <button className="documentos-accion-fila" key={accion.label}>
-                                        <Icono size={16} />
-                                        {accion.label}
-                                    </button>
-                                );
-                            })}
-                        </div>
-                    </Panel>
 
                 </section>
 

@@ -110,39 +110,10 @@
 .reclamos-contenido {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-}
-
-.reclamos-listado,
-.reclamos-tabla,
-.reclamos-resumen-panel {
-  width: 100%;
-  min-width: 0;
-  box-sizing: border-box;
-}
-
-.reclamos-tabla .tabla-header,
-.reclamos-tabla .tabla-fila {
-  gap: 10px;
-  padding: 13px 18px;
-  width: 100%;
-  box-sizing: border-box;
-  min-width: 920px;
-}
-
-.reclamos-tabla .tabla-header span {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--texto-secundario);
-}
-
-.reclamos-id {
-  color: var(--texto-secundario);
-  font-size: 12px;
 }
 
 .reclamos-residente {
-  font-weight: 600;
+  padding: 0;
 }
 
 .reclamos-asunto {
@@ -154,7 +125,6 @@
 .reclamos-cat-badge,
 .reclamos-badge {
   width: fit-content;
-  padding: 4px 10px;
   border-radius: 10px;
   font-size: 11px;
   font-weight: 600;
@@ -171,31 +141,13 @@
 .reclamos-badge-proceso { color: var(--reclamos-color-proceso); background: var(--reclamos-fondo-proceso); }
 .reclamos-badge-resuelto { color: var(--reclamos-color-resuelto); background: var(--reclamos-fondo-resuelto); }
 
-.reclamos-prioridad-alta { color: var(--color-documento-pdf); background: var(--fondo-documento-pdf); }
-.reclamos-prioridad-media { color: var(--color-aviso-amarillo); background: var(--fondo-aviso-amarillo); }
-.reclamos-prioridad-baja { color: var(--color-aviso-verde); background: var(--fondo-verde-suave); }
-
-.reclamos-tabla-acciones {
-  display: flex;
-  gap: 10px;
-}
-
-.reclamos-tabla-acciones button {
-  border: none;
-  background: transparent;
-  color: var(--texto-icono);
-  cursor: pointer;
-  display: flex;
-  padding: 0;
-}
-
-.reclamos-tabla-acciones button:hover {
-  color: var(--texto-principal);
-}
-
 /* =========================
         RESUMEN
 ========================= */
+
+.reclamos-resumen-panel {
+  margin-bottom: 15px;
+}
 
 .reclamos-resumen-panel h3 {
   font-size: 14px;

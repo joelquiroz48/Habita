@@ -162,45 +162,12 @@ function Pagos() {
             render: (pago) => formatearMonto(pago.importe),
         },
         {
-            clave: "metodo",
-            titulo: "Método de pago",
-            ancho: "1.3fr",
-            render: (pago) => {
-                const Icono = iconosMetodo[pago.metodo];
-
-                return (
-                    <span className="pagos-metodo">
-                        <Icono size={16} />
-                        <span>
-                            {pago.metodoLabel}
-                            {pago.metodoSub && <small>{pago.metodoSub}</small>}
-                        </span>
-                    </span>
-                );
-            },
-        },
-        {
             clave: "estado",
             titulo: "Estado",
             ancho: "0.9fr",
             render: (pago) => (
                 <span className={`pagos-badge ${badgeClase(pago.estado)}`}>
                     {pago.estado}
-                </span>
-            ),
-        },
-        {
-            clave: "comprobante",
-            titulo: "Comprobante",
-            ancho: "0.8fr",
-            render: () => (
-                <span className="pagos-tabla-acciones">
-                    <span aria-label="Ver comprobante">
-                        <Eye size={16} />
-                    </span>
-                    <span aria-label="Más opciones">
-                        <MoreVertical size={16} />
-                    </span>
                 </span>
             ),
         },
@@ -256,11 +223,7 @@ function Pagos() {
                     <Search size={16} />
                     <input type="text" placeholder="Buscar pago..." />
                 </div>
-
-                <button className="pagos-btn-exportar">
-                    <Download size={15} />
-                    Exportar
-                </button>
+                
             </div>
 
             {/* CONTENIDO */}

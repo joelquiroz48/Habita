@@ -56,9 +56,6 @@ const columnas = [
         ancho: "0.8fr",
         render: (unidad) => (
             <div className="unidades-tabla-acciones">
-                <button aria-label={`Editar unidad ${unidad.unidad}`}>
-                    <Pencil size={16} />
-                </button>
                 <button aria-label={`Más opciones para ${unidad.unidad}`}>
                     <MoreVertical size={16} />
                 </button>

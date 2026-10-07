@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 
 import "./Reclamos.css";
+import armarGradienteDonut from "../../../utils/armarGradienteDonut";
 import Panel from "../../../components/Panel/Panel";
 import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
 import Tabla from "../../../components/Tabla/Tabla";
@@ -95,17 +96,6 @@ const resumenTarjetas = [
 ];
 
 
-function armarGradienteDonut(datos, total) {
-    let acumulado = 0;
-    const segmentos = datos.map((d) => {
-        const desde = acumulado;
-        const porcentaje = (d.cantidad / total) * 100;
-        acumulado += porcentaje;
-        return `var(--reclamos-color-${d.claseColor}) ${desde}% ${acumulado}%`;
-    });
-    return `conic-gradient(${segmentos.join(", ")})`;
-}
-
 function categoriaBadgeClase(categoria) {
     const mapa = {
         "Mantenimiento": "reclamos-cat-mantenimiento",
@@ -122,12 +112,6 @@ function estadoBadgeClase(estado) {
     if (estado === "Pendiente") return "reclamos-badge-pendiente";
     if (estado === "En proceso") return "reclamos-badge-proceso";
     return "reclamos-badge-resuelto";
-}
-
-function prioridadBadgeClase(prioridad) {
-    if (prioridad === "Alta") return "reclamos-prioridad-alta";
-    if (prioridad === "Media") return "reclamos-prioridad-media";
-    return "reclamos-prioridad-baja";
 }
 
 const columnas = [
@@ -153,31 +137,6 @@ const columnas = [
         render: (reclamo) => (
             <span className={`reclamos-badge ${estadoBadgeClase(reclamo.estado)}`}>
                 {reclamo.estado}
-            </span>
-        ),
-    },
-    {
-        clave: "prioridad",
-        titulo: "Prioridad",
-        ancho: "0.8fr",
-        render: (reclamo) => (
-            <span className={`reclamos-badge ${prioridadBadgeClase(reclamo.prioridad)}`}>
-                {reclamo.prioridad}
-            </span>
-        ),
-    },
-    {
-        clave: "acciones",
-        titulo: "Acciones",
-        ancho: "0.7fr",
-        render: () => (
-            <span className="reclamos-tabla-acciones">
-                <button aria-label="Ver reclamo">
-                    <Eye size={16} />
-                </button>
-                <button aria-label="Más opciones">
-                    <MoreVertical size={16} />
-                </button>
             </span>
         ),
     },
@@ -216,6 +175,77 @@ function Reclamos() {
                 CONTENIDO PRINCIPAL
             ========================= */}
 
+            {/* RESUMEN */}
+
+            <Panel className="reclamos-resumen-panel" titulo="Resumen de reclamos">
+                <div className="reclamos-resumen-contenido">
+                    <div className="reclamos-donut-wrap">
+                        <div
+                            className="reclamos-donut"
+                            style={{
+                                background: armarGradienteDonut(
+                                    resumenEstados,
+                                    "reclamos-color"
+                                )
+                            }}
+                        >
+                            <div className="reclamos-donut-centro" />
+                        </div>
+
+                        <ul className="reclamos-donut-leyenda">
+                            {resumenEstados.map((item) => (
+                                <li key={item.estado}>
+                                    <span className={`reclamos-leyenda-punto ${item.claseColor}`}/>
+
+                                    <span className="reclamos-leyenda-label">
+                                        {item.estado}
+                                    </span>
+
+                                    <span className="reclamos-leyenda-valor">
+                                        {item.cantidad} (
+                                        {Math.round(
+                                            (item.cantidad / totalReclamos) * 100
+                                        )}
+                                        %)
+                                    </span>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+
+                    <div className="reclamos-categorias">
+                        <h3>Categorías más frecuentes</h3>
+
+                        <div className="reclamos-categorias-lista">
+                            {categoriasFrecuentes.map((cat) => {
+                                const Icono = cat.icon;
+
+                                return (
+                                    <div
+                                        className="reclamos-categoria-fila"
+                                        key={cat.nombre}
+                                    >
+                                        <span
+                                            className={`reclamos-categoria-icon ${cat.claseColor}`}
+                                        >
+                                            <Icono size={16} />
+                                        </span>
+
+                                        <span className="reclamos-categoria-nombre">
+                                            {cat.nombre}
+                                        </span>
+
+                                        <span className="reclamos-categoria-valor">
+                                            {cat.cantidad}
+                                        </span>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                </div>
+            </Panel>
+
             <div className="reclamos-filtros">
                 <button className="reclamos-filtro">
                     Todos los estados
@@ -236,11 +266,6 @@ function Reclamos() {
                     <Search size={16} />
                     <input type="text" placeholder="Buscar reclamo..." />
                 </div>
-
-                <button className="reclamos-btn-exportar">
-                    <Download size={15} />
-                    Exportar
-                </button>
             </div>
 
             {/* CONTENIDO */}
@@ -257,82 +282,6 @@ function Reclamos() {
                     />
 
                 </section>
-
-                {/* RESUMEN */}
-
-                <Panel className="reclamos-resumen-panel" titulo="Resumen de reclamos">
-                    <div className="reclamos-resumen-contenido">
-                        <div className="reclamos-donut-wrap">
-                            <div
-                                className="reclamos-donut"
-                                style={{
-                                    background: armarGradienteDonut(
-                                        resumenEstados,
-                                        totalReclamos
-                                    )
-                                }}
-                            >
-                                <div className="reclamos-donut-centro" />
-                            </div>
-
-                            <ul className="reclamos-donut-leyenda">
-                                {resumenEstados.map((item) => (
-                                    <li key={item.estado}>
-                                        <span className={`reclamos-leyenda-punto ${item.claseColor}`}/>
-
-                                        <span className="reclamos-leyenda-label">
-                                            {item.estado}
-                                        </span>
-
-                                        <span className="reclamos-leyenda-valor">
-                                            {item.cantidad} (
-                                            {Math.round(
-                                                (item.cantidad / totalReclamos) * 100
-                                            )}
-                                            %)
-                                        </span>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-
-                        <div className="reclamos-categorias">
-                            <h3>Categorías más frecuentes</h3>
-
-                            <div className="reclamos-categorias-lista">
-                                {categoriasFrecuentes.map((cat) => {
-                                    const Icono = cat.icon;
-
-                                    return (
-                                        <div
-                                            className="reclamos-categoria-fila"
-                                            key={cat.nombre}
-                                        >
-                                            <span
-                                                className={`reclamos-categoria-icon ${cat.claseColor}`}
-                                            >
-                                                <Icono size={16} />
-                                            </span>
-
-                                            <span className="reclamos-categoria-nombre">
-                                                {cat.nombre}
-                                            </span>
-
-                                            <span className="reclamos-categoria-valor">
-                                                {cat.cantidad}
-                                            </span>
-                                        </div>
-                                    );
-                                })}
-                            </div>
-                        </div>
-                    </div>
-
-                    <button className="reclamos-btn-reportes">
-                        <BarChart3 size={15} />
-                        Ver reportes
-                    </button>
-                </Panel>
 
             </div>
 

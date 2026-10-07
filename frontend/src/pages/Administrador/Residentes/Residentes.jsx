@@ -56,13 +56,6 @@ const columnas = [
         render: (residente) => (
             <div className="residentes-tabla-acciones">
                 <button
-                    aria-label={`Editar residente ${residente.nombre}`}
-                    onClick={() => editarResidente(residente)}
-                >
-                    <Pencil size={16} />
-                </button>
-
-                <button
                     aria-label={`Más opciones para ${residente.nombre}`}
                     onClick={() => abrirOpciones(residente)}
                 >

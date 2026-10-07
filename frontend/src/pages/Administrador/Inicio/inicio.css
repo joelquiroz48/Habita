@@ -8,6 +8,17 @@
   --admin-fondo-proceso: var(--fondo-azul-suave);
   --admin-color-resuelto: var(--color-aviso-verde);
   --admin-fondo-resuelto: var(--fondo-verde-suave);
+
+  --reportes-color-purpura: #7c5cbf;
+  --reportes-color-estado-pendiente: var(--color-aviso-amarillo);
+  --reportes-color-estado-proceso: var(--color-aviso-azul);
+  --reportes-color-estado-resuelto: var(--color-aviso-verde);
+  --reportes-color-cat-mantenimiento: var(--color-evento);
+  --reportes-color-cat-limpieza: var(--color-aviso-azul);
+  --reportes-color-cat-ascensores: var(--reportes-color-purpura);
+  --reportes-color-cat-iluminacion: var(--color-aviso-amarillo);
+  --reportes-color-cat-seguridad: var(--color-vencimiento);
+  --reportes-color-cat-otros: var(--borde-secundario);
 }
 
 /* =========================
@@ -16,7 +27,7 @@
 
 .admin-resumen {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 14px;
   margin-bottom: 16px;
 }
@@ -53,15 +64,43 @@
   border-radius: 4px;
 }
 
+
+.reportes-btn-exportar {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  gap: 7px;
+  border: 1px solid var(--verde);
+  border-radius: 8px;
+  background: var(--blanco);
+  color: var(--verde);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 9px 14px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.reportes-btn-exportar:hover {
+  background: var(--celeste-claro);
+}
+
 /* =========================
           GRAFICOS
 ========================= */
 
-.admin-fila-superior {
+.admin-graficos {
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 1fr;
   gap: 14px;
   margin-bottom: 16px;
+}
+
+.admin-fila-superior {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
 }
 
 .admin-selector-anio {
@@ -265,117 +304,142 @@
   background: var(--admin-fondo-resuelto);
 }
 
+/* ---------------------------- */
+
+.reportes-punto {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.reportes-punto.recaudado { background: var(--verde); }
+.reportes-punto.pendiente { background: var(--borde-secundario); }
+.reportes-punto.estado-pendiente { background: var(--reportes-color-estado-pendiente); }
+.reportes-punto.estado-proceso { background: var(--reportes-color-estado-proceso); }
+.reportes-punto.estado-resuelto { background: var(--reportes-color-estado-resuelto); }
+.reportes-punto.cat-mantenimiento { background: var(--reportes-color-cat-mantenimiento); }
+.reportes-punto.cat-limpieza { background: var(--reportes-color-cat-limpieza); }
+.reportes-punto.cat-ascensores { background: var(--reportes-color-cat-ascensores); }
+.reportes-punto.cat-iluminacion { background: var(--reportes-color-cat-iluminacion); }
+.reportes-punto.cat-seguridad { background: var(--reportes-color-cat-seguridad); }
+.reportes-punto.cat-otros { background: var(--reportes-color-cat-otros); }
+
+.reportes-donut-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.reportes-donut {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.reportes-donut-centro {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: var(--blanco);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.reportes-donut-centro strong {
+  font-size: 19px;
+  color: var(--texto-principal);
+}
+
+.reportes-donut-centro span {
+  font-size: 10px;
+  color: var(--texto-secundario);
+}
+
+.reportes-donut-leyenda {
+  list-style: none;
+  width: 100%;
+}
+
+.reportes-donut-leyenda li {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 4px 0;
+  font-size: 12px;
+}
+
+.reportes-leyenda-label {
+  flex: 1;
+  color: var(--texto-secundario);
+}
+
+.reportes-leyenda-valor {
+  font-weight: 600;
+  color: var(--texto-principal);
+}
+
+.reportes-insight {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--separador);
+  font-size: 12px;
+  color: var(--texto-secundario);
+}
+
+.reportes-insight-flecha {
+  margin-left: auto;
+  color: var(--texto-icono);
+}
+
+
 /* =========================
-      TARJETAS INFERIORES
+      ACTIVIDAD + RESUMEN
 ========================= */
 
-.admin-fila-inferior {
+.reportes-inferior-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 16px;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
 }
 
-.admin-inferior-card {
-  display: flex;
-  gap: 12px;
-}
-
-.admin-inferior-icon {
-  width: 40px;
-  height: 40px;
-  min-width: 40px;
-  border-radius: 50%;
-  background: var(--fondo-icono);
-  color: var(--verde);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.admin-inferior-contenido {
+.reportes-actividad-texto {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  min-width: 0;
 }
 
-.admin-inferior-contenido h3 {
+.reportes-actividad-texto strong {
   font-size: 13px;
-  color: var(--texto-secundario);
+  color: var(--texto-principal);
   font-weight: 600;
-  margin-bottom: 2px;
-}
-
-.admin-inferior-contenido strong {
-  font-size: 14px;
-  color: var(--texto-principal);
-}
-
-.admin-inferior-contenido span {
-  font-size: 12px;
-  color: var(--texto-secundario);
-}
-
-.admin-btn-secundario {
-  width: fit-content;
-  border: 1px solid var(--borde-secundario);
-  border-radius: 7px;
-  background: var(--blanco);
-  color: var(--texto-verde);
-  font-size: 12px;
-  font-weight: 500;
-  padding: 6px 12px;
-  margin-top: 6px;
-  cursor: pointer;
-}
-
-.admin-btn-secundario:hover {
-  background: var(--celeste-claro);
-}
-
-/* --- documentos --- */
-
-.admin-documentos-lista {
-  display: flex;
-  flex-direction: column;
-}
-
-.admin-documento-fila {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  padding: 8px 0;
-  border-bottom: 1px solid var(--separador);
-}
-
-.admin-documento-fila:last-child {
-  border-bottom: none;
-}
-
-.admin-documento-icon {
-  width: 27px;
-  height: 27px;
-  min-width: 27px;
-  border-radius: 5px;
-  background: var(--fondo-documento-pdf);
-  color: var(--color-documento-pdf);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.admin-documento-nombre {
-  flex: 1;
-  font-size: 13px;
-  color: var(--texto-principal);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.admin-documento-fecha {
+.reportes-actividad-texto small {
   font-size: 12px;
   color: var(--texto-secundario);
+}
+
+.reportes-actividad-fecha {
+  font-size: 11px;
+  color: var(--texto-secundario);
   white-space: nowrap;
+}
+
+.reportes-tabla-resumen-valor {
+  font-weight: 600;
 }
 
 /* =========================

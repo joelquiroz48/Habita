@@ -20,25 +20,17 @@ import Panel from "../../../components/Panel/Panel";
        DATOS EJEMPLOS
 ========================== */}
 
-const tabs = ["General", "Expensas", "Pagos", "Comunicación", "Seguridad", "Integraciones"];
-
 const datosConsorcio = {
     nombre: "Torres del Parque",
-    cuit: "30-71234567-8",
     direccion: "Av. Siempre Viva 1234, CABA",
     telefono: "11 1234-5678",
     email: "administracion@torresdelparque.com.ar",
-    sitioWeb: "www.torresdelparque.com.ar",
 };
 
 const infoGeneral = [
     { label: "Fecha de inicio", valor: "01/01/2018" },
     { label: "Cantidad de unidades", valor: "96" },
     { label: "Cantidad de edificios", valor: "2" },
-    { label: "Administración", valor: "Administración Propia" },
-    { label: "Banco", valor: "Banco Galicia" },
-    { label: "CBU", valor: "0070001120000012345678" },
-    { label: "Alias", valor: "torresdelparque.consorcio" },
 ];
 
 const tarjetasConfig = [
@@ -64,33 +56,11 @@ const tarjetasConfig = [
         boton: "Gestionar categorías",
         botonIcon: ListChecks,
     },
-    {
-        icon: CreditCard,
-        titulo: "Medios de pago",
-        descripcion: "Configurá los medios de pago habilitados para los residentes.",
-        stats: [
-            { label: "Medios activos", valor: "4" },
-            { label: "Última actualización", valor: "15/08/2026" },
-        ],
-        boton: "Configurar medios",
-        botonIcon: CreditCard,
-    },
-    {
-        icon: Send,
-        titulo: "Plantillas de comunicación",
-        descripcion: "Creá y editá plantillas para comunicados y notificaciones.",
-        stats: [
-            { label: "Plantillas activas", valor: "8" },
-        ],
-        boton: "Gestionar plantillas",
-        botonIcon: FileText,
-    },
 ];
 
 const notificacionesIniciales = [
-    { id: 1, label: "Recibir resumen diario de pagos", descripcion: "Un resumen de los pagos recibidos cada día." },
-    { id: 2, label: "Recibir alertas de reclamos", descripcion: "Notificaciones cuando se crea un nuevo reclamo." },
-    { id: 3, label: "Recibir vencimientos próximos", descripcion: "Recordatorios de expensas próximas a vencer." },
+    { id: 1, label: "Recibir alertas de reclamos", descripcion: "Notificaciones cuando se crea un nuevo reclamo." },
+    { id: 2, label: "Recibir vencimientos próximos", descripcion: "Recordatorios de expensas próximas a vencer." },
 ];
 
 function Configuracion() {
@@ -112,44 +82,17 @@ function Configuracion() {
     return (
         <main className="configuracion">
 
-            {/* TABS */}
-
-            <div className="configuracion-tabs">
-                {tabs.map((tab, index) => (
-                    <button
-                        key={tab}
-                        className={`configuracion-tab ${index === 0 ? "activo" : ""}`}
-                    >
-                        {tab}
-                    </button>
-                ))}
-            </div>
-
             {/* DATOS + INFO GENERAL */}
 
             <div className="configuracion-fila-superior">
 
                 <Panel titulo="Datos del consorcio">
                     <div className="configuracion-datos-grid">
-                        <div className="configuracion-logo-col">
-                            <div className="configuracion-logo-placeholder">
-                                <Building2 size={32} />
-                            </div>
-
-                            <button className="configuracion-btn-secundario">
-                                Cambiar logo
-                            </button>
-                        </div>
 
                         <div className="configuracion-campos-grid">
                             <label>
                                 Nombre del consorcio
                                 <input type="text" defaultValue={datosConsorcio.nombre}/>
-                            </label>
-
-                            <label>
-                                CUIT
-                                <input type="text" defaultValue={datosConsorcio.cuit}/>
                             </label>
 
                             <label>
@@ -165,11 +108,6 @@ function Configuracion() {
                             <label>
                                 Email
                                 <input type="email" defaultValue={datosConsorcio.email}/>
-                            </label>
-
-                            <label>
-                                Sitio web
-                                <input type="text" defaultValue={datosConsorcio.sitioWeb}/>
                             </label>
                         </div>
                     </div>
@@ -188,11 +126,6 @@ function Configuracion() {
                             </div>
                         ))}
                     </div>
-
-                    <button className="configuracion-btn-secundario ancho">
-                        <Pencil size={15} />
-                        Editar información
-                    </button>
                 </Panel>
 
             </div>
@@ -268,11 +201,6 @@ function Configuracion() {
                             </label>
                         ))}
                     </div>
-
-                    <button className="configuracion-btn-secundario">
-                        <Bell size={15} />
-                        Configurar notificaciones
-                    </button>
                 </div>
             </Panel>
 

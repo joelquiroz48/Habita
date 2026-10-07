@@ -182,7 +182,6 @@ function Comunicados() {
             render: (item) => (
                 <span className="comunicados-fecha-celda">
                     <span>{item.fecha}</span>
-                    <small>por Admin</small>
                 </span>
             ),
         },
@@ -194,24 +193,6 @@ function Comunicados() {
             render: (item) => (
                 <span className={`comunicados-badge ${estadoBadgeClase(item.estado)}`}>
                     {item.estado}
-                </span>
-            ),
-        },
-        {
-            clave: "acciones",
-            titulo: "Acciones",
-            ancho: "0.9fr",
-            render: () => (
-                <span className="comunicados-tabla-acciones">
-                    <span aria-label="Ver comunicado">
-                        <Eye size={16} />
-                    </span>
-                    <span aria-label="Editar comunicado">
-                        <Pencil size={16} />
-                    </span>
-                    <span aria-label="Más opciones">
-                        <MoreVertical size={16} />
-                    </span>
                 </span>
             ),
         },

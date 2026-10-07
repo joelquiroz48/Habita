@@ -86,33 +86,6 @@
   box-sizing: border-box;
 }
 
-/* ---- tabs ---- */
-
-.reservas-tabs {
-  display: flex;
-  gap: 6px;
-  border-bottom: 1px solid var(--borde-secundario);
-  margin-bottom: 14px;
-}
-
-.reservas-tab {
-  border: none;
-  background: transparent;
-  color: var(--texto-secundario);
-  font-size: 13px;
-  font-weight: 500;
-  padding: 9px 6px;
-  cursor: pointer;
-  border-bottom: 2px solid transparent;
-  margin-bottom: -1px;
-}
-
-.reservas-tab.activo {
-  color: var(--verde);
-  font-weight: 600;
-  border-bottom-color: var(--verde);
-}
-
 /* ---- tabla ---- */
 
 .reservas-tabla .tabla-header,
@@ -152,21 +125,6 @@
   align-items: center;
   gap: 8px;
 }
-
-.reservas-icono {
-  width: 32px;
-  height: 32px;
-  min-width: 32px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.reservas-icono.sum { background: var(--fondo-verde-suave); color: var(--color-aviso-verde); }
-.reservas-icono.parrilla { background: var(--fondo-aviso-amarillo); color: var(--color-vencimiento); }
-.reservas-icono.gimnasio { background: var(--fondo-azul-suave); color: var(--color-aviso-azul); }
-.reservas-icono.sala { background: var(--reservas-fondo-purpura); color: var(--reservas-color-purpura); }
 
 .reservas-espacio-celda strong {
   font-size: 13px;
@@ -223,115 +181,11 @@
          PANELES
 ========================= */
 
-.reservas-paneles {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 14px;
-  width: 100%;
-  min-width: 0;
-  box-sizing: border-box;
-}
-
-/* ---- calendario ---- */
-
-.reservas-calendario-nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-
-.reservas-calendario-nav strong {
-  font-size: 13px;
-  color: var(--texto-principal);
-}
-
-.reservas-calendario-nav button {
-  border: none;
-  background: transparent;
-  color: var(--texto-secundario);
-  cursor: pointer;
-  display: flex;
-}
-
-.reservas-calendario-dias-nombre,
-.reservas-calendario-semana {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-}
-
-.reservas-calendario-dias-nombre span {
-  font-size: 10px;
-  color: var(--texto-secundario);
-  text-align: center;
-  padding-bottom: 6px;
-}
-
-.reservas-calendario-dia {
-  aspect-ratio: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  color: var(--texto-principal);
-  border-radius: 50%;
-}
-
-.reservas-calendario-dia.fuera {
-  color: var(--separador);
-}
-
-.reservas-calendario-dia.destacado {
-  background: var(--verde);
-  color: var(--blanco);
-  font-weight: 600;
-}
-
-/* ---- proxima reserva ---- */
-
-.reservas-proxima {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 12px;
-}
-
-.reservas-proxima-info {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.reservas-proxima-info strong {
-  font-size: 13px;
-  color: var(--texto-principal);
-  margin-bottom: 2px;
-}
-
-.reservas-proxima-info span {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 12px;
-  color: var(--texto-secundario);
-}
-
-.reservas-btn-detalle {
-  width: 100%;
-  border: 1px solid var(--borde-secundario);
-  border-radius: 8px;
-  background: var(--blanco);
-  color: var(--texto-principal);
-  font-size: 13px;
-  font-weight: 500;
-  padding: 9px;
-  cursor: pointer;
-}
-
-.reservas-btn-detalle:hover {
-  background: var(--fondo);
-}
-
 /* ---- espacios mas reservados ---- */
+
+.reservas-paneles {
+  margin-bottom: 15px;
+}
 
 .reservas-barras-lista {
   display: flex;
@@ -387,10 +241,6 @@
   .reservas-resumen {
     grid-template-columns: repeat(2, 1fr);
   }
-
-  .reservas-paneles {
-    grid-template-columns: 1fr;
-  }
 }
 
 @media (max-width: 800px) {
@@ -399,12 +249,6 @@
   }
 
   .reservas-resumen {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 600px) {
-  .reservas-paneles {
     grid-template-columns: 1fr;
   }
 }

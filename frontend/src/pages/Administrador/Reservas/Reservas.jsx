@@ -112,8 +112,6 @@ const reservas = [
     },
 ];
 
-const tabs = ["Todas", "Pendientes", "Confirmadas", "Canceladas"];
-
 const estadoPorTab = {
     "Pendientes": "Pendiente",
     "Confirmadas": "Confirmada",
@@ -197,13 +195,8 @@ const columnas = [
         titulo: "Espacio",
         ancho: "1.2fr",
         render: (reserva) => {
-            const Icono = iconosEspacio[reserva.espacio];
-
             return (
                 <span className="reservas-espacio-celda">
-                    <span className={`reservas-icono ${claseEspacio[reserva.espacio]}`}>
-                        <Icono size={16} />
-                    </span>
                     <span>
                         <strong>{reserva.espacio}</strong>
                         <small>{reserva.ubicacion}</small>
@@ -225,26 +218,9 @@ const columnas = [
         ),
     },
     { clave: "creada", titulo: "Creada el", ancho: "1fr", clase: "reservas-creada" },
-    {
-        clave: "acciones",
-        titulo: "Acciones",
-        ancho: "0.7fr",
-        render: () => (
-            <span className="reservas-tabla-acciones">
-                <button aria-label="Ver reserva">
-                    <Eye size={16} />
-                </button>
-                <button aria-label="Más opciones">
-                    <MoreVertical size={16} />
-                </button>
-            </span>
-        ),
-    },
 ];
 
 function Reservas() {
-
-    const [tabActiva, setTabActiva] = useState("Todas");
 
     useEffect(() => {
         document.title = "Habita | Reservas";
@@ -277,6 +253,43 @@ function Reservas() {
                 })}
             </section>
 
+            {/* PANELES DE APOYO */}
+
+            <section className="reservas-paneles">
+
+                {/* ESPACIOS MAS RESERVADOS */}
+
+                <Panel titulo="Espacios más reservados">
+                    <div className="reservas-barras-lista">
+                        {espaciosMasReservados.map((espacio) => (
+                            <div className="reservas-barra-fila" key={espacio.nombre}>
+                                <div className="reservas-barra-header">
+                                    <span>{espacio.nombre}</span>
+                                    <strong>{espacio.cantidad}</strong>
+                                </div>
+
+                                <div className="reservas-barra-pista">
+                                    <div
+                                        className="reservas-barra-relleno"
+                                        style={{
+                                            width: `${
+                                                (espacio.cantidad / maxReservasEspacio) * 100
+                                            }%`
+                                        }}
+                                    />
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    <a href="#" className="reservas-link-reporte">
+                        Ver reporte completo
+                        <ChevronRight size={14} />
+                    </a>
+                </Panel>
+
+            </section>
+
             {/* FILTROS */}
 
             <div className="reservas-filtros">
@@ -306,137 +319,13 @@ function Reservas() {
 
             <div className="reservas-contenido">
 
-                <section className="reservas-listado">
+                <Tabla
+                    columnas={columnas}
+                    datos={reservasFiltradas}
+                    etiqueta="reservas"
+                    className="reservas-tabla"
+                />
 
-                    <div className="reservas-tabs">
-                        {tabs.map((tab) => (
-                            <button
-                                key={tab}
-                                className={`reservas-tab ${tab === tabActiva ? "activo" : ""}`}
-                                onClick={() => setTabActiva(tab)}
-                            >
-                                {tab}
-                            </button>
-                        ))}
-                    </div>
-
-                    <Tabla
-                        columnas={columnas}
-                        datos={reservasFiltradas}
-                        etiqueta="reservas"
-                        className="reservas-tabla"
-                    />
-
-                </section>
-
-                {/* PANELES DE APOYO */}
-
-                <section className="reservas-paneles">
-
-                    {/* CALENDARIO */}
-
-                    <Panel titulo="Calendario de reservas">
-                        <div className="reservas-calendario-nav">
-                            <button aria-label="Mes anterior">
-                                <ChevronLeft size={16} />
-                            </button>
-
-                            <strong>Mayo 2024</strong>
-
-                            <button aria-label="Mes siguiente">
-                                <ChevronRight size={16} />
-                            </button>
-                        </div>
-
-                        <div className="reservas-calendario-dias-nombre">
-                            {["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"].map((d) => (
-                                <span key={d}>{d}</span>
-                            ))}
-                        </div>
-
-                        {semanasCalendario.map((semana, i) => (
-                            <div className="reservas-calendario-semana" key={i}>
-                                {semana.map((celda, j) => (
-                                    <span
-                                        key={j}
-                                        className={`reservas-calendario-dia ${
-                                            celda.fuera ? "fuera" : ""
-                                        } ${celda.destacado ? "destacado" : ""}`}
-                                    >
-                                        {celda.dia}
-                                    </span>
-                                ))}
-                            </div>
-                        ))}
-                    </Panel>
-
-                    {/* PROXIMA RESERVA */}
-
-                    <Panel titulo="Próxima reserva">
-                        <div className="reservas-proxima">
-                            <span className={`reservas-icono ${claseEspacio[proximaReserva.espacio]}`}>
-                                <Armchair size={18} />
-                            </span>
-
-                            <div className="reservas-proxima-info">
-                                <strong>
-                                    {proximaReserva.espacio} - {proximaReserva.ubicacion}
-                                </strong>
-
-                                <span>
-                                    <Calendar size={13} />
-                                    {proximaReserva.fecha}
-                                </span>
-
-                                <span>
-                                    <Clock3 size={13} />
-                                    {proximaReserva.horario}
-                                </span>
-
-                                <span>
-                                    <User size={13} />
-                                    {proximaReserva.residente} (Unidad {proximaReserva.unidad})
-                                </span>
-                            </div>
-                        </div>
-
-                        <button className="reservas-btn-detalle">
-                            Ver detalle
-                        </button>
-                    </Panel>
-
-                    {/* ESPACIOS MAS RESERVADOS */}
-
-                    <Panel titulo="Espacios más reservados">
-                        <div className="reservas-barras-lista">
-                            {espaciosMasReservados.map((espacio) => (
-                                <div className="reservas-barra-fila" key={espacio.nombre}>
-                                    <div className="reservas-barra-header">
-                                        <span>{espacio.nombre}</span>
-                                        <strong>{espacio.cantidad}</strong>
-                                    </div>
-
-                                    <div className="reservas-barra-pista">
-                                        <div
-                                            className="reservas-barra-relleno"
-                                            style={{
-                                                width: `${
-                                                    (espacio.cantidad / maxReservasEspacio) * 100
-                                                }%`
-                                            }}
-                                        />
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-
-                        <a href="#" className="reservas-link-reporte">
-                            Ver reporte completo
-                            <ChevronRight size={14} />
-                        </a>
-                    </Panel>
-
-                </section>
 
             </div>
 
