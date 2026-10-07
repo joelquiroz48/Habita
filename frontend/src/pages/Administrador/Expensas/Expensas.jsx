@@ -8,7 +8,6 @@ import {
     Search,
     Eye,
     MoreVertical,
-    ChevronRight,
     Pencil,
     Download,
     Trash2,
@@ -168,13 +167,6 @@ function Expensas() {
     
     const columnas = [
         {
-            clave: "indicador",
-            titulo: "",
-            ancho: "20px",
-            clase: "expensas-chevron",
-            render: (item) => item.periodo === periodoSeleccionado && <ChevronRight size={15} />,
-        },
-        {
             clave: "periodo",
             titulo: "Período",
             ancho: "1fr",
@@ -207,18 +199,6 @@ function Expensas() {
                 </span>
             ),
         },
-        {
-            clave: "acciones",
-            titulo: "Acciones",
-            ancho: "0.7fr",
-            render: () => (
-                <div className="expensas-tabla-acciones">
-                    <button>
-                        <MoreVertical size={16} />
-                    </button>
-                </div>
-            ),
-        },
     ];
 
     return (
@@ -249,117 +229,103 @@ function Expensas() {
             ========================= */}
 
             <div className="expensas-tabs">
-                <button className="expensas-tab activo">Listado de expensas</button>
-                <button className="expensas-tab">Conceptos y categorías</button>
+                <button className="expensas-tab activo">Expensas</button>
+                <button className="expensas-tab">Residentes</button>
             </div>
 
-            <div className="expensas-contenido">
+            {/* LISTADO */}
 
-                {/* LISTADO */}
+            <div className="expensas-filtros">
+                <button className="expensas-filtro">
+                    <Calendar size={15} />
+                    Todos los períodos
+                    <ChevronDown size={15} />
+                </button>
 
-                <section className="expensas-listado">
+                <button className="expensas-filtro">
+                    Todos los estados
+                    <ChevronDown size={15} />
+                </button>
 
-                    <div className="expensas-filtros">
-                        <button className="expensas-filtro">
-                            <Calendar size={15} />
-                            Todos los períodos
-                            <ChevronDown size={15} />
-                        </button>
+                <div className="expensas-buscador">
+                    <Search size={16} />
+                    <input type="text" placeholder="Buscar período..." />
+                </div>
+            </div>
 
-                        <button className="expensas-filtro">
-                            Todos los estados
-                            <ChevronDown size={15} />
-                        </button>
+            <Tabla
+                columnas={columnas}
+                datos={expensas}
+                etiqueta="períodos"
+                className="expensas-tabla"
+                onFilaClick={(item) => setPeriodoSeleccionado(item.periodo)}
+                seleccionable
+                filaSeleccionada={detalle}
+            />
 
-                        <div className="expensas-buscador">
-                            <Search size={16} />
-                            <input type="text" placeholder="Buscar período..." />
+            {/* DETALLE */}
+
+            <Panel
+                className="expensas-detalle"
+                titulo={`Detalle de ${detalle.periodo}`}
+                accion={
+                    <span className={`expensas-badge ${badgeClase(detalle.estado)}`}>
+                        {detalle.estado}
+                    </span>
+                }
+            >
+
+                <p className="expensas-detalle-linea">
+                    Vencimiento: <strong>{detalle.vencimiento}</strong>
+                </p>
+                <p className="expensas-detalle-linea">
+                    Estado: <strong>{detalle.estado}</strong>
+                </p>
+
+                <div className="expensas-detalle-columnas">
+                    <section className="expensas-detalle-seccion">
+                        <h3>Resumen</h3>
+                        <div className="expensas-resumen-fila">
+                            <span>Importe total</span>
+                            <span>{formatearMonto(detalle.importe)}</span>
                         </div>
-                    </div>
-
-                    <Tabla
-                        columnas={columnas}
-                        datos={expensas}
-                        etiqueta="períodos"
-                        className="expensas-tabla"
-                        onFilaClick={(item) => setPeriodoSeleccionado(item.periodo)}
-                        claseFila={(item) => item.periodo === periodoSeleccionado ? "seleccionada" : ""}
-                    />
-
-                </section>
-
-                {/* DETALLE */}
-
-                <Panel
-                    className="expensas-detalle"
-                    titulo={`Detalle de ${detalle.periodo}`}
-                    accion={
-                        <span className={`expensas-badge ${badgeClase(detalle.estado)}`}>
-                            {detalle.estado}
-                        </span>
-                    }
-                >
-
-                    <p className="expensas-detalle-linea">
-                        Vencimiento: <strong>{detalle.vencimiento}</strong>
-                    </p>
-                    <p className="expensas-detalle-linea">
-                        Estado: <strong>{detalle.estado}</strong>
-                    </p>
-
-                    <div className="expensas-detalle-columnas">
-                        <section className="expensas-detalle-seccion">
-                            <h3>Resumen</h3>
-                            <div className="expensas-resumen-fila">
-                                <span>Importe total</span>
-                                <span>{formatearMonto(detalle.importe)}</span>
-                            </div>
-                            <div className="expensas-resumen-fila">
-                                <span>Recaudado</span>
-                                <span>{formatearMonto(detalle.recaudado)}</span>
-                            </div>
-                            <div className="expensas-resumen-fila">
-                                <span>Pendiente</span>
-                                <span className="expensas-pendiente">{formatearMonto(pendiente)}</span>
-                            </div>
-                            <div className="expensas-resumen-fila">
-                                <span>Porcentaje recaudado</span>
-                                <span className="expensas-porcentaje">{detalle.porcentaje}%</span>
-                            </div>
-                        </section>
-
-                        <section className="expensas-detalle-seccion">
-                            <h3>Conceptos</h3>
-                            {detalle.conceptos.map((concepto) => (
-                                <div className="expensas-resumen-fila" key={concepto.nombre}>
-                                    <span>{concepto.nombre}</span>
-                                    <span>{formatearMonto(concepto.monto)}</span>
-                                </div>
-                            ))}
-                        </section>
-                    </div>
-
-                    <section className="expensas-detalle-acciones">
-                        <h3>Acciones</h3>
-                        <div className="expensas-acciones-lista">
-                            <button className="expensas-btn-accion principal">
-                                <Pencil size={15} />
-                                Editar expensa
-                            </button>
-                            <button className="expensas-btn-accion secundario">
-                                <Download size={15} />
-                                Descargar boleta
-                            </button>
-                            <button className="expensas-btn-accion peligro">
-                                <Trash2 size={15} />
-                                Anular expensa
-                            </button>
+                        <div className="expensas-resumen-fila">
+                            <span>Recaudado</span>
+                            <span>{formatearMonto(detalle.recaudado)}</span>
+                        </div>
+                        <div className="expensas-resumen-fila">
+                            <span>Pendiente</span>
+                            <span className="expensas-pendiente">{formatearMonto(pendiente)}</span>
+                        </div>
+                        <div className="expensas-resumen-fila">
+                            <span>Porcentaje recaudado</span>
+                            <span className="expensas-porcentaje">{detalle.porcentaje}%</span>
                         </div>
                     </section>
 
-                </Panel>
+                    <section className="expensas-detalle-seccion">
+                        <h3>Conceptos</h3>
+                        {detalle.conceptos.map((concepto) => (
+                            <div className="expensas-resumen-fila" key={concepto.nombre}>
+                                <span>{concepto.nombre}</span>
+                                <span>{formatearMonto(concepto.monto)}</span>
+                            </div>
+                        ))}
+                    </section>
+                </div>
 
-            </div>
+                <section className="expensas-detalle-acciones">
+                    <h3>Acciones</h3>
+                    <div className="expensas-acciones-lista">
+                        <button className="expensas-btn-accion secundario">
+                            <Download size={15} />
+                            Descargar boleta
+                        </button>
+                    </div>
+                </section>
+
+            </Panel>
+
 
         </main>
     );

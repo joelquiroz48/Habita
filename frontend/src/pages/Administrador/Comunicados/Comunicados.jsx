@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import {
     Calendar,
     ChevronDown,
-    ChevronRight,
     Search,
     Plus,
     Eye,
@@ -145,16 +144,6 @@ function Comunicados() {
 
     const columnas = [
         {
-            clave: "indicador",
-            titulo: "",
-            ancho: "20px",
-            clase: "comunicados-indicador",
-            render: (item) =>
-                seleccionado.id === item.id && detalleAbierto
-                    ? <ChevronRight size={15} />
-                    : null,
-        },
-        {
             clave: "titulo",
             titulo: "Título",
             ancho: "2.2fr",
@@ -175,7 +164,6 @@ function Comunicados() {
             titulo: (
                 <span className="comunicados-th-fecha">
                     Fecha de publicación
-                    <ArrowDown size={13} />
                 </span>
             ),
             ancho: "1.3fr",
@@ -238,11 +226,8 @@ function Comunicados() {
                         etiqueta="comunicados"
                         className="comunicados-tabla"
                         onFilaClick={abrirDetalle}
-                        claseFila={(item) =>
-                            seleccionado.id === item.id && detalleAbierto
-                                ? "seleccionada"
-                                : ""
-                        }
+                        seleccionable
+                        filaSeleccionada={detalleAbierto ? seleccionado : null}
                     />
 
                 </section>

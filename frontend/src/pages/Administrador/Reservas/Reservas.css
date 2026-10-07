@@ -1,6 +1,4 @@
 .reservas {
-  padding: 28px 32px;
-
   --reservas-color-purpura: #7c5cbf;
   --reservas-fondo-purpura: #efe9fb;
 }
@@ -73,69 +71,27 @@
         CONTENIDO
 ========================= */
 
-.pagina-administrador .reservas-contenido {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.pagina-administrador .reservas-listado,
-.pagina-administrador .reservas-tabla {
-  width: 100%;
-  min-width: 0;
-  box-sizing: border-box;
-}
-
 /* ---- tabla ---- */
-
-.reservas-tabla .tabla-header,
-.reservas-tabla .tabla-fila {
-  gap: 10px;
-  padding: 13px 18px;
-  width: 100%;
-  box-sizing: border-box;
-  min-width: 880px;
-}
-
-.reservas-tabla .tabla-header > span {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--texto-secundario);
-}
-
-.reservas-fecha-celda {
-  display: flex;
-  flex-direction: column;
-  color: var(--texto-principal);
-}
 
 .reservas-fecha-celda span {
   display: flex;
   flex-direction: column;
-  color: var(--texto-principal);
 }
 
 .reservas-fecha-celda small {
-  color: var(--texto-secundario);
   font-size: 11px;
-}
-
-.reservas-espacio-celda {
-  display: flex;
-  align-items: center;
-  gap: 8px;
 }
 
 .reservas-espacio-celda strong {
   font-size: 13px;
-  color: var(--texto-principal);
   display: block;
 }
 
 .reservas-espacio-celda small {
-  color: var(--texto-secundario);
   font-size: 11px;
 }
+
+/* ----------- BADGE ----------- */
 
 .reservas-badge {
   width: fit-content;
@@ -148,34 +104,6 @@
 .reservas-badge-confirmada { color: var(--color-aviso-verde); background: var(--fondo-verde-suave); }
 .reservas-badge-pendiente { color: var(--color-aviso-amarillo); background: var(--fondo-aviso-amarillo); }
 .reservas-badge-cancelada { color: var(--color-documento-pdf); background: var(--fondo-documento-pdf); }
-
-.reservas-creada {
-  color: var(--texto-secundario);
-  font-size: 12px;
-}
-
-.reservas-tabla-acciones {
-  display: flex;
-  gap: 10px;
-}
-
-.reservas-tabla-acciones button {
-  border: none;
-  background: transparent;
-  color: var(--texto-icono);
-  cursor: pointer;
-  display: flex;
-  padding: 0;
-}
-
-.reservas-tabla .tabla-paginacion {
-  padding: 0 18px 13px;
-  margin-top: 16px;
-}
-
-.reservas-tabla .tabla-paginacion-info {
-  font-size: 12px;
-}
 
 /* =========================
          PANELES
@@ -238,9 +166,6 @@
 ========================= */
 
 @media (max-width: 1000px) {
-  .reservas-resumen {
-    grid-template-columns: repeat(2, 1fr);
-  }
 }
 
 @media (max-width: 800px) {

@@ -100,59 +100,6 @@
   gap: 16px;
 }
 
-.comunicados-listado,
-.comunicados-tabla,
-.comunicados-detalle {
-  width: 100%;
-  min-width: 0;
-  box-sizing: border-box;
-}
-
-.comunicados-tabla .tabla-header,
-.comunicados-tabla .tabla-fila {
-  gap: 12px;
-  padding: 14px 20px;
-  width: 100%;
-  box-sizing: border-box;
-  min-width: 820px;
-}
-
-.comunicados-tabla .tabla-header > span {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--texto-secundario);
-  text-align: left;
-}
-
-.comunicados-th-fecha {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.comunicados-tabla .tabla-fila {
-  background: transparent;
-}
-
-.comunicados-tabla .tabla-fila.seleccionada {
-  background: var(--celeste-claro);
-}
-
-.comunicados-indicador {
-  display: flex;
-  align-items: center;
-  color: var(--verde);
-}
-
-.comunicados-titulo-celda {
-  min-width: 0;
-  color: var(--texto-principal);
-  font-weight: 600;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
 .comunicados-tipo-badge {
   width: fit-content;
   padding: 4px 10px;
@@ -168,16 +115,6 @@
 .comunicados-tipo-badge.recordatorio { background: var(--comunicados-fondo-recordatorio); color: var(--comunicados-color-recordatorio); }
 .comunicados-tipo-badge.novedad { background: var(--comunicados-fondo-novedad); color: var(--comunicados-color-novedad); }
 
-.comunicados-fecha-celda {
-  display: flex;
-  flex-direction: column;
-}
-
-.comunicados-fecha-celda small {
-  color: var(--texto-secundario);
-  font-size: 11px;
-}
-
 .comunicados-badge {
   width: fit-content;
   padding: 4px 10px;
@@ -189,21 +126,6 @@
 .comunicados-badge-publicado { color: var(--comunicados-color-publicado); background: var(--comunicados-fondo-publicado); }
 .comunicados-badge-programado { color: var(--comunicados-color-programado); background: var(--comunicados-fondo-programado); }
 .comunicados-badge-borrador { color: var(--comunicados-color-borrador); background: var(--comunicados-fondo-borrador); }
-
-.comunicados-tabla-acciones {
-  display: flex;
-  gap: 10px;
-  color: var(--texto-icono);
-}
-
-.comunicados-tabla .tabla-paginacion {
-  padding: 0 20px 14px;
-  margin-top: 16px;
-}
-
-.comunicados-tabla .tabla-paginacion-info {
-  font-size: 12px;
-}
 
 /* =========================
       PANEL DE DETALLE

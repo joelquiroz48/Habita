@@ -5,18 +5,12 @@ import {
     Calendar,
     SlidersHorizontal,
     Upload,
-    ArrowDown,
     ChevronDown,
     Download,
-    MoreVertical,
-    ChevronRight,
-    HardDrive,
-    FolderPlus,
-    FileText,
+    Eye,
 } from "lucide-react";
 
 import "./Documentos.css";
-import Panel from "../../../components/Panel/Panel";
 import Tabla from "../../../components/Tabla/Tabla";
 
 {/* =========================
@@ -130,30 +124,11 @@ const documentos = [
     },
 ];
 
-const categorias = [
-    { nombre: "Reglamentos", cantidad: 6, clase: "reglamentos" },
-    { nombre: "Actas", cantidad: 12, clase: "actas" },
-    { nombre: "Finanzas", cantidad: 18, clase: "finanzas" },
-    { nombre: "Contratos", cantidad: 9, clase: "contratos" },
-    { nombre: "Mantenimiento", cantidad: 11, clase: "mantenimiento" },
-    { nombre: "Seguros", cantidad: 4, clase: "seguros" },
-    { nombre: "Planos", cantidad: 5, clase: "planos" },
-    { nombre: "Otros", cantidad: 7, clase: "otros" },
-];
-
-const almacenamiento = { usado: "2.4 GB", total: "10 GB", porcentaje: 24 };
-
-const accionesRapidas = [
-    { icon: Upload, label: "Subir documento" },
-    { icon: FolderPlus, label: "Nueva carpeta" },
-    { icon: FileText, label: "Solicitar documento" },
-];
-
 const columnas = [
     {
         clave: "nombre",
         titulo: "Nombre",
-        ancho: "2fr",
+        ancho: "1.5fr",
         render: (doc) => (
             <span className="documentos-nombre-celda">
                 <span className="documentos-nombre-texto">
@@ -174,18 +149,6 @@ const columnas = [
         ),
     },
     { clave: "fecha", titulo: "Fecha", ancho: "0.8fr", clase: "documentos-fecha" },
-    {
-        clave: "acciones",
-        titulo: "Acciones",
-        ancho: "0.7fr",
-        render: () => (
-            <span className="documentos-tabla-acciones">
-                <button aria-label="Más opciones">
-                    <MoreVertical size={16} />
-                </button>
-            </span>
-        ),
-    },
 ];
 
 function Documentos() {
@@ -232,20 +195,18 @@ function Documentos() {
 
             {/* CONTENIDO */}
 
-            <div className="documentos-contenido">
+            <Tabla
+                columnas={columnas}
+                datos={documentos}
+                etiqueta="documentos"
+                className="documentos-tabla"
+                mostrarAcciones
+                opcionesAcciones={[
+                    { label: "Vista previa", icon: Eye },
+                    { label: "Descargar", icon: Download },
+                ]}
+            />
 
-                <section className="documentos-listado">
-
-                    <Tabla
-                        columnas={columnas}
-                        datos={documentos}
-                        etiqueta="documentos"
-                        className="documentos-tabla"
-                    />
-
-                </section>
-
-            </div>
 
         </main>
     );

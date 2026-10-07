@@ -279,6 +279,7 @@ function Reclamos() {
                         datos={reclamos}
                         etiqueta="reclamos"
                         className="reclamos-tabla"
+                        seleccionable
                     />
 
                 </section>

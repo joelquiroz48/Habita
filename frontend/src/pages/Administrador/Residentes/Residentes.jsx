@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import {Search, ChevronDown, Plus, Pencil, MoreVertical} from "lucide-react";
+import { Search, ChevronDown, Plus, Pencil } from "lucide-react";
 
 import "./Residentes.css";
 import Tabla from "../../../components/Tabla/Tabla";
@@ -47,21 +47,6 @@ const columnas = [
             <span className={`residentes-badge ${badgeClase(residente.estado)}`}>
                 {residente.estado}
             </span>
-        )
-    },
-    {
-        clave: "acciones",
-        titulo: "Acciones",
-        ancho: "90px",
-        render: (residente) => (
-            <div className="residentes-tabla-acciones">
-                <button
-                    aria-label={`Más opciones para ${residente.nombre}`}
-                    onClick={() => abrirOpciones(residente)}
-                >
-                    <MoreVertical size={16} />
-                </button>
-            </div>
         )
     }
 ];
@@ -112,6 +97,10 @@ function Residentes() {
                 datos={residentes}
                 etiqueta="residentes"
                 className="residentes-tabla"
+                mostrarAcciones
+                opcionesAcciones={[
+                    { label: "Editar", icon: Pencil },
+                ]}
             />
 
         </main>

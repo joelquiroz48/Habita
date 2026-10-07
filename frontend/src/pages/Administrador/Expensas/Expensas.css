@@ -60,20 +60,6 @@
     CONTENIDO (listado + detalle)
 ========================= */
 
-.pagina-administrador .expensas-contenido {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.pagina-administrador .expensas-listado,
-.pagina-administrador .expensas-tabla,
-.pagina-administrador .expensas-detalle {
-  width: 100%;
-  min-width: 0;
-  box-sizing: border-box;
-}
-
 /* ---- listado ---- */
 
 .expensas-filtros {
@@ -118,37 +104,7 @@
   color: var(--texto-principal);
 }
 
-.expensas-tabla .tabla-header,
-.expensas-tabla .tabla-fila {
-  gap: 10px;
-  padding: 14px 18px;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.expensas-tabla .tabla-header span {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--texto-secundario);
-  text-align: left;
-}
-
-.expensas-tabla .tabla-fila {
-  background: transparent;
-}
-
-.expensas-tabla .tabla-fila.seleccionada {
-  background: var(--celeste-claro);
-}
-
-.expensas-chevron {
-  color: var(--verde);
-  display: flex;
-}
-
-.expensas-periodo {
-  font-weight: 600;
-}
+/* TABLA */
 
 .expensas-badge {
   width: fit-content;
@@ -168,22 +124,11 @@
   background: var(--fondo-verde-suave) !important;
 }
 
-.expensas-tabla-acciones {
-  display: flex;
-  gap: 10px;
-  color: var(--texto-icono);
-}
-
-.expensas-tabla .tabla-paginacion {
-  padding: 0 18px 14px;
-  margin-top: 16px;
-}
-
-.expensas-tabla .tabla-paginacion-info {
-  font-size: 12px;
-}
-
 /* ---- panel de detalle ---- */
+
+.expensas-detalle {
+  margin-top: 15px;
+}
 
 .expensas-detalle-linea {
   font-size: 12px;
@@ -217,12 +162,6 @@
 
 .expensas-detalle-acciones {
   margin-top: 18px;
-}
-
-.expensas-acciones-lista {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
 }
 
 .expensas-resumen-fila {
@@ -261,16 +200,6 @@
   cursor: pointer;
 }
 
-.expensas-btn-accion.principal {
-  border: none;
-  background: var(--verde);
-  color: var(--blanco);
-}
-
-.expensas-btn-accion.principal:hover {
-  background: var(--verde-hover);
-}
-
 .expensas-btn-accion.secundario {
   border: 1px solid var(--borde-secundario);
   background: var(--blanco);
@@ -278,17 +207,7 @@
 }
 
 .expensas-btn-accion.secundario:hover {
-  background: var(--fondo);
-}
-
-.expensas-btn-accion.peligro {
-  border: 1px solid var(--color-documento-pdf);
-  background: var(--blanco);
-  color: var(--color-documento-pdf);
-}
-
-.expensas-btn-accion.peligro:hover {
-  background: var(--fondo-documento-pdf);
+  background: var(--celeste-claro);
 }
 
 /* =========================

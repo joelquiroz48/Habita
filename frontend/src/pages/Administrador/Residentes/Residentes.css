@@ -69,16 +69,13 @@
           TABLA
 ========================= */
 
-.residentes-nombre {
-  font-weight: 600;
-}
-
 .residentes-email {
-  color: var(--texto-secundario);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+/* -------- BADGE --------- */
 
 .residentes-badge {
   width: fit-content;
@@ -97,59 +94,6 @@
   background: var(--fondo-aviso-amarillo);
 }
 
-.residentes-tabla-acciones {
-  display: flex;
-  gap: 6px;
-}
-
-.residentes-tabla-acciones button {
-  border: none;
-  background: transparent;
-  color: var(--texto-icono);
-  cursor: pointer;
-  display: flex;
-  padding: 4px;
-}
-
-.residentes-tabla-acciones button:hover {
-  color: var(--texto-principal);
-}
-
 /* =========================
         RESPONSIVE
 ========================= */
-
-@media (max-width: 900px) {
-  .residentes {
-    padding: 20px;
-  }
-
-  .residentes-acciones {
-    flex-wrap: wrap;
-  }
-
-  .residentes-tabla .tabla-header,
-  .residentes-tabla .tabla-fila {
-    grid-template-columns: 1fr 1fr !important;
-    row-gap: 4px;
-  }
-
-  .residentes-tabla .tabla-header span:nth-child(3),
-  .residentes-tabla .tabla-header span:nth-child(4) {
-    display: none;
-  }
-
-  .residentes-tabla .tabla-fila .residentes-email,
-  .residentes-tabla .tabla-fila span:nth-child(4) {
-    display: none;
-  }
-
-  .residentes-tabla .tabla-paginacion {
-    flex-wrap: wrap;
-  }
-
-  .residentes-tabla .tabla-paginacion-info {
-    margin-left: 0;
-    width: 100%;
-  }
-}

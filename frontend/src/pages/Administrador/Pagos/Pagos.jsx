@@ -9,7 +9,6 @@ import {
     Search,
     Eye,
     MoreVertical,
-    ChevronRight,
     X,
     CreditCard,
     Landmark,
@@ -143,14 +142,6 @@ function Pagos() {
     }
 
     const columnas = [
-        {
-            clave: "indicador",
-            titulo: "",
-            ancho: "20px",
-            render: (pago) => pagoSeleccionado.transaccion === pago.transaccion && detalleAbierto
-                ? <ChevronRight size={15} />
-                : null,
-        },
         { clave: "fecha", titulo: "Fecha", ancho: "0.9fr" },
         { clave: "residente", titulo: "Residente", ancho: "1.1fr", clase: "pagos-residente" },
         { clave: "unidad", titulo: "Unidad", ancho: "0.6fr" },
@@ -238,11 +229,8 @@ function Pagos() {
                         etiqueta="pagos"
                         className="pagos-tabla"
                         onFilaClick={abrirDetalle}
-                        claseFila={(pago) =>
-                            pagoSeleccionado.transaccion === pago.transaccion && detalleAbierto
-                                ? "seleccionada"
-                                : ""
-                        }
+                        seleccionable
+                        filaSeleccionada={detalleAbierto ? pagoSeleccionado : null}
                     />
 
                 </section>

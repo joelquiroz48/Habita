@@ -73,16 +73,13 @@
           TABLA
 ========================= */
 
-.unidades-nombre {
-  font-weight: 600;
-}
-
 .unidades-responsable {
-  color: var(--texto-secundario);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+/* -------- BADGE --------- */
 
 .unidades-badge {
   width: fit-content;
@@ -102,60 +99,7 @@
   background: var(--fondo-azul-suave);
 }
 
-.unidades-tabla-acciones {
-  display: flex;
-  gap: 6px;
-}
-
-.unidades-tabla-acciones button {
-  border: none;
-  background: transparent;
-  color: var(--texto-icono);
-  cursor: pointer;
-  display: flex;
-  padding: 4px;
-}
-
-.unidades-tabla-acciones button:hover {
-  color: var(--texto-principal);
-}
-
 /* =========================
         RESPONSIVE
 ========================= */
 
-@media (max-width: 900px) {
-  .unidades {
-    padding: 20px;
-  }
-
-  .unidades-acciones {
-    flex-wrap: wrap;
-  }
-
-  .unidades-tabla .tabla-header,
-  .unidades-tabla .tabla-fila {
-    grid-template-columns: 1fr 1fr !important;
-    row-gap: 4px;
-    min-width: 0;
-  }
-
-  .unidades-tabla .tabla-header > span:nth-child(3),
-  .unidades-tabla .tabla-header > span:nth-child(4) {
-    display: none;
-  }
-
-  .unidades-tabla .tabla-fila > span:nth-child(3),
-  .unidades-tabla .tabla-fila > span.unidades-responsable {
-    display: none;
-  }
-
-  .unidades-tabla .tabla-paginacion {
-    flex-wrap: wrap;
-  }
-
-  .unidades-tabla .tabla-paginacion-info {
-    margin-left: 0;
-    width: 100%;
-  }
-}

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
     Calendar,
     Clock,
@@ -6,16 +6,7 @@ import {
     XCircle,
     ChevronDown,
     Search,
-    Eye,
-    MoreVertical,
-    ChevronLeft,
     ChevronRight,
-    Armchair,
-    Flame,
-    Dumbbell,
-    Users,
-    Clock3,
-    User,
 } from "lucide-react";
 
 import "./Reservas.css";
@@ -33,20 +24,6 @@ const kpis = {
     pendientes: 5,
     confirmadas: 21,
     canceladas: 2,
-};
-
-const iconosEspacio = {
-    "SUM": Armchair,
-    "Parrilla": Flame,
-    "Gimnasio": Dumbbell,
-    "Sala de reuniones": Users,
-};
-
-const claseEspacio = {
-    "SUM": "sum",
-    "Parrilla": "parrilla",
-    "Gimnasio": "gimnasio",
-    "Sala de reuniones": "sala",
 };
 
 const reservas = [
@@ -111,25 +88,6 @@ const reservas = [
         creada: "27/08/2026 12:05",
     },
 ];
-
-const estadoPorTab = {
-    "Pendientes": "Pendiente",
-    "Confirmadas": "Confirmada",
-    "Canceladas": "Cancelada",
-};
-
-const semanasCalendario = [
-    [{ dia: 29, fuera: true }, { dia: 30, fuera: true }, { dia: 1 }, { dia: 2 }, { dia: 3 }, { dia: 4 }, { dia: 5 }],
-    [{ dia: 6 }, { dia: 7 }, { dia: 8 }, { dia: 9 }, { dia: 10 }, { dia: 11 }, { dia: 12 }],
-    [{ dia: 13 }, { dia: 14 }, { dia: 15 }, { dia: 16 }, { dia: 17 }, { dia: 18 }, { dia: 19 }],
-    [{ dia: 20 }, { dia: 21 }, { dia: 22 }, { dia: 23 }, { dia: 24 }, { dia: 25, destacado: true }, { dia: 26 }],
-    [{ dia: 27 }, { dia: 28 }, { dia: 29 }, { dia: 30 }, { dia: 31 }, { dia: 1, fuera: true }, { dia: 2, fuera: true }],
-];
-
-const proximaReserva = {
-    espacio: "SUM", ubicacion: "Planta baja", fecha: "25/05/2024",
-    horario: "18:00 - 22:00", residente: "María Gómez", unidad: "3A",
-};
 
 const espaciosMasReservados = [
     { nombre: "SUM", cantidad: 12 },
@@ -226,10 +184,6 @@ function Reservas() {
         document.title = "Habita | Reservas";
     }, []);
 
-    const reservasFiltradas = tabActiva === "Todas"
-        ? reservas
-        : reservas.filter((r) => r.estado === estadoPorTab[tabActiva]);
-
     return (
         <main className="reservas pagina-administrador">
 
@@ -317,17 +271,13 @@ function Reservas() {
 
             {/* CONTENIDO */}
 
-            <div className="reservas-contenido">
-
-                <Tabla
-                    columnas={columnas}
-                    datos={reservasFiltradas}
-                    etiqueta="reservas"
-                    className="reservas-tabla"
-                />
-
-
-            </div>
+            <Tabla
+                columnas={columnas}
+                datos={reservas}
+                etiqueta="reservas"
+                className="reservas-tabla"
+                seleccionable
+            />
 
         </main>
     );

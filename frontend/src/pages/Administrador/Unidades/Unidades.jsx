@@ -50,18 +50,6 @@ const columnas = [
             </span>
         ),
     },
-    {
-        clave: "acciones",
-        titulo: "Acciones",
-        ancho: "0.8fr",
-        render: (unidad) => (
-            <div className="unidades-tabla-acciones">
-                <button aria-label={`Más opciones para ${unidad.unidad}`}>
-                    <MoreVertical size={16} />
-                </button>
-            </div>
-        ),
-    },
 ];
 
 
@@ -108,6 +96,10 @@ function Unidades() {
                 datos={unidades}
                 etiqueta="unidades"
                 className="unidades-tabla"
+                mostrarAcciones
+                opcionesAcciones={[
+                    { label: "Editar", icon: Pencil },
+                ]}
             />
 
         </main>
