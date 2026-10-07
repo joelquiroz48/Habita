@@ -1,0 +1,350 @@
+/* ===========================
+        PANEL GENERAL
+=========================== */
+
+.register .contenedor {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image:
+        linear-gradient(
+            to right,
+            var(--gradiente-fondo) 0%,
+            var(--gradiente-fondo-medio) 10%,
+            var(--gradiente-fondo-suave) 30%,
+            var(--transparente) 40%
+        ),
+        url("../../assets/img/fondo.png");
+
+    border-radius: 100% 0 0;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    min-height: 100vh;
+    padding: 28px 60px;
+    gap: 30px;
+}
+
+
+/* ===========================
+        PANEL IZQUIERDO
+=========================== */
+
+.register .panel-izquierdo {
+    display: flex;
+    align-items: flex-start;
+}
+
+.register .contenido-izquierdo {
+    max-width: 390px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+.register .contenedor svg {
+    color: var(--verde);
+}
+
+
+/* ---------- Marca ---------- */
+
+.register .encabezado {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.register .marca {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    margin-bottom: 7px;
+}
+
+.register .marca img {
+    transform: translateX(-5px);
+    width: 65px;
+}
+
+.register .marca h1 {
+    font-family: "Montserrat", sans-serif;
+    transform: translateY(12px);
+    font-size: 55px;
+    font-weight: 600;
+}
+
+.register .encabezado p {
+    color: var(--texto-secundario);
+    font-size: 15px;
+}
+
+
+/* ---------- Bienvenida ---------- */
+
+.register .bienvenida-comunidad {
+    margin-bottom: 15px;
+}
+
+.register .bienvenida-comunidad h1 {
+    font-family: "Montserrat", sans-serif;
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.register .bienvenida-comunidad p {
+    color: var(--texto-secundario);
+    font-size: 15px;
+}
+
+
+/* ---------- Características ---------- */
+
+.register .mensaje-inicial {
+    background-color: var(--celeste-claro);
+    display: flex;
+    gap: 28px;
+    max-width: 290px;
+    font-size: 13px;
+    padding: 20px;
+    border-radius: 7px;
+    color: var(--texto-secundario);
+}
+
+.register .mensaje-inicial strong {
+    color: var(--texto-verde);
+    font-weight: 600;
+}
+
+.register .icono-mensaje {
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    background: var(--celeste);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+
+/* ===========================
+        PANEL DERECHO
+=========================== */
+
+.register .panel-derecho {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.register .formulario {
+    width: 100%;
+    max-width: 500px;
+    background: var(--blanco);
+    border-radius: 18px;
+    padding: 40px;
+    box-shadow: 0 14px 35px var(--sombra-formulario);
+}
+
+
+/* ---------- Encabezado ---------- */
+
+.register .icono-register {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--celeste);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 18px;
+}
+
+.register .encabezado-formulario h2 {
+    font-size: 27px;
+    margin-bottom: 6px;
+}
+
+.register .encabezado-formulario p {
+    color: var(--texto-secundario);
+    margin-bottom: 28px;
+}
+
+
+/* ---------- Formulario ---------- */
+
+.register form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.register .campo {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.register .campo label {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.register .input-contenedor {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--borde-input);
+    border-radius: 10px;
+    padding: 0 12px;
+}
+
+.register .input-contenedor input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 13px 10px;
+    font-size: 13px;
+    background: transparent;
+}
+
+.register .input-icono svg {
+    width: 15px;
+    height: 15px;
+}
+
+.register .mostrar-password {
+    border: none;
+    cursor: pointer;
+}
+
+.register .mostrar-password svg {
+    width: 18px;
+    height: 18px;
+}
+
+.register .input-icono svg,
+.register .mostrar-password svg {
+    color: var(--texto-icono);
+}
+
+.register .campos-telefono-dni {
+    display: flex;
+    gap: 10px;
+}
+
+.register .campos-telefono-dni .campo {
+    width: 205px;
+}
+
+
+/* ---------- Opciones formulario ---------- */
+
+.register .opciones-formulario {
+    font-size: 13px;
+}
+
+.register .checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.register .checkbox strong {
+    color: var(--texto-verde);
+    font-weight: 600;
+}
+
+.register .checkbox input {
+    accent-color: var(--verde-medio);
+}
+
+.register .link {
+    color: var(--verde-medio);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+
+/* ---------- Botón ingresar ---------- */
+
+.register .boton-ingresar {
+    border: none;
+    border-radius: 10px;
+    padding: 14px;
+    background: var(--verde-medio);
+    color: var(--blanco);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.register .boton-ingresar:hover {
+    background: var(--verde-hover);
+}
+
+
+/* ---------- Registro ---------- */
+
+.register .acceso {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-top: 22px;
+    font-size: 13px;
+    color: var(--texto-secundario);
+}
+
+.register .acceso a {
+    color: var(--verde-medio);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+
+/* ---------- Separador ---------- */
+
+.register .separador {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.register .separador p {
+    color: var(--separador);
+    font-size: 14px;
+}
+
+
+/* ------------------------------- */
+
+@media (max-width: 900px) {
+
+    .register .contenedor {
+        grid-template-columns: 1fr;
+        padding: 30px;
+        gap: 40px;
+    }
+
+    .register .panel-izquierdo {
+        justify-content: center;
+    }
+
+    .register .panel-derecho {
+        justify-content: center;
+        padding-right: 0;
+    }
+
+    .register .campos-telefono-dni {
+        flex-direction: column;
+    }
+
+    .register .campos-telefono-dni .campo {
+        width: 100%;
+    }
+
+}

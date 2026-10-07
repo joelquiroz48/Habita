@@ -1,3 +1,6 @@
+venv/
+.venv/
+env/
 # Archivos de configuración local y secretos
 .env
 
