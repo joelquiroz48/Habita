@@ -1,26 +1,25 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
     ClipboardList,
     Clock,
     Settings2,
     CheckCircle2,
-    ChevronDown,
-    Search,
-    Download,
-    Eye,
-    MoreVertical,
     Wrench,
     Sparkles,
     ArrowUpDown,
     Lightbulb,
     MoreHorizontal,
-    BarChart3,
+    Image,
+    X,
+    Eye,
 } from "lucide-react";
 
 import "./Reclamos.css";
+import armarGradienteDonut from "../../../utils/armarGradienteDonut";
 import Panel from "../../../components/Panel/Panel";
 import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
 import Tabla from "../../../components/Tabla/Tabla";
+import Navegador from "../../../components/Navegador/Navegador";
 
 {/* =========================
        DATOS EJEMPLOS
@@ -34,13 +33,13 @@ const kpis = {
 };
 
 const reclamos = [
-    { id: "#R-2026-0064", fecha: "01/09/2026", residente: "Nicolás Paz", unidad: "5B", categoria: "Mantenimiento", asunto: "Fuga de agua en cocina", estado: "Pendiente", prioridad: "Alta" },
-    { id: "#R-2026-0063", fecha: "01/09/2026", residente: "María Gómez", unidad: "3A", categoria: "Limpieza", asunto: "Suciedad en pasillos", estado: "En proceso", prioridad: "Media" },
-    { id: "#R-2026-0062", fecha: "31/08/2026", residente: "Juan López", unidad: "7C", categoria: "Ascensores", asunto: "Ascensor se detiene entre pisos", estado: "En proceso", prioridad: "Alta" },
-    { id: "#R-2026-0061", fecha: "31/08/2026", residente: "Carla Romero", unidad: "1B", categoria: "Iluminación", asunto: "Luz quemada en garage", estado: "Resuelto", prioridad: "Baja" },
-    { id: "#R-2026-0060", fecha: "30/08/2026", residente: "Pedro Martínez", unidad: "2D", categoria: "Espacios comunes", asunto: "Mesa rota en SUM", estado: "Resuelto", prioridad: "Media" },
-    { id: "#R-2026-0059", fecha: "29/08/2026", residente: "Laura Sánchez", unidad: "4A", categoria: "Seguridad", asunto: "Puerta del edificio sin traba", estado: "Pendiente", prioridad: "Alta" },
-    { id: "#R-2026-0058", fecha: "28/08/2026", residente: "Diego Fernández", unidad: "6E", categoria: "Mantenimiento", asunto: "Aire acondicionado no enfría", estado: "En proceso", prioridad: "Media" },
+    { id: "#R-2026-0064", fecha: "01/09/2026", residente: "Nicolás Paz", unidad: "5B", categoria: "Mantenimiento", asunto: "Fuga de agua en cocina", estado: "Pendiente", prioridad: "Alta", descripcion: "Holaaa", adjunto: { nombre: "foto1.png", tamano: "245 KB" }, },
+    { id: "#R-2026-0063", fecha: "01/09/2026", residente: "María Gómez", unidad: "3A", categoria: "Limpieza", asunto: "Suciedad en pasillos", estado: "En proceso", prioridad: "Media", descripcion: "Holaaa" },
+    { id: "#R-2026-0062", fecha: "31/08/2026", residente: "Juan López", unidad: "7C", categoria: "Ascensores", asunto: "Ascensor se detiene entre pisos", estado: "En proceso", prioridad: "Alta", descripcion: "Holaaa" },
+    { id: "#R-2026-0061", fecha: "31/08/2026", residente: "Carla Romero", unidad: "1B", categoria: "Iluminación", asunto: "Luz quemada en garage", estado: "Resuelto", prioridad: "Baja", descripcion: "Holaaa", adjunto: { nombre: "1234.jpg", tamano: "245 KB" }, },
+    { id: "#R-2026-0060", fecha: "30/08/2026", residente: "Pedro Martínez", unidad: "2D", categoria: "Espacios comunes", asunto: "Mesa rota en SUM", estado: "Resuelto", prioridad: "Media", descripcion: "Holaaa" },
+    { id: "#R-2026-0059", fecha: "29/08/2026", residente: "Laura Sánchez", unidad: "4A", categoria: "Seguridad", asunto: "Puerta del edificio sin traba", estado: "Pendiente", prioridad: "Alta", descripcion: "Holaaa" },
+    { id: "#R-2026-0058", fecha: "28/08/2026", residente: "Diego Fernández", unidad: "6E", categoria: "Mantenimiento", asunto: "Aire acondicionado no enfría", estado: "En proceso", prioridad: "Media", descripcion: "Holaaa" },
 ];
 
 const totalReclamos = 64;
@@ -95,17 +94,6 @@ const resumenTarjetas = [
 ];
 
 
-function armarGradienteDonut(datos, total) {
-    let acumulado = 0;
-    const segmentos = datos.map((d) => {
-        const desde = acumulado;
-        const porcentaje = (d.cantidad / total) * 100;
-        acumulado += porcentaje;
-        return `var(--reclamos-color-${d.claseColor}) ${desde}% ${acumulado}%`;
-    });
-    return `conic-gradient(${segmentos.join(", ")})`;
-}
-
 function categoriaBadgeClase(categoria) {
     const mapa = {
         "Mantenimiento": "reclamos-cat-mantenimiento",
@@ -124,15 +112,10 @@ function estadoBadgeClase(estado) {
     return "reclamos-badge-resuelto";
 }
 
-function prioridadBadgeClase(prioridad) {
-    if (prioridad === "Alta") return "reclamos-prioridad-alta";
-    if (prioridad === "Media") return "reclamos-prioridad-media";
-    return "reclamos-prioridad-baja";
-}
-
 const columnas = [
     { clave: "id", titulo: "ID", ancho: "1fr", clase: "reclamos-id" },
     { clave: "fecha", titulo: "Fecha", ancho: "0.9fr" },
+    { clave: "asunto", titulo: "Asunto", ancho: "1.5fr", clase: "reclamos-asunto" },
     { clave: "residente", titulo: "Residente", ancho: "1.1fr", clase: "reclamos-residente" },
     { clave: "unidad", titulo: "Unidad", ancho: "0.6fr" },
     {
@@ -145,7 +128,6 @@ const columnas = [
             </span>
         ),
     },
-    { clave: "asunto", titulo: "Asunto", ancho: "1.5fr", clase: "reclamos-asunto" },
     {
         clave: "estado",
         titulo: "Estado",
@@ -156,38 +138,39 @@ const columnas = [
             </span>
         ),
     },
+];
+
+const filtros=[
     {
-        clave: "prioridad",
-        titulo: "Prioridad",
-        ancho: "0.8fr",
-        render: (reclamo) => (
-            <span className={`reclamos-badge ${prioridadBadgeClase(reclamo.prioridad)}`}>
-                {reclamo.prioridad}
-            </span>
-        ),
+        key: "estado",
+        label: "Todos los estados",
+        options: ["Resuelto", "Pendiente", "En proceso"],
     },
     {
-        clave: "acciones",
-        titulo: "Acciones",
-        ancho: "0.7fr",
-        render: () => (
-            <span className="reclamos-tabla-acciones">
-                <button aria-label="Ver reclamo">
-                    <Eye size={16} />
-                </button>
-                <button aria-label="Más opciones">
-                    <MoreVertical size={16} />
-                </button>
-            </span>
-        ),
+        key: "categoria",
+        label: "Todas las categorias",
+        options: ["Mantenimiento", "Limpieza", "Ascensores", "Iluminación", "Espacios comunes", "Seguridad", "Otros"],
+    },
+    {
+        key: "unidad",
+        label: "Todos los edificios",
+        options: ["A", "B", "C", "D"],
     },
 ];
 
 function Reclamos() {
 
+    const [seleccionado, setSeleccionado] = useState(reclamos[0]);
+    const [detalleAbierto, setDetalleAbierto] = useState(false);
+
     useEffect(() => {
         document.title = "Habita | Reclamos";
     }, []);
+
+    function abrirDetalle(comunicado) {
+        setSeleccionado(comunicado);
+        setDetalleAbierto(true);
+    }
 
     return (
         <main className="reclamos">
@@ -216,125 +199,185 @@ function Reclamos() {
                 CONTENIDO PRINCIPAL
             ========================= */}
 
-            <div className="reclamos-filtros">
-                <button className="reclamos-filtro">
-                    Todos los estados
-                    <ChevronDown size={15} />
-                </button>
-
-                <button className="reclamos-filtro">
-                    Todas las categorías
-                    <ChevronDown size={15} />
-                </button>
-
-                <button className="reclamos-filtro">
-                    Todos los edificios
-                    <ChevronDown size={15} />
-                </button>
-
-                <div className="reclamos-buscador">
-                    <Search size={16} />
-                    <input type="text" placeholder="Buscar reclamo..." />
-                </div>
-
-                <button className="reclamos-btn-exportar">
-                    <Download size={15} />
-                    Exportar
-                </button>
-            </div>
-
-            {/* CONTENIDO */}
-
-            <div className="reclamos-contenido">
-
-                <section className="reclamos-listado">
-
+            <Navegador
+                data={reclamos}
+                searchKey="asunto"
+                searchPlaceholder="Buscar reclamo..."
+                filters={filtros}
+            >
+                {(ReclamosFiltrados) => (
                     <Tabla
                         columnas={columnas}
-                        datos={reclamos}
+                        datos={ReclamosFiltrados}
                         etiqueta="reclamos"
                         className="reclamos-tabla"
+                        onFilaClick={abrirDetalle}
+                        seleccionable
+                        filaSeleccionada={detalleAbierto ? seleccionado : null}
                     />
+                        )}
+            </Navegador>
 
-                </section>
+            {/* DETALLE */}
 
-                {/* RESUMEN */}
-
-                <Panel className="reclamos-resumen-panel" titulo="Resumen de reclamos">
-                    <div className="reclamos-resumen-contenido">
-                        <div className="reclamos-donut-wrap">
-                            <div
-                                className="reclamos-donut"
-                                style={{
-                                    background: armarGradienteDonut(
-                                        resumenEstados,
-                                        totalReclamos
-                                    )
-                                }}
-                            >
-                                <div className="reclamos-donut-centro" />
-                            </div>
-
-                            <ul className="reclamos-donut-leyenda">
-                                {resumenEstados.map((item) => (
-                                    <li key={item.estado}>
-                                        <span className={`reclamos-leyenda-punto ${item.claseColor}`}/>
-
-                                        <span className="reclamos-leyenda-label">
-                                            {item.estado}
-                                        </span>
-
-                                        <span className="reclamos-leyenda-valor">
-                                            {item.cantidad} (
-                                            {Math.round(
-                                                (item.cantidad / totalReclamos) * 100
-                                            )}
-                                            %)
-                                        </span>
-                                    </li>
-                                ))}
-                            </ul>
+            {detalleAbierto && (
+                <Panel
+                    className="reclamos-detalle"
+                    titulo={seleccionado.asunto}
+                    tituloComplemento={
+                        <div className={`reclamos-badge ${estadoBadgeClase(seleccionado.estado)}`}>
+                            {seleccionado.estado}
                         </div>
+                    }
+                    accion={
+                        <button
+                            className="reclamos-detalle-cerrar"
+                            onClick={() => setDetalleAbierto(false)}
+                            aria-label="Cerrar detalle"
+                        >
+                            <X size={18} />
+                        </button>
+                    }
+                >
+                    
+                    {/* =========== FILAS =========== */}
 
-                        <div className="reclamos-categorias">
-                            <h3>Categorías más frecuentes</h3>
-
-                            <div className="reclamos-categorias-lista">
-                                {categoriasFrecuentes.map((cat) => {
-                                    const Icono = cat.icon;
-
-                                    return (
-                                        <div
-                                            className="reclamos-categoria-fila"
-                                            key={cat.nombre}
-                                        >
-                                            <span
-                                                className={`reclamos-categoria-icon ${cat.claseColor}`}
-                                            >
-                                                <Icono size={16} />
-                                            </span>
-
-                                            <span className="reclamos-categoria-nombre">
-                                                {cat.nombre}
-                                            </span>
-
-                                            <span className="reclamos-categoria-valor">
-                                                {cat.cantidad}
-                                            </span>
-                                        </div>
-                                    );
-                                })}
-                            </div>
-                        </div>
+                    <div className="reclamos-detalle-fila">
+                        <span>Categoria</span>
+                        <span className={`reclamos-cat-badge ${categoriaBadgeClase(seleccionado.categoria)}`}>
+                            {seleccionado.categoria}
+                        </span>
                     </div>
 
-                    <button className="reclamos-btn-reportes">
-                        <BarChart3 size={15} />
-                        Ver reportes
+                    <div className="reclamos-detalle-fila">
+                        <span>ID</span>
+                        <strong>{seleccionado.id}</strong>
+                    </div>
+
+                    <div className="reclamos-detalle-fila">
+                        <span>Fecha de publicación</span>
+                        <strong>{seleccionado.fecha}</strong>
+                    </div>
+
+                    <div className="reclamos-detalle-fila">
+                        <span>Publicado por</span>
+                        <strong>{seleccionado.residente}</strong>
+                    </div>
+
+                    <div className="reclamos-detalle-fila">
+                        <span>Unidad</span>
+                        <strong>{seleccionado.unidad}</strong>
+                    </div>
+                    
+                    {/* =========== DESCRIPCION =========== */}
+
+                    <h3>Descripción</h3>
+
+                    <p className="reclamos-resumen-texto">
+                        {seleccionado.descripcion}
+                    </p>
+
+                    {/* =========== ADJUNTOS =========== */}
+
+                    <h3>Adjuntos</h3>
+
+                    {seleccionado.adjunto ? (
+                        <div className="reclamos-adjunto">
+                            <Image size={16} />
+
+                            <div className="reclamos-adjunto-info">
+                                <strong>{seleccionado.adjunto.nombre}</strong>
+                                <span>Tamaño - {seleccionado.adjunto.tamano}</span>
+                            </div>
+
+                            <button aria-label="Descargar adjunto">
+                                <Eye size={16} />
+                            </button>
+                        </div>
+                    ) : (
+                        <p className="reclamos-sin-adjunto">
+                            Sin archivos adjuntos.
+                        </p>
+                    )}
+
+                    {/* =========== OPCIONES =========== */}
+
+                    <button className="reclamos-btn-editar">
+                        Seguimiento
                     </button>
                 </Panel>
+            )}
+            
+            {/* RESUMEN */}
 
-            </div>
+            <Panel className="reclamos-resumen-panel" titulo="Resumen de reclamos">
+                <div className="reclamos-resumen-contenido">
+                    <div className="reclamos-donut-wrap">
+                        <div
+                            className="reclamos-donut"
+                            style={{
+                                background: armarGradienteDonut(
+                                    resumenEstados,
+                                    "reclamos-color"
+                                )
+                            }}
+                        >
+                            <div className="reclamos-donut-centro" />
+                        </div>
+
+                        <ul className="reclamos-donut-leyenda">
+                            {resumenEstados.map((item) => (
+                                <li key={item.estado}>
+                                    <span className={`reclamos-leyenda-punto ${item.claseColor}`}/>
+
+                                    <span className="reclamos-leyenda-label">
+                                        {item.estado}
+                                    </span>
+
+                                    <span className="reclamos-leyenda-valor">
+                                        {item.cantidad} (
+                                        {Math.round(
+                                            (item.cantidad / totalReclamos) * 100
+                                        )}
+                                        %)
+                                    </span>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+
+                    <div className="reclamos-categorias">
+                        <h3>Categorías más frecuentes</h3>
+
+                        <div className="reclamos-categorias-lista">
+                            {categoriasFrecuentes.map((cat) => {
+                                const Icono = cat.icon;
+
+                                return (
+                                    <div
+                                        className="reclamos-categoria-fila"
+                                        key={cat.nombre}
+                                    >
+                                        <span
+                                            className={`reclamos-categoria-icon ${cat.claseColor}`}
+                                        >
+                                            <Icono size={16} />
+                                        </span>
+
+                                        <span className="reclamos-categoria-nombre">
+                                            {cat.nombre}
+                                        </span>
+
+                                        <span className="reclamos-categoria-valor">
+                                            {cat.cantidad}
+                                        </span>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                </div>
+            </Panel>
 
         </main>
     );

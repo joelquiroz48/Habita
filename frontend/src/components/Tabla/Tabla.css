@@ -14,8 +14,8 @@
     display: grid;
     align-items: center;
     gap: 12px;
-    padding: 14px 20px;
     min-width: max-content;
+    padding: 14px 20px;
 }
 
 .tabla-header {
@@ -32,11 +32,7 @@
     border-bottom: 1px solid var(--separador);
     font-size: 13px;
     color: var(--texto-principal);
-}
-
-.tabla-header > span,
-.tabla-fila > span {
-    min-width: 0;
+    min-height: 52px;
 }
 
 .tabla-fila.clickeable {
@@ -49,6 +45,17 @@
     background: var(--fondo);
 }
 
+.tabla-card .tabla-fila.seleccionada,
+.tabla-card .tabla-fila.seleccionada:hover {
+    background: var(--celeste-claro);
+}
+
+.tabla-indicador-celda {
+    display: flex;
+    align-items: center;
+    color: var(--verde);
+}
+
 .tabla-fila.clickeable:focus-visible {
     outline: 2px solid var(--verde);
     outline-offset: -2px;
@@ -56,6 +63,92 @@
 
 .tabla-body .tabla-fila:last-child {
     border-bottom: none;
+}
+
+.tabla-acciones-encabezado {
+    text-align: center;
+}
+
+.tabla-acciones-celda {
+    display: flex;
+    justify-content: center;
+}
+
+.tabla-acciones-opcion,
+.tabla-acciones-boton svg {
+    color: var(--verde-hover)
+}
+
+.tabla-acciones {
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+.tabla-acciones-boton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    border: 0;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--texto-icono);
+    cursor: pointer;
+}
+
+.tabla-acciones-boton:hover:not(:disabled),
+.tabla-acciones-boton[aria-expanded="true"] {
+    background: var(--fondo);
+    color: var(--texto-principal);
+}
+
+.tabla-acciones-boton:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.tabla-acciones-menu {
+    position: absolute;
+    z-index: 5;
+    top: calc(100% + 4px);
+    right: 0;
+    min-width: 150px;
+    padding: 5px;
+    border: 1px solid var(--borde-tarjeta);
+    border-radius: 8px;
+    background: var(--blanco);
+    box-shadow: 0 8px 20px rgb(0 0 0 / 12%);
+}
+
+.tabla-acciones-opcion {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 8px 9px;
+    border: 0;
+    border-radius: 5px;
+    background: transparent;
+    font: inherit;
+    font-size: 12px;
+    text-align: left;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.tabla-acciones-opcion:hover:not(:disabled) {
+    background: var(--texto);
+}
+
+.tabla-acciones-opcion:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.tabla-body .tabla-fila:nth-last-child(-n + 2) .tabla-acciones-menu {
+    top: auto;
+    bottom: calc(100% + 4px);
 }
 
 .tabla-vacia {

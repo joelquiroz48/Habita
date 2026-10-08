@@ -1,92 +1,17 @@
-.residentes {
-  padding: 28px 32px;
-}
-
-/* =========================
-        ACCIONES
-========================= */
-
-.residentes-acciones {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 18px;
-}
-
-.residentes-buscador {
-  flex: 1;
-  max-width: 340px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  border: 1px solid var(--borde-input);
-  border-radius: 8px;
-  background: var(--blanco);
-  padding: 9px 12px;
-  color: var(--texto-icono);
-}
-
-.residentes-buscador input {
-  border: none;
-  outline: none;
-  flex: 1;
-  font-size: 13px;
-  font-family: inherit;
-  color: var(--texto-principal);
-}
-
-.residentes-filtro {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  border: 1px solid var(--borde-input);
-  border-radius: 8px;
-  background: var(--blanco);
-  color: var(--texto-secundario);
-  font-size: 13px;
-  padding: 9px 12px;
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-.residentes-btn-nuevo {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  border: none;
-  border-radius: 8px;
-  background: var(--verde);
-  color: var(--blanco);
-  font-size: 13px;
-  font-weight: 600;
-  padding: 10px 16px;
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-.residentes-btn-nuevo:hover {
-  background: var(--verde-hover);
-}
-
 /* =========================
           TABLA
 ========================= */
 
-.residentes-nombre {
-  font-weight: 600;
-}
-
 .residentes-email {
-  color: var(--texto-secundario);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
+/* -------- BADGE --------- */
+
 .residentes-badge {
   width: fit-content;
-  padding: 4px 10px;
   border-radius: 10px;
   font-size: 11px;
   font-weight: 600;
@@ -102,59 +27,6 @@
   background: var(--fondo-aviso-amarillo);
 }
 
-.residentes-tabla-acciones {
-  display: flex;
-  gap: 6px;
-}
-
-.residentes-tabla-acciones button {
-  border: none;
-  background: transparent;
-  color: var(--texto-icono);
-  cursor: pointer;
-  display: flex;
-  padding: 4px;
-}
-
-.residentes-tabla-acciones button:hover {
-  color: var(--texto-principal);
-}
-
 /* =========================
         RESPONSIVE
 ========================= */
-
-@media (max-width: 900px) {
-  .residentes {
-    padding: 20px;
-  }
-
-  .residentes-acciones {
-    flex-wrap: wrap;
-  }
-
-  .residentes-tabla .tabla-header,
-  .residentes-tabla .tabla-fila {
-    grid-template-columns: 1fr 1fr !important;
-    row-gap: 4px;
-  }
-
-  .residentes-tabla .tabla-header span:nth-child(3),
-  .residentes-tabla .tabla-header span:nth-child(4) {
-    display: none;
-  }
-
-  .residentes-tabla .tabla-fila .residentes-email,
-  .residentes-tabla .tabla-fila span:nth-child(4) {
-    display: none;
-  }
-
-  .residentes-tabla .tabla-paginacion {
-    flex-wrap: wrap;
-  }
-
-  .residentes-tabla .tabla-paginacion-info {
-    margin-left: 0;
-    width: 100%;
-  }
-}

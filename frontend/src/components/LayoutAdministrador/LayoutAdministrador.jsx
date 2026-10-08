@@ -114,11 +114,6 @@ const itemsMenu = [
         icon: Folder,
         label: "Documentos",
     },
-    {
-        to: "/administrador/reportes",
-        icon: BarChart3,
-        label: "Reportes",
-    },
 ];
 
 function LayoutAdministrador({ children }) {

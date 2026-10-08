@@ -4,22 +4,14 @@ import {
     Download,
     Clock,
     CheckCircle2,
-    Calendar,
-    ChevronDown,
-    Search,
-    Eye,
-    MoreVertical,
-    ChevronRight,
     X,
-    CreditCard,
-    Landmark,
-    Banknote,
 } from "lucide-react";
 
 import "./Pagos.css";
 import Panel from "../../../components/Panel/Panel";
 import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
 import Tabla from "../../../components/Tabla/Tabla";
+import Navegador from "../../../components/Navegador/Navegador";
 
 {/* =========================
        DATOS EJEMPLOS
@@ -70,13 +62,6 @@ const pagos = [
     },
 ];
 
-const iconosMetodo = {
-    tarjeta: CreditCard,
-    billetera: Wallet,
-    transferencia: Landmark,
-    efectivo: Banknote,
-};
-
 {/* =========================
        TARJETAS RESUMEN
 ========================== */}
@@ -118,11 +103,24 @@ const resumenTarjetas = [
     },
 ];
 
+const filtros=[
+    {
+        key: "estado",
+        label: "Todos los estados",
+        options: ["Confirmado", "Pendiente", "Para confirmar", "Rechazado"],
+    },
+    {
+        key: "periodo",
+        label: "Todos los periodos",
+        options: ["Enero", "Febrero", "Julio", "Agosto", "Septiebre"],
+    },
+];
+
 function formatearMonto(numero) {
     return `$ ${numero.toLocaleString("es-AR")}`;
 }
 
-function badgeClase(estado) {
+function estadoBadgeClase(estado) {
     if (estado === "Confirmado") return "pagos-badge-confirmado";
     if (estado === "Pendiente") return "pagos-badge-pendiente";
     return "pagos-badge-rechazado";
@@ -131,7 +129,7 @@ function badgeClase(estado) {
 function Pagos() {
 
     const [pagoSeleccionado, setPagoSeleccionado] = useState(pagos[0]);
-    const [detalleAbierto, setDetalleAbierto] = useState(true);
+    const [detalleAbierto, setDetalleAbierto] = useState(false);
 
     useEffect(() => {
         document.title = "Habita | Pagos";
@@ -143,14 +141,6 @@ function Pagos() {
     }
 
     const columnas = [
-        {
-            clave: "indicador",
-            titulo: "",
-            ancho: "20px",
-            render: (pago) => pagoSeleccionado.transaccion === pago.transaccion && detalleAbierto
-                ? <ChevronRight size={15} />
-                : null,
-        },
         { clave: "fecha", titulo: "Fecha", ancho: "0.9fr" },
         { clave: "residente", titulo: "Residente", ancho: "1.1fr", clase: "pagos-residente" },
         { clave: "unidad", titulo: "Unidad", ancho: "0.6fr" },
@@ -162,45 +152,12 @@ function Pagos() {
             render: (pago) => formatearMonto(pago.importe),
         },
         {
-            clave: "metodo",
-            titulo: "Método de pago",
-            ancho: "1.3fr",
-            render: (pago) => {
-                const Icono = iconosMetodo[pago.metodo];
-
-                return (
-                    <span className="pagos-metodo">
-                        <Icono size={16} />
-                        <span>
-                            {pago.metodoLabel}
-                            {pago.metodoSub && <small>{pago.metodoSub}</small>}
-                        </span>
-                    </span>
-                );
-            },
-        },
-        {
             clave: "estado",
             titulo: "Estado",
             ancho: "0.9fr",
             render: (pago) => (
-                <span className={`pagos-badge ${badgeClase(pago.estado)}`}>
+                <span className={`pagos-badge ${estadoBadgeClase(pago.estado)}`}>
                     {pago.estado}
-                </span>
-            ),
-        },
-        {
-            clave: "comprobante",
-            titulo: "Comprobante",
-            ancho: "0.8fr",
-            render: () => (
-                <span className="pagos-tabla-acciones">
-                    <span aria-label="Ver comprobante">
-                        <Eye size={16} />
-                    </span>
-                    <span aria-label="Más opciones">
-                        <MoreVertical size={16} />
-                    </span>
                 </span>
             ),
         },
@@ -233,142 +190,96 @@ function Pagos() {
                 CONTENIDO PRINCIPAL
             ========================= */}
 
-            {/* FILTROS */}
-
-            <div className="pagos-filtros">
-                <button className="pagos-filtro">
-                    <Calendar size={15} />
-                    01/08/2026 - 10/09/2026
-                    <ChevronDown size={15} />
-                </button>
-
-                <button className="pagos-filtro">
-                    Todos los métodos
-                    <ChevronDown size={15} />
-                </button>
-
-                <button className="pagos-filtro">
-                    Todos los estados
-                    <ChevronDown size={15} />
-                </button>
-
-                <div className="pagos-buscador">
-                    <Search size={16} />
-                    <input type="text" placeholder="Buscar pago..." />
-                </div>
-
-                <button className="pagos-btn-exportar">
-                    <Download size={15} />
-                    Exportar
-                </button>
-            </div>
-
             {/* CONTENIDO */}
-
-            <div className={`pagos-contenido ${detalleAbierto ? "" : "sin-detalle"}`}>
-
-                <section className="pagos-listado">
-
+            
+            <Navegador
+                data={pagos}
+                searchKey="residente"
+                searchPlaceholder="Buscar pago..."
+                filters={filtros}
+            >
+                {(PagosFiltrados) => (
                     <Tabla
                         columnas={columnas}
-                        datos={pagos}
+                        datos={PagosFiltrados}
                         etiqueta="pagos"
                         className="pagos-tabla"
                         onFilaClick={abrirDetalle}
-                        claseFila={(pago) =>
-                            pagoSeleccionado.transaccion === pago.transaccion && detalleAbierto
-                                ? "seleccionada"
-                                : ""
-                        }
+                        seleccionable
+                        filaSeleccionada={detalleAbierto ? pagoSeleccionado : null}
                     />
+                        )}
+            </Navegador>
 
-                </section>
+            {/* DETALLE */}
 
-                {/* DETALLE */}
-
-                {detalleAbierto && (
-                    <Panel
-                        className="pagos-detalle"
-                        titulo="Detalle del pago"
-                        accion={
-                            <button
-                                className="pagos-detalle-cerrar"
-                                onClick={() => setDetalleAbierto(false)}
-                                aria-label="Cerrar detalle"
-                            >
-                                <X size={18} />
-                            </button>
-                        }
-                    >
-                        <span className={`pagos-badge ${badgeClase(pagoSeleccionado.estado)}`}>
+            {detalleAbierto && (
+                <Panel
+                    className="pagos-detalle"
+                    titulo="Detalle del pago"
+                    tituloComplemento={
+                        <div className={`pagos-badge ${estadoBadgeClase(pagoSeleccionado.estado)}`}>
                             {pagoSeleccionado.estado}
-                        </span>
-
-                        <div className="pagos-detalle-fila">
-                            <span>Residente</span>
-                            <strong>{pagoSeleccionado.residente}</strong>
                         </div>
-
-                        <div className="pagos-detalle-fila">
-                            <span>Unidad</span>
-                            <strong>{pagoSeleccionado.unidad}</strong>
-                        </div>
-
-                        <div className="pagos-detalle-fila">
-                            <span>Período</span>
-                            <strong>{pagoSeleccionado.periodo}</strong>
-                        </div>
-
-                        <div className="pagos-detalle-fila">
-                            <span>Importe</span>
-                            <strong>{formatearMonto(pagoSeleccionado.importe)}</strong>
-                        </div>
-
-                        <div className="pagos-detalle-fila">
-                            <span>Fecha de pago</span>
-                            <strong>{pagoSeleccionado.fecha} - {pagoSeleccionado.hora}</strong>
-                        </div>
-
-                        <p className="pagos-detalle-subtitulo">Método de pago</p>
-
-                        <div className="pagos-detalle-metodo">
-                            {(() => {
-                                const Icono = iconosMetodo[pagoSeleccionado.metodo];
-                                return <Icono size={18} />;
-                            })()}
-
-                            <span>
-                                {pagoSeleccionado.metodoLabel}
-                                {pagoSeleccionado.metodoSub &&
-                                    ` - ${pagoSeleccionado.metodoSub}`}
-                            </span>
-                        </div>
-
-                        <p className="pagos-detalle-subtitulo">N° de transacción</p>
-
-                        <p className="pagos-detalle-transaccion">
-                            {pagoSeleccionado.transaccion}
-                        </p>
-
-                        <div className="pagos-detalle-fila">
-                            <span>Estado</span>
-                            <strong>{pagoSeleccionado.estado}</strong>
-                        </div>
-
-                        <h3>Comprobante</h3>
-
-                        <button className="pagos-btn-comprobante">
-                            <Download size={15} />
-                            Descargar comprobante
+                    }
+                    accion={
+                        <button
+                            className="pagos-detalle-cerrar"
+                            onClick={() => setDetalleAbierto(false)}
+                            aria-label="Cerrar detalle"
+                        >
+                            <X size={18} />
                         </button>
+                    }
+                >
 
-                        <span className="pagos-detalle-archivo">
-                            PDF - 124 KB
-                        </span>
-                    </Panel>
-                )}
+                    {/* =========== FILAS =========== */}
 
-            </div>
+                    <div className="pagos-detalle-fila">
+                        <span>Residente</span>
+                        <strong>{pagoSeleccionado.residente}</strong>
+                    </div>
+
+                    <div className="pagos-detalle-fila">
+                        <span>Unidad</span>
+                        <strong>{pagoSeleccionado.unidad}</strong>
+                    </div>
+
+                    <div className="pagos-detalle-fila">
+                        <span>Período</span>
+                        <strong>{pagoSeleccionado.periodo}</strong>
+                    </div>
+
+                    <div className="pagos-detalle-fila">
+                        <span>Importe</span>
+                        <strong>{formatearMonto(pagoSeleccionado.importe)}</strong>
+                    </div>
+
+                    <div className="pagos-detalle-fila">
+                        <span>Fecha de pago</span>
+                        <strong>{pagoSeleccionado.fecha} - {pagoSeleccionado.hora}</strong>
+                    </div>
+
+                    <p className="pagos-detalle-subtitulo">N° de transacción</p>
+
+                    <p className="pagos-detalle-transaccion">
+                        {pagoSeleccionado.transaccion}
+                    </p>
+                    
+                    {/* =========== COMPROBANTE =========== */}
+
+                    <h3>Comprobante</h3>
+
+                    <button className="pagos-btn-comprobante">
+                        <Download size={15} />
+                        Descargar comprobante
+                    </button>
+
+                    <span className="pagos-detalle-archivo">
+                        PDF - 124 KB
+                    </span>
+                </Panel>
+            )}
 
         </main>
     );

@@ -1,13 +1,6 @@
 import { useEffect, useState } from "react";
 import {
-    Calendar,
-    ChevronDown,
-    ChevronRight,
-    Search,
-    Plus,
-    Eye,
     Pencil,
-    MoreVertical,
     X,
     Droplet,
     Wrench,
@@ -15,7 +8,6 @@ import {
     Hammer,
     Car,
     Star,
-    ArrowDown,
     Paperclip,
     Download,
 } from "lucide-react";
@@ -23,6 +15,7 @@ import {
 import "./Comunicados.css";
 import Panel from "../../../components/Panel/Panel";
 import Tabla from "../../../components/Tabla/Tabla";
+import Navegador from "../../../components/Navegador/Navegador";
 
 {/* =========================
        DATOS EJEMPLOS
@@ -121,7 +114,18 @@ const comunicados = [
     },
 ];
 
-const totalComunicados = 57;
+const filtros=[
+    {
+        key: "estado",
+        label: "Todos los estados",
+        options: ["Publicado", "Borrador"],
+    },
+    {
+        key: "fecha",
+        label: "Todos los periodos",
+        options: ["Enero", "Febrero", "Marzo"],
+    },
+];
 
 function estadoBadgeClase(estado) {
     if (estado === "Publicado") return "comunicados-badge-publicado";
@@ -132,7 +136,7 @@ function estadoBadgeClase(estado) {
 function Comunicados() {
 
     const [seleccionado, setSeleccionado] = useState(comunicados[0]);
-    const [detalleAbierto, setDetalleAbierto] = useState(true);
+    const [detalleAbierto, setDetalleAbierto] = useState(false);
 
     useEffect(() => {
         document.title = "Habita | Comunicados";
@@ -144,16 +148,6 @@ function Comunicados() {
     }
 
     const columnas = [
-        {
-            clave: "indicador",
-            titulo: "",
-            ancho: "20px",
-            clase: "comunicados-indicador",
-            render: (item) =>
-                seleccionado.id === item.id && detalleAbierto
-                    ? <ChevronRight size={15} />
-                    : null,
-        },
         {
             clave: "titulo",
             titulo: "Título",
@@ -175,14 +169,12 @@ function Comunicados() {
             titulo: (
                 <span className="comunicados-th-fecha">
                     Fecha de publicación
-                    <ArrowDown size={13} />
                 </span>
             ),
             ancho: "1.3fr",
             render: (item) => (
                 <span className="comunicados-fecha-celda">
                     <span>{item.fecha}</span>
-                    <small>por Admin</small>
                 </span>
             ),
         },
@@ -197,167 +189,117 @@ function Comunicados() {
                 </span>
             ),
         },
-        {
-            clave: "acciones",
-            titulo: "Acciones",
-            ancho: "0.9fr",
-            render: () => (
-                <span className="comunicados-tabla-acciones">
-                    <span aria-label="Ver comunicado">
-                        <Eye size={16} />
-                    </span>
-                    <span aria-label="Editar comunicado">
-                        <Pencil size={16} />
-                    </span>
-                    <span aria-label="Más opciones">
-                        <MoreVertical size={16} />
-                    </span>
-                </span>
-            ),
-        },
     ];
 
     return (
         <main className="comunicados">
 
-            {/* FILTROS */}
-
-            <div className="comunicados-filtros">
-                <button className="comunicados-filtro">
-                    <Calendar size={15} />
-                    Todos los períodos
-                    <ChevronDown size={15} />
-                </button>
-
-                <button className="comunicados-filtro">
-                    Todos los estados
-                    <ChevronDown size={15} />
-                </button>
-
-                <div className="comunicados-buscador">
-                    <Search size={16} />
-                    <input type="text" placeholder="Buscar comunicado..." />
-                </div>
-
-                <button className="comunicados-btn-nuevo">
-                    <Plus size={16} />
-                    Nuevo comunicado
-                </button>
-            </div>
-
-            {/* CONTENIDO */}
-
-            <div className={`comunicados-contenido ${detalleAbierto ? "" : "sin-detalle"}`}>
-
-                <section className="comunicados-listado">
-
+            <Navegador
+                data={comunicados}
+                searchKey="titulo"
+                searchPlaceholder="Buscar comunicado..."
+                filters={filtros}
+                onNew={() => {}}
+                newButtonText="Crear comunicado"
+            >
+                {(ComunicadosFiltrados) => (
                     <Tabla
                         columnas={columnas}
-                        datos={comunicados}
+                        datos={ComunicadosFiltrados}
                         etiqueta="comunicados"
                         className="comunicados-tabla"
                         onFilaClick={abrirDetalle}
-                        claseFila={(item) =>
-                            seleccionado.id === item.id && detalleAbierto
-                                ? "seleccionada"
-                                : ""
-                        }
+                        seleccionable
+                        filaSeleccionada={detalleAbierto ? seleccionado : null}
                     />
-
-                </section>
-
-                {/* DETALLE */}
-
-                {detalleAbierto && (
-                    <Panel
-                        className="comunicados-detalle"
-                        titulo="Detalle del comunicado"
-                        accion={
-                            <button
-                                className="comunicados-detalle-cerrar"
-                                onClick={() => setDetalleAbierto(false)}
-                                aria-label="Cerrar detalle"
-                            >
-                                <X size={18} />
-                            </button>
-                        }
-                    >
-                        <span
-                            className={`comunicados-badge ${estadoBadgeClase(
-                                seleccionado.estado
-                            )}`}
-                        >
-                            {seleccionado.estado}
-                        </span>
-
-                        <div className="comunicados-detalle-titulo">
-                            <span className={`comunicados-icono ${seleccionado.claseColor}`}>
-                                {(() => {
-                                    const Icono = seleccionado.icon;
-                                    return <Icono size={20} />;
-                                })()}
-                            </span>
-
-                            <strong>{seleccionado.titulo}</strong>
-                        </div>
-
-                        <div className="comunicados-detalle-fila">
-                            <span>Tipo</span>
-                            <span className={`comunicados-tipo-badge ${seleccionado.claseColor}`}>
-                                {seleccionado.tipo}
-                            </span>
-                        </div>
-
-                        <div className="comunicados-detalle-fila">
-                            <span>Fecha de publicación</span>
-                            <strong>{seleccionado.fecha}</strong>
-                        </div>
-
-                        <div className="comunicados-detalle-fila">
-                            <span>Publicado por</span>
-                            <strong>{seleccionado.publicadoPor}</strong>
-                        </div>
-
-                        <div className="comunicados-detalle-fila">
-                            <span>Audiencia</span>
-                            <strong>{seleccionado.audiencia}</strong>
-                        </div>
-
-                        <h3>Resumen</h3>
-
-                        <p className="comunicados-resumen-texto">
-                            {seleccionado.resumen}
-                        </p>
-
-                        <h3>Adjuntos</h3>
-
-                        {seleccionado.adjunto ? (
-                            <div className="comunicados-adjunto">
-                                <Paperclip size={16} />
-
-                                <div className="comunicados-adjunto-info">
-                                    <strong>{seleccionado.adjunto.nombre}</strong>
-                                    <span>PDF - {seleccionado.adjunto.tamano}</span>
-                                </div>
-
-                                <button aria-label="Descargar adjunto">
-                                    <Download size={16} />
-                                </button>
-                            </div>
-                        ) : (
-                            <p className="comunicados-sin-adjunto">
-                                Sin archivos adjuntos.
-                            </p>
                         )}
+            </Navegador>
 
-                        <button className="comunicados-btn-editar">
-                            <Pencil size={15} />
-                            Editar comunicado
+            {/* DETALLE */}
+
+            {detalleAbierto && (
+                <Panel
+                    className="comunicados-detalle"
+                    titulo={seleccionado.titulo}
+                    tituloComplemento={
+                        <div className={`comunicados-badge ${estadoBadgeClase(seleccionado.estado)}`}>
+                            {seleccionado.estado}
+                        </div>
+                    }
+                    accion={
+                        <button
+                            className="comunicados-detalle-cerrar"
+                            onClick={() => setDetalleAbierto(false)}
+                            aria-label="Cerrar detalle"
+                        >
+                            <X size={18} />
                         </button>
-                    </Panel>
-                )}
+                    }
+                >
+                    
+                    {/* =========== FILAS =========== */}
 
-            </div>
+                    <div className="comunicados-detalle-fila">
+                        <span>Tipo</span>
+                        <span className={`comunicados-tipo-badge ${seleccionado.claseColor}`}>
+                            {seleccionado.tipo}
+                        </span>
+                    </div>
+
+                    <div className="comunicados-detalle-fila">
+                        <span>Fecha de publicación</span>
+                        <strong>{seleccionado.fecha}</strong>
+                    </div>
+
+                    <div className="comunicados-detalle-fila">
+                        <span>Publicado por</span>
+                        <strong>{seleccionado.publicadoPor}</strong>
+                    </div>
+
+                    <div className="comunicados-detalle-fila">
+                        <span>Audiencia</span>
+                        <strong>{seleccionado.audiencia}</strong>
+                    </div>
+                    
+                    {/* =========== RESUMEN =========== */}
+
+                    <h3>Resumen</h3>
+
+                    <p className="comunicados-resumen-texto">
+                        {seleccionado.resumen}
+                    </p>
+
+                    {/* =========== ADJUNTOS =========== */}
+
+                    <h3>Adjuntos</h3>
+
+                    {seleccionado.adjunto ? (
+                        <div className="comunicados-adjunto">
+                            <Paperclip size={16} />
+
+                            <div className="comunicados-adjunto-info">
+                                <strong>{seleccionado.adjunto.nombre}</strong>
+                                <span>PDF - {seleccionado.adjunto.tamano}</span>
+                            </div>
+
+                            <button aria-label="Descargar adjunto">
+                                <Download size={16} />
+                            </button>
+                        </div>
+                    ) : (
+                        <p className="comunicados-sin-adjunto">
+                            Sin archivos adjuntos.
+                        </p>
+                    )}
+
+                    {/* =========== OPCIONES =========== */}
+
+                    <button className="comunicados-btn-editar">
+                        <Pencil size={15} />
+                        Editar comunicado
+                    </button>
+                </Panel>
+            )}
 
         </main>
     );

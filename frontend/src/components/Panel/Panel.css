@@ -31,6 +31,17 @@
   font-weight: 600;
 }
 
+.panel-titulo-linea {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.panel-titulo-linea h2 {
+    margin: 0;
+}
+
 .panel-header span {
     display: block;
     margin-top: 3px;

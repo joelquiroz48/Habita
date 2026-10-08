@@ -1,6 +1,4 @@
 .reservas {
-  padding: 28px 32px;
-
   --reservas-color-purpura: #7c5cbf;
   --reservas-fondo-purpura: #efe9fb;
 }
@@ -22,162 +20,30 @@
 }
 
 /* =========================
-          FILTROS
-========================= */
-
-.reservas-filtros {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 16px;
-  flex-wrap: wrap;
-}
-
-.reservas-filtro {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  border: 1px solid var(--borde-input);
-  border-radius: 8px;
-  background: var(--blanco);
-  color: var(--texto-secundario);
-  font-size: 13px;
-  padding: 9px 12px;
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-.reservas-buscador {
-  flex: 1;
-  min-width: 160px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  border: 1px solid var(--borde-input);
-  border-radius: 8px;
-  background: var(--blanco);
-  padding: 9px 12px;
-  color: var(--texto-icono);
-}
-
-.reservas-buscador input {
-  border: none;
-  outline: none;
-  flex: 1;
-  font-size: 13px;
-  font-family: inherit;
-  color: var(--texto-principal);
-}
-
-/* =========================
         CONTENIDO
 ========================= */
 
-.pagina-administrador .reservas-contenido {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.pagina-administrador .reservas-listado,
-.pagina-administrador .reservas-tabla {
-  width: 100%;
-  min-width: 0;
-  box-sizing: border-box;
-}
-
-/* ---- tabs ---- */
-
-.reservas-tabs {
-  display: flex;
-  gap: 6px;
-  border-bottom: 1px solid var(--borde-secundario);
-  margin-bottom: 14px;
-}
-
-.reservas-tab {
-  border: none;
-  background: transparent;
-  color: var(--texto-secundario);
-  font-size: 13px;
-  font-weight: 500;
-  padding: 9px 6px;
-  cursor: pointer;
-  border-bottom: 2px solid transparent;
-  margin-bottom: -1px;
-}
-
-.reservas-tab.activo {
-  color: var(--verde);
-  font-weight: 600;
-  border-bottom-color: var(--verde);
-}
-
 /* ---- tabla ---- */
-
-.reservas-tabla .tabla-header,
-.reservas-tabla .tabla-fila {
-  gap: 10px;
-  padding: 13px 18px;
-  width: 100%;
-  box-sizing: border-box;
-  min-width: 880px;
-}
-
-.reservas-tabla .tabla-header > span {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--texto-secundario);
-}
-
-.reservas-fecha-celda {
-  display: flex;
-  flex-direction: column;
-  color: var(--texto-principal);
-}
 
 .reservas-fecha-celda span {
   display: flex;
   flex-direction: column;
-  color: var(--texto-principal);
 }
 
 .reservas-fecha-celda small {
-  color: var(--texto-secundario);
   font-size: 11px;
 }
 
-.reservas-espacio-celda {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.reservas-icono {
-  width: 32px;
-  height: 32px;
-  min-width: 32px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.reservas-icono.sum { background: var(--fondo-verde-suave); color: var(--color-aviso-verde); }
-.reservas-icono.parrilla { background: var(--fondo-aviso-amarillo); color: var(--color-vencimiento); }
-.reservas-icono.gimnasio { background: var(--fondo-azul-suave); color: var(--color-aviso-azul); }
-.reservas-icono.sala { background: var(--reservas-fondo-purpura); color: var(--reservas-color-purpura); }
-
 .reservas-espacio-celda strong {
   font-size: 13px;
-  color: var(--texto-principal);
   display: block;
 }
 
 .reservas-espacio-celda small {
-  color: var(--texto-secundario);
   font-size: 11px;
 }
+
+/* ----------- BADGE ----------- */
 
 .reservas-badge {
   width: fit-content;
@@ -191,147 +57,15 @@
 .reservas-badge-pendiente { color: var(--color-aviso-amarillo); background: var(--fondo-aviso-amarillo); }
 .reservas-badge-cancelada { color: var(--color-documento-pdf); background: var(--fondo-documento-pdf); }
 
-.reservas-creada {
-  color: var(--texto-secundario);
-  font-size: 12px;
-}
-
-.reservas-tabla-acciones {
-  display: flex;
-  gap: 10px;
-}
-
-.reservas-tabla-acciones button {
-  border: none;
-  background: transparent;
-  color: var(--texto-icono);
-  cursor: pointer;
-  display: flex;
-  padding: 0;
-}
-
-.reservas-tabla .tabla-paginacion {
-  padding: 0 18px 13px;
-  margin-top: 16px;
-}
-
-.reservas-tabla .tabla-paginacion-info {
-  font-size: 12px;
-}
-
 /* =========================
          PANELES
 ========================= */
 
-.reservas-paneles {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 14px;
-  width: 100%;
-  min-width: 0;
-  box-sizing: border-box;
-}
-
-/* ---- calendario ---- */
-
-.reservas-calendario-nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-
-.reservas-calendario-nav strong {
-  font-size: 13px;
-  color: var(--texto-principal);
-}
-
-.reservas-calendario-nav button {
-  border: none;
-  background: transparent;
-  color: var(--texto-secundario);
-  cursor: pointer;
-  display: flex;
-}
-
-.reservas-calendario-dias-nombre,
-.reservas-calendario-semana {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-}
-
-.reservas-calendario-dias-nombre span {
-  font-size: 10px;
-  color: var(--texto-secundario);
-  text-align: center;
-  padding-bottom: 6px;
-}
-
-.reservas-calendario-dia {
-  aspect-ratio: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  color: var(--texto-principal);
-  border-radius: 50%;
-}
-
-.reservas-calendario-dia.fuera {
-  color: var(--separador);
-}
-
-.reservas-calendario-dia.destacado {
-  background: var(--verde);
-  color: var(--blanco);
-  font-weight: 600;
-}
-
-/* ---- proxima reserva ---- */
-
-.reservas-proxima {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 12px;
-}
-
-.reservas-proxima-info {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.reservas-proxima-info strong {
-  font-size: 13px;
-  color: var(--texto-principal);
-  margin-bottom: 2px;
-}
-
-.reservas-proxima-info span {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 12px;
-  color: var(--texto-secundario);
-}
-
-.reservas-btn-detalle {
-  width: 100%;
-  border: 1px solid var(--borde-secundario);
-  border-radius: 8px;
-  background: var(--blanco);
-  color: var(--texto-principal);
-  font-size: 13px;
-  font-weight: 500;
-  padding: 9px;
-  cursor: pointer;
-}
-
-.reservas-btn-detalle:hover {
-  background: var(--fondo);
-}
-
 /* ---- espacios mas reservados ---- */
+
+.reservas-panel {
+  margin-top: 15px;
+}
 
 .reservas-barras-lista {
   display: flex;
@@ -378,19 +112,76 @@
   color: var(--verde-hover);
   text-decoration: none;
 }
+/* ----------------------------------------- */
+
+.reservas-detalle {
+  margin-top: 15px;
+}
+
+.reservas-detalle-titulo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 12px 0 14px;
+}
+
+.reservas-detalle-titulo strong {
+  font-size: 15px;
+  color: var(--texto-principal);
+}
+
+.reservas-detalle-fila {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--separador);
+}
+
+.reservas-detalle-fila span:first-child {
+  color: var(--texto-secundario);
+}
+
+.reservas-detalle-fila strong {
+  color: var(--texto-principal);
+  font-weight: 600;
+}
+
+.reservas-detalle h3 {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--texto-secundario);
+  margin-top: 16px;
+  margin-bottom: 8px;
+}
+
+.reservas-btn-editar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  border: 1px solid var(--verde);
+  border-radius: 8px;
+  background: var(--blanco);
+  color: var(--verde);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 10px;
+  margin-top: 18px;
+  cursor: pointer;
+}
+
+.reservas-btn-editar:hover {
+  background: var(--celeste-claro);
+}
 
 /* =========================
         RESPONSIVE
 ========================= */
 
 @media (max-width: 1000px) {
-  .reservas-resumen {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .reservas-paneles {
-    grid-template-columns: 1fr;
-  }
 }
 
 @media (max-width: 800px) {
@@ -399,12 +190,6 @@
   }
 
   .reservas-resumen {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 600px) {
-  .reservas-paneles {
     grid-template-columns: 1fr;
   }
 }

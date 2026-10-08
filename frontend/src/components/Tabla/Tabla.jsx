@@ -1,7 +1,80 @@
 
-import { useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { ChevronLeft, ChevronRight, MoreVertical } from "lucide-react";
 import "./Tabla.css";
+
+function MenuAcciones({ dato, opciones }) {
+    const [abierto, setAbierto] = useState(false);
+    const contenedorRef = useRef(null);
+    const botonRef = useRef(null);
+    const identificador = dato.nombre ?? dato.unidad ?? dato.id ?? "registro";
+
+    useEffect(() => {
+        if (!abierto) return undefined;
+
+        const cerrarAlHacerClickAfuera = (event) => {
+            if (!contenedorRef.current?.contains(event.target)) {
+                setAbierto(false);
+            }
+        };
+        const cerrarConEscape = (event) => {
+            if (event.key === "Escape") {
+                setAbierto(false);
+                botonRef.current?.focus();
+            }
+        };
+
+        document.addEventListener("pointerdown", cerrarAlHacerClickAfuera);
+        document.addEventListener("keydown", cerrarConEscape);
+
+        return () => {
+            document.removeEventListener("pointerdown", cerrarAlHacerClickAfuera);
+            document.removeEventListener("keydown", cerrarConEscape);
+        };
+    }, [abierto]);
+
+    return (
+        <div className="tabla-acciones" ref={contenedorRef}>
+            <button
+                ref={botonRef}
+                type="button"
+                className="tabla-acciones-boton"
+                aria-label={`Acciones para ${identificador}`}
+                aria-haspopup="menu"
+                aria-expanded={abierto}
+                disabled={opciones.length === 0}
+                onClick={(event) => {
+                    event.stopPropagation();
+                    setAbierto((valor) => !valor);
+                }}
+            >
+                <MoreVertical size={18} />
+            </button>
+
+            {abierto && (
+                <div className="tabla-acciones-menu" role="menu">
+                    {opciones.map((opcion) => (
+                        <button
+                            type="button"
+                            className="tabla-acciones-opcion"
+                            role="menuitem"
+                            key={opcion.label}
+                            disabled={opcion.disabled}
+                            onClick={(event) => {
+                                event.stopPropagation();
+                                opcion.onClick?.(dato);
+                                setAbierto(false);
+                            }}
+                        >
+                            {opcion.icon && <opcion.icon size={15} />}
+                            <span>{opcion.label}</span>
+                        </button>
+                    ))}
+                </div>
+            )}
+        </div>
+    );
+}
 
 const Tabla = ({
     columnas,
@@ -9,11 +82,17 @@ const Tabla = ({
     etiqueta = "registros",
     className = "",
     onFilaClick,
-    claseFila = () => ""
+    claseFila = () => "",
+    mostrarAcciones = false,
+    opcionesAcciones = [],
+    seleccionable = false,
+    filaSeleccionada,
 }) => {
     const filasPorPagina = 5;
 
     const [paginaActiva, setPaginaActiva] = useState(1);
+    const [seleccionInterna, setSeleccionInterna] = useState(null);
+    const seleccionControlada = filaSeleccionada !== undefined;
 
     const totalPaginas = Math.ceil(datos.length / filasPorPagina);
 
@@ -43,7 +122,7 @@ const Tabla = ({
         inicioPaginas + 4
     );
 
-    const distribucionColumnas = columnas
+    const distribucionDatos = columnas
         .map((columna) => {
             const ancho = columna.ancho || "1fr";
             return /^\d*\.?\d+fr$/.test(ancho)
@@ -51,42 +130,77 @@ const Tabla = ({
                 : ancho;
         })
         .join(" ");
+    const distribucionColumnas = [
+        ...(seleccionable ? ["25px"] : []),
+        distribucionDatos,
+        ...(mostrarAcciones ? ["100px"] : []),
+    ].join(" ");
 
     return (
         <section className={`tabla-card ${className}`}>
             <div className="tabla-header" style={{ gridTemplateColumns: distribucionColumnas }}>
+                {seleccionable && <span className="tabla-indicador-encabezado" />}
                 {columnas.map((columna) => (
                     <span key={columna.clave}>
                         {columna.titulo}
                     </span>
                 ))}
+                {mostrarAcciones && <span className="tabla-acciones-encabezado">Acciones</span>}
             </div>
 
             <div className="tabla-body">
-                {datosPagina.map((dato, index) => (
-                    <div
-                        className={`tabla-fila ${claseFila(dato)} ${onFilaClick ? "clickeable" : ""}`}
-                        key={dato.id ?? inicio + index}
-                        style={{ gridTemplateColumns: distribucionColumnas }}
-                        onClick={onFilaClick ? () => onFilaClick(dato) : undefined}
-                        onKeyDown={onFilaClick ? (event) => {
-                            if (event.key === "Enter" || event.key === " ") {
-                                event.preventDefault();
-                                onFilaClick(dato);
-                            }
-                        } : undefined}
-                        role={onFilaClick ? "button" : undefined}
-                        tabIndex={onFilaClick ? 0 : undefined}
-                    >
-                        {columnas.map((columna) => (
-                            <span className={columna.clase || ""} key={columna.clave}>
-                                {columna.render
-                                    ? columna.render(dato)
-                                    : dato[columna.clave]}
-                            </span>
-                        ))}
-                    </div>
-                ))}
+                {datosPagina.map((dato, index) => {
+                    const clave = dato.id ?? inicio + index;
+                    const seleccionado = seleccionControlada
+                        ? dato === filaSeleccionada
+                        : dato === seleccionInterna;
+                    const manejarClickFila = () => {
+                        if (seleccionable && !seleccionControlada) {
+                            setSeleccionInterna(dato);
+                        }
+                        onFilaClick?.(dato);
+                    };
+
+                    return (
+                        <div
+                            className={`tabla-fila ${claseFila(dato)} ${
+                                seleccionable && seleccionado ? "seleccionada" : ""
+                            } ${onFilaClick || seleccionable ? "clickeable" : ""}`}
+                            key={clave}
+                            style={{ gridTemplateColumns: distribucionColumnas }}
+                            onClick={onFilaClick || seleccionable ? manejarClickFila : undefined}
+                            onKeyDown={onFilaClick || seleccionable ? (event) => {
+                                if (
+                                    event.target === event.currentTarget
+                                    && (event.key === "Enter" || event.key === " ")
+                                ) {
+                                    event.preventDefault();
+                                    manejarClickFila();
+                                }
+                            } : undefined}
+                            role={onFilaClick || seleccionable ? "button" : undefined}
+                            tabIndex={onFilaClick || seleccionable ? 0 : undefined}
+                        >
+                            {seleccionable && (
+                                <span className="tabla-indicador-celda">
+                                    {seleccionado && <ChevronRight size={15} />}
+                                </span>
+                            )}
+                            {columnas.map((columna) => (
+                                <span className={columna.clase || ""} key={columna.clave}>
+                                    {columna.render
+                                        ? columna.render(dato)
+                                        : dato[columna.clave]}
+                                </span>
+                            ))}
+                            {mostrarAcciones && (
+                                <span className="tabla-acciones-celda">
+                                    <MenuAcciones dato={dato} opciones={opcionesAcciones} />
+                                </span>
+                            )}
+                        </div>
+                    );
+                })}
 
                 {datos.length === 0 && (
                     <div className="tabla-vacia">

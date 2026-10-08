@@ -1,6 +1,4 @@
 .comunicados {
-  padding: 28px 32px;
-
   --comunicados-color-aviso: var(--color-aviso-azul);
   --comunicados-fondo-aviso: var(--fondo-azul-suave);
   --comunicados-color-mantenimiento: var(--color-aviso-verde);
@@ -23,134 +21,11 @@
 }
 
 /* =========================
-          FILTROS
-========================= */
-
-.comunicados-filtros {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 18px;
-  flex-wrap: wrap;
-}
-
-.comunicados-filtro {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  border: 1px solid var(--borde-input);
-  border-radius: 8px;
-  background: var(--blanco);
-  color: var(--texto-secundario);
-  font-size: 13px;
-  padding: 9px 12px;
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-.comunicados-buscador {
-  flex: 1;
-  min-width: 160px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  border: 1px solid var(--borde-input);
-  border-radius: 8px;
-  background: var(--blanco);
-  padding: 9px 12px;
-  color: var(--texto-icono);
-}
-
-.comunicados-buscador input {
-  border: none;
-  outline: none;
-  flex: 1;
-  font-size: 13px;
-  font-family: inherit;
-  color: var(--texto-principal);
-}
-
-.comunicados-btn-nuevo {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  border: none;
-  border-radius: 8px;
-  background: var(--verde);
-  color: var(--blanco);
-  font-size: 13px;
-  font-weight: 600;
-  padding: 10px 16px;
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-.comunicados-btn-nuevo:hover {
-  background: var(--verde-hover);
-}
-
-/* =========================
         CONTENIDO
 ========================= */
 
-.comunicados-contenido {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.comunicados-listado,
-.comunicados-tabla,
 .comunicados-detalle {
-  width: 100%;
-  min-width: 0;
-  box-sizing: border-box;
-}
-
-.comunicados-tabla .tabla-header,
-.comunicados-tabla .tabla-fila {
-  gap: 12px;
-  padding: 14px 20px;
-  width: 100%;
-  box-sizing: border-box;
-  min-width: 820px;
-}
-
-.comunicados-tabla .tabla-header > span {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--texto-secundario);
-  text-align: left;
-}
-
-.comunicados-th-fecha {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.comunicados-tabla .tabla-fila {
-  background: transparent;
-}
-
-.comunicados-tabla .tabla-fila.seleccionada {
-  background: var(--celeste-claro);
-}
-
-.comunicados-indicador {
-  display: flex;
-  align-items: center;
-  color: var(--verde);
-}
-
-.comunicados-titulo-celda {
-  min-width: 0;
-  color: var(--texto-principal);
-  font-weight: 600;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  margin-top: 15px;
 }
 
 .comunicados-tipo-badge {
@@ -168,16 +43,6 @@
 .comunicados-tipo-badge.recordatorio { background: var(--comunicados-fondo-recordatorio); color: var(--comunicados-color-recordatorio); }
 .comunicados-tipo-badge.novedad { background: var(--comunicados-fondo-novedad); color: var(--comunicados-color-novedad); }
 
-.comunicados-fecha-celda {
-  display: flex;
-  flex-direction: column;
-}
-
-.comunicados-fecha-celda small {
-  color: var(--texto-secundario);
-  font-size: 11px;
-}
-
 .comunicados-badge {
   width: fit-content;
   padding: 4px 10px;
@@ -189,21 +54,6 @@
 .comunicados-badge-publicado { color: var(--comunicados-color-publicado); background: var(--comunicados-fondo-publicado); }
 .comunicados-badge-programado { color: var(--comunicados-color-programado); background: var(--comunicados-fondo-programado); }
 .comunicados-badge-borrador { color: var(--comunicados-color-borrador); background: var(--comunicados-fondo-borrador); }
-
-.comunicados-tabla-acciones {
-  display: flex;
-  gap: 10px;
-  color: var(--texto-icono);
-}
-
-.comunicados-tabla .tabla-paginacion {
-  padding: 0 20px 14px;
-  margin-top: 16px;
-}
-
-.comunicados-tabla .tabla-paginacion-info {
-  font-size: 12px;
-}
 
 /* =========================
       PANEL DE DETALLE

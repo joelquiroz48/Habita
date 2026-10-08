@@ -23,7 +23,6 @@ import ReclamosAdmin from "./pages/Administrador/Reclamos/Reclamos";
 import ComunicadosAdmin from "./pages/Administrador/Comunicados/Comunicados";
 import ReservasAdmin from "./pages/Administrador/Reservas/Reservas";
 import DocumentosAdmin from "./pages/Administrador/Documentos/Documentos";
-import ReportesAdmin from "./pages/Administrador/Reportes/Reportes";
 import ConfiguracionAdmin from "./pages/Administrador/Configuracion/Configuracion";
 
 function App() {
@@ -152,13 +151,6 @@ function App() {
                 <Route path="/administrador/documentos" element={
                         <LayoutAdministrador>
                             <DocumentosAdmin />
-                        </LayoutAdministrador>
-                    }
-                />
-
-                <Route path="/administrador/reportes" element={
-                        <LayoutAdministrador>
-                            <ReportesAdmin />
                         </LayoutAdministrador>
                     }
                 />

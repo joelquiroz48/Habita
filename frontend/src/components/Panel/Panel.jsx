@@ -3,6 +3,7 @@ import "./Panel.css";
 const Panel = ({
     icono,
     titulo,
+    tituloComplemento,
     descripcion,
     accion,
     children,
@@ -17,9 +18,12 @@ const Panel = ({
                 </div>
             )}
 
-            <div>
+            <div className="panel-titulo-contenido">
                 {titulo && (
-                    <h2>{titulo}</h2>
+                    <div className="panel-titulo-linea">
+                        <h2>{titulo}</h2>
+                        {tituloComplemento}
+                    </div>
                 )}
 
                 {descripcion && (
@@ -31,7 +35,7 @@ const Panel = ({
 
     return (
         <article className={`panel ${className}`}>
-            {(icono || titulo || descripcion || accion) && (
+            {(icono || titulo || tituloComplemento || descripcion || accion) && (
                 <div
                     className={`panel-header ${
                         icono && !accion ? "panel-header-junto" : ""
