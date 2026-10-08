@@ -5,6 +5,7 @@ import {
     Users,
     PiggyBank,
     Download,
+    X,
 } from "lucide-react";
 
 import "./Expensas.css";
@@ -101,13 +102,14 @@ function formatearMonto(numero) {
     return `$ ${numero.toLocaleString("es-AR")}`;
 }
 
-function badgeClase(estado) {
+function estadoBadgeClase(estado) {
     return estado === "En curso" ? "expensas-badge-curso" : "expensas-badge-cerrada";
 }
 
 function Expensas() {
 
-    const [periodoSeleccionado, setPeriodoSeleccionado] = useState(expensas[0].periodo);
+    const [seleccionado, setSeleccionado] = useState(expensas[0]);
+    const [detalleAbierto, setDetalleAbierto] = useState(false);
     const [expensasListado, setExpensasListado] = useState(expensas);
 
     useEffect(() => {
@@ -115,6 +117,11 @@ function Expensas() {
     }, []);
 
     const expensaActual = expensas[0];
+
+    function abrirDetalle(comunicado) {
+        setSeleccionado(comunicado);
+        setDetalleAbierto(true);
+    }
 
     {/* =========================
             TARJETAS RESUMEN
@@ -157,7 +164,7 @@ function Expensas() {
         },
     ];
 
-    const detalle = expensas.find((e) => e.periodo === periodoSeleccionado);
+    const detalle = expensasListado.find((e) => e.periodo === seleccionado.periodo);
     
     const pendiente = detalle.importe - detalle.recaudado;
     
@@ -190,7 +197,7 @@ function Expensas() {
             titulo: "Estado",
             ancho: "0.8fr",
             render: (item) => (
-                <span className={`expensas-badge ${badgeClase(item.estado)}`}>
+                <span className={`expensas-badge ${estadoBadgeClase(item.estado)}`}>
                     {item.estado}
                 </span>
             ),
@@ -242,78 +249,94 @@ function Expensas() {
                         datos={expensasFiltrados}
                         etiqueta="períodos"
                         className="expensas-tabla"
-                        onFilaClick={(item) => setPeriodoSeleccionado(item.periodo)}
+                        onFilaClick={abrirDetalle}
                         seleccionable
-                        filaSeleccionada={detalle}
+                        filaSeleccionada={detalleAbierto ? seleccionado : null}
                     />
                         )}
             </Navegador>
 
-            
-
             {/* DETALLE */}
 
-            <Panel
-                className="expensas-detalle"
-                titulo={`Detalle de ${detalle.periodo}`}
-                accion={
-                    <span className={`expensas-badge ${badgeClase(detalle.estado)}`}>
-                        {detalle.estado}
-                    </span>
-                }
-            >
-
-                <p className="expensas-detalle-linea">
-                    Vencimiento: <strong>{detalle.vencimiento}</strong>
-                </p>
-                <p className="expensas-detalle-linea">
-                    Estado: <strong>{detalle.estado}</strong>
-                </p>
-
-                <div className="expensas-detalle-columnas">
-                    <section className="expensas-detalle-seccion">
-                        <h3>Resumen</h3>
-                        <div className="expensas-resumen-fila">
-                            <span>Importe total</span>
-                            <span>{formatearMonto(detalle.importe)}</span>
+            {detalleAbierto && (
+                <Panel
+                    className="expensas-detalle"
+                    titulo={`Detalle de ${detalle.periodo}`}
+                    tituloComplemento={
+                        <div className={`expensas-badge ${estadoBadgeClase(detalle.estado)}`}>
+                            {detalle.estado}
                         </div>
-                        <div className="expensas-resumen-fila">
-                            <span>Recaudado</span>
-                            <span>{formatearMonto(detalle.recaudado)}</span>
-                        </div>
-                        <div className="expensas-resumen-fila">
-                            <span>Pendiente</span>
-                            <span className="expensas-pendiente">{formatearMonto(pendiente)}</span>
-                        </div>
-                        <div className="expensas-resumen-fila">
-                            <span>Porcentaje recaudado</span>
-                            <span className="expensas-porcentaje">{detalle.porcentaje}%</span>
-                        </div>
-                    </section>
-
-                    <section className="expensas-detalle-seccion">
-                        <h3>Conceptos</h3>
-                        {detalle.conceptos.map((concepto) => (
-                            <div className="expensas-resumen-fila" key={concepto.nombre}>
-                                <span>{concepto.nombre}</span>
-                                <span>{formatearMonto(concepto.monto)}</span>
-                            </div>
-                        ))}
-                    </section>
-                </div>
-
-                <section className="expensas-detalle-acciones">
-                    <h3>Acciones</h3>
-                    <div className="expensas-acciones-lista">
-                        <button className="expensas-btn-accion secundario">
-                            <Download size={15} />
-                            Descargar boleta
+                    }
+                    accion={
+                        <button
+                            className="expensas-detalle-cerrar"
+                            onClick={() => setDetalleAbierto(false)}
+                            aria-label="Cerrar detalle"
+                        >
+                            <X size={18} />
                         </button>
+                    }
+                >
+
+                    {/* =========== DETALLES =========== */}
+
+                    <p className="expensas-detalle-linea">
+                        Vencimiento: <strong>{detalle.vencimiento}</strong>
+                    </p>
+                    
+                    {/* =========== COLUMNAS =========== */}
+
+                    <div className="expensas-detalle-columnas">
+                        
+                        {/* =========== FILAS =========== */}
+
+                        <section className="expensas-detalle-seccion">
+                            <h3>Resumen</h3>
+                            <div className="expensas-resumen-fila">
+                                <span>Importe total</span>
+                                <span>{formatearMonto(detalle.importe)}</span>
+                            </div>
+                            <div className="expensas-resumen-fila">
+                                <span>Recaudado</span>
+                                <span>{formatearMonto(detalle.recaudado)}</span>
+                            </div>
+                            <div className="expensas-resumen-fila">
+                                <span>Pendiente</span>
+                                <span className="expensas-pendiente">{formatearMonto(pendiente)}</span>
+                            </div>
+                            <div className="expensas-resumen-fila">
+                                <span>Porcentaje recaudado</span>
+                                <span className="expensas-porcentaje">{detalle.porcentaje}%</span>
+                            </div>
+                        </section>
+
+                        {/* =========== FILAS =========== */}
+
+                        <section className="expensas-detalle-seccion">
+                            <h3>Conceptos</h3>
+                            {detalle.conceptos.map((concepto) => (
+                                <div className="expensas-resumen-fila" key={concepto.nombre}>
+                                    <span>{concepto.nombre}</span>
+                                    <span>{formatearMonto(concepto.monto)}</span>
+                                </div>
+                            ))}
+                        </section>
                     </div>
-                </section>
 
-            </Panel>
+                    {/* =========== BOLETA =========== */}
 
+                    <section className="expensas-detalle-acciones">
+                        <h3>Acciones</h3>
+                        <div className="expensas-acciones-lista">
+                            <button className="expensas-btn-boleta">
+                                <Download size={15} />
+                                Descargar boleta
+                            </button>
+                        </div>
+                    </section>
+
+                </Panel>
+            )}
 
         </main>
     );

@@ -74,6 +74,11 @@
     justify-content: center;
 }
 
+.tabla-acciones-opcion,
+.tabla-acciones-boton svg {
+    color: var(--verde-hover)
+}
+
 .tabla-acciones {
     position: relative;
     display: flex;

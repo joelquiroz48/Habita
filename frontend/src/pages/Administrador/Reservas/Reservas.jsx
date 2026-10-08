@@ -5,6 +5,7 @@ import {
     CheckCircle2,
     XCircle,
     ChevronRight,
+    X,
 } from "lucide-react";
 
 import "./Reservas.css";
@@ -127,10 +128,12 @@ const resumenTarjetas = [
     },
 ];
 
-function badgeClase(estado) {
+function estadoBadgeClase(estado) {
     if (estado === "Confirmada") return "reservas-badge-confirmada";
     if (estado === "Pendiente") return "reservas-badge-pendiente";
-    return "reservas-badge-cancelada";
+    if (estado === "Cancelada") return "reservas-badge-cancelada";
+    if (estado === "Rechazada") return "reservas-badge-rechazada";
+    return "reservas-badge-finalizada";
 }
 
 const columnas = [
@@ -169,7 +172,7 @@ const columnas = [
         titulo: "Estado",
         ancho: "0.9fr",
         render: (reserva) => (
-            <span className={`reservas-badge ${badgeClase(reserva.estado)}`}>
+            <span className={`reservas-badge ${estadoBadgeClase(reserva.estado)}`}>
                 {reserva.estado}
             </span>
         ),
@@ -197,11 +200,19 @@ const filtros=[
 
 function Reservas() {
 
+    const [seleccionado, setSeleccionado] = useState(reservas[0]);
+    const [detalleAbierto, setDetalleAbierto] = useState(false);
+
     const [reservasListado, setReservasListado] = useState(reservas);
 
     useEffect(() => {
         document.title = "Habita | Reservas";
     }, []);
+
+    function abrirDetalle(comunicado) {
+    setSeleccionado(comunicado);
+    setDetalleAbierto(true);
+    }
 
     return (
         <main className="reservas pagina-administrador">
@@ -225,6 +236,75 @@ function Reservas() {
                     );
                 })}
             </section>
+
+            <Navegador
+                data={reservasListado}
+                searchKey="espacio"
+                searchPlaceholder="Buscar reserva..."
+                filters={filtros}
+            >
+                {(ReservasFiltradas) => (
+                    <Tabla
+                        columnas={columnas}
+                        datos={ReservasFiltradas}
+                        etiqueta="reservas"
+                        className="reservas-tabla"
+                        onFilaClick={abrirDetalle}
+                        seleccionable
+                        filaSeleccionada={detalleAbierto ? seleccionado : null}
+                    />
+                        )}
+            </Navegador>      
+
+            {detalleAbierto && (
+                <Panel
+                    className="reservas-detalle"
+                    titulo={seleccionado.espacio}
+                    tituloComplemento={
+                        <div className={`reservas-badge ${estadoBadgeClase(seleccionado.estado)}`}>
+                            {seleccionado.estado}
+                        </div>
+                    }
+                    accion={
+                        <button
+                            className="reservas-detalle-cerrar"
+                            onClick={() => setDetalleAbierto(false)}
+                            aria-label="Cerrar detalle"
+                        >
+                            <X size={18} />
+                        </button>
+                    }
+                >
+                    
+                    {/* =========== FILAS =========== */}
+
+                    <div className="reservas-detalle-fila">
+                        <span>Ubicación</span>
+                        <strong>{seleccionado.ubicacion}</strong>
+                    </div>
+
+                    <div className="reservas-detalle-fila">
+                        <span>Solicitado por</span>
+                        <strong>{seleccionado.residente}</strong>
+                    </div>
+
+                    <div className="reservas-detalle-fila">
+                        <span>Unidad</span>
+                        <strong>{seleccionado.unidad}</strong>
+                    </div>
+
+                    <div className="reservas-detalle-fila">
+                        <span>Fecha y horario solicitado</span>
+                        <strong>{seleccionado.fecha} {seleccionado.horario}</strong>
+                    </div>
+
+                    {/* =========== OPCIONES =========== */}
+
+                    <button className="comunicados-btn-editar">
+                        Cancelar reserva
+                    </button>
+                </Panel>
+            )}
 
             <Panel titulo="Espacios más reservados" className="reservas-panel">
                 <div className="reservas-barras-lista">
@@ -253,24 +333,7 @@ function Reservas() {
                     Ver reporte completo
                     <ChevronRight size={14} />
                 </a>
-            </Panel>
-
-            <Navegador
-                data={reservasListado}
-                searchKey="espacio"
-                searchPlaceholder="Buscar reserva..."
-                filters={filtros}
-            >
-                {(ReservasFiltradas) => (
-                    <Tabla
-                        columnas={columnas}
-                        datos={ReservasFiltradas}
-                        etiqueta="reservas"
-                        className="reservas-tabla"
-                        seleccionable
-                    />
-                        )}
-            </Navegador>            
+            </Panel>      
 
         </main>
     );

@@ -138,27 +138,24 @@
   font-weight: 600;
 }
 
-.expensas-btn-accion {
+.expensas-btn-boleta {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   width: 100%;
+  border: 1px solid var(--verde);
   border-radius: 8px;
+  background: var(--blanco);
+  color: var(--verde);
   font-size: 13px;
   font-weight: 600;
   padding: 10px;
-  margin-top: 8px;
+  margin-top: 18px;
   cursor: pointer;
 }
 
-.expensas-btn-accion.secundario {
-  border: 1px solid var(--borde-secundario);
-  background: var(--blanco);
-  color: var(--texto-principal);
-}
-
-.expensas-btn-accion.secundario:hover {
+.expensas-btn-boleta:hover {
   background: var(--celeste-claro);
 }
 

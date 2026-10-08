@@ -120,7 +120,7 @@ function formatearMonto(numero) {
     return `$ ${numero.toLocaleString("es-AR")}`;
 }
 
-function badgeClase(estado) {
+function estadoBadgeClase(estado) {
     if (estado === "Confirmado") return "pagos-badge-confirmado";
     if (estado === "Pendiente") return "pagos-badge-pendiente";
     return "pagos-badge-rechazado";
@@ -129,7 +129,7 @@ function badgeClase(estado) {
 function Pagos() {
 
     const [pagoSeleccionado, setPagoSeleccionado] = useState(pagos[0]);
-    const [detalleAbierto, setDetalleAbierto] = useState(true);
+    const [detalleAbierto, setDetalleAbierto] = useState(false);
 
     const [pagosListado, setPagosListado] = useState(pagos);
 
@@ -158,7 +158,7 @@ function Pagos() {
             titulo: "Estado",
             ancho: "0.9fr",
             render: (pago) => (
-                <span className={`pagos-badge ${badgeClase(pago.estado)}`}>
+                <span className={`pagos-badge ${estadoBadgeClase(pago.estado)}`}>
                     {pago.estado}
                 </span>
             ),
@@ -193,102 +193,95 @@ function Pagos() {
             ========================= */}
 
             {/* CONTENIDO */}
+            
+            <Navegador
+                data={pagosListado}
+                searchKey="residente"
+                searchPlaceholder="Buscar pago..."
+                filters={filtros}
+            >
+                {(PagosFiltrados) => (
+                    <Tabla
+                        columnas={columnas}
+                        datos={PagosFiltrados}
+                        etiqueta="pagos"
+                        className="pagos-tabla"
+                        onFilaClick={abrirDetalle}
+                        seleccionable
+                        filaSeleccionada={detalleAbierto ? pagoSeleccionado : null}
+                    />
+                        )}
+            </Navegador>
 
-            <div className={`pagos-contenido ${detalleAbierto ? "" : "sin-detalle"}`}>
+            {/* DETALLE */}
 
-                <section className="pagos-listado">
-
-                    <Navegador
-                        data={pagosListado}
-                        searchKey="residente"
-                        searchPlaceholder="Buscar pago..."
-                        filters={filtros}
-                    >
-                        {(PagosFiltrados) => (
-                            <Tabla
-                                columnas={columnas}
-                                datos={PagosFiltrados}
-                                etiqueta="pagos"
-                                className="pagos-tabla"
-                                onFilaClick={abrirDetalle}
-                                seleccionable
-                                filaSeleccionada={detalleAbierto ? pagoSeleccionado : null}
-                            />
-                                )}
-                    </Navegador>
-
-                </section>
-
-                {/* DETALLE */}
-
-                {detalleAbierto && (
-                    <Panel
-                        className="pagos-detalle"
-                        titulo="Detalle del pago"
-                        accion={
-                            <button
-                                className="pagos-detalle-cerrar"
-                                onClick={() => setDetalleAbierto(false)}
-                                aria-label="Cerrar detalle"
-                            >
-                                <X size={18} />
-                            </button>
-                        }
-                    >
-                        <span className={`pagos-badge ${badgeClase(pagoSeleccionado.estado)}`}>
+            {detalleAbierto && (
+                <Panel
+                    className="pagos-detalle"
+                    titulo="Detalle del pago"
+                    tituloComplemento={
+                        <div className={`pagos-badge ${estadoBadgeClase(pagoSeleccionado.estado)}`}>
                             {pagoSeleccionado.estado}
-                        </span>
-
-                        <div className="pagos-detalle-fila">
-                            <span>Residente</span>
-                            <strong>{pagoSeleccionado.residente}</strong>
                         </div>
-
-                        <div className="pagos-detalle-fila">
-                            <span>Unidad</span>
-                            <strong>{pagoSeleccionado.unidad}</strong>
-                        </div>
-
-                        <div className="pagos-detalle-fila">
-                            <span>Período</span>
-                            <strong>{pagoSeleccionado.periodo}</strong>
-                        </div>
-
-                        <div className="pagos-detalle-fila">
-                            <span>Importe</span>
-                            <strong>{formatearMonto(pagoSeleccionado.importe)}</strong>
-                        </div>
-
-                        <div className="pagos-detalle-fila">
-                            <span>Fecha de pago</span>
-                            <strong>{pagoSeleccionado.fecha} - {pagoSeleccionado.hora}</strong>
-                        </div>
-
-                        <p className="pagos-detalle-subtitulo">N° de transacción</p>
-
-                        <p className="pagos-detalle-transaccion">
-                            {pagoSeleccionado.transaccion}
-                        </p>
-
-                        <div className="pagos-detalle-fila">
-                            <span>Estado</span>
-                            <strong>{pagoSeleccionado.estado}</strong>
-                        </div>
-
-                        <h3>Comprobante</h3>
-
-                        <button className="pagos-btn-comprobante">
-                            <Download size={15} />
-                            Descargar comprobante
+                    }
+                    accion={
+                        <button
+                            className="pagos-detalle-cerrar"
+                            onClick={() => setDetalleAbierto(false)}
+                            aria-label="Cerrar detalle"
+                        >
+                            <X size={18} />
                         </button>
+                    }
+                >
 
-                        <span className="pagos-detalle-archivo">
-                            PDF - 124 KB
-                        </span>
-                    </Panel>
-                )}
+                    {/* =========== FILAS =========== */}
 
-            </div>
+                    <div className="pagos-detalle-fila">
+                        <span>Residente</span>
+                        <strong>{pagoSeleccionado.residente}</strong>
+                    </div>
+
+                    <div className="pagos-detalle-fila">
+                        <span>Unidad</span>
+                        <strong>{pagoSeleccionado.unidad}</strong>
+                    </div>
+
+                    <div className="pagos-detalle-fila">
+                        <span>Período</span>
+                        <strong>{pagoSeleccionado.periodo}</strong>
+                    </div>
+
+                    <div className="pagos-detalle-fila">
+                        <span>Importe</span>
+                        <strong>{formatearMonto(pagoSeleccionado.importe)}</strong>
+                    </div>
+
+                    <div className="pagos-detalle-fila">
+                        <span>Fecha de pago</span>
+                        <strong>{pagoSeleccionado.fecha} - {pagoSeleccionado.hora}</strong>
+                    </div>
+
+                    <p className="pagos-detalle-subtitulo">N° de transacción</p>
+
+                    <p className="pagos-detalle-transaccion">
+                        {pagoSeleccionado.transaccion}
+                    </p>
+                    
+                    {/* =========== COMPROBANTE =========== */}
+
+                    <h3>Comprobante</h3>
+
+                    <button className="pagos-btn-comprobante">
+                        <Download size={15} />
+                        Descargar comprobante
+                    </button>
+
+                    <span className="pagos-detalle-archivo">
+                        PDF - 124 KB
+                    </span>
+                </Panel>
+            )}
 
         </main>
     );

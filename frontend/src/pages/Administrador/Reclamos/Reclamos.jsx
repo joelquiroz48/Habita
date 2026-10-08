@@ -9,6 +9,9 @@ import {
     ArrowUpDown,
     Lightbulb,
     MoreHorizontal,
+    Image,
+    X,
+    Eye,
 } from "lucide-react";
 
 import "./Reclamos.css";
@@ -30,13 +33,13 @@ const kpis = {
 };
 
 const reclamos = [
-    { id: "#R-2026-0064", fecha: "01/09/2026", residente: "Nicolás Paz", unidad: "5B", categoria: "Mantenimiento", asunto: "Fuga de agua en cocina", estado: "Pendiente", prioridad: "Alta" },
-    { id: "#R-2026-0063", fecha: "01/09/2026", residente: "María Gómez", unidad: "3A", categoria: "Limpieza", asunto: "Suciedad en pasillos", estado: "En proceso", prioridad: "Media" },
-    { id: "#R-2026-0062", fecha: "31/08/2026", residente: "Juan López", unidad: "7C", categoria: "Ascensores", asunto: "Ascensor se detiene entre pisos", estado: "En proceso", prioridad: "Alta" },
-    { id: "#R-2026-0061", fecha: "31/08/2026", residente: "Carla Romero", unidad: "1B", categoria: "Iluminación", asunto: "Luz quemada en garage", estado: "Resuelto", prioridad: "Baja" },
-    { id: "#R-2026-0060", fecha: "30/08/2026", residente: "Pedro Martínez", unidad: "2D", categoria: "Espacios comunes", asunto: "Mesa rota en SUM", estado: "Resuelto", prioridad: "Media" },
-    { id: "#R-2026-0059", fecha: "29/08/2026", residente: "Laura Sánchez", unidad: "4A", categoria: "Seguridad", asunto: "Puerta del edificio sin traba", estado: "Pendiente", prioridad: "Alta" },
-    { id: "#R-2026-0058", fecha: "28/08/2026", residente: "Diego Fernández", unidad: "6E", categoria: "Mantenimiento", asunto: "Aire acondicionado no enfría", estado: "En proceso", prioridad: "Media" },
+    { id: "#R-2026-0064", fecha: "01/09/2026", residente: "Nicolás Paz", unidad: "5B", categoria: "Mantenimiento", asunto: "Fuga de agua en cocina", estado: "Pendiente", prioridad: "Alta", descripcion: "Holaaa", adjunto: { nombre: "foto1.png", tamano: "245 KB" }, },
+    { id: "#R-2026-0063", fecha: "01/09/2026", residente: "María Gómez", unidad: "3A", categoria: "Limpieza", asunto: "Suciedad en pasillos", estado: "En proceso", prioridad: "Media", descripcion: "Holaaa" },
+    { id: "#R-2026-0062", fecha: "31/08/2026", residente: "Juan López", unidad: "7C", categoria: "Ascensores", asunto: "Ascensor se detiene entre pisos", estado: "En proceso", prioridad: "Alta", descripcion: "Holaaa" },
+    { id: "#R-2026-0061", fecha: "31/08/2026", residente: "Carla Romero", unidad: "1B", categoria: "Iluminación", asunto: "Luz quemada en garage", estado: "Resuelto", prioridad: "Baja", descripcion: "Holaaa", adjunto: { nombre: "1234.jpg", tamano: "245 KB" }, },
+    { id: "#R-2026-0060", fecha: "30/08/2026", residente: "Pedro Martínez", unidad: "2D", categoria: "Espacios comunes", asunto: "Mesa rota en SUM", estado: "Resuelto", prioridad: "Media", descripcion: "Holaaa" },
+    { id: "#R-2026-0059", fecha: "29/08/2026", residente: "Laura Sánchez", unidad: "4A", categoria: "Seguridad", asunto: "Puerta del edificio sin traba", estado: "Pendiente", prioridad: "Alta", descripcion: "Holaaa" },
+    { id: "#R-2026-0058", fecha: "28/08/2026", residente: "Diego Fernández", unidad: "6E", categoria: "Mantenimiento", asunto: "Aire acondicionado no enfría", estado: "En proceso", prioridad: "Media", descripcion: "Holaaa" },
 ];
 
 const totalReclamos = 64;
@@ -157,11 +160,19 @@ const filtros=[
 
 function Reclamos() {
 
+    const [seleccionado, setSeleccionado] = useState(reclamos[0]);
+    const [detalleAbierto, setDetalleAbierto] = useState(false);
+
     const [reclamosListado, setReclamosListado] = useState(reclamos);
 
     useEffect(() => {
         document.title = "Habita | Reclamos";
     }, []);
+
+    function abrirDetalle(comunicado) {
+        setSeleccionado(comunicado);
+        setDetalleAbierto(true);
+    }
 
     return (
         <main className="reclamos">
@@ -202,10 +213,102 @@ function Reclamos() {
                         datos={ReclamosFiltrados}
                         etiqueta="reclamos"
                         className="reclamos-tabla"
+                        onFilaClick={abrirDetalle}
                         seleccionable
+                        filaSeleccionada={detalleAbierto ? seleccionado : null}
                     />
                         )}
             </Navegador>
+
+            {/* DETALLE */}
+
+            {detalleAbierto && (
+                <Panel
+                    className="reclamos-detalle"
+                    titulo={seleccionado.asunto}
+                    tituloComplemento={
+                        <div className={`reclamos-badge ${estadoBadgeClase(seleccionado.estado)}`}>
+                            {seleccionado.estado}
+                        </div>
+                    }
+                    accion={
+                        <button
+                            className="reclamos-detalle-cerrar"
+                            onClick={() => setDetalleAbierto(false)}
+                            aria-label="Cerrar detalle"
+                        >
+                            <X size={18} />
+                        </button>
+                    }
+                >
+                    
+                    {/* =========== FILAS =========== */}
+
+                    <div className="reclamos-detalle-fila">
+                        <span>Categoria</span>
+                        <span className={`reclamos-cat-badge ${categoriaBadgeClase(seleccionado.categoria)}`}>
+                            {seleccionado.categoria}
+                        </span>
+                    </div>
+
+                    <div className="reclamos-detalle-fila">
+                        <span>ID</span>
+                        <strong>{seleccionado.id}</strong>
+                    </div>
+
+                    <div className="reclamos-detalle-fila">
+                        <span>Fecha de publicación</span>
+                        <strong>{seleccionado.fecha}</strong>
+                    </div>
+
+                    <div className="reclamos-detalle-fila">
+                        <span>Publicado por</span>
+                        <strong>{seleccionado.residente}</strong>
+                    </div>
+
+                    <div className="reclamos-detalle-fila">
+                        <span>Unidad</span>
+                        <strong>{seleccionado.unidad}</strong>
+                    </div>
+                    
+                    {/* =========== DESCRIPCION =========== */}
+
+                    <h3>Descripción</h3>
+
+                    <p className="reclamos-resumen-texto">
+                        {seleccionado.descripcion}
+                    </p>
+
+                    {/* =========== ADJUNTOS =========== */}
+
+                    <h3>Adjuntos</h3>
+
+                    {seleccionado.adjunto ? (
+                        <div className="reclamos-adjunto">
+                            <Image size={16} />
+
+                            <div className="reclamos-adjunto-info">
+                                <strong>{seleccionado.adjunto.nombre}</strong>
+                                <span>Tamaño - {seleccionado.adjunto.tamano}</span>
+                            </div>
+
+                            <button aria-label="Descargar adjunto">
+                                <Eye size={16} />
+                            </button>
+                        </div>
+                    ) : (
+                        <p className="reclamos-sin-adjunto">
+                            Sin archivos adjuntos.
+                        </p>
+                    )}
+
+                    {/* =========== OPCIONES =========== */}
+
+                    <button className="reclamos-btn-editar">
+                        Seguimiento
+                    </button>
+                </Panel>
+            )}
             
             {/* RESUMEN */}
 

@@ -136,7 +136,7 @@ function estadoBadgeClase(estado) {
 function Comunicados() {
 
     const [seleccionado, setSeleccionado] = useState(comunicados[0]);
-    const [detalleAbierto, setDetalleAbierto] = useState(true);
+    const [detalleAbierto, setDetalleAbierto] = useState(false);
     
     const [comunicadosListado, setComunicadosListado] = useState(comunicados);
 
@@ -196,125 +196,112 @@ function Comunicados() {
     return (
         <main className="comunicados">
 
-            <div className={`comunicados-contenido ${detalleAbierto ? "" : "sin-detalle"}`}>
-
-                <section className="comunicados-listado">
-
-                    <Navegador
-                        data={comunicadosListado}
-                        searchKey="titulo"
-                        searchPlaceholder="Buscar comunicado..."
-                        filters={filtros}
-                        onNew={() => {}}
-                        newButtonText="Crear comunicado"
-                    >
-                        {(ComunicadosFiltrados) => (
-                            <Tabla
-                                columnas={columnas}
-                                datos={ComunicadosFiltrados}
-                                etiqueta="comunicados"
-                                className="comunicados-tabla"
-                                onFilaClick={abrirDetalle}
-                                seleccionable
-                                filaSeleccionada={detalleAbierto ? seleccionado : null}
-                            />
-                                )}
-                    </Navegador>
-
-                </section>
-
-                {/* DETALLE */}
-
-                {detalleAbierto && (
-                    <Panel
-                        className="comunicados-detalle"
-                        titulo="Detalle del comunicado"
-                        accion={
-                            <button
-                                className="comunicados-detalle-cerrar"
-                                onClick={() => setDetalleAbierto(false)}
-                                aria-label="Cerrar detalle"
-                            >
-                                <X size={18} />
-                            </button>
-                        }
-                    >
-                        <span
-                            className={`comunicados-badge ${estadoBadgeClase(
-                                seleccionado.estado
-                            )}`}
-                        >
-                            {seleccionado.estado}
-                        </span>
-
-                        <div className="comunicados-detalle-titulo">
-                            <span className={`comunicados-icono ${seleccionado.claseColor}`}>
-                                {(() => {
-                                    const Icono = seleccionado.icon;
-                                    return <Icono size={20} />;
-                                })()}
-                            </span>
-
-                            <strong>{seleccionado.titulo}</strong>
-                        </div>
-
-                        <div className="comunicados-detalle-fila">
-                            <span>Tipo</span>
-                            <span className={`comunicados-tipo-badge ${seleccionado.claseColor}`}>
-                                {seleccionado.tipo}
-                            </span>
-                        </div>
-
-                        <div className="comunicados-detalle-fila">
-                            <span>Fecha de publicación</span>
-                            <strong>{seleccionado.fecha}</strong>
-                        </div>
-
-                        <div className="comunicados-detalle-fila">
-                            <span>Publicado por</span>
-                            <strong>{seleccionado.publicadoPor}</strong>
-                        </div>
-
-                        <div className="comunicados-detalle-fila">
-                            <span>Audiencia</span>
-                            <strong>{seleccionado.audiencia}</strong>
-                        </div>
-
-                        <h3>Resumen</h3>
-
-                        <p className="comunicados-resumen-texto">
-                            {seleccionado.resumen}
-                        </p>
-
-                        <h3>Adjuntos</h3>
-
-                        {seleccionado.adjunto ? (
-                            <div className="comunicados-adjunto">
-                                <Paperclip size={16} />
-
-                                <div className="comunicados-adjunto-info">
-                                    <strong>{seleccionado.adjunto.nombre}</strong>
-                                    <span>PDF - {seleccionado.adjunto.tamano}</span>
-                                </div>
-
-                                <button aria-label="Descargar adjunto">
-                                    <Download size={16} />
-                                </button>
-                            </div>
-                        ) : (
-                            <p className="comunicados-sin-adjunto">
-                                Sin archivos adjuntos.
-                            </p>
+            <Navegador
+                data={comunicadosListado}
+                searchKey="titulo"
+                searchPlaceholder="Buscar comunicado..."
+                filters={filtros}
+                onNew={() => {}}
+                newButtonText="Crear comunicado"
+            >
+                {(ComunicadosFiltrados) => (
+                    <Tabla
+                        columnas={columnas}
+                        datos={ComunicadosFiltrados}
+                        etiqueta="comunicados"
+                        className="comunicados-tabla"
+                        onFilaClick={abrirDetalle}
+                        seleccionable
+                        filaSeleccionada={detalleAbierto ? seleccionado : null}
+                    />
                         )}
+            </Navegador>
 
-                        <button className="comunicados-btn-editar">
-                            <Pencil size={15} />
-                            Editar comunicado
+            {/* DETALLE */}
+
+            {detalleAbierto && (
+                <Panel
+                    className="comunicados-detalle"
+                    titulo={seleccionado.titulo}
+                    tituloComplemento={
+                        <div className={`comunicados-badge ${estadoBadgeClase(seleccionado.estado)}`}>
+                            {seleccionado.estado}
+                        </div>
+                    }
+                    accion={
+                        <button
+                            className="comunicados-detalle-cerrar"
+                            onClick={() => setDetalleAbierto(false)}
+                            aria-label="Cerrar detalle"
+                        >
+                            <X size={18} />
                         </button>
-                    </Panel>
-                )}
+                    }
+                >
+                    
+                    {/* =========== FILAS =========== */}
 
-            </div>
+                    <div className="comunicados-detalle-fila">
+                        <span>Tipo</span>
+                        <span className={`comunicados-tipo-badge ${seleccionado.claseColor}`}>
+                            {seleccionado.tipo}
+                        </span>
+                    </div>
+
+                    <div className="comunicados-detalle-fila">
+                        <span>Fecha de publicación</span>
+                        <strong>{seleccionado.fecha}</strong>
+                    </div>
+
+                    <div className="comunicados-detalle-fila">
+                        <span>Publicado por</span>
+                        <strong>{seleccionado.publicadoPor}</strong>
+                    </div>
+
+                    <div className="comunicados-detalle-fila">
+                        <span>Audiencia</span>
+                        <strong>{seleccionado.audiencia}</strong>
+                    </div>
+                    
+                    {/* =========== RESUMEN =========== */}
+
+                    <h3>Resumen</h3>
+
+                    <p className="comunicados-resumen-texto">
+                        {seleccionado.resumen}
+                    </p>
+
+                    {/* =========== ADJUNTOS =========== */}
+
+                    <h3>Adjuntos</h3>
+
+                    {seleccionado.adjunto ? (
+                        <div className="comunicados-adjunto">
+                            <Paperclip size={16} />
+
+                            <div className="comunicados-adjunto-info">
+                                <strong>{seleccionado.adjunto.nombre}</strong>
+                                <span>PDF - {seleccionado.adjunto.tamano}</span>
+                            </div>
+
+                            <button aria-label="Descargar adjunto">
+                                <Download size={16} />
+                            </button>
+                        </div>
+                    ) : (
+                        <p className="comunicados-sin-adjunto">
+                            Sin archivos adjuntos.
+                        </p>
+                    )}
+
+                    {/* =========== OPCIONES =========== */}
+
+                    <button className="comunicados-btn-editar">
+                        <Pencil size={15} />
+                        Editar comunicado
+                    </button>
+                </Panel>
+            )}
 
         </main>
     );

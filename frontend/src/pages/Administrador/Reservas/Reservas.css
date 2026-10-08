@@ -64,7 +64,7 @@
 /* ---- espacios mas reservados ---- */
 
 .reservas-panel {
-  margin-bottom: 15px;
+  margin-top: 15px;
 }
 
 .reservas-barras-lista {
@@ -111,6 +111,70 @@
   font-weight: 500;
   color: var(--verde-hover);
   text-decoration: none;
+}
+/* ----------------------------------------- */
+
+.reservas-detalle {
+  margin-top: 15px;
+}
+
+.reservas-detalle-titulo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 12px 0 14px;
+}
+
+.reservas-detalle-titulo strong {
+  font-size: 15px;
+  color: var(--texto-principal);
+}
+
+.reservas-detalle-fila {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--separador);
+}
+
+.reservas-detalle-fila span:first-child {
+  color: var(--texto-secundario);
+}
+
+.reservas-detalle-fila strong {
+  color: var(--texto-principal);
+  font-weight: 600;
+}
+
+.reservas-detalle h3 {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--texto-secundario);
+  margin-top: 16px;
+  margin-bottom: 8px;
+}
+
+.reservas-btn-editar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  border: 1px solid var(--verde);
+  border-radius: 8px;
+  background: var(--blanco);
+  color: var(--verde);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 10px;
+  margin-top: 18px;
+  cursor: pointer;
+}
+
+.reservas-btn-editar:hover {
+  background: var(--celeste-claro);
 }
 
 /* =========================

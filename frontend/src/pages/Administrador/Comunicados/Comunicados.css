@@ -1,6 +1,4 @@
 .comunicados {
-  padding: 28px 32px;
-
   --comunicados-color-aviso: var(--color-aviso-azul);
   --comunicados-fondo-aviso: var(--fondo-azul-suave);
   --comunicados-color-mantenimiento: var(--color-aviso-verde);
@@ -26,10 +24,8 @@
         CONTENIDO
 ========================= */
 
-.comunicados-contenido {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+.comunicados-detalle {
+  margin-top: 15px;
 }
 
 .comunicados-tipo-badge {
