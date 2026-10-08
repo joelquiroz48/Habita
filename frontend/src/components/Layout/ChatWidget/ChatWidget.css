@@ -188,3 +188,33 @@
 .btn-hablar:hover {
     background-color: var(--verde-hover);
 }
+
+.chat-window-flotante {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    width: 340px;
+    height: 440px;
+    background: var(--blanco);
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid var(--borde-tarjeta);
+    z-index: 9999;
+    /* Asegura que flote sobre todo */
+    animation: fadeInChat 0.25s ease-in-out;
+}
+
+@keyframes fadeInChat {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

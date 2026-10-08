@@ -139,7 +139,7 @@ const eventos = [
     },
 ];
 
-function Inicio() {
+function Inicio({ onAbrirChat }) {
 
     useEffect(() => {
         document.title = "Habita | Inicio";
@@ -458,10 +458,9 @@ function Inicio() {
                         <h2>Asistente Habita</h2>
                     </div>
 
-                    {/* La interfaz de chat se acopla exactamente a este panel */}
-                    <ChatWidget />
+                    {/* Al hacer clic en el botón, abre el Chat Flotante del Layout */}
+                    <ChatWidget onAbrir={onAbrirChat} />
                 </article>
-
             </section>
         </main>
     );
