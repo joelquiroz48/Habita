@@ -6,6 +6,7 @@ import {
     PiggyBank,
     Download,
     X,
+    Pencil,
 } from "lucide-react";
 
 import "./Expensas.css";
@@ -98,29 +99,113 @@ const expensas = [
 
 const totalUnidadesConExpensa = 96;
 
+const residentesExpensas = [
+    {
+        id: 1,
+        nombre: "Nicolás Paz",
+        periodo: expensas[0].periodo,
+        vencimiento: expensas[0].vencimiento,
+        importe: 56770,
+        estado: "Pendiente",
+    },
+    {
+        id: 2,
+        nombre: "María Gómez",
+        periodo: expensas[0].periodo,
+        vencimiento: expensas[0].vencimiento,
+        importe: null,
+        estado: "Pendiente",
+    },
+    {
+        id: 3,
+        nombre: "Juan López",
+        periodo: expensas[0].periodo,
+        vencimiento: expensas[0].vencimiento,
+        importe: 54990,
+        estado: "Pendiente",
+    },
+    {
+        id: 4,
+        nombre: "Carla Romero",
+        periodo: expensas[1].periodo,
+        vencimiento: expensas[1].vencimiento,
+        importe: 54940,
+        estado: "Pagado",
+    },
+    {
+        id: 5,
+        nombre: "Pedro Martínez",
+        periodo: expensas[1].periodo,
+        vencimiento: expensas[1].vencimiento,
+        importe: 54940,
+        estado: "Pagado",
+    },
+    {
+        id: 6,
+        nombre: "Laura Sánchez",
+        periodo: expensas[1].periodo,
+        vencimiento: expensas[1].vencimiento,
+        importe: 54940,
+        estado: "Sin pagar",
+    },
+];
+
+const filtrosResidentes=[
+    {
+        key: "estado",
+        label: "Todos los estados",
+        options: ["Pagado", "Pendiente", "Sin pagar"],
+    },
+]
+
 function formatearMonto(numero) {
     return `$ ${numero.toLocaleString("es-AR")}`;
+}
+
+function formatearImporteResidente(importe) {
+    return importe == null ? "--" : formatearMonto(importe);
 }
 
 function estadoBadgeClase(estado) {
     return estado === "En curso" ? "expensas-badge-curso" : "expensas-badge-cerrada";
 }
 
+function claseEstadoResidente(estado) {
+    if (estado === "Pagado") return "expensas-residente-pagado";
+    if (estado === "Pendiente") return "expensas-residente-pendiente";
+    return "expensas-residente-sin-pagar";
+}
+
 function Expensas() {
 
     const [seleccionado, setSeleccionado] = useState(expensas[0]);
+    const [residenteSeleccionado, setResidenteSeleccionado] = useState(null);
+
     const [detalleAbierto, setDetalleAbierto] = useState(false);
-    const [expensasListado, setExpensasListado] = useState(expensas);
+    const [tabActivo, setTabActivo] = useState("expensas");
 
     useEffect(() => {
         document.title = "Habita | Expensas";
     }, []);
 
-    const expensaActual = expensas[0];
+    const expensaActual = expensas[0]
+
 
     function abrirDetalle(comunicado) {
         setSeleccionado(comunicado);
+        setResidenteSeleccionado(null);
         setDetalleAbierto(true);
+    }
+
+    function abrirDetalleResidente(residente) {
+        setResidenteSeleccionado(residente);
+        setDetalleAbierto(true);
+    }
+
+    function cambiarTab(tab) {
+        setTabActivo(tab);
+        setDetalleAbierto(false);
+        setResidenteSeleccionado(null);
     }
 
     {/* =========================
@@ -164,7 +249,7 @@ function Expensas() {
         },
     ];
 
-    const detalle = expensasListado.find((e) => e.periodo === seleccionado.periodo);
+    const detalle = expensas.find((e) => e.periodo === seleccionado.periodo);
     
     const pendiente = detalle.importe - detalle.recaudado;
     
@@ -204,6 +289,40 @@ function Expensas() {
         },
     ];
 
+    const columnasResidentes = [
+        {
+            clave: "nombre",
+            titulo: "Residente",
+            ancho: "minmax(150px, 1.2fr)",
+        },
+        {
+            clave: "vencimiento",
+            titulo: "Vencimiento",
+            ancho: "minmax(110px, 1fr)",
+        },
+        {
+            clave: "periodo",
+            titulo: "Período",
+            ancho: "minmax(120px, 1fr)",
+        },
+        {
+            clave: "importe",
+            titulo: "Importe",
+            ancho: "minmax(100px, 1fr)",
+            render: (residente) => formatearImporteResidente(residente.importe),
+        },
+        {
+            clave: "estado",
+            titulo: "Estado",
+            ancho: "minmax(100px, 0.8fr)",
+            render: (residente) => (
+                <span className={`expensas-badge ${claseEstadoResidente(residente.estado)}`}>
+                    {residente.estado}
+                </span>
+            ),
+        },
+    ];
+
     return (
         <main className="expensas pagina-administrador">
 
@@ -231,34 +350,79 @@ function Expensas() {
                 CONTENIDO PRINCIPAL
             ========================= */}
 
-            <div className="expensas-tabs">
-                <button className="expensas-tab activo">Expensas</button>
-                <button className="expensas-tab">Residentes</button>
+            <div className="expensas-tabs" role="tablist" aria-label="Secciones de expensas">
+                <button
+                    type="button"
+                    id="tab-expensas"
+                    role="tab"
+                    aria-selected={tabActivo === "expensas"}
+                    aria-controls="panel-expensas"
+                    className={`expensas-tab ${tabActivo === "expensas" ? "activo" : ""}`}
+                    onClick={() => cambiarTab("expensas")}
+                >
+                    Expensas
+                </button>
+                <button
+                    type="button"
+                    id="tab-residentes"
+                    role="tab"
+                    aria-selected={tabActivo === "residentes"}
+                    aria-controls="panel-residentes"
+                    className={`expensas-tab ${tabActivo === "residentes" ? "activo" : ""}`}
+                    onClick={() => cambiarTab("residentes")}
+                >
+                    Residentes
+                </button>
             </div>
 
-            {/* LISTADO */}
-
-            <Navegador
-                data={expensasListado}
-                searchKey="periodo"
-                searchPlaceholder="Buscar periodo..."
-            >
-                {(expensasFiltrados) => (
-                    <Tabla
-                        columnas={columnas}
-                        datos={expensasFiltrados}
-                        etiqueta="períodos"
-                        className="expensas-tabla"
-                        onFilaClick={abrirDetalle}
-                        seleccionable
-                        filaSeleccionada={detalleAbierto ? seleccionado : null}
-                    />
+            {tabActivo === "expensas" ? (
+                <div id="panel-expensas" role="tabpanel" aria-labelledby="tab-expensas">
+                    <Navegador
+                        key="navegador-expensas"
+                        data={expensas}
+                        searchKey="periodo"
+                        searchPlaceholder="Buscar periodo..."
+                    >
+                        {(expensasFiltrados) => (
+                            <Tabla
+                                columnas={columnas}
+                                datos={expensasFiltrados}
+                                etiqueta="períodos"
+                                className="expensas-tabla"
+                                onFilaClick={abrirDetalle}
+                                seleccionable
+                                filaSeleccionada={detalleAbierto ? seleccionado : null}
+                            />
                         )}
-            </Navegador>
+                    </Navegador>
+                </div>
+            ) : (
+                <div id="panel-residentes" role="tabpanel" aria-labelledby="tab-residentes">
+                    <Navegador
+                        key="navegador-residentes"
+                        data={residentesExpensas}
+                        searchKey="nombre"
+                        searchPlaceholder="Buscar residente..."
+                        filters={filtrosResidentes}
+                    >
+                        {(residentesFiltrados) => (
+                            <Tabla
+                                columnas={columnasResidentes}
+                                datos={residentesFiltrados}
+                                etiqueta="residentes"
+                                className="expensas-tabla"
+                                onFilaClick={abrirDetalleResidente}
+                                seleccionable
+                                filaSeleccionada={detalleAbierto ? residenteSeleccionado : null}
+                            />
+                        )}
+                    </Navegador>
+                </div>
+            )}
 
             {/* DETALLE */}
 
-            {detalleAbierto && (
+            {tabActivo === "expensas" && detalleAbierto && (
                 <Panel
                     className="expensas-detalle"
                     titulo={`Detalle de ${detalle.periodo}`}
@@ -325,16 +489,75 @@ function Expensas() {
 
                     {/* =========== BOLETA =========== */}
 
-                    <section className="expensas-detalle-acciones">
-                        <h3>Acciones</h3>
-                        <div className="expensas-acciones-lista">
-                            <button className="expensas-btn-boleta">
-                                <Download size={15} />
-                                Descargar boleta
-                            </button>
-                        </div>
-                    </section>
+                    <button className="expensas-btn-detalles">
+                        <Pencil size={15} />
+                        Editar expensa
+                    </button>
 
+                    <button className="expensas-btn-detalles">
+                        <Download size={15} />
+                        Descargar boleta
+                    </button>
+
+                </Panel>
+            )}
+
+            {tabActivo === "residentes" && detalleAbierto && residenteSeleccionado && (
+                <Panel
+                    className="expensas-detalle"
+                    titulo={`Detalle de ${residenteSeleccionado.nombre}`}
+                    tituloComplemento={
+                        <div className={`expensas-badge ${claseEstadoResidente(residenteSeleccionado.estado)}`}>
+                            {residenteSeleccionado.estado}
+                        </div>
+                    }
+                    accion={
+                        <button
+                            type="button"
+                            className="expensas-detalle-cerrar"
+                            onClick={() => setDetalleAbierto(false)}
+                            aria-label="Cerrar detalle del residente"
+                        >
+                            <X size={18} />
+                        </button>
+                    }
+                >
+                    
+                    {/* =========== DETALLES =========== */}
+
+                    <p className="expensas-detalle-linea">
+                        Período: <strong>{residenteSeleccionado.periodo}</strong>
+                    </p>
+                    <p className="expensas-detalle-linea">
+                        Vencimiento: <strong>{residenteSeleccionado.vencimiento}</strong>
+                    </p>
+                    <section className="expensas-detalle-seccion">
+
+                        {/* =========== FILAS =========== */}
+
+                        <h3>Resumen de expensa</h3>
+                        <div className="expensas-resumen-fila">
+                            <span>Residente</span>
+                            <span>{residenteSeleccionado.nombre}</span>
+                        </div>
+                        <div className="expensas-resumen-fila">
+                            <span>Importe</span>
+                            <span>{formatearImporteResidente(residenteSeleccionado.importe)}</span>
+                        </div>
+                        <div className="expensas-resumen-fila">
+                            <span>Estado</span>
+                            <span className={`expensas-residente-estado ${claseEstadoResidente(residenteSeleccionado.estado)}`}>
+                                {residenteSeleccionado.estado}
+                            </span>
+                        </div>
+                        
+                        {/* =========== EDITAR IMPORTE =========== */}
+
+                        <button className="expensas-btn-detalles">
+                            <Pencil size={15} />
+                            Editar importe
+                        </button>
+                    </section>
                 </Panel>
             )}
 

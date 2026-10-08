@@ -160,8 +160,6 @@ const filtros=[
 ];
 
 function Documentos() {
-    
-    const [documentosListado, setDocumentosdListado] = useState(documentos);
 
     useEffect(() => {
         document.title = "Habita | Documentos";
@@ -171,7 +169,7 @@ function Documentos() {
         <main className="documentos pagina-administrador">
 
             <Navegador
-                data={documentosListado}
+                data={documentos}
                 searchKey="nombre"
                 searchPlaceholder="Buscar documento..."
                 filters={filtros}

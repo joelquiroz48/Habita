@@ -76,6 +76,21 @@
   background: var(--fondo-verde-suave) !important;
 }
 
+.expensas-residente-pagado {
+  color: var(--color-aviso-verde) !important;
+  background: var(--fondo-verde-suave) !important;
+}
+
+.expensas-residente-pendiente {
+  color: var(--color-vencimiento) !important;
+  background: var(--fondo-aviso-amarillo) !important;
+}
+
+.expensas-residente-sin-pagar {
+  color: var(--color-aviso-rojo) !important;
+  background: var(--fondo-documento-pdf) !important;
+}
+
 /* ---- panel de detalle ---- */
 
 .expensas-detalle {
@@ -138,7 +153,7 @@
   font-weight: 600;
 }
 
-.expensas-btn-boleta {
+.expensas-btn-detalles {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -155,7 +170,7 @@
   cursor: pointer;
 }
 
-.expensas-btn-boleta:hover {
+.expensas-btn-detalles:hover {
   background: var(--celeste-claro);
 }
 

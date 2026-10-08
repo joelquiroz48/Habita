@@ -203,8 +203,6 @@ function Reservas() {
     const [seleccionado, setSeleccionado] = useState(reservas[0]);
     const [detalleAbierto, setDetalleAbierto] = useState(false);
 
-    const [reservasListado, setReservasListado] = useState(reservas);
-
     useEffect(() => {
         document.title = "Habita | Reservas";
     }, []);
@@ -238,7 +236,7 @@ function Reservas() {
             </section>
 
             <Navegador
-                data={reservasListado}
+                data={reservas}
                 searchKey="espacio"
                 searchPlaceholder="Buscar reserva..."
                 filters={filtros}

@@ -67,8 +67,6 @@ function badgeClase(estado) {
 
 function Residentes() {
 
-    const [residentesListado, setResidentesListado] = useState(residentes);
-
     useEffect(() => {
         document.title = "Habita | Residentes";
     }, []);
@@ -77,7 +75,7 @@ function Residentes() {
         <main className="residentes">
 
             <Navegador
-                data={residentesListado}
+                data={residentes}
                 searchKey="nombre"
                 searchPlaceholder="Buscar residente..."
                 filters={filtros}

@@ -131,8 +131,6 @@ function Pagos() {
     const [pagoSeleccionado, setPagoSeleccionado] = useState(pagos[0]);
     const [detalleAbierto, setDetalleAbierto] = useState(false);
 
-    const [pagosListado, setPagosListado] = useState(pagos);
-
     useEffect(() => {
         document.title = "Habita | Pagos";
     }, []);
@@ -195,7 +193,7 @@ function Pagos() {
             {/* CONTENIDO */}
             
             <Navegador
-                data={pagosListado}
+                data={pagos}
                 searchKey="residente"
                 searchPlaceholder="Buscar pago..."
                 filters={filtros}

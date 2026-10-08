@@ -137,8 +137,6 @@ function Comunicados() {
 
     const [seleccionado, setSeleccionado] = useState(comunicados[0]);
     const [detalleAbierto, setDetalleAbierto] = useState(false);
-    
-    const [comunicadosListado, setComunicadosListado] = useState(comunicados);
 
     useEffect(() => {
         document.title = "Habita | Comunicados";
@@ -197,7 +195,7 @@ function Comunicados() {
         <main className="comunicados">
 
             <Navegador
-                data={comunicadosListado}
+                data={comunicados}
                 searchKey="titulo"
                 searchPlaceholder="Buscar comunicado..."
                 filters={filtros}

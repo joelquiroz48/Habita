@@ -73,7 +73,6 @@ function badgeClase(estado) {
 }
 
 function Unidades() {
-    const [unidadesListado, setUnidadesListado] = useState(unidades);
 
     useEffect(() => {
         document.title = "Habita | Unidades";
@@ -82,7 +81,7 @@ function Unidades() {
     return (
         <main className="unidades">
             <Navegador
-                data={unidadesListado}
+                data={unidades}
                 searchKey="unidad"
                 searchPlaceholder="Buscar por unidad..."
                 filters={filtros}

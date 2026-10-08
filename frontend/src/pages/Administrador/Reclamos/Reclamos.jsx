@@ -163,8 +163,6 @@ function Reclamos() {
     const [seleccionado, setSeleccionado] = useState(reclamos[0]);
     const [detalleAbierto, setDetalleAbierto] = useState(false);
 
-    const [reclamosListado, setReclamosListado] = useState(reclamos);
-
     useEffect(() => {
         document.title = "Habita | Reclamos";
     }, []);
@@ -202,7 +200,7 @@ function Reclamos() {
             ========================= */}
 
             <Navegador
-                data={reclamosListado}
+                data={reclamos}
                 searchKey="asunto"
                 searchPlaceholder="Buscar reclamo..."
                 filters={filtros}
