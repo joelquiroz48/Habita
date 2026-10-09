@@ -1,0 +1,178 @@
+.comunicados {
+  --comunicados-color-aviso: var(--color-aviso-azul);
+  --comunicados-fondo-aviso: var(--fondo-azul-suave);
+  --comunicados-color-mantenimiento: var(--color-aviso-verde);
+  --comunicados-fondo-mantenimiento: var(--fondo-verde-suave);
+  --comunicados-color-reunion: #7c5cbf;
+  --comunicados-fondo-reunion: #efe9fb;
+  --comunicados-color-obra: var(--color-vencimiento);
+  --comunicados-fondo-obra: #fdece0;
+  --comunicados-color-recordatorio: var(--color-evento);
+  --comunicados-fondo-recordatorio: #e5f6f4;
+  --comunicados-color-novedad: var(--color-documento-pdf);
+  --comunicados-fondo-novedad: var(--fondo-documento-pdf);
+
+  --comunicados-color-publicado: var(--color-aviso-verde);
+  --comunicados-fondo-publicado: var(--fondo-verde-suave);
+  --comunicados-color-programado: var(--color-vencimiento);
+  --comunicados-fondo-programado: #fdece0;
+  --comunicados-color-borrador: var(--texto-secundario);
+  --comunicados-fondo-borrador: var(--fondo-icono);
+}
+
+/* =========================
+        CONTENIDO
+========================= */
+
+.comunicados-detalle {
+  margin-top: 15px;
+}
+
+.comunicados-tipo-badge {
+  width: fit-content;
+  padding: 4px 10px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.comunicados-tipo-badge.aviso { background: var(--comunicados-fondo-aviso); color: var(--comunicados-color-aviso); }
+.comunicados-tipo-badge.mantenimiento { background: var(--comunicados-fondo-mantenimiento); color: var(--comunicados-color-mantenimiento); }
+.comunicados-tipo-badge.reunion { background: var(--comunicados-fondo-reunion); color: var(--comunicados-color-reunion); }
+.comunicados-tipo-badge.obra { background: var(--comunicados-fondo-obra); color: var(--comunicados-color-obra); }
+.comunicados-tipo-badge.recordatorio { background: var(--comunicados-fondo-recordatorio); color: var(--comunicados-color-recordatorio); }
+.comunicados-tipo-badge.novedad { background: var(--comunicados-fondo-novedad); color: var(--comunicados-color-novedad); }
+
+.comunicados-badge {
+  width: fit-content;
+  padding: 4px 10px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.comunicados-badge-publicado { color: var(--comunicados-color-publicado); background: var(--comunicados-fondo-publicado); }
+.comunicados-badge-programado { color: var(--comunicados-color-programado); background: var(--comunicados-fondo-programado); }
+.comunicados-badge-borrador { color: var(--comunicados-color-borrador); background: var(--comunicados-fondo-borrador); }
+
+/* =========================
+      PANEL DE DETALLE
+========================= */
+
+.comunicados-detalle-titulo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 12px 0 14px;
+}
+
+.comunicados-detalle-titulo strong {
+  font-size: 15px;
+  color: var(--texto-principal);
+}
+
+.comunicados-detalle-fila {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--separador);
+}
+
+.comunicados-detalle-fila span:first-child {
+  color: var(--texto-secundario);
+}
+
+.comunicados-detalle-fila strong {
+  color: var(--texto-principal);
+  font-weight: 600;
+}
+
+.comunicados-detalle h3 {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--texto-secundario);
+  margin-top: 16px;
+  margin-bottom: 8px;
+}
+
+.comunicados-resumen-texto {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--texto-principal);
+}
+
+.comunicados-sin-adjunto {
+  font-size: 12px;
+  color: var(--texto-secundario);
+}
+
+.comunicados-adjunto {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--borde-tarjeta);
+  border-radius: 8px;
+  padding: 8px 10px;
+  color: var(--texto-icono);
+}
+
+.comunicados-adjunto-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.comunicados-adjunto-info strong {
+  font-size: 12px;
+  color: var(--texto-principal);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.comunicados-adjunto-info span {
+  font-size: 11px;
+  color: var(--texto-secundario);
+}
+
+.comunicados-adjunto button {
+  border: none;
+  background: transparent;
+  color: var(--texto-icono);
+  cursor: pointer;
+  display: flex;
+}
+
+.comunicados-btn-editar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  border: 1px solid var(--verde);
+  border-radius: 8px;
+  background: var(--blanco);
+  color: var(--verde);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 10px;
+  margin-top: 18px;
+  cursor: pointer;
+}
+
+.comunicados-btn-editar:hover {
+  background: var(--celeste-claro);
+}
+
+/* =========================
+        RESPONSIVE
+========================= */
+
+@media (max-width: 800px) {
+  .comunicados {
+    padding: 20px;
+  }
+}

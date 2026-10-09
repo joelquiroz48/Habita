@@ -1,0 +1,200 @@
+/* =========================
+      CABECERA + KPIS
+========================= */
+
+.expensas-resumen {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.expensas-progreso {
+  width: 100%;
+  height: 6px;
+  border-radius: 4px;
+  background: var(--borde-input);
+  margin-top: 6px;
+  overflow: hidden;
+}
+
+.expensas-progreso-relleno {
+  height: 100%;
+  background: var(--verde);
+  border-radius: 4px;
+}
+
+/* =========================
+          TABS
+========================= */
+
+.expensas-tabs {
+  display: flex;
+  gap: 6px;
+  border-bottom: 1px solid var(--borde-secundario);
+  margin-bottom: 16px;
+}
+
+.expensas-tab {
+  border: none;
+  background: transparent;
+  color: var(--texto-secundario);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 10px 6px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+}
+
+.expensas-tab.activo {
+  color: var(--verde);
+  font-weight: 600;
+  border-bottom-color: var(--verde);
+}
+
+/* =========================
+    CONTENIDO (listado + detalle)
+========================= */
+
+/* TABLA */
+
+.expensas-badge {
+  width: fit-content;
+  padding: 4px 10px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.expensas-badge-curso {
+    color: var(--color-aviso-azul) !important;
+    background: var(--fondo-azul-suave) !important;
+}
+
+.expensas-badge-cerrada {
+  color: var(--color-aviso-verde) !important;
+  background: var(--fondo-verde-suave) !important;
+}
+
+.expensas-residente-pagado {
+  color: var(--color-aviso-verde) !important;
+  background: var(--fondo-verde-suave) !important;
+}
+
+.expensas-residente-pendiente {
+  color: var(--color-vencimiento) !important;
+  background: var(--fondo-aviso-amarillo) !important;
+}
+
+.expensas-residente-sin-pagar {
+  color: var(--color-aviso-rojo) !important;
+  background: var(--fondo-documento-pdf) !important;
+}
+
+/* ---- panel de detalle ---- */
+
+.expensas-detalle {
+  margin-top: 15px;
+}
+
+.expensas-detalle-linea {
+  font-size: 12px;
+  color: var(--texto-secundario);
+  margin-bottom: 3px;
+}
+
+.expensas-detalle-linea strong {
+  color: var(--texto-principal);
+  font-weight: 600;
+}
+
+.expensas-detalle h3 {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--texto-secundario);
+  text-transform: none;
+  margin-top: 16px;
+  margin-bottom: 8px;
+}
+
+.expensas-detalle-columnas {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.expensas-detalle-seccion {
+  min-width: 0;
+}
+
+.expensas-detalle-acciones {
+  margin-top: 18px;
+}
+
+.expensas-resumen-fila {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  padding: 5px 0;
+  border-bottom: 1px solid var(--separador);
+}
+
+.expensas-resumen-fila:last-of-type {
+  border-bottom: none;
+}
+
+.expensas-pendiente {
+  color: var(--color-vencimiento);
+  font-weight: 600;
+}
+
+.expensas-porcentaje {
+  color: var(--verde-hover);
+  font-weight: 600;
+}
+
+.expensas-btn-detalles {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  border: 1px solid var(--verde);
+  border-radius: 8px;
+  background: var(--blanco);
+  color: var(--verde);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 10px;
+  margin-top: 18px;
+  cursor: pointer;
+}
+
+.expensas-btn-detalles:hover {
+  background: var(--celeste-claro);
+}
+
+/* =========================
+        RESPONSIVE
+========================= */
+
+@media (max-width: 1200px) {
+  .expensas-resumen {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+@media (max-width: 800px) {
+  .expensas {
+    padding: 20px;
+  }
+
+  .expensas-resumen {
+    grid-template-columns: 1fr;
+  }
+
+  .expensas-detalle-columnas {
+    grid-template-columns: 1fr;
+  }
+}

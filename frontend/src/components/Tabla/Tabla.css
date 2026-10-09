@@ -1,0 +1,206 @@
+/* =========================
+          TABLA
+========================= */
+
+.tabla-card {
+    background: var(--blanco);
+    border: 1px solid var(--borde-tarjeta);
+    border-radius: 12px;
+    overflow-x: auto;
+}
+
+.tabla-header,
+.tabla-fila {
+    display: grid;
+    align-items: center;
+    gap: 12px;
+    min-width: max-content;
+    padding: 14px 20px;
+}
+
+.tabla-header {
+    border-bottom: 1px solid var(--borde-secundario);
+}
+
+.tabla-header span {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--texto-secundario);
+}
+
+.tabla-fila {
+    border-bottom: 1px solid var(--separador);
+    font-size: 13px;
+    color: var(--texto-principal);
+    min-height: 52px;
+}
+
+.tabla-fila.clickeable {
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+}
+
+.tabla-fila.clickeable:hover {
+    background: var(--fondo);
+}
+
+.tabla-card .tabla-fila.seleccionada,
+.tabla-card .tabla-fila.seleccionada:hover {
+    background: var(--celeste-claro);
+}
+
+.tabla-indicador-celda {
+    display: flex;
+    align-items: center;
+    color: var(--verde);
+}
+
+.tabla-fila.clickeable:focus-visible {
+    outline: 2px solid var(--verde);
+    outline-offset: -2px;
+}
+
+.tabla-body .tabla-fila:last-child {
+    border-bottom: none;
+}
+
+.tabla-acciones-encabezado {
+    text-align: center;
+}
+
+.tabla-acciones-celda {
+    display: flex;
+    justify-content: center;
+}
+
+.tabla-acciones-opcion,
+.tabla-acciones-boton svg {
+    color: var(--verde-hover)
+}
+
+.tabla-acciones {
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+.tabla-acciones-boton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    border: 0;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--texto-icono);
+    cursor: pointer;
+}
+
+.tabla-acciones-boton:hover:not(:disabled),
+.tabla-acciones-boton[aria-expanded="true"] {
+    background: var(--fondo);
+    color: var(--texto-principal);
+}
+
+.tabla-acciones-boton:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.tabla-acciones-menu {
+    position: absolute;
+    z-index: 5;
+    top: calc(100% + 4px);
+    right: 0;
+    min-width: 150px;
+    padding: 5px;
+    border: 1px solid var(--borde-tarjeta);
+    border-radius: 8px;
+    background: var(--blanco);
+    box-shadow: 0 8px 20px rgb(0 0 0 / 12%);
+}
+
+.tabla-acciones-opcion {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 8px 9px;
+    border: 0;
+    border-radius: 5px;
+    background: transparent;
+    font: inherit;
+    font-size: 12px;
+    text-align: left;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.tabla-acciones-opcion:hover:not(:disabled) {
+    background: var(--texto);
+}
+
+.tabla-acciones-opcion:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.tabla-body .tabla-fila:nth-last-child(-n + 2) .tabla-acciones-menu {
+    top: auto;
+    bottom: calc(100% + 4px);
+}
+
+.tabla-vacia {
+    padding: 24px 20px;
+    color: var(--texto-secundario);
+    font-size: 13px;
+    text-align: center;
+}
+
+/* =========================
+        PAGINACIÓN
+========================= */
+
+.tabla-paginacion {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 18px 15px 14px 0;
+    padding-left: 10px;
+}
+
+.tabla-pagina,
+.tabla-pagina-flecha {
+    width: 30px;
+    height: 30px;
+    border: 1px solid var(--borde-secundario);
+    border-radius: 7px;
+    background: var(--blanco);
+    color: var(--texto-secundario);
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.tabla-pagina.activa {
+    border-color: var(--verde);
+    color: var(--verde);
+    font-weight: 600;
+}
+
+.tabla-pagina-flecha:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.tabla-paginacion-info {
+    margin-left: auto;
+    font-size: 12px;
+	font-weight: 500;
+    color: var(--texto-secundario);
+}

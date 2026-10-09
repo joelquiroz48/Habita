@@ -1,107 +1,136 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import "./Layout.css";
+import "./LayoutAdministrador.css";
 
 import iconPerfil from "../../assets/img/foto-perfil.png";
 import iconLogo from "../../assets/img/icon.png";
-import imagenEdificio from "../../assets/img/imagen-predeterminada.png";
 
 import {
     ChevronDown,
     Menu,
     Bell,
-    House,
+    LayoutDashboard,
+    Users,
+    Building2,
+    FileText,
     Wallet,
-    Calendar,
-    MessageSquareWarning,
+    BellRing,
     Megaphone,
+    CalendarDays,
     Folder,
+    BarChart3,
 } from "lucide-react";
 
 const informacionHeader = {
-    "/inicio": {
-        titulo: "Bienvenido, Residente",
-        descripcion: "Resumen de tu comunidad",
+    "/administrador/inicio": {
+        titulo: "Bienvenido, Administrador",
+        descripcion: "Resumen general del consorcio",
     },
-    "/expensas": {
-        titulo: "Mis expensas",
-        descripcion: "Consultá, pagá y descargá tus expensas",
+    "/administrador/residentes": {
+        titulo: "Residentes",
+        descripcion: "Gestioná los residentes del edificio",
     },
-    "/reservas": {
-        titulo: "Reservas",
-        descripcion: "Reservá y gestioná los espacios comunes de tu comunidad",
+    "/administrador/unidades": {
+        titulo: "Unidades",
+        descripcion: "Gestioná las unidades del edificio",
     },
-    "/reclamos": {
+    "/administrador/expensas": {
+        titulo: "Expensas",
+        descripcion: "Creá y gestioná las expensas del consorcio",
+    },
+    "/administrador/pagos": {
+        titulo: "Pagos",
+        descripcion: "Consultá los pagos recibidos",
+    },
+    "/administrador/reclamos": {
         titulo: "Reclamos",
-        descripcion: "Reportá problemas y consultá el estado de tus reclamos",
+        descripcion: "Gestioná y actualizá el estado de los reclamos",
     },
-    "/avisos": {
-        titulo: "Avisos",
-        descripcion: "Mantenete informado sobre todo lo que sucede en tu comunidad",
+    "/administrador/comunicados": {
+        titulo: "Comunicados",
+        descripcion: "Publicá avisos para los residentes",
     },
-    "/documentos": {
+    "/administrador/reservas": {
+        titulo: "Reservas",
+        descripcion: "Gestioná las reservas de espacios comunes",
+    },
+    "/administrador/documentos": {
         titulo: "Documentos",
-        descripcion: "Accedé a los documentos importantes de tu consorcio",
+        descripcion: "Administrá los documentos del consorcio",
     },
-    "/perfil": {
-        titulo: "Mi perfil",
-        descripcion: "Consultá y actualizá tus datos personales",
+    "/administrador/reportes": {
+        titulo: "Reportes",
+        descripcion: "Consultá estadísticas del consorcio",
     },
-    "/configuracion": {
+    "/administrador/configuracion": {
         titulo: "Configuración",
         descripcion: "Personalizá las opciones de tu cuenta",
     },
 };
 
 const itemsMenu = [
-    { to: "/inicio", icon: House, label: "Inicio" },
-    { to: "/expensas", icon: Wallet, label: "Mis expensas" },
-    { to: "/reservas", icon: Calendar, label: "Reservas" },
-    { to: "/reclamos", icon: MessageSquareWarning, label: "Reclamos" },
-    { to: "/avisos", icon: Megaphone, label: "Avisos" },
-    { to: "/documentos", icon: Folder, label: "Documentos" },
+    {
+        to: "/administrador/inicio",
+        icon: LayoutDashboard,
+        label: "Dashboard",
+    },
+    {
+        to: "/administrador/residentes",
+        icon: Users,
+        label: "Residentes",
+    },
+    {
+        to: "/administrador/unidades",
+        icon: Building2,
+        label: "Unidades",
+    },
+    {
+        to: "/administrador/expensas",
+        icon: FileText,
+        label: "Expensas",
+    },
+    {
+        to: "/administrador/pagos",
+        icon: Wallet,
+        label: "Pagos",
+    },
+    {
+        to: "/administrador/reclamos",
+        icon: BellRing,
+        label: "Reclamos",
+    },
+    {
+        to: "/administrador/comunicados",
+        icon: Megaphone,
+        label: "Comunicados",
+    },
+    {
+        to: "/administrador/reservas",
+        icon: CalendarDays,
+        label: "Reservas",
+    },
+    {
+        to: "/administrador/documentos",
+        icon: Folder,
+        label: "Documentos",
+    },
 ];
 
-import ChatWidget from "./ChatWidget/ChatWidget";
-
-function Layout({ children }) {
+function LayoutAdministrador({ children }) {
     const [sidebarAbierto, setSidebarAbierto] = useState(true);
     const [menuAbierto, setMenuAbierto] = useState(false);
 
     const location = useLocation();
     const infoHeader = informacionHeader[location.pathname];
 
-    // Estado del Chat Flotante
-    const [chatAbierto, setChatAbierto] = useState(false);
-    const [mensajes, setMensajes] = useState([
-        { id: 1, emisor: "bot", texto: "¡Hola! Soy tu asistente Habita 🤖. ¿En qué te puedo ayudar hoy?" }
-    ]);
-    const [inputTexto, setInputTexto] = useState("");
-
-    const enviarMensaje = (e) => {
-        e.preventDefault();
-        if (!inputTexto.trim()) return;
-
-        const nuevoMensajeUsr = { id: Date.now(), emisor: "usr", texto: inputTexto };
-        setMensajes((prev) => [...prev, nuevoMensajeUsr]);
-        setInputTexto("");
-
-        setTimeout(() => {
-            const respuestaBot = {
-                id: Date.now() + 1,
-                emisor: "bot",
-                texto: "Entendido, estoy procesando tu consulta..."
-            };
-            setMensajes((prev) => [...prev, respuestaBot]);
-        }, 800);
-    };
-
     return (
         <div className="layout">
             <div className="layout-principal">
+
                 {/* ----- HEADER ----- */}
                 <header>
                     <div className="header-navegacion">
+
                         <button
                             className="boton-sidebar"
                             onClick={() => setSidebarAbierto(!sidebarAbierto)}
@@ -110,10 +139,18 @@ function Layout({ children }) {
                             <Menu />
                         </button>
 
-                        <Link to="/inicio" className="logo">
-                            <img src={iconLogo} alt="Logo de Habita" />
+                        <Link
+                            to="/administrador/inicio"
+                            className="logo-admin"
+                        >
+                            <img
+                                src={iconLogo}
+                                alt="Logo de Habita"
+                            />
+
                             <h1>Habita</h1>
                         </Link>
+
                     </div>
 
                     <div className="header-info">
@@ -122,6 +159,7 @@ function Layout({ children }) {
                     </div>
 
                     <div className="header-usuario">
+
                         <div className="header-notificaciones">
                             <Bell />
                         </div>
@@ -135,20 +173,16 @@ function Layout({ children }) {
                             className="menu-usuario"
                             onClick={() => setMenuAbierto(!menuAbierto)}
                         >
-                            <div className="menu-usuario-texto">
-                                <strong>Usuario_nombre</strong>
-                                <span>Residente</span>
+                            <div className="menu-admin-usuario-texto">
+                                <strong>Administrador</strong>
+                                <span>Admin</span>
                             </div>
 
                             <ChevronDown />
 
                             {menuAbierto && (
                                 <div className="menu-perfil">
-                                    <Link to="/perfil">
-                                        Mi perfil
-                                    </Link>
-
-                                    <Link to="/configuracion">
+                                    <Link to="/administrador/configuracion">
                                         Configuración
                                     </Link>
 
@@ -158,6 +192,7 @@ function Layout({ children }) {
                                 </div>
                             )}
                         </div>
+
                     </div>
                 </header>
 
@@ -194,44 +229,18 @@ function Layout({ children }) {
                                 })}
 
                             </ul>
-
-                            {/* ----- INFORMACIÓN DEL EDIFICIO ----- */}
-                            <div className="sidebar-edificio">
-                                <img
-                                    src={imagenEdificio}
-                                    alt="Imagen del edificio"
-                                />
-
-                                <div className="sidebar-edificio-info">
-                                    <strong>Torre Los Álamos</strong>
-                                    <span>Av. Siempre Viva 742</span>
-                                </div>
-                            </div>
                         </nav>
                     </aside>
 
                     {/* ----- CONTENIDO DE CADA PÁGINA ----- */}
                     <main id="contenido-main">
-                        {/* Se clona el elemento hijo pasando onAbrirChat de forma segura con React.cloneElement */}
-                        {React.isValidElement(children)
-                            ? React.cloneElement(children, { onAbrirChat: () => setChatAbierto(true) })
-                            : children}
+                        {children}
                     </main>
+
                 </div>
             </div>
-
-            {/* ----- VENTANA DEL CHAT FLOTANTE ----- */}
-            <ChatWidget
-                flotante={true}
-                abierto={chatAbierto}
-                onCerrar={() => setChatAbierto(false)}
-                mensajes={mensajes}
-                inputTexto={inputTexto}
-                setInputTexto={setInputTexto}
-                onEnviarMensaje={enviarMensaje}
-            />
         </div>
     );
 }
 
-export default Layout;
+export default LayoutAdministrador;

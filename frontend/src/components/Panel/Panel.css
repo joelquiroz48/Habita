@@ -1,0 +1,63 @@
+/* =========================
+           PANELES
+   ========================= */
+
+.panel {
+    border: 1px solid var(--borde-tarjeta);
+    border-radius: 12px;
+    padding: 16px;
+    min-width: 0;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 13px;
+}
+
+.panel-header a {
+  color: var(--verde-hover);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.panel-header svg {
+    color: var(--verde);
+}
+
+.panel-header h2 {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.panel-titulo-linea {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.panel-titulo-linea h2 {
+    margin: 0;
+}
+
+.panel-header span {
+    display: block;
+    margin-top: 3px;
+    font-size: 12px;
+    color: var(--texto-secundario);
+}
+
+/* -------- tipos de header -------- */
+
+.panel-header-icono {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.panel-header-junto {
+    justify-content: flex-start;
+    gap: 12px;
+}

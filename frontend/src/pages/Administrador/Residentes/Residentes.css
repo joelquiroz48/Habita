@@ -1,0 +1,32 @@
+/* =========================
+          TABLA
+========================= */
+
+.residentes-email {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* -------- BADGE --------- */
+
+.residentes-badge {
+  width: fit-content;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.residentes-badge-activo {
+  color: var(--color-aviso-verde);
+  background: var(--fondo-verde-suave);
+}
+
+.residentes-badge-invitado {
+  color: var(--color-aviso-amarillo);
+  background: var(--fondo-aviso-amarillo);
+}
+
+/* =========================
+        RESPONSIVE
+========================= */

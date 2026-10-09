@@ -1,0 +1,473 @@
+.admin-dashboard {
+  padding: 28px 32px;
+
+  /* Colores propios de esta pantalla, mapeados a la paleta del global.css */
+  --admin-color-pendiente: var(--color-aviso-amarillo);
+  --admin-fondo-pendiente: var(--fondo-aviso-amarillo);
+  --admin-color-proceso: var(--color-aviso-azul);
+  --admin-fondo-proceso: var(--fondo-azul-suave);
+  --admin-color-resuelto: var(--color-aviso-verde);
+  --admin-fondo-resuelto: var(--fondo-verde-suave);
+
+  --reportes-color-purpura: #7c5cbf;
+  --reportes-color-estado-pendiente: var(--color-aviso-amarillo);
+  --reportes-color-estado-proceso: var(--color-aviso-azul);
+  --reportes-color-estado-resuelto: var(--color-aviso-verde);
+  --reportes-color-cat-mantenimiento: var(--color-evento);
+  --reportes-color-cat-limpieza: var(--color-aviso-azul);
+  --reportes-color-cat-ascensores: var(--reportes-color-purpura);
+  --reportes-color-cat-iluminacion: var(--color-aviso-amarillo);
+  --reportes-color-cat-seguridad: var(--color-vencimiento);
+  --reportes-color-cat-otros: var(--borde-secundario);
+}
+
+/* =========================
+      TARJETAS DE KPI
+========================= */
+
+.admin-resumen {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.admin-tendencia {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 12px;
+  color: var(--texto-secundario);
+  margin-top: 6px;
+}
+
+.admin-tendencia.positiva {
+  color: var(--color-aviso-verde);
+}
+
+.admin-tendencia.negativa {
+  color: var(--color-aviso-rojo);
+}
+
+.admin-progreso {
+  width: 100%;
+  height: 6px;
+  border-radius: 4px;
+  background: var(--borde-input);
+  margin-top: 8px;
+  overflow: hidden;
+}
+
+.admin-progreso-relleno {
+  height: 100%;
+  background: var(--verde);
+  border-radius: 4px;
+}
+
+
+.reportes-btn-exportar {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  gap: 7px;
+  border: 1px solid var(--verde);
+  border-radius: 8px;
+  background: var(--blanco);
+  color: var(--verde);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 9px 14px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.reportes-btn-exportar:hover {
+  background: var(--celeste-claro);
+}
+
+/* =========================
+          GRAFICOS
+========================= */
+
+.admin-graficos {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.admin-fila-superior {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.admin-selector-anio {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  border: 1px solid var(--borde-secundario);
+  border-radius: 7px;
+  background: var(--blanco);
+  color: var(--texto-secundario);
+  font-size: 12px;
+  padding: 5px 9px;
+  cursor: pointer;
+}
+
+/* --- barras --- */
+
+.admin-barras-chart {
+  display: flex;
+  gap: 10px;
+  height: 210px;
+}
+
+.admin-barras-eje-y {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--texto-secundario);
+  padding-bottom: 22px;
+}
+
+.admin-barras-lista {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.admin-barra-columna {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  height: 100%;
+}
+
+.admin-barra-pista {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.admin-barra {
+  width: 60%;
+  background: var(--verde);
+  border-radius: 4px 4px 0 0;
+}
+
+.admin-barra-columna span {
+  font-size: 11px;
+  color: var(--texto-secundario);
+}
+
+/* --- donut --- */
+
+.admin-donut-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.admin-donut {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-donut-centro {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: var(--blanco);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-donut-centro strong {
+  font-size: 24px;
+  color: var(--texto-principal);
+}
+
+.admin-donut-centro span {
+  font-size: 11px;
+  color: var(--texto-secundario);
+}
+
+.admin-donut-leyenda {
+  list-style: none;
+  width: 100%;
+}
+
+.admin-donut-leyenda li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 0;
+  font-size: 13px;
+}
+
+.admin-leyenda-punto {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.admin-leyenda-punto.pendiente {
+  background: var(--admin-color-pendiente);
+}
+
+.admin-leyenda-punto.proceso {
+  background: var(--admin-color-proceso);
+}
+
+.admin-leyenda-punto.resuelto {
+  background: var(--admin-color-resuelto);
+}
+
+.admin-leyenda-label {
+  flex: 1;
+  color: var(--texto-secundario);
+}
+
+.admin-leyenda-valor {
+  font-weight: 600;
+  color: var(--texto-principal);
+}
+
+/* =========================
+          LISTADOS
+========================= */
+
+.admin-fila-central {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.admin-tabla-titulo {
+  color: var(--texto-principal);
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.admin-tabla-secundario {
+  color: var(--texto-secundario);
+  font-size: 12px;
+}
+
+.admin-tabla-fecha {
+  color: var(--texto-secundario);
+  font-size: 12px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.admin-badge {
+  width: fit-content;
+  padding: 3px 9px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 500;
+  justify-self: start;
+}
+
+.admin-badge-pendiente {
+  color: var(--admin-color-pendiente);
+  background: var(--admin-fondo-pendiente);
+}
+
+.admin-badge-proceso {
+  color: var(--admin-color-proceso);
+  background: var(--admin-fondo-proceso);
+}
+
+.admin-badge-resuelto {
+  color: var(--admin-color-resuelto);
+  background: var(--admin-fondo-resuelto);
+}
+
+/* ---------------------------- */
+
+.reportes-punto {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.reportes-punto.recaudado { background: var(--verde); }
+.reportes-punto.pendiente { background: var(--borde-secundario); }
+.reportes-punto.estado-pendiente { background: var(--reportes-color-estado-pendiente); }
+.reportes-punto.estado-proceso { background: var(--reportes-color-estado-proceso); }
+.reportes-punto.estado-resuelto { background: var(--reportes-color-estado-resuelto); }
+.reportes-punto.cat-mantenimiento { background: var(--reportes-color-cat-mantenimiento); }
+.reportes-punto.cat-limpieza { background: var(--reportes-color-cat-limpieza); }
+.reportes-punto.cat-ascensores { background: var(--reportes-color-cat-ascensores); }
+.reportes-punto.cat-iluminacion { background: var(--reportes-color-cat-iluminacion); }
+.reportes-punto.cat-seguridad { background: var(--reportes-color-cat-seguridad); }
+.reportes-punto.cat-otros { background: var(--reportes-color-cat-otros); }
+
+.reportes-donut-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.reportes-donut {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.reportes-donut-centro {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: var(--blanco);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.reportes-donut-centro strong {
+  font-size: 19px;
+  color: var(--texto-principal);
+}
+
+.reportes-donut-centro span {
+  font-size: 10px;
+  color: var(--texto-secundario);
+}
+
+.reportes-donut-leyenda {
+  list-style: none;
+  width: 100%;
+}
+
+.reportes-donut-leyenda li {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 4px 0;
+  font-size: 12px;
+}
+
+.reportes-leyenda-label {
+  flex: 1;
+  color: var(--texto-secundario);
+}
+
+.reportes-leyenda-valor {
+  font-weight: 600;
+  color: var(--texto-principal);
+}
+
+.reportes-insight {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--separador);
+  font-size: 12px;
+  color: var(--texto-secundario);
+}
+
+.reportes-insight-flecha {
+  margin-left: auto;
+  color: var(--texto-icono);
+}
+
+
+/* =========================
+      ACTIVIDAD + RESUMEN
+========================= */
+
+.reportes-inferior-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.reportes-actividad-texto {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.reportes-actividad-texto strong {
+  font-size: 13px;
+  color: var(--texto-principal);
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.reportes-actividad-texto small {
+  font-size: 12px;
+  color: var(--texto-secundario);
+}
+
+.reportes-actividad-fecha {
+  font-size: 11px;
+  color: var(--texto-secundario);
+  white-space: nowrap;
+}
+
+.reportes-tabla-resumen-valor {
+  font-weight: 600;
+}
+
+/* =========================
+        RESPONSIVE
+========================= */
+
+@media (max-width: 1200px) {
+  .admin-resumen {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .admin-fila-superior,
+  .admin-fila-central,
+  .admin-fila-inferior {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 800px) {
+  .admin-dashboard {
+    padding: 20px;
+  }
+
+  .admin-resumen {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-tabla-fecha {
+    text-align: left;
+  }
+}

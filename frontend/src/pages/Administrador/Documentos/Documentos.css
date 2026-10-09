@@ -1,0 +1,72 @@
+.documentos {
+  --doc-color-reglamentos: var(--color-documento-doc);
+  --doc-fondo-reglamentos: var(--fondo-azul-suave);
+  --doc-color-actas: var(--color-aviso-verde);
+  --doc-fondo-actas: var(--fondo-verde-suave);
+  --doc-color-finanzas: var(--color-aviso-amarillo);
+  --doc-fondo-finanzas: var(--fondo-aviso-amarillo);
+  --doc-color-contratos: var(--color-aviso-azul);
+  --doc-fondo-contratos: var(--fondo-azul-suave);
+  --doc-color-mantenimiento: var(--color-evento);
+  --doc-fondo-mantenimiento: #e5f6f4;
+  --doc-color-seguros: var(--color-documento-pdf);
+  --doc-fondo-seguros: var(--fondo-documento-pdf);
+  --doc-color-planos: #7c5cbf;
+  --doc-fondo-planos: #efe9fb;
+  --doc-color-otros: var(--texto-secundario);
+  --doc-fondo-otros: var(--fondo-icono);
+
+  --doc-color-a: #5a67d8;
+  --doc-fondo-a: #e6e8fb;
+  --doc-color-b: #7c5cbf;
+  --doc-fondo-b: #efe9fb;
+  --doc-color-c: #d1548a;
+  --doc-fondo-c: #fbe6ef;
+}
+
+/* =========================
+        CONTENIDO
+========================= */
+
+.documentos-nombre-texto strong {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.documentos-nombre-texto small {
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.documentos-badge {
+  width: fit-content;
+  padding: 4px 10px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.documentos-badge.reglamentos { color: var(--doc-color-reglamentos); background: var(--doc-fondo-reglamentos); }
+.documentos-badge.actas { color: var(--doc-color-actas); background: var(--doc-fondo-actas); }
+.documentos-badge.finanzas { color: var(--doc-color-finanzas); background: var(--doc-fondo-finanzas); }
+.documentos-badge.contratos { color: var(--doc-color-contratos); background: var(--doc-fondo-contratos); }
+.documentos-badge.mantenimiento { color: var(--doc-color-mantenimiento); background: var(--doc-fondo-mantenimiento); }
+.documentos-badge.seguros { color: var(--doc-color-seguros); background: var(--doc-fondo-seguros); }
+.documentos-badge.planos { color: var(--doc-color-planos); background: var(--doc-fondo-planos); }
+.documentos-badge.otros { color: var(--doc-color-otros); background: var(--doc-fondo-otros); }
+
+.documentos-fecha,
+.documentos-tamano {
+  color: var(--texto-secundario);
+  font-size: 12px;
+}
+
+/* =========================
+        RESPONSIVE
+========================= */
