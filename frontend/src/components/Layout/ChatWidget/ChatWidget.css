@@ -1,12 +1,12 @@
-/* Contenedor del Widget: ocupa el 100% de la tarjeta o espacio donde se ubique */
 .chat-widget-container {
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
+    
+    
 }
 
-/* Ventana de chat adaptada al contenedor */
 .chat-window {
     width: 100%;
     height: 380px;
@@ -17,9 +17,9 @@
     flex-direction: column;
     overflow: hidden;
     border: 1px solid var(--borde-tarjeta);
+    
 }
 
-/* Encabezado */
 .chat-header {
     background-color: var(--verde);
     color: var(--negro);
@@ -46,7 +46,6 @@
     background: transparent;
     border: none;
     color: var(--texto-principal);
-    /* 🎨 Cambia el color aquí (ej: #08363C o var(--verde)) */
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -54,17 +53,15 @@
     transition: color 0.2s ease, transform 0.2s ease;
 }
 
-/* Asegura que el icono Lucide use el color del botón */
 .btn-cerrar svg {
     stroke: currentColor;
 }
 
 .btn-cerrar:hover {
     color: var(--verde-hover);
-    /* 🌟 Color al pasar el mouse */
     transform: scale(1.1);
 }
-/* Lista de mensajes */
+
 .chat-messages {
     flex: 1;
     padding: 12px;
@@ -135,19 +132,18 @@
     background-color: var(--verde-hover);
 }
 
-/* Contenedor principal de la tarjeta inicial */
 .tarjeta-inicial-asistente {
     display: flex;
     flex-direction: column;
     gap: 15px;
     padding: 10px;
+    
+    
 }
 
-/* Alinea la imagen y el texto uno al lado del otro */
 .contenido-asistente {
     display: flex;
     align-items: center;
-    /* 🎯 Alinea la imagen y el texto al centro vertical */
     gap: 15px;
 }
 
@@ -161,14 +157,11 @@
 .texto-asistente p {
     font-size: 14px;
     font-weight: 500;
-    /* ✏️ Le da un poco más de grosor a la fuente */
     color: var(--texto-principal);
-    /* 🎨 Usa el color de texto principal para destacar más */
     line-height: 1.4;
     margin: 0;
 }
 
-/* Botón inferior a lo ancho */
 .btn-hablar {
     display: flex;
     align-items: center;
@@ -203,7 +196,6 @@
     overflow: hidden;
     border: 1px solid var(--borde-tarjeta);
     z-index: 9999;
-    /* Asegura que flote sobre todo */
     animation: fadeInChat 0.25s ease-in-out;
 }
 

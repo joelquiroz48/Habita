@@ -6,6 +6,7 @@
     padding: 17px;
     border: 1px solid var(--borde-tarjeta);
     border-radius: 12px;
+    background: var(--blanco);
 }
 
 .resumen-icon {
