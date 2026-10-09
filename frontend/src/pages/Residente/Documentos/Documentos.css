@@ -412,6 +412,27 @@
 
 
 /* =========================
+        ASISTENTE
+========================= */
+
+.asistente-card {
+    width: 100%;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 16px;
+    box-sizing: border-box;
+    background: var(--blanco);
+    margin: 0;
+}
+
+.documentos-columna .asistente-card {
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    margin-top: 0;
+}
+
+/* =========================
         RESPONSIVE
 ========================= */
 

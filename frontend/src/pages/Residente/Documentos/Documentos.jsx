@@ -17,6 +17,7 @@ import {
     SlidersHorizontal,
 } from "lucide-react";
 
+import ChatWidget from "../../../components/Layout/ChatWidget/ChatWidget";
 import "./Documentos.css";
 import Panel from "../../../components/Panel/Panel";
 import Tabla from "../../../components/Tabla/Tabla";
@@ -182,7 +183,7 @@ const categoriasExplorar = [
 ];
 
 
-function Documentos() {
+function Documentos({ onAbrirChat }) {
 
     useEffect(() => {
         document.title = "Habita | Documentos";
@@ -303,10 +304,17 @@ function Documentos() {
                         </button>
                     </Panel>
 
+                    <article className="panel-card asistente-card">
+                        <div className="panel-header">
+                            <h2>Asistente Habita</h2>
+                        </div>
+
+                        <ChatWidget onAbrir={onAbrirChat} />
+                    </article>
+
                 </section>
 
             </section>
-
         </main>
     );
 }

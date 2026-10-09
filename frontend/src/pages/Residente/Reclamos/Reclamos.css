@@ -13,6 +13,12 @@
     gap: 16px;
 }
 
+.reclamos-residente-lateral {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
 .reclamos-residente-principal {
     display: flex;
     min-width: 0;
@@ -255,6 +261,25 @@
     font-weight: 400;
     line-height: 1.6;
     color: var(--texto-secundario);
+}
+
+/* =========================
+        ASISTENTE
+========================= */
+
+.asistente-card {
+    width: 100%;
+    min-height: 100%;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 16px;
+    box-sizing: border-box;
+    background: var(--blanco);
+    margin: 0;
+}
+
+.reclamos-residente-lateral .asistente-card {
+    margin-top: 0;
 }
 
 /* =========================
