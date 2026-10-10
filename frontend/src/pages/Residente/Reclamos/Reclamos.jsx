@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
 import {
     ChevronDown,
-    EllipsisVertical,
-    Eye,
     MousePointer2,
     Paperclip,
     Info,
     SquarePen,
+    X,
 } from "lucide-react";
 
 import "./Reclamos.css";
 import Panel from "../../../components/Panel/Panel";
 import Tabla from "../../../components/Tabla/Tabla";
+import Navegador from "../../../components/Navegador/Navegador";
 
 const categorias = [
     "Mantenimiento",
@@ -23,7 +23,7 @@ const categorias = [
     "Otros",
 ];
 
-const solicitudesEjemplo = [
+const reclamosIniciales = [
     { id: 1, titulo: "Filtración debajo de la pileta", categoria: "Mantenimiento", estado: "En revisión", fecha: "02-10-26" },
     { id: 2, titulo: "El ascensor principal hace ruido", categoria: "Ascensores", estado: "Respondido", fecha: "28-09-26" },
     { id: 3, titulo: "Luces apagadas en la cochera", categoria: "Iluminación", estado: "Resuelto", fecha: "24-09-26" },
@@ -44,11 +44,24 @@ function claseEstado(estado) {
     if (estado === "Respondido") return "respondido";
     return "resuelto";
 }
+const filtros=[
+    {
+        key: "categoria",
+        label: "Todas las categorías",
+        options: ["Ascensores","Espacios comunes","Iluminación","Limpieza","Mantenimiento","Seguridad","Otros"],
+    },
+     {
+        key: "estado",
+        label: "Todos los estados",
+        options: ["En revisión", "Respondido", "Resuelto"],
+    },
 
-const columnasSolicitudes = [
+];
+
+const columnasReclamos = [
     {
         clave: "titulo",
-        titulo: "Solicitud",
+        titulo: "Reclamo",
         ancho: "2fr",
         render: (solicitud) => (
             <strong className="solicitud-titulo">{solicitud.titulo}</strong>
@@ -66,32 +79,26 @@ const columnasSolicitudes = [
         ),
     },
     { clave: "fecha", titulo: "Fecha", ancho: "0.9fr" },
-    {
-        clave: "acciones",
-        titulo: "Acciones",
-        ancho: "0.7fr",
-        render: () => (
-            <span className="solicitud-acciones">
-                <button type="button" title="Ver solicitud" aria-label="Ver solicitud">
-                    <Eye />
-                </button>
-                <button type="button" title="Más opciones" aria-label="Más opciones">
-                    <EllipsisVertical />
-                </button>
-            </span>
-        ),
-    },
+
 ];
 
 function Reclamos() {
-    const [solicitudes, setSolicitudes] = useState(solicitudesEjemplo);
+    const [reclamos, setReclamos] = useState(reclamosIniciales);
     const [archivoAdjunto, setArchivoAdjunto] = useState("");
 
     useEffect(() => {
         document.title = "Habita | Reclamos";
     }, []);
 
-    const enviarSolicitud = (event) => {
+    const [reclamosSeleccionado, setReclamosSeleccionado] = useState(reclamos[0]);
+    const [detalleAbierto, setDetalleAbierto] = useState(false);
+    
+    function abrirDetalle(reclamo) {
+        setReclamosSeleccionado(reclamo);
+        setDetalleAbierto(true);
+    }
+
+    const enviarReclamo = (event) => {
         event.preventDefault();
 
         const datos = new FormData(event.currentTarget);
@@ -101,7 +108,7 @@ function Reclamos() {
             year: "2-digit",
         }).replaceAll("/", "-");
 
-        setSolicitudes((actuales) => [
+        setReclamos((actuales) => [
             {
                 id: Date.now(),
                 titulo: datos.get("asunto").toString(),
@@ -119,16 +126,67 @@ function Reclamos() {
     return (
         <main className="reclamos-residente">
             <div className="reclamos-residente-layout">
-                <Tabla
-                    columnas={columnasSolicitudes}
-                    datos={solicitudes}
-                    etiqueta="solicitudes"
-                    className="reclamos-solicitudes-tabla"
-                />
+                 
+                 {/* RECLAMOS */}
+                <Navegador
+                    data={reclamos}
+                    searchKey="titulo"
+                    searchPlaceholder="Buscar reclamo..."
+                    filters={filtros}
+                >
+                    {(ReclamosFiltrados) => (
+                        <Tabla
+                            columnas={columnasReclamos}
+                            datos={ReclamosFiltrados}
+                            etiqueta="reclamos"
+                            className="reclamos-reclamos-tabla"
+                            onFilaClick={abrirDetalle}
+                            seleccionable
+                            filaSeleccionada={detalleAbierto ? reclamosSeleccionado : null}
+                        />
+                            )}
+                </Navegador>
+                
+                {/* DETALLE */}
+
+                {detalleAbierto && (
+                    <Panel
+                        className="reclamos-detalle"
+                        titulo={reclamosSeleccionado.titulo}
+                        tituloComplemento={
+                            <div className={`reclamos-badge ${claseEstado(reclamosSeleccionado.estado)}`}>
+                                {reclamosSeleccionado.estado}
+                            </div>
+                        }
+                        accion={
+                            <button
+                                className="reclamos-detalle-cerrar"
+                                onClick={() => setDetalleAbierto(false)}
+                                aria-label="Cerrar detalle"
+                            >
+                                <X size={18} />
+                            </button>
+                        }
+                    >
+
+                        {/* =========== FILAS =========== */}
+
+                        <div className="reclamos-detalle-fila">
+                            <span>Categoría</span>
+                            <strong>{reclamosSeleccionado.categoria}</strong>
+                        </div>
+
+                        <div className="reclamos-detalle-fila">
+                            <span>Fecha</span>
+                            <strong>{reclamosSeleccionado.fecha}</strong>
+                        </div>
+                        
+                    </Panel>
+                )}
                 <section className="reclamos-residente-principal">
-                    <Panel titulo="Crear nueva solicitud" icono={<SquarePen />} className="crear-solicitud-panel">
-                        <form className="form-solicitud" onSubmit={enviarSolicitud}>
-                            <label className="campo-solicitud">
+                    <Panel titulo="Crear nuevo reclamo" icono={<SquarePen />} className="crear-reclamo-panel">
+                        <form className="form-reclamo" onSubmit={enviarReclamo}>
+                            <label className="campo-reclamo">
                                 <span>Asunto</span>
                                 <input
                                     name="asunto"
@@ -139,9 +197,9 @@ function Reclamos() {
                                 />
                             </label>
 
-                            <label className="campo-solicitud">
+                            <label className="campo-reclamo">
                                 <span>Categoría</span>
-                                <span className="select-solicitud-wrap">
+                                <span className="select-reclamo-wrap">
                                     <select name="categoria" defaultValue="" required>
                                         <option value="" disabled>Selecciona una categoría</option>
                                         {categorias.map((categoria) => (
@@ -152,7 +210,7 @@ function Reclamos() {
                                 </span>
                             </label>
 
-                            <label className="campo-solicitud campo-descripcion">
+                            <label className="campo-reclamo campo-descripcion">
                                 <span>Descripción</span>
                                 <textarea
                                     name="descripcion"
@@ -162,7 +220,7 @@ function Reclamos() {
                                 />
                             </label>
 
-                            <div className="solicitud-formulario-acciones">
+                            <div className="reclamo-formulario-acciones">
                                 <label className="adjuntar-archivo" htmlFor="archivo-solicitud">
                                     <Paperclip aria-hidden="true" />
                                     <span>{archivoAdjunto || "Adjuntar archivo"}</span>
@@ -173,9 +231,9 @@ function Reclamos() {
                                         onChange={(event) => setArchivoAdjunto(event.target.files[0]?.name || "")}
                                     />
                                 </label>
-                                <button className="enviar-solicitud" type="submit">
+                                <button className="enviar-reclamo" type="submit">
                                     <MousePointer2 aria-hidden="true" />
-                                    Enviar solicitud
+                                    Enviar reclamo
                                 </button>
                             </div>
                         </form>

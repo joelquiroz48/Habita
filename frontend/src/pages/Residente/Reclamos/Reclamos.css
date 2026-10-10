@@ -20,23 +20,93 @@
     gap: 14px;
 }
 
-.reclamos-solicitudes-tabla {
+.reclamos-reclamos-tabla {
     grid-column: 1 / -1;
     min-width: 0;
     width: 100%;
+}
+
+.reclamos-detalle {
+    grid-column: 1 / -1;
+    min-width: 0;
+    width: 100%;
+}
+
+.reclamos-badge {
+    width: fit-content;
+    padding: 4px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.reclamos-badge.en-revision {
+    background: var(--fondo-aviso-amarillo);
+    color: var(--color-vencimiento);
+}
+
+.reclamos-badge.respondido {
+    background: var(--fondo-azul-suave);
+    color: var(--color-aviso-azul);
+}
+
+.reclamos-badge.resuelto {
+    background: var(--fondo-verde-suave);
+    color: var(--color-aviso-verde);
+}
+
+.reclamos-detalle-cerrar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--texto-secundario);
+}
+
+.reclamos-detalle-cerrar:hover {
+    background: var(--fondo-icono);
+    color: var(--verde-hover);
+}
+
+.reclamos-detalle-fila {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--separador);
+    font-size: 13px;
+}
+
+.reclamos-detalle-fila:last-child {
+    border-bottom: 0;
+}
+
+.reclamos-detalle-fila span {
+    color: var(--texto-secundario);
+}
+
+.reclamos-detalle-fila strong {
+    color: var(--texto-principal);
+    font-weight: 600;
+    text-align: right;
 }
 
 /* =========================
         SOLICITUD
 ========================= */
 
-.form-solicitud {
+.form-reclamo {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 14px;
 }
 
-.campo-solicitud {
+.campo-reclamo {
     display: flex;
     min-width: 0;
     flex-direction: column;
@@ -45,9 +115,9 @@
     font-weight: 600;
 }
 
-.campo-solicitud input,
-.campo-solicitud select,
-.campo-solicitud textarea {
+.campo-reclamo input,
+.campo-reclamo select,
+.campo-reclamo textarea {
     width: 100%;
     border: 1px solid var(--borde-input);
     border-radius: 6px;
@@ -56,37 +126,37 @@
     font: 400 13px "Open Sans", sans-serif;
 }
 
-.campo-solicitud input,
-.campo-solicitud select {
+.campo-reclamo input,
+.campo-reclamo select {
     height: 40px;
     padding: 0 11px;
 }
 
-.campo-solicitud input::placeholder,
-.campo-solicitud textarea::placeholder,
-.campo-solicitud select:invalid {
+.campo-reclamo input::placeholder,
+.campo-reclamo textarea::placeholder,
+.campo-reclamo select:invalid {
     color: #7a858a;
 }
 
-.campo-solicitud input:focus,
-.campo-solicitud select:focus,
-.campo-solicitud textarea:focus {
+.campo-reclamo input:focus,
+.campo-reclamo select:focus,
+.campo-reclamo textarea:focus {
     border-color: var(--verde);
     box-shadow: 0 0 0 2px rgb(39 155 151 / 12%);
 }
 
-.select-solicitud-wrap {
+.select-reclamo-wrap {
     position: relative;
     display: block;
 }
 
-.campo-solicitud select {
+.campo-reclamo select {
     appearance: none;
     padding-right: 36px;
     cursor: pointer;
 }
 
-.select-solicitud-wrap > svg {
+.select-reclamo-wrap > svg {
     position: absolute;
     top: 50%;
     right: 11px;
@@ -98,18 +168,18 @@
 }
 
 .campo-descripcion,
-.solicitud-formulario-acciones {
+.reclamo-formulario-acciones {
     grid-column: 1 / -1;
 }
 
-.campo-solicitud textarea {
+.campo-reclamo textarea {
     min-height: 112px;
     padding: 10px 11px;
     line-height: 1.5;
     resize: vertical;
 }
 
-.solicitud-formulario-acciones {
+.reclamo-formulario-acciones {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -121,7 +191,7 @@
 ========================= */
 
 .adjuntar-archivo,
-.enviar-solicitud {
+.enviar-reclamo {
     display: inline-flex;
     height: 40px;
     box-sizing: border-box;
@@ -147,7 +217,7 @@
 }
 
 .adjuntar-archivo > svg,
-.enviar-solicitud > svg {
+.enviar-reclamo > svg {
     width: 16px;
     height: 16px;
     flex: 0 0 auto;
@@ -163,14 +233,14 @@
     display: none;
 }
 
-.enviar-solicitud {
+.enviar-reclamo {
     border: 1px solid var(--verde);
     background: var(--verde);
     color: var(--blanco);
     cursor: pointer;
 }
 
-.enviar-solicitud:hover {
+.enviar-reclamo:hover {
     border-color: var(--verde-hover);
     background: var(--verde-hover);
 }
@@ -179,7 +249,7 @@
            TABLA
 ========================= */
 
-.reclamos-solicitudes-tabla .tabla-fila {
+.reclamos-reclamos-tabla .tabla-fila {
     min-height: 46px;
     font-size: 12px;
     font-weight: 500;
@@ -218,29 +288,6 @@
     color: var(--color-aviso-verde);
 }
 
-.solicitud-acciones {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.solicitud-acciones button {
-    display: inline-flex;
-    width: 26px;
-    height: 26px;
-    align-items: center;
-    justify-content: center;
-    border-radius: 5px;
-    background: transparent;
-    color: var(--texto-icono);
-    cursor: pointer;
-}
-
-.solicitud-acciones button:hover {
-    background: var(--fondo-icono);
-    color: var(--verde-hover);
-}
-
 /* =========================
     CONSEJOS RECLAMOS
 ========================= */
@@ -268,16 +315,16 @@
 }
 
 @media (max-width: 560px) {
-    .form-solicitud {
+    .form-reclamo {
         grid-template-columns: minmax(0, 1fr);
     }
 
     .campo-descripcion,
-    .solicitud-formulario-acciones {
+    .reclamo-formulario-acciones {
         grid-column: auto;
     }
 
-    .solicitud-formulario-acciones {
+    .reclamo-formulario-acciones {
         align-items: stretch;
         flex-direction: column;
     }
@@ -286,7 +333,7 @@
         max-width: 100%;
     }
 
-    .enviar-solicitud {
+    .enviar-reclamo {
         width: 100%;
     }
 }
