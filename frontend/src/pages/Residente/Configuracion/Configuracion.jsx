@@ -1,10 +1,6 @@
 import { useEffect, useState } from "react";
 import {
-    Settings,
-    Palette,
-    Globe,
-    CalendarCheck,
-    Shield,
+    Bell,
     HelpCircle,
     MessageCircle,
     FileText,
@@ -19,44 +15,41 @@ import Panel from "../../../components/Panel/Panel";
        DATOS EJEMPLOS
 ========================== */}
 
-const configuraciones = [
+const preferencias = [
     {
-        clave: "espaciosDisponibles",
-        icono: CalendarCheck,
-        titulo: "Mostrar espacios disponibles",
-        descripcion: "Priorizá los espacios con disponibilidad.",
+        clave: "avisos",
+        titulo: "Avisos",
+        descripcion: "Recibí avisos importantes del consorcio",
     },
     {
-        clave: "recordatorioReservas",
-        icono: CalendarCheck,
-        titulo: "Recordatorio de reservas",
-        descripcion: "Mostrá recordatorios de próximas reservas.",
+        clave: "expensas",
+        titulo: "Expensas",
+        descripcion: "Recordatorios y novedades de expensas",
     },
     {
-        clave: "confirmarCancelacion",
-        icono: Shield,
-        titulo: "Confirmar antes de cancelar",
-        descripcion: "Pedir confirmación antes de cancelar una reserva.",
+        clave: "reservas",
+        titulo: "Reservas",
+        descripcion: "Confirmaciones y recordatorios de reservas",
     },
 ];
-
+    
 
 function Configuracion() {
     useEffect(() => {
         document.title = "Habita | Configuración";
     }, []);
 
-    const [preferencias, setPreferencias] = useState({
-        espaciosDisponibles: false,
-        recordatorioReservas: false,
-        confirmarCancelacion: false,
+    const [notificaciones, setNotificaciones] = useState({
+        avisos: false,
+        expensas: false,
+        reservas: false,
     });
 
-    const cambiarPreferencia = (tipo) => {
-        setPreferencias((prev) => ({
-            ...prev,
-            [tipo]: !prev[tipo],
-        }));
+   const cambiarNotificacion = (tipo) => {
+        setNotificaciones({
+            ...notificaciones,
+            [tipo]: !notificaciones[tipo],
+        });
     };
 
     return (
@@ -76,84 +69,35 @@ function Configuracion() {
 
                     {/* PREFERENCIAS */}
 
-                    <Panel titulo="Preferencias de la aplicación" descripcion="Personalizá cómo querés utilizar Habita." icono={<Settings />}>
-                        <div className="config-list">
-                            <div className="config-item">
-                                <div className="config-item-icon"><Palette /></div>
+                    <Panel
+                        titulo="Preferencias de notificación"
+                        icono={<Bell />}
+                        className="preferencias-card"
+                    >
+                        <div className="preferencias-lista">
+                            {preferencias.map((preferencia) => (
+                                <div className="preferencia" key={preferencia.clave}>
+                                    <div>
+                                        <strong>{preferencia.titulo}</strong>
+                                        <span>{preferencia.descripcion}</span>
+                                    </div>
 
-                                <div className="config-item-content">
-                                    <strong>Apariencia</strong>
-                                    <span>Elegí cómo se muestra la aplicación.</span>
+                                    <button className={`switch ${
+                                            notificaciones[preferencia.clave] ? "activo" : ""
+                                        }`}
+                                        onClick={() => cambiarNotificacion(preferencia.clave)}
+                                    >
+                                        <span></span>
+                                    </button>
                                 </div>
-
-                                <select defaultValue="claro">
-                                    <option value="claro">Claro</option>
-                                    <option value="automatico">Automático</option>
-                                </select>
-                            </div>
-
-                            <div className="config-item">
-                                <div className="config-item-icon"><Globe /></div>
-
-                                <div className="config-item-content">
-                                    <strong>Idioma</strong>
-                                    <span>Seleccioná el idioma de Habita.</span>
-                                </div>
-
-                                <select defaultValue="es">
-                                    <option value="es">Español</option>
-                                </select>
-                            </div>
-
-                            <div className="config-item">
-                                <div className="config-item-icon"><CalendarCheck /></div>
-
-                                <div className="config-item-content">
-                                    <strong>Formato de fecha</strong>
-                                    <span>Elegí cómo querés visualizar las fechas.</span>
-                                </div>
-
-                                <select defaultValue="ddmmyyyy">
-                                    <option value="ddmmyyyy">DD/MM/AAAA</option>
-                                    <option value="mmddyyyy">MM/DD/AAAA</option>
-                                </select>
-                            </div>
+                            ))}
                         </div>
                     </Panel>
 
+
+                {/* CONFIGURACIONES */}
                     {/* RESERVAS */}
 
-                    <Panel titulo="Preferencias de reservas" descripcion="Configurá algunas opciones relacionadas con tus reservas." icono={<CalendarCheck />}>
-                        <div className="config-list">
-                            {configuraciones.map((configuracion) => {
-                                const Icono = configuracion.icono;
-
-                                return (
-                                    <div className="config-item" key={configuracion.clave}>
-                                        <div className="config-item-icon"><Icono /></div>
-
-                                        <div className="config-item-content">
-                                            <strong>{configuracion.titulo}</strong>
-                                            <span>{configuracion.descripcion}</span>
-                                        </div>
-
-                                        <button
-                                            type="button"
-                                            className={`switch ${
-                                                preferencias[configuracion.clave] ? "activo" : ""
-                                            }`}
-                                            onClick={() =>
-                                                cambiarPreferencia(configuracion.clave)
-                                            }
-                                            aria-pressed={preferencias[configuracion.clave]}
-                                        >
-                                            <span></span>
-                                        </button>
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    </Panel>
 
                 </section>
 

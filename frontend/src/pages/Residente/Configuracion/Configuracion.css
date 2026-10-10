@@ -24,27 +24,6 @@
     gap: 14px;
 }
 
-/* =========================
-          LISTAS
-========================= */
-
-.config-list {
-    display: flex;
-    flex-direction: column;
-}
-
-.config-item {
-    min-height: 58px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    border-bottom: 1px solid var(--separador);
-}
-
-.config-item:last-child {
-    border-bottom: none;
-}
-
 .config-item-icon {
     width: 31px;
     height: 31px;
@@ -77,27 +56,6 @@
 
 
 /* =========================
-          SELECT
-========================= */
-
-.config-item select {
-    width: 115px;
-    height: 28px;
-    padding: 0 7px;
-    border: 1px solid var(--borde-input);
-    border-radius: 6px;
-    color: var(--texto-secundario);
-    font-size: 12px;
-    outline: none;
-    cursor: pointer;
-}
-
-.config-item select:focus {
-    border-color: var(--verde);
-}
-
-
-/* =========================
           SWITCH
 ========================= */
 
@@ -111,6 +69,9 @@
 .configuracion .switch span {
     position: absolute;
     inset: 0;
+    width: auto;
+    height: auto;
+    left: 0;
     border-radius: 20px;
     background: var(--borde-secundario);
     cursor: pointer;
@@ -129,7 +90,8 @@
     transition: 0.2s;
 }
 
-.configuracion .switch.activo {
+.configuracion .switch.activo span {
+    left: 0;
     background: var(--verde);
 }
 
@@ -264,9 +226,6 @@
         grid-template-columns: 1fr;
     }
 
-    .cuenta-card {
-        grid-column: span 2;
-    }
 }
 
 
@@ -275,32 +234,11 @@
         padding: 20px;
     }
 
-    .cuenta-card {
-        grid-column: auto;
-    }
-
-    .config-item {
-        align-items: flex-start;
-        padding: 10px 0;
-    }
-
-    .config-item select {
-        width: 100px;
-    }
 }
 
 
 @media (max-width: 500px) {
-    .config-item {
-        flex-wrap: wrap;
-    }
-
     .config-item-content {
         min-width: calc(100% - 45px);
-    }
-
-    .config-item select,
-    .config-item .switch {
-        margin-left: 41px;
     }
 }
