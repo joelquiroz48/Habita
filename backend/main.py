@@ -72,17 +72,73 @@ def register(payload: RegisterIn):
 @app.post("/api/auth/login")
 def login(payload: LoginIn):
     if not SUPABASE_URL or not SUPABASE_ANON_KEY:
-        raise HTTPException(status_code=500, detail="SUPABASE_URL or SUPABASE_ANON_KEY not set")
+        raise HTTPException(
+            status_code=500,
+            detail="SUPABASE_URL or SUPABASE_ANON_KEY not set"
+        )
 
+    # 1. Autenticar usuario en Supabase Auth
     url = f"{SUPABASE_URL.rstrip('/')}/auth/v1/token?grant_type=password"
-    # Some Supabase deployments accept JSON for the token endpoint — send JSON.
-    json_body = {"email": payload.email, "password": payload.password}
-    headers = _supabase_headers(use_service_role=False, content_type="application/json")
-    resp = requests.post(url, json=json_body, headers=headers)
-    if resp.status_code >= 400:
-        raise HTTPException(status_code=resp.status_code, detail=resp.json())
 
-    return resp.json()
+    json_body = {
+        "email": payload.email,
+        "password": payload.password
+    }
+
+    headers = _supabase_headers(
+        use_service_role=False,
+        content_type="application/json"
+    )
+
+    resp = requests.post(
+        url,
+        json=json_body,
+        headers=headers
+    )
+
+    if resp.status_code >= 400:
+        raise HTTPException(
+            status_code=resp.status_code,
+            detail=resp.json()
+        )
+
+    auth_data = resp.json()
+
+    # 2. Obtener ID del usuario autenticado
+    user_id = auth_data["user"]["id"]
+
+    # 3. Buscar el usuario en la tabla "usuario"
+    usuario_url = (
+        f"{SUPABASE_URL.rstrip('/')}"
+        f"/rest/v1/usuario?id=eq.{user_id}&select=tipo"
+    )
+
+    usuario_resp = requests.get(
+        usuario_url,
+        headers=_supabase_headers(use_service_role=True)
+    )
+
+    if usuario_resp.status_code >= 400:
+        raise HTTPException(
+            status_code=usuario_resp.status_code,
+            detail=usuario_resp.json()
+        )
+
+    usuarios = usuario_resp.json()
+
+    if not usuarios:
+        raise HTTPException(
+            status_code=404,
+            detail="Usuario no encontrado en la tabla usuario"
+        )
+
+    # 4. Obtener rol
+    tipo = usuarios[0]["tipo"]
+
+    # 5. Agregar el rol a la respuesta del login
+    auth_data["tipo"] = tipo
+
+    return auth_data
 
 
 @app.get("/api/health")
