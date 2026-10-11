@@ -14,7 +14,7 @@ import {
     Download,
 } from "lucide-react";
 
-import "./Inicio.css";
+import "./inicio.css";
 import Panel from "../../../components/Panel/Panel";
 import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
 import TablaReportes from "../../../components/TablaReportes/TablaReportes";
