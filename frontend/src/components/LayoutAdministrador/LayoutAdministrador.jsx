@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import "./LayoutAdministrador.css";
+import "./Layoutadministrador.css";
 
 import iconPerfil from "../../assets/img/foto-perfil.png";
 import iconLogo from "../../assets/img/icon.png";
@@ -151,7 +151,7 @@ function LayoutAdministrador({ children }) {
                             <h1>Habita</h1>
                         </Link>
 
-                    </div>
+                    </div>gi
 
                     <div className="header-info">
                         <h1>{infoHeader?.titulo}</h1>

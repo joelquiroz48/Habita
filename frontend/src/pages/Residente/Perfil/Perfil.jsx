@@ -6,39 +6,13 @@ import {
     UserRound,
     Building2,
     Mail,
-    Phone,
     Pencil,
-    Bell,
     ShieldCheck,
-    Smartphone,
-    Monitor,
+    X,
 } from "lucide-react";
 
 import "./Perfil.css";
 import Panel from "../../../components/Panel/Panel";
-
-{/* =========================
-       DATOS EJEMPLOS
-========================== */}
-
-const preferencias = [
-    {
-        clave: "avisos",
-        titulo: "Avisos",
-        descripcion: "Recibí avisos importantes del consorcio",
-    },
-    {
-        clave: "expensas",
-        titulo: "Expensas",
-        descripcion: "Recordatorios y novedades de expensas",
-    },
-    {
-        clave: "reservas",
-        titulo: "Reservas",
-        descripcion: "Confirmaciones y recordatorios de reservas",
-    },
-];
-
 
 function Perfil() {
 
@@ -46,17 +20,129 @@ function Perfil() {
         document.title = "Habita | Mi perfil";
     }, []);
 
-    const [notificaciones, setNotificaciones] = useState({
-        avisos: false,
-        expensas: false,
-        reservas: false,
+    const [nombreUsuario, setNombreUsuario] = useState("Nombre_usuario");
+    const [fotoPerfil, setFotoPerfil] = useState(iconPerfil);
+    const [modalEdicionAbierto, setModalEdicionAbierto] = useState(false);
+    const [nombreBorrador, setNombreBorrador] = useState(nombreUsuario);
+    const [fotoBorrador, setFotoBorrador] = useState(null);
+    const [errorFoto, setErrorFoto] = useState("");
+    const [contacto, setContacto] = useState({
+        email: "ejemplo@gmail.com",
+        telefono: "+54 11 1234 5678",
+        telefonoAlternativo: "+54 11 9876 5432",
     });
+    const [contactoBorrador, setContactoBorrador] = useState(contacto);
+    const [erroresContacto, setErroresContacto] = useState({});
+    const [editandoContacto, setEditandoContacto] = useState(false);
+    const [contactoGuardado, setContactoGuardado] = useState(false);
 
-    const cambiarNotificacion = (tipo) => {
-        setNotificaciones({
-            ...notificaciones,
-            [tipo]: !notificaciones[tipo],
-        });
+    useEffect(() => {
+        if (!modalEdicionAbierto) return;
+
+        const cerrarConEscape = (event) => {
+            if (event.key === "Escape") setModalEdicionAbierto(false);
+        };
+
+        window.addEventListener("keydown", cerrarConEscape);
+        return () => window.removeEventListener("keydown", cerrarConEscape);
+    }, [modalEdicionAbierto]);
+
+    const abrirEdicionPerfil = () => {
+        setNombreBorrador(nombreUsuario);
+        setFotoBorrador(null);
+        setErrorFoto("");
+        setModalEdicionAbierto(true);
+    };
+
+    const seleccionarFoto = (event) => {
+        const archivo = event.target.files?.[0];
+        if (!archivo) return;
+
+        const lector = new FileReader();
+        lector.onload = () => {
+            if (typeof lector.result === "string") {
+                setFotoBorrador(lector.result);
+                setErrorFoto("");
+            }
+        };
+        lector.onerror = () => {
+            setErrorFoto("No se pudo cargar la imagen. Intentá con otro archivo.");
+        };
+        lector.readAsDataURL(archivo);
+    };
+
+    const guardarPerfil = (event) => {
+        event.preventDefault();
+        setNombreUsuario(nombreBorrador.trim() || nombreUsuario);
+        if (fotoBorrador) setFotoPerfil(fotoBorrador);
+        setModalEdicionAbierto(false);
+    };
+
+    const abrirEdicionContacto = () => {
+        setContactoBorrador({ ...contacto });
+        setErroresContacto({});
+        setContactoGuardado(false);
+        setEditandoContacto(true);
+    };
+
+    const cambiarContacto = (campo, valor) => {
+        setContactoBorrador((actual) => ({ ...actual, [campo]: valor }));
+        setErroresContacto((actual) => ({ ...actual, [campo]: "" }));
+        setContactoGuardado(false);
+    };
+
+    const validarTelefono = (valor) => {
+        const telefono = valor.trim();
+        if (!telefono) return "Este campo es obligatorio.";
+        if (!/^\+?[0-9\s().-]+$/.test(telefono)) {
+            return "Usá solo números, espacios, guiones, paréntesis y + al inicio.";
+        }
+
+        const cantidadDigitos = telefono.replace(/\D/g, "").length;
+        if (cantidadDigitos < 8 || cantidadDigitos > 15) {
+            return "El teléfono debe tener entre 8 y 15 dígitos.";
+        }
+
+        return "";
+    };
+
+    const guardarContacto = (event) => {
+        event.preventDefault();
+
+        const valores = {
+            email: contactoBorrador.email.trim(),
+            telefono: contactoBorrador.telefono.trim(),
+            telefonoAlternativo: contactoBorrador.telefonoAlternativo.trim(),
+        };
+        const nuevosErrores = {};
+
+        if (!valores.email) {
+            nuevosErrores.email = "El email es obligatorio.";
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valores.email)) {
+            nuevosErrores.email = "Ingresá un email válido.";
+        }
+
+        nuevosErrores.telefono = validarTelefono(valores.telefono);
+        if (valores.telefonoAlternativo) {
+            nuevosErrores.telefonoAlternativo = validarTelefono(valores.telefonoAlternativo);
+        }
+
+        const errores = Object.fromEntries(
+            Object.entries(nuevosErrores).filter(([, mensaje]) => mensaje)
+        );
+        setErroresContacto(errores);
+        if (Object.keys(errores).length > 0) return;
+
+        setContacto(valores);
+        setContactoBorrador(valores);
+        setEditandoContacto(false);
+        setContactoGuardado(true);
+    };
+
+    const cancelarEdicionContacto = () => {
+        setContactoBorrador({ ...contacto });
+        setErroresContacto({});
+        setEditandoContacto(false);
     };
 
     return (
@@ -70,25 +156,24 @@ function Perfil() {
 
                 {/* PERFIL DEL RESIDENTE */}
 
-                <Panel titulo="Perfil del residente" icono={<UserRound />} className="residente-card">
+                <Panel
+                    titulo="Perfil del residente"
+                    icono={<UserRound />}
+                    accion={
+                        <button className="btn-editar" onClick={abrirEdicionPerfil}>
+                            <Pencil />
+                            Editar
+                        </button>
+                    }
+                    className="residente-card"
+                >
                     <div className="residente-contenido">
                         <div className="avatar-residente">
-                            <img src={iconPerfil} alt="Imagen de perfil"/>
+                            <img src={fotoPerfil} alt="Imagen de perfil"/>
                         </div>
 
                         <div className="residente-datos">
-                            <h3>Nombre_usuario</h3>
-
-                            <span>
-                                <Mail />
-                                ejemplo@gmail.com
-                            </span>
-
-                            <span>
-                                <Phone />
-                                +54 11 1234 5678
-                            </span>
-
+                            <h3>{nombreUsuario}</h3>
                             <span>
                                 <UserRound />
                                 Residente
@@ -120,6 +205,11 @@ function Perfil() {
                             </div>
 
                             <div>
+                                <span>Dirección</span>
+                                <strong>Av. del Libertador 1234, 5B, CABA, Argentina</strong>
+                            </div>
+
+                            <div>
                                 <span>Estado</span>
                                 <small className="badge-residente">Inquilino</small>
                             </div>
@@ -139,79 +229,112 @@ function Perfil() {
                 <Panel
                     titulo="Datos de contacto"
                     icono={<Mail />}
-                    accion={
-                        <button className="btn-editar">
+                    accion={!editandoContacto && (
+                        <button className="btn-editar" onClick={abrirEdicionContacto}>
                             <Pencil />
                             Editar
                         </button>
-                    }
+                    )}
                     className="contacto-card"
                 >
-                    <div className="contacto-form">
-                        <div className="campo-perfil">
-                            <label>Email</label>
-                            <input type="text" value="ejemplo@gmail.com"/>
-                        </div>
-
-                        <div className="campo-perfil">
-                            <label>Teléfono</label>
-                            <input type="text" value="+54 11 1234 5678"/>
-                        </div>
-
-                        <div className="campo-perfil">
-                            <label>Teléfono alternativo</label>
-                            <input type="text" value="+54 11 9876 5432"/>
-                        </div>
-
-                        <div className="campo-perfil">
-                            <label>Dirección de notificación</label>
-                            <input type="text" value="Av. del Libertador 1234, 5B, CABA, Argentina"/>
-                        </div>
-                    </div>
-
-                    <p className="texto-ayuda">Estos datos se utilizarán para comunicarnos con vos.</p>
-                </Panel>
-
-                {/* PREFERENCIAS */}
-
-                <Panel
-                    titulo="Preferencias de notificación"
-                    icono={<Bell />}
-                    accion={
-                        <button className="btn-editar">
-                            <Pencil />
-                            Editar
-                        </button>
-                    }
-                    className="preferencias-card"
-                >
-                    <div className="preferencias-lista">
-                        {preferencias.map((preferencia) => (
-                            <div className="preferencia" key={preferencia.clave}>
-                                <div>
-                                    <strong>{preferencia.titulo}</strong>
-                                    <span>{preferencia.descripcion}</span>
+                    {editandoContacto ? (
+                        <form className="contacto-form" noValidate onSubmit={guardarContacto}>
+                            <div className="campo-perfil">
+                                <label htmlFor="contacto-email">Email</label>
+                                <div className="contacto-campo">
+                                    <input
+                                        id="contacto-email"
+                                        type="email"
+                                        autoComplete="email"
+                                        value={contactoBorrador.email}
+                                        aria-invalid={Boolean(erroresContacto.email)}
+                                        aria-describedby={erroresContacto.email ? "error-contacto-email" : undefined}
+                                        onChange={(event) => cambiarContacto("email", event.target.value)}
+                                    />
+                                    {erroresContacto.email && (
+                                        <small id="error-contacto-email" className="contacto-error" role="alert">
+                                            {erroresContacto.email}
+                                        </small>
+                                    )}
                                 </div>
+                            </div>
 
-                                <button className={`switch ${
-                                        notificaciones[preferencia.clave] ? "activo" : ""
-                                    }`}
-                                    onClick={() => cambiarNotificacion(preferencia.clave)}
+                            <div className="campo-perfil">
+                                <label htmlFor="contacto-telefono">Teléfono</label>
+                                <div className="contacto-campo">
+                                    <input
+                                        id="contacto-telefono"
+                                        type="tel"
+                                        autoComplete="tel"
+                                        value={contactoBorrador.telefono}
+                                        aria-invalid={Boolean(erroresContacto.telefono)}
+                                        aria-describedby={erroresContacto.telefono ? "error-contacto-telefono" : undefined}
+                                        onChange={(event) => cambiarContacto("telefono", event.target.value)}
+                                    />
+                                    {erroresContacto.telefono && (
+                                        <small id="error-contacto-telefono" className="contacto-error" role="alert">
+                                            {erroresContacto.telefono}
+                                        </small>
+                                    )}
+                                </div>
+                            </div>
+
+                            <div className="campo-perfil">
+                                <label htmlFor="contacto-telefono-alternativo">Teléfono alternativo</label>
+                                <div className="contacto-campo">
+                                    <input
+                                        id="contacto-telefono-alternativo"
+                                        type="tel"
+                                        value={contactoBorrador.telefonoAlternativo}
+                                        aria-invalid={Boolean(erroresContacto.telefonoAlternativo)}
+                                        aria-describedby={erroresContacto.telefonoAlternativo ? "error-contacto-telefono-alternativo" : undefined}
+                                        onChange={(event) => cambiarContacto("telefonoAlternativo", event.target.value)}
+                                    />
+                                    {erroresContacto.telefonoAlternativo && (
+                                        <small id="error-contacto-telefono-alternativo" className="contacto-error" role="alert">
+                                            {erroresContacto.telefonoAlternativo}
+                                        </small>
+                                    )}
+                                </div>
+                            </div>
+
+                            <div className="contacto-acciones">
+                                <button
+                                    className="contacto-cancelar"
+                                    type="button"
+                                    onClick={cancelarEdicionContacto}
                                 >
-                                    <span></span>
+                                    Cancelar
+                                </button>
+                                <button className="btn-editar" type="submit">
+                                    Guardar cambios
                                 </button>
                             </div>
-                        ))}
-                    </div>
+                        </form>
+                    ) : (
+                        <>
+                            <div className="contacto-form">
+                                <div className="campo-perfil">
+                                    <span>Email</span>
+                                    <strong>{contacto.email}</strong>
+                                </div>
+                                <div className="campo-perfil">
+                                    <span>Teléfono</span>
+                                    <strong>{contacto.telefono}</strong>
+                                </div>
+                                <div className="campo-perfil">
+                                    <span>Teléfono alternativo</span>
+                                    <strong>{contacto.telefonoAlternativo || "No especificado"}</strong>
+                                </div>
+                            </div>
+                            {contactoGuardado ? (
+                                <p className="contacto-exito" role="status">Los datos de contacto se guardaron correctamente.</p>
+                            ) : (
+                                <p className="texto-ayuda">Estos datos se utilizarán para comunicarnos con vos.</p>
+                            )}
+                        </>
+                    )}
                 </Panel>
-
-            </section>
-
-            {/* =========================
-                FILA INFERIOR
-            ========================= */}
-
-            <section className="perfil-inferior">
 
                 {/* SEGURIDAD */}
 
@@ -221,8 +344,6 @@ function Perfil() {
                     className="seguridad-card"
                 >
                     <div className="seguridad-contenido">
-
-                        {/* CONTRASEÑA */}
                         <div className="seguridad-bloque">
                             <strong>Contraseña</strong>
 
@@ -232,53 +353,82 @@ function Perfil() {
 
                             <button className="btn-seguridad">Cambiar contraseña</button>
                         </div>
-
-                        {/* DOS PASOS */}
-                        <div className="seguridad-bloque">
-                            <div className="seguridad-titulo">
-                                <strong>Verificación en dos pasos</strong>
-
-                                <span className="badge-activa">Activada</span>
-                            </div>
-
-                            <p>Tu cuenta está protegida con verificación en dos pasos.</p>
-
-                            <button className="btn-seguridad">Administrar</button>
-                        </div>
-
-                        {/* SESIONES */}
-                        <div className="seguridad-bloque sesiones">
-                            <div className="sesiones-header">
-                                <strong>Sesiones activas</strong>
-
-                                <button>Ver todas (2)</button>
-                            </div>
-
-                            <div className="sesion">
-                                <Monitor />
-
-                                <div>
-                                    <strong>Chrome en Windows</strong>
-                                    <span>Buenos Aires, Argentina</span>
-                                </div>
-
-                                <small className="badge-actual">Actual</small>
-                            </div>
-
-                            <div className="sesion">
-                                <Smartphone />
-
-                                <div>
-                                    <strong>iPhone 14 en iOS</strong>
-                                    <span>Buenos Aires, Argentina · 08/05/2026, 10:32</span>
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
                 </Panel>
 
             </section>
+
+            {modalEdicionAbierto && (
+                <div
+                    className="perfil-modal-fondo"
+                    onClick={() => setModalEdicionAbierto(false)}
+                >
+                    <section
+                        className="perfil-modal"
+                        role="dialog"
+                        aria-modal="true"
+                        aria-labelledby="perfil-modal-titulo"
+                        onClick={(event) => event.stopPropagation()}
+                    >
+                        <div className="perfil-modal-header">
+                            <h2 id="perfil-modal-titulo">Editar perfil</h2>
+                            <button
+                                className="perfil-modal-cerrar"
+                                type="button"
+                                aria-label="Cerrar"
+                                onClick={() => setModalEdicionAbierto(false)}
+                            >
+                                <X />
+                            </button>
+                        </div>
+
+                        <form onSubmit={guardarPerfil}>
+                            <div className="perfil-modal-foto">
+                                <img
+                                    src={fotoBorrador || fotoPerfil}
+                                    alt="Vista previa de la foto de perfil"
+                                />
+                                <label htmlFor="foto-perfil-input">Foto de perfil</label>
+                                <input
+                                    id="foto-perfil-input"
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={seleccionarFoto}
+                                />
+                                {errorFoto && (
+                                    <span className="perfil-modal-error" role="alert">
+                                        {errorFoto}
+                                    </span>
+                                )}
+                            </div>
+
+                            <div className="campo-perfil perfil-modal-nombre">
+                                <label htmlFor="nombre-perfil-input">Nombre de usuario</label>
+                                <input
+                                    id="nombre-perfil-input"
+                                    type="text"
+                                    value={nombreBorrador}
+                                    onChange={(event) => setNombreBorrador(event.target.value)}
+                                    required
+                                />
+                            </div>
+
+                            <div className="perfil-modal-acciones">
+                                <button
+                                    className="perfil-modal-cancelar"
+                                    type="button"
+                                    onClick={() => setModalEdicionAbierto(false)}
+                                >
+                                    Cancelar
+                                </button>
+                                <button className="btn-editar" type="submit">
+                                    Guardar cambios
+                                </button>
+                            </div>
+                        </form>
+                    </section>
+                </div>
+            )}
 
         </main>
     );

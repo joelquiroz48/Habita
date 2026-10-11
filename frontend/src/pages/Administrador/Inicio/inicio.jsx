@@ -21,7 +21,6 @@ import "./Inicio.css";
 import estadisticasMensuales from "../../../data/estadisticasMensuales.json";
 import reclamosEstadosData from "../../../data/reclamosEstadosData.json";
 import reclamosCategoriasData from "../../../data/reclamosCategoriasData.json";
-
 import Panel from "../../../components/Panel/Panel";
 import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
 import Tabla from "../../../components/Tabla/Tabla";
