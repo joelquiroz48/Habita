@@ -1,0 +1,5 @@
+[
+    { "nombre": "Pendientes", "cantidad": 18 },
+    { "nombre": "En proceso", "cantidad": 26 },
+    { "nombre": "Resueltos", "cantidad": 20 }
+]

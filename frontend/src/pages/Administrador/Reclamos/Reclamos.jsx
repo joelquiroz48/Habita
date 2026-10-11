@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import "chart.js/auto";
+import { Doughnut } from "react-chartjs-2";
 import {
     ClipboardList,
     Clock,
@@ -15,7 +17,6 @@ import {
 } from "lucide-react";
 
 import "./Reclamos.css";
-import armarGradienteDonut from "../../../utils/armarGradienteDonut";
 import Panel from "../../../components/Panel/Panel";
 import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
 import Tabla from "../../../components/Tabla/Tabla";
@@ -313,16 +314,26 @@ function Reclamos() {
             <Panel className="reclamos-resumen-panel" titulo="Resumen de reclamos">
                 <div className="reclamos-resumen-contenido">
                     <div className="reclamos-donut-wrap">
-                        <div
-                            className="reclamos-donut"
-                            style={{
-                                background: armarGradienteDonut(
-                                    resumenEstados,
-                                    "reclamos-color"
-                                )
-                            }}
-                        >
-                            <div className="reclamos-donut-centro" />
+                        <div className="reclamos-donut-chart">
+                            <Doughnut
+                                data={{
+                                    labels: resumenEstados.map((item) => item.estado),
+                                    datasets: [
+                                        {
+                                            data: resumenEstados.map((item) => item.cantidad),
+                                            backgroundColor: ["#ee9d25", "#328bc2", "#399665"],
+                                            borderWidth: 0,
+                                            hoverOffset: 4,
+                                        },
+                                    ],
+                                }}
+                                options={{
+                                    responsive: true,
+                                    maintainAspectRatio: false,
+                                    cutout: "66%",
+                                    plugins: { legend: { display: false } },
+                                }}
+                            />
                         </div>
 
                         <ul className="reclamos-donut-leyenda">
@@ -352,15 +363,9 @@ function Reclamos() {
                         <div className="reclamos-categorias-lista">
                             {categoriasFrecuentes.map((cat) => {
                                 const Icono = cat.icon;
-
                                 return (
-                                    <div
-                                        className="reclamos-categoria-fila"
-                                        key={cat.nombre}
-                                    >
-                                        <span
-                                            className={`reclamos-categoria-icon ${cat.claseColor}`}
-                                        >
+                                    <div className="reclamos-categoria-fila" key={cat.nombre}>
+                                        <span className={`reclamos-categoria-icon ${cat.claseColor}`}>
                                             <Icono size={16} />
                                         </span>
 

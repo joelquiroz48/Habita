@@ -1,0 +1,99 @@
+
+[
+  {
+    "mes": "Ene",
+    "recaudacion": 28400,
+    "pagosRealizados": 65,
+    "reclamosTotales": 42,
+    "reclamosResueltos": 18,
+    "reservas": 30
+  },
+  {
+    "mes": "Feb",
+    "recaudacion": 31200,
+    "pagosRealizados": 70,
+    "reclamosTotales": 51,
+    "reclamosResueltos": 25,
+    "reservas": 35
+  },
+  {
+    "mes": "Mar",
+    "recaudacion": 35420,
+    "pagosRealizados": 78,
+    "reclamosTotales": 64,
+    "reclamosResueltos": 20,
+    "reservas": 46
+  },
+  {
+    "mes": "Abr",
+    "recaudacion": 33100,
+    "pagosRealizados": 73,
+    "reclamosTotales": 58,
+    "reclamosResueltos": 32,
+    "reservas": 41
+  },
+  {
+    "mes": "May",
+    "recaudacion": 38200,
+    "pagosRealizados": 84,
+    "reclamosTotales": 61,
+    "reclamosResueltos": 39,
+    "reservas": 52
+  },
+  {
+    "mes": "Jun",
+    "recaudacion": 40500,
+    "pagosRealizados": 89,
+    "reclamosTotales": 55,
+    "reclamosResueltos": 42,
+    "reservas": 48
+  },
+  {
+    "mes": "Jul",
+    "recaudacion": 39100,
+    "pagosRealizados": 86,
+    "reclamosTotales": 47,
+    "reclamosResueltos": 38,
+    "reservas": 44
+  },
+  {
+    "mes": "Ago",
+    "recaudacion": 42800,
+    "pagosRealizados": 92,
+    "reclamosTotales": 59,
+    "reclamosResueltos": 45,
+    "reservas": 57
+  },
+  {
+    "mes": "Sep",
+    "recaudacion": 44300,
+    "pagosRealizados": 96,
+    "reclamosTotales": 53,
+    "reclamosResueltos": 48,
+    "reservas": 61
+  },
+  {
+    "mes": "Oct",
+    "recaudacion": 42100,
+    "pagosRealizados": 91,
+    "reclamosTotales": 67,
+    "reclamosResueltos": 51,
+    "reservas": 55
+  },
+  {
+    "mes": "Nov",
+    "recaudacion": 46700,
+    "pagosRealizados": 101,
+    "reclamosTotales": 62,
+    "reclamosResueltos": 56,
+    "reservas": 68
+  },
+  {
+    "mes": "Dic",
+    "recaudacion": 49500,
+    "pagosRealizados": 108,
+    "reclamosTotales": 71,
+    "reclamosResueltos": 63,
+    "reservas": 74
+  }
+]

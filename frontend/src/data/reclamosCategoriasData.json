@@ -1,0 +1,8 @@
+[
+    { "nombre": "Mantenimiento", "cantidad": 22 },
+    { "nombre": "Limpieza", "cantidad": 15 },
+    { "nombre": "Ascensores", "cantidad": 10 },
+    { "nombre": "Iluminación", "cantidad": 8 },
+    { "nombre": "Seguridad", "cantidad": 6 },
+    { "nombre": "Otros", "cantidad": 4 }
+]
