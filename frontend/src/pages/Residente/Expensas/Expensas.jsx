@@ -153,9 +153,9 @@ const resumenExpensas = [
         contenido: (
             <>
                 <small>{expensaActual.periodo}</small>
-                <em className="badge-expensa">
+                {/* <em className="badge-expensa">
                     Pendiente de pago
-                </em>
+                </em> */}
             </>
         ),
     },
@@ -182,22 +182,22 @@ const resumenExpensas = [
             </>
         ),
     },
-    {
-        icono: CreditCard,
-        titulo: "Medio de pago preferido",
-        valor: "",
-        contenido: (
-            <>
-                <strong className="medio-preferido">
-                    Tarjeta de crédito
-                </strong>
-                <small>Terminada en 4242</small>
-                <button className="link-verde">
-                    Cambiar medio de pago
-                </button>
-            </>
-        ),
-    },
+    // {
+    //     icono: CreditCard,
+    //     titulo: "Medio de pago preferido",
+    //     valor: "",
+    //     contenido: (
+    //         <>
+    //             <strong className="medio-preferido">
+    //                 Tarjeta de crédito
+    //             </strong>
+    //             <small>Terminada en 4242</small>
+    //             <button className="link-verde">
+    //                 Cambiar medio de pago
+    //             </button>
+    //         </>
+    //     ),
+    // },
 ];
 
 
@@ -250,7 +250,7 @@ function Expensas() {
 
                             <strong>{expensaActual.monto}</strong>
 
-                            <span>Período: 01/08/2026 al 31/08/2026</span>
+                            {/* <span>Período: 01/08/2026 al 31/08/2026</span> */}
 
                             <small>Vence el 10/09/2026</small>
 
@@ -307,7 +307,7 @@ function Expensas() {
 
                     {/* MEDIOS DE PAGO */}
 
-                    <Panel titulo="Medios de pago" descripcion="Elegí cómo querés pagar tu expensa" className="medios-pago">
+                    {/* <Panel titulo="Medios de pago" descripcion="Elegí cómo querés pagar tu expensa" className="medios-pago">
                         <div className="metodos-tabs">
                             <button className="activo">Tarjeta</button>
 
@@ -350,7 +350,7 @@ function Expensas() {
                             Ver mis medios de pago
                             <ChevronRight />
                         </button>
-                    </Panel>
+                    </Panel> */}
 
                     {/* AYUDA */}
 
@@ -390,7 +390,7 @@ function Expensas() {
                     </Panel>
 
                 </section>
-            
+
             </section>
 
         </main>
