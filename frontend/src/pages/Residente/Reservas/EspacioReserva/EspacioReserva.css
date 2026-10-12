@@ -1,0 +1,366 @@
+/* =========================
+    PANTALLA DE UN ESPACIO
+========================= */
+
+.espacio-reserva {
+    width: 100%;
+    padding: 24px;
+}
+
+.espacio-volver {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 12px;
+    background: transparent;
+    color: var(--verde-hover);
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.espacio-volver svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* ----- Banner ----- */
+
+.espacio-banner {
+    position: relative;
+    height: 240px;
+    margin-bottom: 14px;
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--fondo-icono);
+}
+
+.espacio-banner.con-galeria {
+    cursor: pointer;
+}
+
+.espacio-banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.espacio-banner-degradado {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to top,
+        rgba(8, 54, 60, 0.85) 0%,
+        rgba(8, 54, 60, 0.35) 45%,
+        rgba(8, 54, 60, 0) 100%
+    );
+}
+
+.espacio-banner-texto {
+    position: absolute;
+    left: 20px;
+    bottom: 16px;
+    right: 150px;
+    color: var(--blanco);
+}
+
+.espacio-banner-texto h1 {
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.espacio-banner-texto span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 4px;
+    font-size: 13px;
+    opacity: 0.95;
+}
+
+.espacio-banner-texto svg {
+    width: 15px;
+    height: 15px;
+}
+
+.espacio-banner-fotos {
+    position: absolute;
+    right: 16px;
+    bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: 30px;
+    padding: 0 12px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.92);
+    color: var(--texto-principal);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.espacio-banner-fotos svg {
+    width: 15px;
+    height: 15px;
+}
+
+.espacio-banner-fotos:hover {
+    background: var(--blanco);
+}
+
+/* ----- Contenido ----- */
+
+.espacio-contenido {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 0.9fr);
+    gap: 14px;
+    align-items: start;
+}
+
+.espacio-columna {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-width: 0;
+}
+
+.espacio-descripcion {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--texto-secundario);
+}
+
+.espacio-datos {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px 16px;
+    margin-top: 14px;
+}
+
+.espacio-datos dt {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    color: var(--texto-secundario);
+}
+
+.espacio-datos dt svg {
+    width: 14px;
+    height: 14px;
+    color: var(--verde);
+}
+
+.espacio-datos dd {
+    margin-top: 2px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--texto-principal);
+}
+
+.espacio-subtitulo {
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid var(--separador);
+    font-size: 13px;
+    color: var(--texto-principal);
+}
+
+.espacio-reglas {
+    margin-top: 6px;
+    padding-left: 18px;
+}
+
+.espacio-reglas li {
+    font-size: 12px;
+    line-height: 1.7;
+    color: var(--texto-secundario);
+}
+
+.espacio-separador {
+    border: none;
+    border-top: 1px solid var(--separador);
+}
+
+/* ----- Formulario de solicitud ----- */
+
+.solicitud-confirmacion {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 9px 10px;
+    border-radius: 7px;
+    background: var(--celeste-claro);
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--texto-secundario);
+    cursor: pointer;
+}
+
+.solicitud-confirmacion input {
+    margin-top: 3px;
+    flex-shrink: 0;
+    accent-color: var(--verde);
+}
+
+.solicitud-exito {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 0;
+    text-align: center;
+}
+
+.solicitud-exito > svg {
+    width: 38px;
+    height: 38px;
+    color: var(--color-aviso-verde);
+}
+
+.solicitud-exito strong {
+    font-size: 15px;
+}
+
+.solicitud-exito p {
+    max-width: 380px;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--texto-secundario);
+}
+
+.solicitud-exito .btn-solicitar {
+    max-width: 240px;
+}
+
+.texto-turno {
+    font-size: 12px;
+    color: var(--texto-secundario);
+}
+
+/* ----- Reservas registradas ----- */
+
+.registradas-lista {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+}
+
+.registradas-lista li {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 8px 6px;
+    border-bottom: 1px solid var(--separador);
+}
+
+.registradas-lista li:last-child {
+    border-bottom: none;
+}
+
+.registradas-lista li.resaltada {
+    background: var(--fondo-aviso-amarillo);
+    border-radius: 5px;
+}
+
+.registradas-lista span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    color: var(--texto-secundario);
+}
+
+.registradas-lista svg {
+    width: 14px;
+    height: 14px;
+    color: var(--verde);
+}
+
+/* ----- Galería de fotos ----- */
+
+.galeria {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--texto-principal);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.galeria img {
+    display: block;
+    width: 100%;
+    max-height: 60vh;
+    object-fit: contain;
+}
+
+.galeria-flecha {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--texto-principal);
+}
+
+.galeria-flecha:hover {
+    background: var(--blanco);
+}
+
+.galeria-flecha.izquierda {
+    left: 10px;
+}
+
+.galeria-flecha.derecha {
+    right: 10px;
+}
+
+.galeria-contador {
+    margin-top: 8px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--texto-secundario);
+}
+
+
+/* =========================
+       RESPONSIVE
+========================= */
+
+@media (max-width: 1200px) {
+
+    .espacio-contenido {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+@media (max-width: 800px) {
+
+    .espacio-reserva {
+        padding: 20px;
+    }
+
+    .espacio-banner {
+        height: 190px;
+    }
+
+    .espacio-banner-texto {
+        right: 16px;
+        bottom: 54px;
+    }
+
+    .espacio-banner-texto h1 {
+        font-size: 21px;
+    }
+
+    .espacio-datos {
+        grid-template-columns: 1fr;
+    }
+}

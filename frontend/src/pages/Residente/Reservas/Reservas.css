@@ -7,6 +7,42 @@
     padding: 24px;
 }
 
+/* Avisos de la pantalla (errores, falta de sesión) */
+
+.reservas-aviso {
+    margin-bottom: 14px;
+}
+
+.reservas-aviso-info {
+    padding: 8px 12px;
+    border-radius: 7px;
+    background: var(--fondo-aviso-amarillo);
+    color: var(--texto-secundario);
+    font-size: 12px;
+}
+
+/* Mensajes y textos reutilizados en varias pantallas de reservas */
+
+.mensaje-error {
+    padding: 7px 10px;
+    border-radius: 6px;
+    background: var(--fondo-documento-pdf);
+    color: var(--color-aviso-rojo);
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+.texto-ayuda {
+    font-size: 11px;
+    color: var(--texto-secundario);
+}
+
+.reservas-vacio {
+    padding: 10px 0;
+    font-size: 12px;
+    color: var(--texto-secundario);
+}
+
 /* =========================
       RESUMEN SUPERIOR
 ========================= */
@@ -34,6 +70,33 @@
     flex-direction: column;
     gap: 14px;
     min-width: 0;
+}
+
+/* =========================
+      ESTADOS DE RESERVA
+========================= */
+
+.estado-confirmada {
+    background: var(--fondo-verde-suave);
+    color: var(--color-pendiente);
+}
+
+.estado-pendiente {
+    background: var(--fondo-azul-suave);
+    color: var(--color-aviso-azul);
+}
+
+.estado-rechazada {
+    background: var(--fondo-documento-pdf);
+    color: var(--color-aviso-rojo);
+}
+
+.etiqueta-estado {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
 }
 
 /* =========================
@@ -99,16 +162,6 @@
     font-weight: 500;
 }
 
-.estado-confirmada {
-    background: var(--fondo-verde-suave);
-    color: var(--color-pendiente);
-}
-
-.estado-pendiente {
-    background: var(--fondo-azul-suave);
-    color: var(--color-pendiente-azul);
-}
-
 .reserva-card-datos {
     display: flex;
     align-items: center;
@@ -123,12 +176,6 @@
     color: var(--texto-secundario);
 }
 
-.numero-reserva {
-    display: block;
-    font-size: 11px;
-    margin-top: 3px;
-}
-
 .reserva-card-acciones {
     display: flex;
     flex-direction: column;
@@ -141,6 +188,7 @@
     height: 25px;
     border: 1px solid var(--borde-input);
     border-radius: 5px;
+    background: var(--blanco);
     color: var(--texto-secundario);
     display: flex;
     align-items: center;
@@ -159,30 +207,13 @@
     color: #e54848;
 }
 
-.btn-nueva-reserva {
-    border-radius: 6px;
-    background: var(--verde);
-    color: var(--blanco);
-    height: 29px;
-    padding: 0 10px;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 13px;
-    font-weight: 600;
-    flex-shrink: 0;
-}
-
-.panel-header .btn-nueva-reserva svg {
-    color: var(--blanco);
-}
-
-.btn-nueva-reserva:hover {
-    background: var(--verde-hover);
+.reserva-card-acciones .btn-cancelar:hover {
+    border-color: var(--color-aviso-rojo);
+    color: var(--color-aviso-rojo);
 }
 
 /* =========================
-        NUEVA RESERVA
+     BUSCAR ESPACIO (FILTRO)
 ========================= */
 
 .nueva-reserva {
@@ -207,20 +238,45 @@
 }
 
 .campo-reserva select,
-.campo-reserva input {
+.campo-reserva input,
+.campo-reserva textarea {
     width: 100%;
-    height: 30px;
     padding: 0 9px;
     border: 1px solid var(--borde-input);
     border-radius: 6px;
+    background: var(--blanco);
     color: var(--texto-secundario);
+    font-family: inherit;
     font-size: 11px;
     outline: none;
 }
 
+.campo-reserva select,
+.campo-reserva input {
+    height: 30px;
+}
+
+.campo-reserva textarea {
+    padding: 7px 9px;
+    resize: vertical;
+}
+
 .campo-reserva select:focus,
-.campo-reserva input:focus {
+.campo-reserva input:focus,
+.campo-reserva textarea:focus {
     border-color: var(--verde);
+}
+
+.campo-reserva select:disabled,
+.campo-reserva textarea:disabled {
+    background: var(--fondo);
+    cursor: not-allowed;
+}
+
+.fila-doble {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 9px;
 }
 
 .btn-solicitar {
@@ -232,10 +288,24 @@
     color: var(--blanco);
     font-size: 13px;
     font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.btn-solicitar svg {
+    width: 15px;
+    height: 15px;
 }
 
 .btn-solicitar:hover {
     background: var(--verde-hover);
+}
+
+.btn-solicitar:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 
 .btn-limpiar {
@@ -243,8 +313,14 @@
     height: 28px;
     border: 1px solid var(--borde-secundario);
     border-radius: 6px;
+    background: var(--blanco);
     color: var(--texto-secundario);
     font-size: 13px;
+}
+
+.btn-limpiar:hover {
+    border-color: var(--verde);
+    color: var(--verde-hover);
 }
 
 
@@ -326,24 +402,20 @@
     padding: 7px;
     display: flex;
     flex-direction: column;
+    gap: 6px;
 }
 
 .espacio-info strong {
     font-size: 13px;
 }
 
-.espacio-info span {
-    font-size: 12px;
-    color: var(--texto-secundario);
-    margin: 2px 0 6px;
-}
-
 .espacio-info button {
     height: 23px;
     border: 1px solid var(--verde);
     border-radius: 5px;
+    background: var(--blanco);
     color: var(--verde-hover);
-    font-size: 9px;
+    font-size: 11px;
 }
 
 .espacio-info button:hover {
@@ -386,11 +458,20 @@
 }
 
 .evento-reserva {
+    width: 100%;
     display: flex;
     align-items: center;
     gap: 8px;
     padding: 6px 0;
     border-bottom: 1px solid var(--separador);
+    background: transparent;
+    font-family: inherit;
+    color: inherit;
+    text-align: left;
+}
+
+.evento-reserva:hover {
+    background: var(--celeste-claro);
 }
 
 .evento-reserva:last-child {
@@ -443,16 +524,6 @@
     white-space: nowrap;
 }
 
-.evento-confirmado {
-    color: var(--color-pendiente);
-    background: var(--fondo-verde-suave);
-}
-
-.evento-pendiente {
-    color: var(--color-pendiente-azul);
-    background: var(--fondo-azul-suave);
-}
-
 .link-calendario {
     margin-top: 8px;
     background: transparent;
@@ -474,15 +545,22 @@
 }
 
 .ayuda-reserva-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 0;
     border-bottom: 1px solid var(--separador);
 }
 
 .ayuda-reserva-item:last-child {
     border-bottom: none;
+}
+
+.ayuda-reserva-cabecera {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 0;
+    background: transparent;
+    text-align: left;
+    cursor: pointer;
 }
 
 .ayuda-reserva-icon {
@@ -497,26 +575,142 @@
     justify-content: center;
 }
 
-.ayuda-reserva-item > div:nth-child(2) {
+.ayuda-reserva-textos {
     flex: 1;
     display: flex;
     flex-direction: column;
     min-width: 0;
 }
 
-.ayuda-reserva-item strong {
+.ayuda-reserva-textos strong {
     font-size: 13px;
+    color: var(--texto-principal);
 }
 
-.ayuda-reserva-item span {
+.ayuda-reserva-textos span {
     font-size: 12px;
     color: var(--texto-secundario);
     margin-top: 2px;
 }
 
-.ayuda-reserva-item > svg {
+.ayuda-reserva-flecha {
+    width: 18px;
+    height: 18px;
     color: var(--texto-icono);
     flex-shrink: 0;
+    transition: transform 0.2s ease;
+}
+
+.ayuda-reserva-item.abierta .ayuda-reserva-flecha {
+    transform: rotate(90deg);
+}
+
+.ayuda-reserva-cabecera:hover strong {
+    color: var(--verde-hover);
+}
+
+.ayuda-reserva-respuesta {
+    margin: 0 0 12px 35px;
+    padding: 10px 12px;
+    border-radius: 7px;
+    background: var(--celeste-claro);
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--texto-secundario);
+    animation: ayuda-aparecer 0.18s ease;
+}
+
+.ayuda-reserva-respuesta ul,
+.ayuda-reserva-respuesta ol {
+    padding-left: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.ayuda-reserva-respuesta strong {
+    color: var(--texto-principal);
+}
+
+@keyframes ayuda-aparecer {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+
+/* =========================
+   VENTANAS (DETALLE / CANCELAR / MODIFICAR)
+========================= */
+
+.modal-texto {
+    margin-bottom: 12px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--texto-secundario);
+}
+
+.modal-texto strong {
+    color: var(--texto-principal);
+}
+
+.modal-cuerpo .mensaje-error {
+    margin: 8px 0;
+}
+
+.modal-aviso-pie {
+    flex: 1;
+    align-self: center;
+    font-size: 12px;
+    color: var(--texto-secundario);
+}
+
+.detalle-lista {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 14px;
+    margin-top: 12px;
+}
+
+.detalle-lista .ancho-completo {
+    grid-column: 1 / -1;
+}
+
+.detalle-lista dt {
+    font-size: 11px;
+    color: var(--texto-secundario);
+}
+
+.detalle-lista dd {
+    margin-top: 2px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--texto-principal);
+}
+
+.detalle-subtitulo {
+    margin-top: 18px;
+    padding-top: 12px;
+    border-top: 1px solid var(--separador);
+    font-size: 13px;
+    color: var(--texto-principal);
+}
+
+.detalle-descripcion {
+    margin-top: 6px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--texto-secundario);
+}
+
+.detalle-reglas {
+    margin-top: 6px;
+    padding-left: 18px;
+}
+
+.detalle-reglas li {
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--texto-secundario);
 }
 
 
@@ -593,6 +787,10 @@
 
     .calendario-mes {
         gap: 2px;
+    }
+
+    .detalle-lista {
+        grid-template-columns: 1fr;
     }
 
 }
