@@ -12,6 +12,7 @@ import Panel from "../../../components/Panel/Panel";
 import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
 import Tabla from "../../../components/Tabla/Tabla";
 import Navegador from "../../../components/Navegador/Navegador";
+import { obtenerOpcionesPeriodo } from "../../../utils/periodos";
 
 {/* =========================
        DATOS EJEMPLOS
@@ -105,14 +106,14 @@ const resumenTarjetas = [
 
 const filtros=[
     {
+        key: "periodo",
+        label: "Todos los periodos",
+        options: obtenerOpcionesPeriodo(pagos, "periodo"),
+    },
+    {
         key: "estado",
         label: "Todos los estados",
         options: ["Confirmado", "Pendiente", "Para confirmar", "Rechazado"],
-    },
-    {
-        key: "periodo",
-        label: "Todos los periodos",
-        options: ["Enero", "Febrero", "Julio", "Agosto", "Septiebre"],
     },
 ];
 
@@ -141,10 +142,10 @@ function Pagos() {
     }
 
     const columnas = [
-        { clave: "fecha", titulo: "Fecha", ancho: "0.9fr" },
+        { clave: "fecha", titulo: "Fecha de pago", ancho: "0.9fr" },
         { clave: "residente", titulo: "Residente", ancho: "1.1fr", clase: "pagos-residente" },
-        { clave: "unidad", titulo: "Unidad", ancho: "0.6fr" },
         { clave: "periodo", titulo: "Período", ancho: "0.9fr" },
+        { clave: "unidad", titulo: "Unidad", ancho: "0.6fr" },
         {
             clave: "importe",
             titulo: "Importe",
@@ -195,7 +196,7 @@ function Pagos() {
             <Navegador
                 data={pagos}
                 searchKey="residente"
-                searchPlaceholder="Buscar pago..."
+                searchPlaceholder="Buscar residente..."
                 filters={filtros}
             >
                 {(PagosFiltrados) => (

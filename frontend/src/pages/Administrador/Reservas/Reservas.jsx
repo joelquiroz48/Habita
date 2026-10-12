@@ -13,6 +13,7 @@ import Panel from "../../../components/Panel/Panel";
 import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
 import Tabla from "../../../components/Tabla/Tabla";
 import Navegador from "../../../components/Navegador/Navegador";
+import { obtenerOpcionesPeriodo, obtenerPeriodoFecha } from "../../../utils/periodos";
 
 {/* =========================
        DATOS EJEMPLOS
@@ -87,7 +88,10 @@ const reservas = [
         estado: "Confirmada",
         creada: "27/08/2026 12:05",
     },
-];
+].map((reserva) => ({
+    ...reserva,
+    periodoFecha: obtenerPeriodoFecha(reserva.creada),
+}));
 
 const espaciosMasReservados = [
     { nombre: "SUM", cantidad: 12 },
@@ -137,6 +141,22 @@ function estadoBadgeClase(estado) {
 }
 
 const columnas = [
+    { clave: "creada", titulo: "Solicitada el", ancho: "0.8fr", clase: "reservas-creada" },
+    {
+        clave: "espacio",
+        titulo: "Espacio",
+        ancho: "1fr",
+        render: (reserva) => {
+            return (
+                <span className="reservas-espacio-celda">
+                    <span>
+                        <strong>{reserva.espacio}</strong>
+                        <small>{reserva.ubicacion}</small>
+                    </span>
+                </span>
+            );
+        },
+    },
     {
         clave: "fecha",
         titulo: "Fecha y hora",
@@ -150,21 +170,6 @@ const columnas = [
             </span>
         ),
     },
-    {
-        clave: "espacio",
-        titulo: "Espacio",
-        ancho: "1.2fr",
-        render: (reserva) => {
-            return (
-                <span className="reservas-espacio-celda">
-                    <span>
-                        <strong>{reserva.espacio}</strong>
-                        <small>{reserva.ubicacion}</small>
-                    </span>
-                </span>
-            );
-        },
-    },
     { clave: "residente", titulo: "Residente", ancho: "1fr" },
     { clave: "unidad", titulo: "Unidad", ancho: "0.6fr" },
     {
@@ -177,24 +182,18 @@ const columnas = [
             </span>
         ),
     },
-    { clave: "creada", titulo: "Creada el", ancho: "1fr", clase: "reservas-creada" },
 ];
 
 const filtros=[
     {
+        key: "periodoFecha",
+        label: "Todos los periodos",
+        options: obtenerOpcionesPeriodo(reservas),
+    },
+    {
         key: "estado",
         label: "Todos los estados",
         options: ["Confirmada", "Pendiente", "Cancelada", "Rechazada", "Finalizada"],
-    },
-    {
-        key: "espacio",
-        label: "Todos los espacios",
-        options: ["Sum", "Parrilla", "Gimnasio", "Sala de reuniones"],
-    },
-    {
-        key: "fecha",
-        label: "Todos los periodos",
-        options: ["Enero", "Febrero"],
     },
 ];
 
@@ -238,7 +237,7 @@ function Reservas() {
             <Navegador
                 data={reservas}
                 searchKey="espacio"
-                searchPlaceholder="Buscar reserva..."
+                searchPlaceholder="Buscar espacio..."
                 filters={filtros}
             >
                 {(ReservasFiltradas) => (

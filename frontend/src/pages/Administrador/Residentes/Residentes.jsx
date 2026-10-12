@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Pencil } from "lucide-react";
+import { useEffect } from "react";
+import { Settings2 } from "lucide-react";
 
 import "./Residentes.css";
 import Tabla from "../../../components/Tabla/Tabla";
@@ -10,11 +10,11 @@ import Navegador from "../../../components/Navegador/Navegador";
 ========================== */}
 
 const residentes = [
-    { nombre: "Nicolás Paz", unidad: "5B", email: "nicolas.paz@email.com", telefono: "11 2345 6789", estado: "Activo" },
-    { nombre: "María Gómez", unidad: "3A", email: "maria.gomez@email.com", telefono: "11 3456 7890", estado: "Activo" },
-    { nombre: "Juan López", unidad: "7C", email: "juan.lopez@email.com", telefono: "11 4567 8901", estado: "Activo" },
-    { nombre: "Carla Romero", unidad: "1B", email: "carla.romero@email.com", telefono: "11 5678 9012", estado: "Activo" },
-    { nombre: "Pedro Martínez", unidad: "2D", email: "pedro.martinez@email.com", telefono: "11 6789 0123", estado: "Activo" },
+    { nombre: "Nicolás Paz", unidad: "5B", email: "nicolas.paz@email.com", telefono: "11 2345 6789", telefonoAlt: "11 2345 6789", estado: "Activo" },
+    { nombre: "María Gómez", unidad: "3A", email: "maria.gomez@email.com", telefono: "11 3456 7890", telefonoAlt: "11 2345 6789", estado: "Activo" },
+    { nombre: "Juan López", unidad: "7C", email: "juan.lopez@email.com", telefono: "11 4567 8901", telefonoAlt: "11 2345 6789", estado: "Activo" },
+    { nombre: "Carla Romero", unidad: "1B", email: "carla.romero@email.com", telefono: "11 5678 9012", telefonoAlt: "11 2345 6789", estado: "Activo" },
+    { nombre: "Pedro Martínez", unidad: "2D", email: "pedro.martinez@email.com", telefono: "11 6789 0123", telefonoAlt: "11 2345 6789", estado: "Activo" },
 ];
 
 const columnas = [
@@ -38,6 +38,11 @@ const columnas = [
     {
         clave: "telefono",
         titulo: "Teléfono",
+        ancho: "minmax(120px, 1fr)"
+    },
+    {
+        clave: "telefonoAlt",
+        titulo: "Teléfono alt.",
         ancho: "minmax(120px, 1fr)"
     },
     {
@@ -90,7 +95,7 @@ function Residentes() {
                         className="residentes-tabla"
                         mostrarAcciones
                         opcionesAcciones={[
-                            { label: "Editar", icon: Pencil },
+                            { label: "Administrar", icon: Settings2 },
                         ]}
                     />
                         )}

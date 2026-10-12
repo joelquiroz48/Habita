@@ -14,6 +14,7 @@ import Panel from "../../../components/Panel/Panel";
 import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
 import Tabla from "../../../components/Tabla/Tabla";
 import Navegador from "../../../components/Navegador/Navegador";
+import { obtenerOpcionesPeriodo } from "../../../utils/periodos";
 
 {/* =========================
        DATOS EJEMPLO
@@ -103,6 +104,7 @@ const residentesExpensas = [
     {
         id: 1,
         nombre: "Nicolás Paz",
+        unidad: "1A",
         periodo: expensas[0].periodo,
         vencimiento: expensas[0].vencimiento,
         importe: 56770,
@@ -111,6 +113,7 @@ const residentesExpensas = [
     {
         id: 2,
         nombre: "María Gómez",
+        unidad: "1A",
         periodo: expensas[0].periodo,
         vencimiento: expensas[0].vencimiento,
         importe: null,
@@ -119,6 +122,7 @@ const residentesExpensas = [
     {
         id: 3,
         nombre: "Juan López",
+        unidad: "1A",
         periodo: expensas[0].periodo,
         vencimiento: expensas[0].vencimiento,
         importe: 54990,
@@ -127,6 +131,7 @@ const residentesExpensas = [
     {
         id: 4,
         nombre: "Carla Romero",
+        unidad: "1A",
         periodo: expensas[1].periodo,
         vencimiento: expensas[1].vencimiento,
         importe: 54940,
@@ -135,6 +140,7 @@ const residentesExpensas = [
     {
         id: 5,
         nombre: "Pedro Martínez",
+        unidad: "1A",
         periodo: expensas[1].periodo,
         vencimiento: expensas[1].vencimiento,
         importe: 54940,
@@ -143,6 +149,7 @@ const residentesExpensas = [
     {
         id: 6,
         nombre: "Laura Sánchez",
+        unidad: "1A",
         periodo: expensas[1].periodo,
         vencimiento: expensas[1].vencimiento,
         importe: 54940,
@@ -150,13 +157,26 @@ const residentesExpensas = [
     },
 ];
 
+const filtrosExpensas = [
+    {
+        key: "estado",
+        label: "Todos los estados",
+        options: ["En curso", "Cerrada"],
+    },
+];
+
 const filtrosResidentes=[
+    {
+        key: "periodo",
+        label: "Todos los periodos",
+        options: obtenerOpcionesPeriodo(residentesExpensas, "periodo"),
+    },
     {
         key: "estado",
         label: "Todos los estados",
         options: ["Pagado", "Pendiente", "Sin pagar"],
     },
-]
+];
 
 function formatearMonto(numero) {
     return `$ ${numero.toLocaleString("es-AR")}`;
@@ -291,30 +311,35 @@ function Expensas() {
 
     const columnasResidentes = [
         {
+            clave: "periodo",
+            titulo: "Período",
+            ancho: "1fr",
+        },
+        {
             clave: "nombre",
             titulo: "Residente",
-            ancho: "minmax(150px, 1.2fr)",
+            ancho: "1fr",
+        },
+        {
+            clave: "unidad",
+            titulo: "Unidad",
+            ancho: "0.8fr",
         },
         {
             clave: "vencimiento",
             titulo: "Vencimiento",
-            ancho: "minmax(110px, 1fr)",
-        },
-        {
-            clave: "periodo",
-            titulo: "Período",
-            ancho: "minmax(120px, 1fr)",
+            ancho: "1fr",
         },
         {
             clave: "importe",
             titulo: "Importe",
-            ancho: "minmax(100px, 1fr)",
+            ancho: "1fr",
             render: (residente) => formatearImporteResidente(residente.importe),
         },
         {
             clave: "estado",
             titulo: "Estado",
-            ancho: "minmax(100px, 0.8fr)",
+            ancho: "1fr",
             render: (residente) => (
                 <span className={`expensas-badge ${claseEstadoResidente(residente.estado)}`}>
                     {residente.estado}
@@ -382,6 +407,7 @@ function Expensas() {
                         data={expensas}
                         searchKey="periodo"
                         searchPlaceholder="Buscar periodo..."
+                        filters={filtrosExpensas}
                     >
                         {(expensasFiltrados) => (
                             <Tabla
