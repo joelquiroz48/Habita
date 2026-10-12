@@ -1,0 +1,143 @@
+/* =========================
+        MODAL
+========================= */
+
+.modal-fondo {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(8, 54, 60, 0.45);
+}
+
+.modal {
+    width: 100%;
+    max-height: calc(100vh - 40px);
+    display: flex;
+    flex-direction: column;
+    background: var(--blanco);
+    border-radius: 10px;
+    box-shadow: 0 10px 30px var(--sombra-formulario);
+    overflow: hidden;
+}
+
+.modal-encabezado {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--separador);
+}
+
+.modal-encabezado h2 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--texto-principal);
+}
+
+.modal-cerrar {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border-radius: 6px;
+    color: var(--texto-icono);
+}
+
+.modal-cerrar svg {
+    width: 18px;
+    height: 18px;
+}
+
+.modal-cerrar:hover {
+    background: var(--fondo-icono);
+    color: var(--verde-hover);
+}
+
+.modal-cuerpo {
+    padding: 16px;
+    overflow-y: auto;
+}
+
+.modal-pie {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 12px 16px;
+    border-top: 1px solid var(--separador);
+}
+
+/* Botones comunes dentro de las ventanas */
+
+.modal-boton {
+    height: 32px;
+    padding: 0 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    border: 1px solid var(--borde-secundario);
+    background: var(--blanco);
+    color: var(--texto-secundario);
+}
+
+.modal-boton:hover {
+    border-color: var(--verde);
+    color: var(--verde-hover);
+}
+
+.modal-boton.principal {
+    background: var(--verde);
+    border-color: var(--verde);
+    color: var(--blanco);
+}
+
+.modal-boton.principal:hover {
+    background: var(--verde-hover);
+    border-color: var(--verde-hover);
+    color: var(--blanco);
+}
+
+.modal-boton.peligro {
+    border-color: var(--color-aviso-rojo);
+    background: var(--color-aviso-rojo);
+    color: var(--blanco);
+}
+
+.modal-boton.peligro:hover {
+    opacity: 0.9;
+    color: var(--blanco);
+}
+
+.modal-boton.contorno-peligro {
+    border-color: #ffaaaa;
+    color: var(--color-documento-pdf);
+}
+
+.modal-boton.contorno-peligro:hover {
+    border-color: var(--color-aviso-rojo);
+    color: var(--color-aviso-rojo);
+}
+
+.modal-boton:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+@media (max-width: 550px) {
+
+    .modal-fondo {
+        padding: 10px;
+    }
+
+    .modal-pie .modal-boton {
+        flex: 1;
+    }
+}
