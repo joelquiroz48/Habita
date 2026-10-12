@@ -1,20 +1,16 @@
 import { useEffect, useState } from "react";
 import {
-    Building2,
-    Check,
     Settings,
     DollarSign,
-    CreditCard,
-    Send,
+    Pencil,
     Bell,
     ListChecks,
-    FileText,
-    Pencil,
     CalendarClock,
 } from "lucide-react";
 
 import "./Configuracion.css";
 import Panel from "../../../components/Panel/Panel";
+import fondo from "../../../assets/img/fondo.png";
 
 {/* =========================
        DATOS EJEMPLOS
@@ -31,6 +27,7 @@ const infoGeneral = [
     { label: "Fecha de inicio", valor: "01/01/2018" },
     { label: "Cantidad de unidades", valor: "96" },
     { label: "Cantidad de edificios", valor: "2" },
+    { label: "Cantidad de residentes", valor: "64" },
 ];
 
 const tarjetasConfig = [
@@ -58,16 +55,31 @@ const tarjetasConfig = [
     },
 ];
 
+
 const notificacionesIniciales = [
-    { id: 1, label: "Recibir alertas de reclamos", descripcion: "Notificaciones cuando se crea un nuevo reclamo." },
-    { id: 2, label: "Recibir vencimientos próximos", descripcion: "Recordatorios de expensas próximas a vencer." },
+    {
+        id: 1,
+        label: "Recibir alertas de nuevos mensajes",
+        descripcion: "Notificaciones cuando un residente envía una nueva consulta o mensaje.",
+        activo: false,
+    },
+    {
+        id: 2,
+        label: "Recibir vencimientos próximos",
+        descripcion: "Recordatorios de expensas próximas a vencer.",
+        activo: false,
+    },
+    {
+        id: 3,
+        label: "Recibir alertas de expensas vencidas",
+        descripcion: "Avisos sobre expensas que ya superaron su fecha de vencimiento.",
+        activo: false,
+    },
 ];
 
-function Configuracion() {
 
-    const [notificaciones, setNotificaciones] = useState(
-        notificacionesIniciales.map((n) => ({ ...n, activo: true }))
-    );
+function Configuracion() {
+    const [notificaciones, setNotificaciones] = useState(notificacionesIniciales);
 
     useEffect(() => {
         document.title = "Habita | Configuración";
@@ -86,38 +98,41 @@ function Configuracion() {
 
             <div className="configuracion-fila-superior">
 
-                <Panel titulo="Datos del consorcio">
-                    <div className="configuracion-datos-grid">
+                <Panel 
+                titulo="Datos del consorcio" 
+                className="configuracion-datos" 
+                accion={
+                    <button className="btn-editar">
+                        <Pencil />
+                        Editar
+                    </button>
+                }>
+                    <label>
+                        Nombre del consorcio
+                        <input type="text" defaultValue={datosConsorcio.nombre}/>
+                    </label>
 
-                        <div className="configuracion-campos-grid">
-                            <label>
-                                Nombre del consorcio
-                                <input type="text" defaultValue={datosConsorcio.nombre}/>
-                            </label>
+                    <label>
+                        Dirección
+                        <input type="text" defaultValue={datosConsorcio.direccion}/>
+                    </label>
 
-                            <label>
-                                Dirección
-                                <input type="text" defaultValue={datosConsorcio.direccion}/>
-                            </label>
+                    <label>
+                        Teléfono
+                        <input type="text" defaultValue={datosConsorcio.telefono}/>
+                    </label>
 
-                            <label>
-                                Teléfono
-                                <input type="text" defaultValue={datosConsorcio.telefono}/>
-                            </label>
-
-                            <label>
-                                Email
-                                <input type="email" defaultValue={datosConsorcio.email}/>
-                            </label>
-                        </div>
-                    </div>
-
-                    <div className="configuracion-guardar-fila">
-                        <button className="configuracion-btn-guardar">Guardar cambios</button>
-                    </div>
+                    <label>
+                        Email
+                        <input type="email" defaultValue={datosConsorcio.email}/>
+                    </label>
                 </Panel>
 
-                <Panel titulo="Información general">
+                <Panel className="configuracion-info">
+                    <div className="configuracion-info-banner">
+                        <img src={fondo} alt="Vista del edificio Torres del Parque" />
+                    </div>
+                    <h2>Información general</h2>
                     <div className="configuracion-info-lista">
                         {infoGeneral.map((item) => (
                             <div className="configuracion-info-fila" key={item.label}>
@@ -162,47 +177,39 @@ function Configuracion() {
                         </Panel>
                     );
                 })}
+
+                <Panel
+                    titulo="Notificaciones del sistema"
+                    icono={<Bell size={20} />}
+                    className="configuracion-notificaciones-panel"
+                >
+                    {notificaciones.map((n) => (
+                        <div className="configuracion-notif-fila" key={n.id}>
+                            <div>
+                                <strong>{n.label}</strong>
+                                <span>{n.descripcion}</span>
+                            </div>
+                            <button
+                                type="button"
+                                className={`switch ${
+                                    n.activo ? "activo" : ""
+                                }`}
+                                onClick={() => alternarNotificacion(n.id)}
+                                role="switch"
+                                aria-pressed={n.activo}
+                                aria-checked={n.activo}
+                                aria-label={n.label}
+                            >
+                                <span></span>
+                            </button>
+                        </div>
+                    ))}
+                </Panel>
             </section>
 
             {/* NOTIFICACIONES */}
 
-            <Panel>
-                <div className="configuracion-notificaciones">
-                    <div className="configuracion-notif-encabezado">
-                        <div className="configuracion-tarjeta-icon">
-                            <Bell size={20} />
-                        </div>
-
-                        <div>
-                            <h3>Notificaciones del sistema</h3>
-                            <p>Elegí qué notificaciones querés recibir y cómo.</p>
-                        </div>
-                    </div>
-
-                    <div className="configuracion-notif-lista">
-                        {notificaciones.map((n) => (
-                            <label className="configuracion-notif-fila" key={n.id}>
-                                <button
-                                    type="button"
-                                    className={`configuracion-checkbox ${
-                                        n.activo ? "activo" : ""
-                                    }`}
-                                    onClick={() => alternarNotificacion(n.id)}
-                                    aria-pressed={n.activo}
-                                    aria-label={n.label}
-                                >
-                                    {n.activo && <Check size={13} />}
-                                </button>
-
-                                <div>
-                                    <strong>{n.label}</strong>
-                                    <span>{n.descripcion}</span>
-                                </div>
-                            </label>
-                        ))}
-                    </div>
-                </div>
-            </Panel>
+            
 
         </main>
     );
