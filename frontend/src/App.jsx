@@ -5,6 +5,8 @@ import Register from "./pages/Residente/Register/Register";
 import Inicio from "./pages/Residente/Inicio/Inicio";
 import Expensas from "./pages/Residente/Expensas/Expensas";
 import Reservas from "./pages/Residente/Reservas/Reservas";
+import EspacioReserva from "./pages/Residente/Reservas/EspacioReserva/EspacioReserva";
+import CalendarioReservas from "./pages/Residente/Reservas/CalendarioReservas/CalendarioReservas";
 import Reclamos from "./pages/Residente/Reclamos/Reclamos";
 import Avisos from "./pages/Residente/Avisos/Avisos";
 import Documentos from "./pages/Residente/Documentos/Documentos";
@@ -14,15 +16,16 @@ import Configuracion from "./pages/Residente/Configuracion/Configuracion";
 import Layout from "./components/Layout/Layout";
 import LayoutAdministrador from "./components/LayoutAdministrador/LayoutAdministrador";
 
-import InicioAdmin from "./pages/Administrador/Inicio/Inicio";
+import InicioAdmin from "./pages/Administrador/Inicio/inicio";
 import ResidentesAdmin from "./pages/Administrador/Residentes/Residentes";
 import UnidadesAdmin from "./pages/Administrador/Unidades/Unidades";
 import ExpensasAdmin from "./pages/Administrador/Expensas/Expensas";
 import PagosAdmin from "./pages/Administrador/Pagos/Pagos";
 import ReclamosAdmin from "./pages/Administrador/Reclamos/Reclamos";
 import ComunicadosAdmin from "./pages/Administrador/Comunicados/Comunicados";
-import ReservasAdmin from "./pages/Administrador/Reservas/Reservas";
+import ReservasAdmin from "./pages/Residente/Reservas/Reservas";
 import DocumentosAdmin from "./pages/Administrador/Documentos/Documentos";
+//import ReportesAdmin from "./pages/Administrador/Reportes/Reportes";
 import ConfiguracionAdmin from "./pages/Administrador/Configuracion/Configuracion";
 
 function App() {
@@ -53,6 +56,20 @@ function App() {
                 <Route path="/reservas" element={
                         <Layout>
                             <Reservas />
+                        </Layout>
+                    }
+                />
+
+                <Route path="/reservas/espacio/:id" element={
+                        <Layout>
+                            <EspacioReserva />
+                        </Layout>
+                    }
+                />
+
+                <Route path="/reservas/calendario" element={
+                        <Layout>
+                            <CalendarioReservas />
                         </Layout>
                     }
                 />
@@ -154,6 +171,13 @@ function App() {
                         </LayoutAdministrador>
                     }
                 />
+
+                {/* <Route path="/administrador/reportes" element={
+        <LayoutAdministrador>
+            <ReportesAdmin />
+        </LayoutAdministrador>
+    }
+/> */}
 
                 <Route path="/administrador/configuracion" element={
                         <LayoutAdministrador>
