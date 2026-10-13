@@ -3,12 +3,38 @@ const cors = require('cors');
 require('dotenv').config();
 const {GoogleGenAI} = require('@google/genai');
 
+const ERRORES_GEMINI_REINTENTABLES = new Set([429, 500, 502, 503, 504]);
+const MAX_INTENTOS_GEMINI = 3;
+
 const app = express();
 app.use(cors());
 app.use(express.json());
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY});
 const instruccionesSistema = require('./chat-info/instrucciones-sistema.js')
+
+async function generarRespuestaGemini(contents) {
+    for (let intento = 1; intento <= MAX_INTENTOS_GEMINI; intento++) {
+        try {
+            return await ai.models.generateContent({
+                model: 'gemini-3.5-flash-lite',
+                contents,
+                config: {
+                    systemInstruction: instruccionesSistema,
+                },
+            });
+        } catch (error) {
+            const status = Number(error.status);
+            if (!ERRORES_GEMINI_REINTENTABLES.has(status) || intento === MAX_INTENTOS_GEMINI) {
+                throw error;
+            }
+
+            const esperaMs = 500 * 2 ** (intento - 1);
+            console.warn(`Gemini devolvió ${status}; reintento ${intento + 1}/${MAX_INTENTOS_GEMINI} en ${esperaMs} ms`);
+            await new Promise((resolve) => setTimeout(resolve, esperaMs));
+        }
+    }
+}
 
 // Ruta POST para recibir los mensajes con historial conversacional
 app.post('/api/chat', async (req, res) => {
@@ -45,19 +71,17 @@ app.post('/api/chat', async (req, res) => {
         });
 
         const startedAt = Date.now();
-        const response = await ai.models.generateContent({
-            model: 'gemini-3.5-flash-lite',
-            contents: contents,
-            config: {
-                systemInstruction: instruccionesSistema,
-            },
-        });
+        const response = await generarRespuestaGemini(contents);
 
         console.info(`Respuesta de Gemini en ${Date.now() - startedAt} ms`);
         res.json({ respuesta: response.text });
     } catch (error) {
         console.error('Error al hablar con Habita:', error);
-        res.status(500).json({ error: 'Ocurrió un error en el servidor' });
+        const status = ERRORES_GEMINI_REINTENTABLES.has(Number(error.status)) ? 503 : 502;
+        const mensaje = status === 503
+            ? 'El asistente está temporalmente ocupado. Esperá unos segundos e intentá de nuevo.'
+            : 'No se pudo generar una respuesta. Revisá la configuración del asistente.';
+        res.status(status).json({ error: mensaje });
     }
 });
 

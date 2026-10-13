@@ -132,7 +132,8 @@ function Layout({ children }) {
             });
 
             if (!res.ok) {
-                throw new Error("Respuesta no satisfactoria del servidor");
+                const data = await res.json().catch(() => ({}));
+                throw new Error(data.error || "El asistente no pudo responder.");
             }
 
             const data = await res.json();
@@ -147,7 +148,9 @@ function Layout({ children }) {
             const mensajeError = {
                 id: Date.now() + 1,
                 emisor: "error",
-                texto: "Disculpá, hubo un problema al comunicarme con el servidor. Verificá que el backend esté en ejecución.",
+                texto: error instanceof TypeError
+                    ? "No pude conectarme con Habita. Verificá que el servidor esté en ejecución."
+                    : error.message,
             };
             setMensajes((prev) => [...prev, mensajeError]);
         } finally {
