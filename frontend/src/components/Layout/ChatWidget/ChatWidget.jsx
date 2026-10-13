@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { MessageCircle, X, Send } from "lucide-react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import "./ChatWidget.css";
 
 // Importamos la imagen normal y la de ojos cerrados/alternativa
@@ -62,7 +64,11 @@ function ChatWidget({
             <div className="chat-messages">
                 {mensajes.map((msg) => (
                     <div key={msg.id} className={`mensaje ${msg.emisor === "usr" ? "msj-usr" : "msj-chat"}`}>
-                        {msg.texto}
+                        {msg.emisor === "bot" ? (
+                            <ReactMarkdown remarkPlugins={[remarkGfm]}>{msg.texto}</ReactMarkdown>
+                        ) : (
+                            msg.texto
+                        )}
                     </div>
                 ))}
                 {cargando && (
