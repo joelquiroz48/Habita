@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Download, Eye, Info } from "lucide-react";
+import { CircleHelp, Download, Eye, Info, MessageCircle, Search, SlidersHorizontal } from "lucide-react";
 
 import ChatWidget from "../../../components/Layout/ChatWidget/ChatWidget";
 import "./Documentos.css";
@@ -179,10 +179,6 @@ function Documentos({ onAbrirChat }) {
 
                         <ChatWidget onAbrir={onAbrirChat} />
                     </article>
-
-                </section>
-
-            </section>
         </main>
     );
 }

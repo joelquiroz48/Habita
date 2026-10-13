@@ -71,7 +71,7 @@ const columnasReclamos = [
 ];
 
 function Reclamos({ onAbrirChat }) {
-    const [solicitudes, setSolicitudes] = useState(solicitudesEjemplo);
+    const [reclamos, setReclamos] = useState(reclamosIniciales);
     const [archivoAdjunto, setArchivoAdjunto] = useState("");
     const filtros = useMemo(() => [
         {
@@ -273,6 +273,7 @@ function Reclamos({ onAbrirChat }) {
                         </form>
                     </Panel>
 
+                    <aside className="reclamos-residente-lateral">
                     <Panel titulo="Consejos para reportar" icono={<Info />} className="consejos-reclamos">
                         <ul>
                             {consejos.map((consejo) => (
@@ -289,7 +290,7 @@ function Reclamos({ onAbrirChat }) {
                         <ChatWidget onAbrir={onAbrirChat} />
                     </article>
                 </aside>
-            </div>
+            </section>
         </main>
     );
 }
