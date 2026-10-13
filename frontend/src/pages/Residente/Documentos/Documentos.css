@@ -36,8 +36,32 @@
     INFORMACIÓN IMPORTANTE
 ========================= */
 .informacion-documentos {
+    margin-top: 0;
+}
+
+.documentos-paneles-inferiores {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 14px;
     margin-top: 14px;
 }
+
+.asistente-documentos {
+    display: flex;
+    flex-direction: column;
+}
+
+.asistente-documentos .panel-contenido {
+    display: flex;
+    flex: 1;
+}
+
+.asistente-documentos .tarjeta-inicial-asistente {
+    flex: 1;
+    justify-content: space-between;
+}
+
 .informacion-documentos ul {
     padding-left: 16px;
 }
@@ -49,96 +73,6 @@
     margin-bottom: 3px;
 }
 
-
-/* =========================
-      BÚSQUEDA
-========================= */
-
-.buscador-documentos {
-    height: 29px;
-    display: flex;
-    align-items: center;
-    border: 1px solid var(--borde-input);
-    border-radius: 5px;
-    overflow: hidden;
-}
-
-.buscador-documentos input {
-    flex: 1;
-    min-width: 0;
-    height: 100%;
-    outline: none;
-    padding: 0 8px;
-    font-size: 11px;
-}
-
-.buscador-documentos input::placeholder {
-    color: var(--texto-icono);
-}
-
-.buscador-documentos button {
-    width: 30px;
-    height: 100%;
-    border-left: 1px solid var(--borde-input);
-    color: var(--texto-icono);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.buscador-documentos button:hover {
-    color: var(--verde-hover);
-}
-
-
-/* =========================
-          FILTROS
-========================= */
-
-.filtro-documento {
-    margin-bottom: 7px;
-}
-
-.filtro-documento:last-child {
-    margin-bottom: 0;
-}
-
-.filtro-documento select {
-    width: 100%;
-    height: 29px;
-    padding: 0 7px;
-    border: 1px solid var(--borde-input);
-    border-radius: 5px;
-    color: var(--texto-secundario);
-    font-size: 11px;
-    outline: none;
-}
-
-.filtro-documento select:focus {
-    border-color: var(--verde);
-}
-
-
-/* =========================
-        ASISTENTE
-========================= */
-
-.asistente-card {
-    width: 100%;
-    border: 1px solid #e0e0e0;
-    border-radius: 12px;
-    padding: 16px;
-    box-sizing: border-box;
-    background: var(--blanco);
-    margin: 0;
-}
-
-.documentos-columna .asistente-card {
-    width: 100%;
-    height: auto;
-    min-height: 0;
-    margin-top: 0;
-}
 
 /* =========================
         RESPONSIVE
@@ -156,6 +90,10 @@
 
 
 @media (max-width: 800px) {
+    .documentos-paneles-inferiores {
+        grid-template-columns: 1fr;
+    }
+
     .documentos {
         padding: 20px;
     }
