@@ -1,13 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-    Calendar,
-    DollarSign,
-    Users,
-    PiggyBank,
-    Download,
-    X,
-    Pencil,
-} from "lucide-react";
+import { Calendar, DollarSign, Users, PiggyBank, Download, X, Pencil } from "lucide-react";
 
 import "./Expensas.css";
 import Panel from "../../../components/Panel/Panel";
@@ -516,11 +508,6 @@ function Expensas() {
                     {/* =========== BOLETA =========== */}
 
                     <button className="expensas-btn-detalles">
-                        <Pencil size={15} />
-                        Editar expensa
-                    </button>
-
-                    <button className="expensas-btn-detalles">
                         <Download size={15} />
                         Descargar boleta
                     </button>
@@ -551,39 +538,55 @@ function Expensas() {
                     
                     {/* =========== DETALLES =========== */}
 
-                    <p className="expensas-detalle-linea">
-                        Período: <strong>{residenteSeleccionado.periodo}</strong>
-                    </p>
-                    <p className="expensas-detalle-linea">
-                        Vencimiento: <strong>{residenteSeleccionado.vencimiento}</strong>
-                    </p>
-                    <section className="expensas-detalle-seccion">
+                    <div className="expensas-detalle-datos">
+                        <p className="expensas-detalle-linea">
+                            Período: <strong>{residenteSeleccionado.periodo}</strong>
+                        </p>
+                        <p className="expensas-detalle-linea">
+                            Vencimiento: <strong>{residenteSeleccionado.vencimiento}</strong>
+                        </p>
+                    </div>
 
-                        {/* =========== FILAS =========== */}
+                    <div className="expensas-detalle-columnas">
+                        <section className="expensas-detalle-seccion">
+                            <h3>Resumen de expensa</h3>
+                            <div className="expensas-resumen-fila">
+                                <span>Residente</span>
+                                <span>{residenteSeleccionado.nombre}</span>
+                            </div>
+                            <div className="expensas-resumen-fila">
+                                <span>Unidad</span>
+                                <span>{residenteSeleccionado.unidad}</span>
+                            </div>
+                            <div className="expensas-resumen-fila">
+                                <span>Importe</span>
+                                <span>{formatearImporteResidente(residenteSeleccionado.importe)}</span>
+                            </div>
+                            <div className="expensas-resumen-fila">
+                                <span>Estado</span>
+                                <span className={`expensas-residente-estado ${claseEstadoResidente(residenteSeleccionado.estado)}`}>
+                                    {residenteSeleccionado.estado}
+                                </span>
+                            </div>
+                        </section>
 
-                        <h3>Resumen de expensa</h3>
-                        <div className="expensas-resumen-fila">
-                            <span>Residente</span>
-                            <span>{residenteSeleccionado.nombre}</span>
-                        </div>
-                        <div className="expensas-resumen-fila">
-                            <span>Importe</span>
-                            <span>{formatearImporteResidente(residenteSeleccionado.importe)}</span>
-                        </div>
-                        <div className="expensas-resumen-fila">
-                            <span>Estado</span>
-                            <span className={`expensas-residente-estado ${claseEstadoResidente(residenteSeleccionado.estado)}`}>
-                                {residenteSeleccionado.estado}
-                            </span>
-                        </div>
-                        
-                        {/* =========== EDITAR IMPORTE =========== */}
+                        <section className="expensas-detalle-seccion">
+                            <h3>Conceptos</h3>
+                            {detalle.conceptos.map((concepto) => (
+                                <div className="expensas-resumen-fila" key={concepto.nombre}>
+                                    <span>{concepto.nombre}</span>
+                                    <span>{formatearMonto(concepto.monto)}</span>
+                                </div>
+                            ))}
+                        </section>
+                    </div>
 
-                        <button className="expensas-btn-detalles">
-                            <Pencil size={15} />
-                            Editar importe
-                        </button>
-                    </section>
+                    {/* =========== EDITAR IMPORTE =========== */}
+
+                    <button className="expensas-btn-detalles">
+                        <Pencil size={15} />
+                        Editar importe
+                    </button>
                 </Panel>
             )}
 

@@ -1,11 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-    Wallet,
-    Download,
-    Clock,
-    CheckCircle2,
-    X,
-} from "lucide-react";
+import { Wallet, Download, Clock, CheckCircle2, X } from "lucide-react";
 
 import "./Pagos.css";
 import Panel from "../../../components/Panel/Panel";

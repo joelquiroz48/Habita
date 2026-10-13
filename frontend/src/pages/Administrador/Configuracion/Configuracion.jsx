@@ -1,12 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-    Settings,
-    DollarSign,
-    Pencil,
-    Bell,
-    ListChecks,
-    CalendarClock,
-} from "lucide-react";
+import { Settings, DollarSign, Pencil, Bell, ListChecks, CalendarClock } from "lucide-react";
 
 import "./Configuracion.css";
 import Panel from "../../../components/Panel/Panel";

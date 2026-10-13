@@ -107,6 +107,7 @@ function categoriaBadgeClase(categoria) {
         "Iluminación": "reclamos-cat-iluminacion",
         "Espacios comunes": "reclamos-cat-comunes",
         "Seguridad": "reclamos-cat-seguridad",
+        "Otros": "reclamos-cat-otros",
     };
     return mapa[categoria] || "";
 }
@@ -254,17 +255,12 @@ function Reclamos() {
                     </div>
 
                     <div className="reclamos-detalle-fila">
-                        <span>ID</span>
-                        <strong>{seleccionado.id}</strong>
-                    </div>
-
-                    <div className="reclamos-detalle-fila">
                         <span>Fecha de publicación</span>
                         <strong>{seleccionado.fecha}</strong>
                     </div>
 
                     <div className="reclamos-detalle-fila">
-                        <span>Publicado por</span>
+                        <span>Residente</span>
                         <strong>{seleccionado.residente}</strong>
                     </div>
 

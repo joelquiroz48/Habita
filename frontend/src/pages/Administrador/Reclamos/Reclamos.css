@@ -47,10 +47,14 @@
 
 .reclamos-cat-badge,
 .reclamos-badge {
+  display: inline-flex;
+  align-items: center;
   width: fit-content;
+  padding: 4px 8px;
   border-radius: 10px;
   font-size: 11px;
   font-weight: 600;
+  line-height: 1.2;
 }
 
 .reclamos-cat-mantenimiento { color: var(--reclamos-color-mantenimiento); background: var(--reclamos-fondo-mantenimiento); }
@@ -59,6 +63,7 @@
 .reclamos-cat-iluminacion { color: var(--reclamos-color-iluminacion); background: var(--reclamos-fondo-iluminacion); }
 .reclamos-cat-comunes { color: var(--reclamos-color-comunes); background: var(--reclamos-fondo-comunes); }
 .reclamos-cat-seguridad { color: var(--reclamos-color-seguridad); background: var(--reclamos-fondo-seguridad); }
+.reclamos-cat-otros { color: var(--reclamos-color-otros); background: var(--reclamos-fondo-otros); }
 
 .reclamos-badge-pendiente { color: var(--reclamos-color-pendiente); background: var(--reclamos-fondo-pendiente); }
 .reclamos-badge-proceso { color: var(--reclamos-color-proceso); background: var(--reclamos-fondo-proceso); }
@@ -86,13 +91,14 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 12px;
   font-size: 13px;
   padding: 8px 0;
   border-bottom: 1px solid var(--separador);
 }
 
-.reclamos-detalle-fila span:first-child {
-  color: var(--texto-secundario);
+.reclamos-detalle-fila > .reclamos-cat-badge {
+  margin-left: auto;
 }
 
 .reclamos-detalle-fila strong {

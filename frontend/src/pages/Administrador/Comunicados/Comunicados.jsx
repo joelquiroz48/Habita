@@ -1,10 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-    Pencil,
-    X,
-    Paperclip,
-    Download,
-} from "lucide-react";
+import { Pencil, X, Paperclip, Download, Trash } from "lucide-react";
 
 import "./Comunicados.css";
 import Panel from "../../../components/Panel/Panel";
@@ -224,7 +219,7 @@ function Comunicados() {
                     {/* =========== FILAS =========== */}
 
                     <div className="comunicados-detalle-fila">
-                        <span>Tipo</span>
+                        <span>Categoría</span>
                         <span className={`comunicados-tipo-badge ${seleccionado.claseColor}`}>
                             {seleccionado.categoria}
                         </span>
@@ -233,11 +228,6 @@ function Comunicados() {
                     <div className="comunicados-detalle-fila">
                         <span>Fecha de publicación</span>
                         <strong>{seleccionado.fecha}</strong>
-                    </div>
-
-                    <div className="comunicados-detalle-fila">
-                        <span>Publicado por</span>
-                        <strong>{seleccionado.publicadoPor}</strong>
                     </div>
 
                     <div className="comunicados-detalle-fila">
@@ -281,6 +271,11 @@ function Comunicados() {
                     <button className="comunicados-btn-editar">
                         <Pencil size={15} />
                         Editar comunicado
+                    </button>
+
+                    <button className="comunicados-btn-editar">
+                        <Trash size={15} />
+                        Eliminar comunicado
                     </button>
                 </Panel>
             )}

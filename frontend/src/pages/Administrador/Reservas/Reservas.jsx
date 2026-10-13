@@ -1,12 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-    Calendar,
-    Clock,
-    CheckCircle2,
-    XCircle,
-    ChevronRight,
-    X,
-} from "lucide-react";
+import { Calendar, Clock, CheckCircle2, XCircle, ChevronRight, X } from "lucide-react";
 
 import "./Reservas.css";
 import Panel from "../../../components/Panel/Panel";

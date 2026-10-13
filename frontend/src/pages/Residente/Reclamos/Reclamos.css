@@ -86,10 +86,6 @@
     border-bottom: 0;
 }
 
-.reclamos-detalle-fila span {
-    color: var(--texto-secundario);
-}
-
 .reclamos-detalle-fila strong {
     color: var(--texto-principal);
     font-weight: 600;
