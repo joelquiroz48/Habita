@@ -1,19 +1,12 @@
 import { useEffect, useState } from "react";
-import {
-    Calendar,
-    DollarSign,
-    Users,
-    PiggyBank,
-    Download,
-    X,
-    Pencil,
-} from "lucide-react";
+import { Calendar, DollarSign, Users, PiggyBank, Download, X, Pencil } from "lucide-react";
 
 import "./Expensas.css";
 import Panel from "../../../components/Panel/Panel";
 import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
 import Tabla from "../../../components/Tabla/Tabla";
 import Navegador from "../../../components/Navegador/Navegador";
+import { obtenerOpcionesPeriodo } from "../../../utils/periodos";
 
 {/* =========================
        DATOS EJEMPLO
@@ -103,6 +96,7 @@ const residentesExpensas = [
     {
         id: 1,
         nombre: "Nicolás Paz",
+        unidad: "1A",
         periodo: expensas[0].periodo,
         vencimiento: expensas[0].vencimiento,
         importe: 56770,
@@ -111,6 +105,7 @@ const residentesExpensas = [
     {
         id: 2,
         nombre: "María Gómez",
+        unidad: "1A",
         periodo: expensas[0].periodo,
         vencimiento: expensas[0].vencimiento,
         importe: null,
@@ -119,6 +114,7 @@ const residentesExpensas = [
     {
         id: 3,
         nombre: "Juan López",
+        unidad: "1A",
         periodo: expensas[0].periodo,
         vencimiento: expensas[0].vencimiento,
         importe: 54990,
@@ -127,6 +123,7 @@ const residentesExpensas = [
     {
         id: 4,
         nombre: "Carla Romero",
+        unidad: "1A",
         periodo: expensas[1].periodo,
         vencimiento: expensas[1].vencimiento,
         importe: 54940,
@@ -135,6 +132,7 @@ const residentesExpensas = [
     {
         id: 5,
         nombre: "Pedro Martínez",
+        unidad: "1A",
         periodo: expensas[1].periodo,
         vencimiento: expensas[1].vencimiento,
         importe: 54940,
@@ -143,6 +141,7 @@ const residentesExpensas = [
     {
         id: 6,
         nombre: "Laura Sánchez",
+        unidad: "1A",
         periodo: expensas[1].periodo,
         vencimiento: expensas[1].vencimiento,
         importe: 54940,
@@ -150,13 +149,26 @@ const residentesExpensas = [
     },
 ];
 
+const filtrosExpensas = [
+    {
+        key: "estado",
+        label: "Todos los estados",
+        options: ["En curso", "Cerrada"],
+    },
+];
+
 const filtrosResidentes=[
+    {
+        key: "periodo",
+        label: "Todos los periodos",
+        options: obtenerOpcionesPeriodo(residentesExpensas, "periodo"),
+    },
     {
         key: "estado",
         label: "Todos los estados",
         options: ["Pagado", "Pendiente", "Sin pagar"],
     },
-]
+];
 
 function formatearMonto(numero) {
     return `$ ${numero.toLocaleString("es-AR")}`;
@@ -291,30 +303,35 @@ function Expensas() {
 
     const columnasResidentes = [
         {
+            clave: "periodo",
+            titulo: "Período",
+            ancho: "1fr",
+        },
+        {
             clave: "nombre",
             titulo: "Residente",
-            ancho: "minmax(150px, 1.2fr)",
+            ancho: "1fr",
+        },
+        {
+            clave: "unidad",
+            titulo: "Unidad",
+            ancho: "0.8fr",
         },
         {
             clave: "vencimiento",
             titulo: "Vencimiento",
-            ancho: "minmax(110px, 1fr)",
-        },
-        {
-            clave: "periodo",
-            titulo: "Período",
-            ancho: "minmax(120px, 1fr)",
+            ancho: "1fr",
         },
         {
             clave: "importe",
             titulo: "Importe",
-            ancho: "minmax(100px, 1fr)",
+            ancho: "1fr",
             render: (residente) => formatearImporteResidente(residente.importe),
         },
         {
             clave: "estado",
             titulo: "Estado",
-            ancho: "minmax(100px, 0.8fr)",
+            ancho: "1fr",
             render: (residente) => (
                 <span className={`expensas-badge ${claseEstadoResidente(residente.estado)}`}>
                     {residente.estado}
@@ -382,6 +399,7 @@ function Expensas() {
                         data={expensas}
                         searchKey="periodo"
                         searchPlaceholder="Buscar periodo..."
+                        filters={filtrosExpensas}
                     >
                         {(expensasFiltrados) => (
                             <Tabla
@@ -490,11 +508,6 @@ function Expensas() {
                     {/* =========== BOLETA =========== */}
 
                     <button className="expensas-btn-detalles">
-                        <Pencil size={15} />
-                        Editar expensa
-                    </button>
-
-                    <button className="expensas-btn-detalles">
                         <Download size={15} />
                         Descargar boleta
                     </button>
@@ -525,39 +538,55 @@ function Expensas() {
                     
                     {/* =========== DETALLES =========== */}
 
-                    <p className="expensas-detalle-linea">
-                        Período: <strong>{residenteSeleccionado.periodo}</strong>
-                    </p>
-                    <p className="expensas-detalle-linea">
-                        Vencimiento: <strong>{residenteSeleccionado.vencimiento}</strong>
-                    </p>
-                    <section className="expensas-detalle-seccion">
+                    <div className="expensas-detalle-datos">
+                        <p className="expensas-detalle-linea">
+                            Período: <strong>{residenteSeleccionado.periodo}</strong>
+                        </p>
+                        <p className="expensas-detalle-linea">
+                            Vencimiento: <strong>{residenteSeleccionado.vencimiento}</strong>
+                        </p>
+                    </div>
 
-                        {/* =========== FILAS =========== */}
+                    <div className="expensas-detalle-columnas">
+                        <section className="expensas-detalle-seccion">
+                            <h3>Resumen de expensa</h3>
+                            <div className="expensas-resumen-fila">
+                                <span>Residente</span>
+                                <span>{residenteSeleccionado.nombre}</span>
+                            </div>
+                            <div className="expensas-resumen-fila">
+                                <span>Unidad</span>
+                                <span>{residenteSeleccionado.unidad}</span>
+                            </div>
+                            <div className="expensas-resumen-fila">
+                                <span>Importe</span>
+                                <span>{formatearImporteResidente(residenteSeleccionado.importe)}</span>
+                            </div>
+                            <div className="expensas-resumen-fila">
+                                <span>Estado</span>
+                                <span className={`expensas-residente-estado ${claseEstadoResidente(residenteSeleccionado.estado)}`}>
+                                    {residenteSeleccionado.estado}
+                                </span>
+                            </div>
+                        </section>
 
-                        <h3>Resumen de expensa</h3>
-                        <div className="expensas-resumen-fila">
-                            <span>Residente</span>
-                            <span>{residenteSeleccionado.nombre}</span>
-                        </div>
-                        <div className="expensas-resumen-fila">
-                            <span>Importe</span>
-                            <span>{formatearImporteResidente(residenteSeleccionado.importe)}</span>
-                        </div>
-                        <div className="expensas-resumen-fila">
-                            <span>Estado</span>
-                            <span className={`expensas-residente-estado ${claseEstadoResidente(residenteSeleccionado.estado)}`}>
-                                {residenteSeleccionado.estado}
-                            </span>
-                        </div>
-                        
-                        {/* =========== EDITAR IMPORTE =========== */}
+                        <section className="expensas-detalle-seccion">
+                            <h3>Conceptos</h3>
+                            {detalle.conceptos.map((concepto) => (
+                                <div className="expensas-resumen-fila" key={concepto.nombre}>
+                                    <span>{concepto.nombre}</span>
+                                    <span>{formatearMonto(concepto.monto)}</span>
+                                </div>
+                            ))}
+                        </section>
+                    </div>
 
-                        <button className="expensas-btn-detalles">
-                            <Pencil size={15} />
-                            Editar importe
-                        </button>
-                    </section>
+                    {/* =========== EDITAR IMPORTE =========== */}
+
+                    <button className="expensas-btn-detalles">
+                        <Pencil size={15} />
+                        Editar importe
+                    </button>
                 </Panel>
             )}
 

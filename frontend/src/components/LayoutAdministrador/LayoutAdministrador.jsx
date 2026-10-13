@@ -151,7 +151,7 @@ function LayoutAdministrador({ children }) {
                             <h1>Habita</h1>
                         </Link>
 
-                    </div>gi
+                    </div>
 
                     <div className="header-info">
                         <h1>{infoHeader?.titulo}</h1>

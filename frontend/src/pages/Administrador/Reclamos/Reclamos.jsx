@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import "chart.js/auto";
+import { Doughnut } from "react-chartjs-2";
 import {
     ClipboardList,
     Clock,
@@ -15,11 +17,11 @@ import {
 } from "lucide-react";
 
 import "./Reclamos.css";
-import armarGradienteDonut from "../../../utils/armarGradienteDonut";
 import Panel from "../../../components/Panel/Panel";
 import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
 import Tabla from "../../../components/Tabla/Tabla";
 import Navegador from "../../../components/Navegador/Navegador";
+import { obtenerOpcionesPeriodo, obtenerPeriodoFecha } from "../../../utils/periodos";
 
 {/* =========================
        DATOS EJEMPLOS
@@ -33,14 +35,17 @@ const kpis = {
 };
 
 const reclamos = [
-    { id: "#R-2026-0064", fecha: "01/09/2026", residente: "Nicolás Paz", unidad: "5B", categoria: "Mantenimiento", asunto: "Fuga de agua en cocina", estado: "Pendiente", prioridad: "Alta", descripcion: "Holaaa", adjunto: { nombre: "foto1.png", tamano: "245 KB" }, },
-    { id: "#R-2026-0063", fecha: "01/09/2026", residente: "María Gómez", unidad: "3A", categoria: "Limpieza", asunto: "Suciedad en pasillos", estado: "En proceso", prioridad: "Media", descripcion: "Holaaa" },
-    { id: "#R-2026-0062", fecha: "31/08/2026", residente: "Juan López", unidad: "7C", categoria: "Ascensores", asunto: "Ascensor se detiene entre pisos", estado: "En proceso", prioridad: "Alta", descripcion: "Holaaa" },
-    { id: "#R-2026-0061", fecha: "31/08/2026", residente: "Carla Romero", unidad: "1B", categoria: "Iluminación", asunto: "Luz quemada en garage", estado: "Resuelto", prioridad: "Baja", descripcion: "Holaaa", adjunto: { nombre: "1234.jpg", tamano: "245 KB" }, },
-    { id: "#R-2026-0060", fecha: "30/08/2026", residente: "Pedro Martínez", unidad: "2D", categoria: "Espacios comunes", asunto: "Mesa rota en SUM", estado: "Resuelto", prioridad: "Media", descripcion: "Holaaa" },
-    { id: "#R-2026-0059", fecha: "29/08/2026", residente: "Laura Sánchez", unidad: "4A", categoria: "Seguridad", asunto: "Puerta del edificio sin traba", estado: "Pendiente", prioridad: "Alta", descripcion: "Holaaa" },
-    { id: "#R-2026-0058", fecha: "28/08/2026", residente: "Diego Fernández", unidad: "6E", categoria: "Mantenimiento", asunto: "Aire acondicionado no enfría", estado: "En proceso", prioridad: "Media", descripcion: "Holaaa" },
-];
+    { fecha: "01/09/2026", residente: "Nicolás Paz", unidad: "5B", categoria: "Mantenimiento", asunto: "Fuga de agua en cocina", estado: "Pendiente", prioridad: "Alta", descripcion: "Holaaa", adjunto: { nombre: "foto1.png", tamano: "245 KB" }, },
+    { fecha: "01/09/2026", residente: "María Gómez", unidad: "3A", categoria: "Limpieza", asunto: "Suciedad en pasillos", estado: "En proceso", prioridad: "Media", descripcion: "Holaaa" },
+    { fecha: "31/08/2026", residente: "Juan López", unidad: "7C", categoria: "Ascensores", asunto: "Ascensor se detiene entre pisos", estado: "En proceso", prioridad: "Alta", descripcion: "Holaaa" },
+    { fecha: "31/08/2026", residente: "Carla Romero", unidad: "1B", categoria: "Iluminación", asunto: "Luz quemada en garage", estado: "Resuelto", prioridad: "Baja", descripcion: "Holaaa", adjunto: { nombre: "1234.jpg", tamano: "245 KB" }, },
+    { fecha: "30/08/2026", residente: "Pedro Martínez", unidad: "2D", categoria: "Espacios comunes", asunto: "Mesa rota en SUM", estado: "Resuelto", prioridad: "Media", descripcion: "Holaaa" },
+    { fecha: "29/08/2026", residente: "Laura Sánchez", unidad: "4A", categoria: "Seguridad", asunto: "Puerta del edificio sin traba", estado: "Pendiente", prioridad: "Alta", descripcion: "Holaaa" },
+    { fecha: "28/08/2026", residente: "Diego Fernández", unidad: "6E", categoria: "Mantenimiento", asunto: "Aire acondicionado no enfría", estado: "En proceso", prioridad: "Media", descripcion: "Holaaa" },
+].map((reclamo) => ({
+    ...reclamo,
+    periodoFecha: obtenerPeriodoFecha(reclamo.fecha),
+}));
 
 const totalReclamos = 64;
 
@@ -102,6 +107,7 @@ function categoriaBadgeClase(categoria) {
         "Iluminación": "reclamos-cat-iluminacion",
         "Espacios comunes": "reclamos-cat-comunes",
         "Seguridad": "reclamos-cat-seguridad",
+        "Otros": "reclamos-cat-otros",
     };
     return mapa[categoria] || "";
 }
@@ -113,15 +119,13 @@ function estadoBadgeClase(estado) {
 }
 
 const columnas = [
-    { clave: "id", titulo: "ID", ancho: "1fr", clase: "reclamos-id" },
-    { clave: "fecha", titulo: "Fecha", ancho: "0.9fr" },
-    { clave: "asunto", titulo: "Asunto", ancho: "1.5fr", clase: "reclamos-asunto" },
-    { clave: "residente", titulo: "Residente", ancho: "1.1fr", clase: "reclamos-residente" },
+    { clave: "asunto", titulo: "Asunto", ancho: "1.3fr", clase: "reclamos-asunto" },
+    { clave: "residente", titulo: "Residente", ancho: "1fr", clase: "reclamos-residente" },
     { clave: "unidad", titulo: "Unidad", ancho: "0.6fr" },
     {
         clave: "categoria",
         titulo: "Categoría",
-        ancho: "1fr",
+        ancho: "1.1fr",
         render: (reclamo) => (
             <span className={`reclamos-cat-badge ${categoriaBadgeClase(reclamo.categoria)}`}>
                 {reclamo.categoria}
@@ -131,30 +135,31 @@ const columnas = [
     {
         clave: "estado",
         titulo: "Estado",
-        ancho: "0.9fr",
+        ancho: "1fr",
         render: (reclamo) => (
             <span className={`reclamos-badge ${estadoBadgeClase(reclamo.estado)}`}>
                 {reclamo.estado}
             </span>
         ),
     },
+    { clave: "fecha", titulo: "Fecha", ancho: "0.8fr" },
 ];
 
 const filtros=[
-    {
-        key: "estado",
-        label: "Todos los estados",
-        options: ["Resuelto", "Pendiente", "En proceso"],
-    },
     {
         key: "categoria",
         label: "Todas las categorias",
         options: ["Mantenimiento", "Limpieza", "Ascensores", "Iluminación", "Espacios comunes", "Seguridad", "Otros"],
     },
     {
-        key: "unidad",
-        label: "Todos los edificios",
-        options: ["A", "B", "C", "D"],
+        key: "estado",
+        label: "Todos los estados",
+        options: ["Resuelto", "Pendiente", "En proceso"],
+    },
+    {
+        key: "periodoFecha",
+        label: "Todos los periodos",
+        options: obtenerOpcionesPeriodo(reclamos),
     },
 ];
 
@@ -250,17 +255,12 @@ function Reclamos() {
                     </div>
 
                     <div className="reclamos-detalle-fila">
-                        <span>ID</span>
-                        <strong>{seleccionado.id}</strong>
-                    </div>
-
-                    <div className="reclamos-detalle-fila">
                         <span>Fecha de publicación</span>
                         <strong>{seleccionado.fecha}</strong>
                     </div>
 
                     <div className="reclamos-detalle-fila">
-                        <span>Publicado por</span>
+                        <span>Residente</span>
                         <strong>{seleccionado.residente}</strong>
                     </div>
 
@@ -313,16 +313,26 @@ function Reclamos() {
             <Panel className="reclamos-resumen-panel" titulo="Resumen de reclamos">
                 <div className="reclamos-resumen-contenido">
                     <div className="reclamos-donut-wrap">
-                        <div
-                            className="reclamos-donut"
-                            style={{
-                                background: armarGradienteDonut(
-                                    resumenEstados,
-                                    "reclamos-color"
-                                )
-                            }}
-                        >
-                            <div className="reclamos-donut-centro" />
+                        <div className="reclamos-donut-chart">
+                            <Doughnut
+                                data={{
+                                    labels: resumenEstados.map((item) => item.estado),
+                                    datasets: [
+                                        {
+                                            data: resumenEstados.map((item) => item.cantidad),
+                                            backgroundColor: ["#ee9d25", "#328bc2", "#399665"],
+                                            borderWidth: 0,
+                                            hoverOffset: 4,
+                                        },
+                                    ],
+                                }}
+                                options={{
+                                    responsive: true,
+                                    maintainAspectRatio: false,
+                                    cutout: "66%",
+                                    plugins: { legend: { display: false } },
+                                }}
+                            />
                         </div>
 
                         <ul className="reclamos-donut-leyenda">
@@ -352,15 +362,9 @@ function Reclamos() {
                         <div className="reclamos-categorias-lista">
                             {categoriasFrecuentes.map((cat) => {
                                 const Icono = cat.icon;
-
                                 return (
-                                    <div
-                                        className="reclamos-categoria-fila"
-                                        key={cat.nombre}
-                                    >
-                                        <span
-                                            className={`reclamos-categoria-icon ${cat.claseColor}`}
-                                        >
+                                    <div className="reclamos-categoria-fila" key={cat.nombre}>
+                                        <span className={`reclamos-categoria-icon ${cat.claseColor}`}>
                                             <Icono size={16} />
                                         </span>
 
