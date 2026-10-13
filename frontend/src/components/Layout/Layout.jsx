@@ -90,12 +90,21 @@ function Layout({ children }) {
         setCargandoRespuesta(true);
 
         try {
+            // Enviamos el historial previo formateado junto al nuevo mensaje
+            const historialParaEnviar = mensajes.map((m) => ({
+                emisor: m.emisor,
+                texto: m.texto,
+            }));
+
             const res = await fetch("http://localhost:3000/api/chat", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ mensaje: textoAEnviar }),
+                body: JSON.stringify({
+                    mensaje: textoAEnviar,
+                    historial: historialParaEnviar,
+                }),
             });
 
             if (!res.ok) {
