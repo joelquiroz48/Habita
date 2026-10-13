@@ -14,6 +14,7 @@ function ChatWidget({
     abierto = false,
     onAbrir = () => { },
     onCerrar = () => { },
+    mensajeContextual = "Tu asistente Habita siempre disponible las 24 hs",
     mensajes = [],
     onEnviarMensaje = () => { },
     inputTexto = "",
@@ -43,7 +44,7 @@ function ChatWidget({
                         onMouseLeave={() => setIsHovered(false)}
                     />
                     <div className="texto-asistente">
-                        <p>Tu asistente Habita siempre disponible las 24 hs</p>
+                        <p>{mensajeContextual}</p>
                     </div>
                 </div>
 

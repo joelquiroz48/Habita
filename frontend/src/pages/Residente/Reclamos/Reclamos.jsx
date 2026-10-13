@@ -287,7 +287,10 @@ function Reclamos({ onAbrirChat }) {
                             <h2>Asistente Habita</h2>
                         </div>
 
-                        <ChatWidget onAbrir={onAbrirChat} />
+                        <ChatWidget
+                            onAbrir={onAbrirChat}
+                            mensajeContextual="¿Necesitás hacer un reclamo? Te ayudo"
+                        />
                     </article>
                 </aside>
             </section>

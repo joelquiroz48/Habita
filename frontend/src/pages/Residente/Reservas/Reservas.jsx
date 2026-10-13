@@ -709,7 +709,10 @@ function Reservas({ onAbrirChat }) {
                     </Panel>
 
                     <Panel titulo="Asistente Habita" className="asistente-reservas">
-                        <ChatWidget onAbrir={onAbrirChat} />
+                        <ChatWidget
+                            onAbrir={onAbrirChat}
+                            mensajeContextual="¿Querés reservar un espacio? Te guío"
+                        />
                     </Panel>
 
                 </section>

@@ -129,7 +129,10 @@ function Documentos({ onAbrirChat }) {
                 </Panel>
 
                 <Panel titulo="Asistente Habita" className="asistente-documentos">
-                    <ChatWidget onAbrir={onAbrirChat} />
+                    <ChatWidget
+                        onAbrir={onAbrirChat}
+                        mensajeContextual="¿Buscás un documento? Te ayudo a encontrarlo"
+                    />
                 </Panel>
             </section>
         </main>

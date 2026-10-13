@@ -336,7 +336,10 @@ function Expensas({ onAbrirChat }) {
                 </Panel>
 
                 <Panel titulo="Asistente Habita" className="asistente-expensas">
-                    <ChatWidget onAbrir={onAbrirChat} />
+                    <ChatWidget
+                        onAbrir={onAbrirChat}
+                        mensajeContextual="¿Dudas con tus expensas? Te ayudo a entenderlas"
+                    />
                 </Panel>
             </section>
 
