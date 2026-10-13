@@ -163,9 +163,32 @@
         AYUDA
 ========================= */
 
-.ayuda-expensas {
+.expensas-ayuda-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 14px;
     margin-top: 14px;
+}
+
+.ayuda-expensas {
+    margin-top: 0;
     padding-bottom: 8px;
+}
+
+.asistente-expensas {
+    display: flex;
+    flex-direction: column;
+}
+
+.asistente-expensas .panel-contenido {
+    display: flex;
+    flex: 1;
+}
+
+.asistente-expensas .tarjeta-inicial-asistente {
+    flex: 1;
+    justify-content: space-between;
 }
 
 .ayuda-item {
@@ -235,6 +258,10 @@
 
     .expensas .expensas-residente-detalle-columnas,
     .expensas .expensas-residente-detalle-acciones {
+        grid-template-columns: 1fr;
+    }
+
+    .expensas-ayuda-grid {
         grid-template-columns: 1fr;
     }
 

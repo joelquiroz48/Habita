@@ -10,7 +10,18 @@
     display: grid;
     grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
     align-items: start;
+    gap: 16px;
+}
+
+.reclamos-residente-lateral {
+    display: flex;
+    flex-direction: column;
     gap: 14px;
+}
+
+.reclamos-residente-principal {
+    display: flex;
+    align-items: stretch;
     min-width: 0;
     margin-top: 14px;
 }
@@ -296,12 +307,32 @@
 }
 
 /* =========================
+        ASISTENTE
+========================= */
+
+.asistente-card {
+    width: 100%;
+    min-height: 100%;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 16px;
+    box-sizing: border-box;
+    background: var(--blanco);
+    margin: 0;
+}
+
+.reclamos-residente-lateral .asistente-card {
+    margin-top: 0;
+    min-height: 0;
+}
+
+/* =========================
         RESPONSIVE
 ========================= */
 
 @media (max-width: 900px) {
     .reclamos-residente-principal {
-        grid-template-columns: minmax(0, 1fr);
+        flex-direction: column;
     }
 }
 

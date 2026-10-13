@@ -72,6 +72,21 @@
     min-width: 0;
 }
 
+.asistente-reservas {
+    display: flex;
+    flex-direction: column;
+}
+
+.asistente-reservas .panel-contenido {
+    display: flex;
+    flex: 1;
+}
+
+.asistente-reservas .tarjeta-inicial-asistente {
+    flex: 1;
+    justify-content: space-between;
+}
+
 /* =========================
       ESTADOS DE RESERVA
 ========================= */
