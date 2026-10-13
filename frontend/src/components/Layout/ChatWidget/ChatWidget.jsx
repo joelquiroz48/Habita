@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { MessageCircle, X, Send } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -22,6 +22,14 @@ function ChatWidget({
 }) {
     // Estado para detectar si el mouse está sobre la imagen
     const [isHovered, setIsHovered] = useState(false);
+    const mensajesRef = useRef(null);
+
+    useLayoutEffect(() => {
+        const contenedor = mensajesRef.current;
+        if (contenedor) {
+            contenedor.scrollTop = contenedor.scrollHeight;
+        }
+    }, [mensajes, cargando, abierto, flotante]);
 
     if (!flotante) {
         return (
@@ -61,7 +69,7 @@ function ChatWidget({
                 </button>
             </header>
 
-            <div className="chat-messages">
+            <div className="chat-messages" ref={mensajesRef}>
                 {mensajes.map((msg) => (
                     <div key={msg.id} className={`mensaje ${msg.emisor === "usr" ? "msj-usr" : "msj-chat"}`}>
                         {msg.emisor === "bot" ? (
