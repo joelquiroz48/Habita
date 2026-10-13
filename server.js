@@ -44,14 +44,16 @@ app.post('/api/chat', async (req, res) => {
             parts: [{ text: mensaje }],
         });
 
+        const startedAt = Date.now();
         const response = await ai.models.generateContent({
-            model: 'gemini-2.5-flash',
+            model: 'gemini-3.5-flash-lite',
             contents: contents,
             config: {
                 systemInstruction: instruccionesSistema,
             },
         });
 
+        console.info(`Respuesta de Gemini en ${Date.now() - startedAt} ms`);
         res.json({ respuesta: response.text });
     } catch (error) {
         console.error('Error al hablar con Habita:', error);
