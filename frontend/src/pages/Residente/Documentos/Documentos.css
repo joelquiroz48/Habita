@@ -1,14 +1,4 @@
 /* =========================
-        DOCUMENTOS
-========================= */
-
-.documentos {
-    width: 100%;
-    padding: 24px;
-}
-
-
-/* =========================
       BADGES CATEGORÍA
 ========================= */
 
@@ -46,7 +36,7 @@
     INFORMACIÓN IMPORTANTE
 ========================= */
 .informacion-documentos {
-    margin-bottom: 14px;
+    margin-top: 14px;
 }
 .informacion-documentos ul {
     padding-left: 16px;

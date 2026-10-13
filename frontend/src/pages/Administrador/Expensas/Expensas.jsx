@@ -341,7 +341,7 @@ function Expensas() {
     ];
 
     return (
-        <main className="expensas pagina-administrador">
+        <main className="expensas-admin pagina-administrador">
 
             {/* =========================
                   RESUMEN SUPERIOR

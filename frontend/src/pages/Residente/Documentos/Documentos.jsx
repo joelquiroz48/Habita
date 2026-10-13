@@ -1,9 +1,5 @@
 import { useEffect } from "react";
-import {
-    Download,
-    Eye,
-    Info,
-} from "lucide-react";
+import { Download, Eye, Info } from "lucide-react";
 
 import "./Documentos.css";
 import Panel from "../../../components/Panel/Panel";
@@ -91,17 +87,6 @@ function Documentos() {
                 CONTENIDO PRINCIPAL
             ========================= */}
 
-
-            {/* INFORMACIÓN IMPORTANTE */}
-
-            <Panel titulo="Información importante" icono={<Info />} className="informacion-documentos">
-                <ul>
-                    <li>Los documentos se actualizan periódicamente.</li>
-                    <li>Podés descargar o visualizar cada archivo.</li>
-                    <li>Ante cualquier duda, podés contactar con la administración.</li>
-                </ul>
-            </Panel>
-
             {/* DOCUMENTOS */}
             <Navegador
                 data={documentos}
@@ -123,7 +108,16 @@ function Documentos() {
                     />
                         )}
             </Navegador>
+            
+            {/* INFORMACIÓN IMPORTANTE */}
 
+            <Panel titulo="Información importante" icono={<Info />} className="informacion-documentos">
+                <ul>
+                    <li>Los documentos se actualizan periódicamente.</li>
+                    <li>Podés descargar o visualizar cada archivo.</li>
+                    <li>Ante cualquier duda, podés contactar con la administración.</li>
+                </ul>
+            </Panel>
         </main>
     );
 }

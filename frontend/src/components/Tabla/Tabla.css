@@ -20,6 +20,7 @@
 
 .tabla-header {
     border-bottom: 1px solid var(--borde-secundario);
+    background: var(--fondo-icono);
 }
 
 .tabla-header span {
@@ -30,8 +31,8 @@
 
 .tabla-fila {
     border-bottom: 1px solid var(--separador);
-    font-size: 13px;
-    color: var(--texto-principal);
+    font-size: 12px;
+    color: var(--texto-secundario);
     min-height: 52px;
 }
 

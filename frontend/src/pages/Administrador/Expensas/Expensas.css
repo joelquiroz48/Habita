@@ -2,13 +2,13 @@
       CABECERA + KPIS
 ========================= */
 
-.expensas-resumen {
+.expensas-admin .expensas-resumen {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 14px;
 }
 
-.expensas-progreso {
+.expensas-admin .expensas-progreso {
   width: 100%;
   height: 6px;
   border-radius: 4px;
@@ -17,7 +17,7 @@
   overflow: hidden;
 }
 
-.expensas-progreso-relleno {
+.expensas-admin .expensas-progreso-relleno {
   height: 100%;
   background: var(--verde);
   border-radius: 4px;
@@ -27,14 +27,14 @@
           TABS
 ========================= */
 
-.expensas-tabs {
+.expensas-admin .expensas-tabs {
   display: flex;
   gap: 6px;
   border-bottom: 1px solid var(--borde-secundario);
   margin-bottom: 16px;
 }
 
-.expensas-tab {
+.expensas-admin .expensas-tab {
   border: none;
   background: transparent;
   color: var(--texto-secundario);
@@ -46,7 +46,7 @@
   margin-bottom: -1px;
 }
 
-.expensas-tab.activo {
+.expensas-admin .expensas-tab.activo {
   color: var(--verde);
   font-weight: 600;
   border-bottom-color: var(--verde);
@@ -58,7 +58,7 @@
 
 /* TABLA */
 
-.expensas-badge {
+.expensas-admin .expensas-badge {
   width: fit-content;
   padding: 4px 10px;
   border-radius: 10px;
@@ -66,56 +66,56 @@
   font-weight: 600;
 }
 
-.expensas-badge-curso {
+.expensas-admin .expensas-badge-curso {
     color: var(--color-aviso-azul) !important;
     background: var(--fondo-azul-suave) !important;
 }
 
-.expensas-badge-cerrada {
+.expensas-admin .expensas-badge-cerrada {
   color: var(--color-aviso-verde) !important;
   background: var(--fondo-verde-suave) !important;
 }
 
-.expensas-residente-pagado {
+.expensas-admin .expensas-residente-pagado {
   color: var(--color-aviso-verde) !important;
   background: var(--fondo-verde-suave) !important;
 }
 
-.expensas-residente-pendiente {
+.expensas-admin .expensas-residente-pendiente {
   color: var(--color-vencimiento) !important;
   background: var(--fondo-aviso-amarillo) !important;
 }
 
-.expensas-residente-sin-pagar {
+.expensas-admin .expensas-residente-sin-pagar {
   color: var(--color-aviso-rojo) !important;
   background: var(--fondo-documento-pdf) !important;
 }
 
 /* ---- panel de detalle ---- */
 
-.expensas-detalle {
+.expensas-admin .expensas-detalle {
   margin-top: 15px;
 }
 
-.expensas-detalle-datos {
+.expensas-admin .expensas-detalle-datos {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px 18px;
   margin-bottom: 16px;
 }
 
-.expensas-detalle-linea {
+.expensas-admin .expensas-detalle-linea {
   font-size: 12px;
   color: var(--texto-secundario);
   margin: 0;
 }
 
-.expensas-detalle-linea strong {
+.expensas-admin .expensas-detalle-linea strong {
   color: var(--texto-principal);
   font-weight: 600;
 }
 
-.expensas-detalle h3 {
+.expensas-admin .expensas-detalle h3 {
   font-size: 12px;
   font-weight: 600;
   color: var(--texto-secundario);
@@ -124,21 +124,21 @@
   margin-bottom: 8px;
 }
 
-.expensas-detalle-columnas {
+.expensas-admin .expensas-detalle-columnas {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 24px;
 }
 
-.expensas-detalle-seccion {
+.expensas-admin .expensas-detalle-seccion {
   min-width: 0;
 }
 
-.expensas-detalle-acciones {
+.expensas-admin .expensas-detalle-acciones {
   margin-top: 18px;
 }
 
-.expensas-resumen-fila {
+.expensas-admin .expensas-resumen-fila {
   display: flex;
   justify-content: space-between;
   font-size: 13px;
@@ -146,21 +146,21 @@
   border-bottom: 1px solid var(--separador);
 }
 
-.expensas-resumen-fila:last-of-type {
+.expensas-admin .expensas-resumen-fila:last-of-type {
   border-bottom: none;
 }
 
-.expensas-pendiente {
+.expensas-admin .expensas-pendiente {
   color: var(--color-vencimiento);
   font-weight: 600;
 }
 
-.expensas-porcentaje {
+.expensas-admin .expensas-porcentaje {
   color: var(--verde-hover);
   font-weight: 600;
 }
 
-.expensas-btn-detalles {
+.expensas-admin .expensas-btn-detalles {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -177,7 +177,7 @@
   cursor: pointer;
 }
 
-.expensas-btn-detalles:hover {
+.expensas-admin .expensas-btn-detalles:hover {
   background: var(--celeste-claro);
 }
 
@@ -186,22 +186,22 @@
 ========================= */
 
 @media (max-width: 1200px) {
-  .expensas-resumen {
+  .expensas-admin .expensas-resumen {
     grid-template-columns: repeat(2, 1fr);
   }
 
 }
 
 @media (max-width: 800px) {
-  .expensas {
+  .expensas-admin {
     padding: 20px;
   }
 
-  .expensas-resumen {
+  .expensas-admin .expensas-resumen {
     grid-template-columns: 1fr;
   }
 
-  .expensas-detalle-columnas {
+  .expensas-admin .expensas-detalle-columnas {
     grid-template-columns: 1fr;
   }
 }
