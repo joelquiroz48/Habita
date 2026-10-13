@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Download, Eye, Info } from "lucide-react";
 
+import ChatWidget from "../../../components/Layout/ChatWidget/ChatWidget";
 import "./Documentos.css";
 import Panel from "../../../components/Panel/Panel";
 import Tabla from "../../../components/Tabla/Tabla";
@@ -83,7 +84,7 @@ const filtros = [
     },
 ];
 
-function Documentos() {
+function Documentos({ onAbrirChat }) {
 
     useEffect(() => {
         document.title = "Habita | Documentos";
@@ -120,13 +121,68 @@ function Documentos() {
             
             {/* INFORMACIÓN IMPORTANTE */}
 
-            <Panel titulo="Información importante" icono={<Info />} className="informacion-documentos">
-                <ul>
-                    <li>Los documentos se actualizan periódicamente.</li>
-                    <li>Podés descargar o visualizar cada archivo.</li>
-                    <li>Ante cualquier duda, podés contactar con la administración.</li>
-                </ul>
-            </Panel>
+                    <Panel titulo="Información importante" icono={<Info />} className="informacion-documentos">
+                        <ul>
+                            <li>Los documentos se actualizan periódicamente.</li>
+                            <li>Podés descargar o visualizar cada archivo.</li>
+                            <li>Ante cualquier duda, podés contactar con la administración.</li>
+                        </ul>
+                    </Panel>
+
+                    {/* BÚSQUEDA RÁPIDA */}
+
+                    <Panel titulo="Búsqueda rápida" icono={<Search />} className="busqueda-documentos">
+                        <div className="buscador-documentos">
+                            <input type="text" placeholder="Buscar documento..."/>
+
+                            <button><Search /></button>
+                        </div>
+                    </Panel>
+
+                    {/* FILTROS */}
+
+                    <Panel titulo="Filtros" icono={<SlidersHorizontal />} className="filtros-documentos">
+                        <div className="filtro-documento">
+                            <select>
+                                <option>Todas las categorías</option>
+                                <option>Reglamentos</option>
+                                <option>Asambleas</option>
+                                <option>Estados contables</option>
+                                <option>Obras y mejoras</option>
+                                <option>Otros</option>
+                            </select>
+                        </div>
+
+                        <div className="filtro-documento">
+                            <select>
+                                <option>Más recientes</option>
+                                <option>Más antiguos</option>
+                            </select>
+                        </div>
+                    </Panel>
+
+                    {/* AYUDA */}
+
+                    <Panel titulo="¿Necesitás ayuda?" icono={<CircleHelp />} className="ayuda-documentos">
+                        <p>Nuestro asistente puede ayudarte a encontrar el documento que necesitás.</p>
+
+                        <button className="btn-consultar">
+                            <MessageCircle />
+                            Chatear a Habita
+                        </button>
+                    </Panel>
+
+                    <article className="panel-card asistente-card">
+                        <div className="panel-header">
+                            <h2>Asistente Habita</h2>
+                        </div>
+
+                        <ChatWidget onAbrir={onAbrirChat} />
+                    </article>
+
+                </section>
+
+            </section>
         </main>
     );
 }

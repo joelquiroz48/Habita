@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { ChevronDown, MousePointer2, Paperclip, Info, SquarePen, X, Image, Eye } from "lucide-react";
 
+import ChatWidget from "../../../components/Layout/ChatWidget/ChatWidget";
 import "./Reclamos.css";
 import Panel from "../../../components/Panel/Panel";
 import Tabla from "../../../components/Tabla/Tabla";
@@ -69,8 +70,8 @@ const columnasReclamos = [
 
 ];
 
-function Reclamos() {
-    const [reclamos, setReclamos] = useState(reclamosIniciales);
+function Reclamos({ onAbrirChat }) {
+    const [solicitudes, setSolicitudes] = useState(solicitudesEjemplo);
     const [archivoAdjunto, setArchivoAdjunto] = useState("");
     const filtros = useMemo(() => [
         {
@@ -279,7 +280,16 @@ function Reclamos() {
                             ))}
                         </ul>
                     </Panel>
-                </section>
+
+                    <article className="panel-card asistente-card">
+                        <div className="panel-header">
+                            <h2>Asistente Habita</h2>
+                        </div>
+
+                        <ChatWidget onAbrir={onAbrirChat} />
+                    </article>
+                </aside>
+            </div>
         </main>
     );
 }

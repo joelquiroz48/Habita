@@ -1,3 +1,8 @@
 venv/
 .venv/
 env/
+# Archivos de configuración local y secretos
+.env
+
+# Carpetas pesadas de dependencias
+node_modules/

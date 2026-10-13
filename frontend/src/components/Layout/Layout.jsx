@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./Layout.css";
 
@@ -62,6 +62,8 @@ const itemsMenu = [
     { to: "/documentos", icon: Folder, label: "Documentos" },
 ];
 
+import ChatWidget from "./ChatWidget/ChatWidget";
+
 function Layout({ children }) {
     const [sidebarAbierto, setSidebarAbierto] = useState(true);
     const [menuAbierto, setMenuAbierto] = useState(false);
@@ -69,14 +71,37 @@ function Layout({ children }) {
     const location = useLocation();
     const infoHeader = informacionHeader[location.pathname];
 
+    // Estado del Chat Flotante
+    const [chatAbierto, setChatAbierto] = useState(false);
+    const [mensajes, setMensajes] = useState([
+        { id: 1, emisor: "bot", texto: "¡Hola! Soy tu asistente Habita 🤖. ¿En qué te puedo ayudar hoy?" }
+    ]);
+    const [inputTexto, setInputTexto] = useState("");
+
+    const enviarMensaje = (e) => {
+        e.preventDefault();
+        if (!inputTexto.trim()) return;
+
+        const nuevoMensajeUsr = { id: Date.now(), emisor: "usr", texto: inputTexto };
+        setMensajes((prev) => [...prev, nuevoMensajeUsr]);
+        setInputTexto("");
+
+        setTimeout(() => {
+            const respuestaBot = {
+                id: Date.now() + 1,
+                emisor: "bot",
+                texto: "Entendido, estoy procesando tu consulta..."
+            };
+            setMensajes((prev) => [...prev, respuestaBot]);
+        }, 800);
+    };
+
     return (
         <div className="layout">
             <div className="layout-principal">
-
                 {/* ----- HEADER ----- */}
                 <header>
                     <div className="header-navegacion">
-
                         <button
                             className="boton-sidebar"
                             onClick={() => setSidebarAbierto(!sidebarAbierto)}
@@ -89,7 +114,6 @@ function Layout({ children }) {
                             <img src={iconLogo} alt="Logo de Habita" />
                             <h1>Habita</h1>
                         </Link>
-
                     </div>
 
                     <div className="header-info">
@@ -98,7 +122,6 @@ function Layout({ children }) {
                     </div>
 
                     <div className="header-usuario">
-
                         <div className="header-notificaciones">
                             <Bell />
                         </div>
@@ -135,7 +158,6 @@ function Layout({ children }) {
                                 </div>
                             )}
                         </div>
-
                     </div>
                 </header>
 
@@ -190,11 +212,24 @@ function Layout({ children }) {
 
                     {/* ----- CONTENIDO DE CADA PÁGINA ----- */}
                     <main id="contenido-main">
-                        {children}
+                        {/* Se clona el elemento hijo pasando onAbrirChat de forma segura con React.cloneElement */}
+                        {React.isValidElement(children)
+                            ? React.cloneElement(children, { onAbrirChat: () => setChatAbierto(true) })
+                            : children}
                     </main>
-
                 </div>
             </div>
+
+            {/* ----- VENTANA DEL CHAT FLOTANTE ----- */}
+            <ChatWidget
+                flotante={true}
+                abierto={chatAbierto}
+                onCerrar={() => setChatAbierto(false)}
+                mensajes={mensajes}
+                inputTexto={inputTexto}
+                setInputTexto={setInputTexto}
+                onEnviarMensaje={enviarMensaje}
+            />
         </div>
     );
 }
