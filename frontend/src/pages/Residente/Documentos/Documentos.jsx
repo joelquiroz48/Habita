@@ -42,12 +42,12 @@ const columnasDocumentos = [
     {
         clave: "nombre",
         titulo: "Documento",
-        ancho: "2fr",
+        ancho: "1.5fr",
     },
     {
         clave: "categoria",
         titulo: "Categoría",
-        ancho: "1.1fr",
+        ancho: "1fr",
         render: (documento) => (
             <small
                 className={`categoria-badge ${documento.categoria
@@ -61,7 +61,7 @@ const columnasDocumentos = [
     {
         clave: "fecha",
         titulo: "Fecha",
-        ancho: "0.8fr",
+        ancho: "1fr",
         clase: "fecha-documento",
     },
 ];
