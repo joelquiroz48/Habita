@@ -6,6 +6,7 @@ import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
 import Panel from "../../../components/Panel/Panel";
 import Tabla from "../../../components/Tabla/Tabla";
 import Navegador from "../../../components/Navegador/Navegador";
+import ChatWidget from "../../../components/Layout/ChatWidget/ChatWidget";
 
 /* =========================
     DATOS DE EJEMPLO
@@ -152,7 +153,7 @@ function estadoBadgeClase(estado) {
     return "expensas-badge-pendiente";
 }
 
-function Expensas() {
+function Expensas({ onAbrirChat }) {
 
     const [expensaSeleccionada, setExpensaSeleccionada] = useState(historialExpensas[0]);
     const [detalleAbierto, setDetalleAbierto] = useState(false);
@@ -297,42 +298,47 @@ function Expensas() {
                 </Panel>
             )}
 
-            {/* AYUDA */}
+            {/* AYUDA Y ASISTENTE */}
+            <section className="expensas-ayuda-grid">
+                <Panel titulo="Ayuda sobre expensas" className="ayuda-expensas">
+                    <div className="ayuda-item">
+                        <div className="ayuda-icon"><CircleHelp /></div>
 
-            <Panel titulo="Ayuda sobre expensas" className="ayuda-expensas">
-                <div className="ayuda-item">
-                    <div className="ayuda-icon"><CircleHelp  /></div>
+                        <div>
+                            <strong>¿Cómo se calculan las expensas?</strong>
+                            <span>Entendé qué incluye tu expensa mensual.</span>
+                        </div>
 
-                    <div>
-                        <strong>¿Cómo se calculan las expensas?</strong>
-                        <span>Entendé qué incluye tu expensa mensual.</span>
+                        <ChevronRight />
                     </div>
 
-                    <ChevronRight />
-                </div>
+                    <div className="ayuda-item">
+                        <div className="ayuda-icon"><WalletCards /></div>
 
-                <div className="ayuda-item">
-                    <div className="ayuda-icon"><WalletCards /></div>
+                        <div>
+                            <strong>Medios de pago y promociones</strong>
+                            <span>Conocé las opciones disponibles.</span>
+                        </div>
 
-                    <div>
-                        <strong>Medios de pago y promociones</strong>
-                        <span>Conocé las opciones disponibles.</span>
+                        <ChevronRight />
                     </div>
 
-                    <ChevronRight />
-                </div>
+                    <div className="ayuda-item">
+                        <div className="ayuda-icon"><FileText /></div>
 
-                <div className="ayuda-item">
-                    <div className="ayuda-icon"><FileText /></div>
+                        <div>
+                            <strong>¿Tenés un problema con tu pago?</strong>
+                            <span>Te ayudamos a resolverlo.</span>
+                        </div>
 
-                    <div>
-                        <strong>¿Tenés un problema con tu pago?</strong>
-                        <span>Te ayudamos a resolverlo.</span>
+                        <ChevronRight />
                     </div>
+                </Panel>
 
-                    <ChevronRight />
-                </div>
-            </Panel>
+                <Panel titulo="Asistente Habita" className="asistente-expensas">
+                    <ChatWidget onAbrir={onAbrirChat} />
+                </Panel>
+            </section>
 
 
         </main>
