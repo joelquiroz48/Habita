@@ -21,6 +21,7 @@
 
 .reclamos-residente-principal {
     display: flex;
+    align-items: stretch;
     min-width: 0;
     margin-top: 14px;
 }
@@ -322,6 +323,7 @@
 
 .reclamos-residente-lateral .asistente-card {
     margin-top: 0;
+    min-height: 0;
 }
 
 /* =========================
@@ -330,7 +332,7 @@
 
 @media (max-width: 900px) {
     .reclamos-residente-principal {
-        grid-template-columns: minmax(0, 1fr);
+        flex-direction: column;
     }
 }
 
