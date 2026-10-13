@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./Layout.css";
 
@@ -62,6 +62,28 @@ const itemsMenu = [
     { to: "/documentos", icon: Folder, label: "Documentos" },
 ];
 
+const CHAT_SESSION_STORAGE_KEY = "habita-chat-messages";
+const MENSAJE_INICIAL_CHAT = {
+    id: 1,
+    emisor: "bot",
+    texto: "¡Hola! Soy tu asistente Habita 🤖. ¿En qué te puedo ayudar hoy?",
+};
+
+function cargarMensajesChat() {
+    try {
+        const mensajesGuardados = JSON.parse(
+            sessionStorage.getItem(CHAT_SESSION_STORAGE_KEY) || "null"
+        );
+        if (Array.isArray(mensajesGuardados) && mensajesGuardados.length > 0) {
+            return mensajesGuardados;
+        }
+    } catch {
+        return [MENSAJE_INICIAL_CHAT];
+    }
+
+    return [MENSAJE_INICIAL_CHAT];
+}
+
 import ChatWidget from "./ChatWidget/ChatWidget";
 
 function Layout({ children }) {
@@ -74,10 +96,12 @@ function Layout({ children }) {
     // Estado del Chat Flotante
     const [chatAbierto, setChatAbierto] = useState(false);
     const [cargandoRespuesta, setCargandoRespuesta] = useState(false);
-    const [mensajes, setMensajes] = useState([
-        { id: 1, emisor: "bot", texto: "¡Hola! Soy tu asistente Habita 🤖. ¿En qué te puedo ayudar hoy?" }
-    ]);
+    const [mensajes, setMensajes] = useState(cargarMensajesChat);
     const [inputTexto, setInputTexto] = useState("");
+
+    useEffect(() => {
+        sessionStorage.setItem(CHAT_SESSION_STORAGE_KEY, JSON.stringify(mensajes));
+    }, [mensajes]);
 
     const enviarMensaje = async (e) => {
         e.preventDefault();
@@ -91,10 +115,10 @@ function Layout({ children }) {
 
         try {
             // Enviamos el historial previo formateado junto al nuevo mensaje
-            const historialParaEnviar = mensajes.map((m) => ({
-                emisor: m.emisor,
-                texto: m.texto,
-            }));
+            const historialParaEnviar = mensajes
+                .slice(1)
+                .filter((m) => m.emisor === "usr" || m.emisor === "bot")
+                .map((m) => ({ emisor: m.emisor, texto: m.texto }));
 
             const res = await fetch("http://localhost:3000/api/chat", {
                 method: "POST",
@@ -122,7 +146,7 @@ function Layout({ children }) {
             console.error("Error al comunicarse con el asistente Habita:", error);
             const mensajeError = {
                 id: Date.now() + 1,
-                emisor: "bot",
+                emisor: "error",
                 texto: "Disculpá, hubo un problema al comunicarme con el servidor. Verificá que el backend esté en ejecución.",
             };
             setMensajes((prev) => [...prev, mensajeError]);
@@ -187,7 +211,10 @@ function Layout({ children }) {
                                         Configuración
                                     </Link>
 
-                                    <Link to="/">
+                                    <Link
+                                        to="/"
+                                        onClick={() => sessionStorage.removeItem(CHAT_SESSION_STORAGE_KEY)}
+                                    >
                                         Cerrar sesión
                                     </Link>
                                 </div>
