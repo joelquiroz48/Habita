@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Landing from "./pages/Landing/Landing";
 import Login from "./pages/Residente/Login/Login";
 import Register from "./pages/Residente/Register/Register";
 
@@ -25,7 +26,6 @@ import ReclamosAdmin from "./pages/Administrador/Reclamos/Reclamos";
 import ComunicadosAdmin from "./pages/Administrador/Comunicados/Comunicados";
 import ReservasAdmin from "./pages/Administrador/Reservas/Reservas";
 import DocumentosAdmin from "./pages/Administrador/Documentos/Documentos";
-//import ReportesAdmin from "./pages/Administrador/Reportes/Reportes";
 import ConfiguracionAdmin from "./pages/Administrador/Configuracion/Configuracion";
 
 function App() {
@@ -34,7 +34,8 @@ function App() {
             <Routes>
                 {/* ----- Pantallas sin Layout ----- */}
                 
-                <Route path="/" element={<Login />} />
+                <Route path="/" element={<Landing />} />
+                <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
 
                 {/* ----- Pantallas con Layout (Residente) ----- */}
@@ -171,13 +172,6 @@ function App() {
                         </LayoutAdministrador>
                     }
                 />
-
-                {/* <Route path="/administrador/reportes" element={
-        <LayoutAdministrador>
-            <ReportesAdmin />
-        </LayoutAdministrador>
-    }
-/> */}
 
                 <Route path="/administrador/configuracion" element={
                         <LayoutAdministrador>

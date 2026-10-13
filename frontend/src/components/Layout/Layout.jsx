@@ -129,7 +129,7 @@ function Layout({ children }) {
                                         Configuración
                                     </Link>
 
-                                    <Link to="/">
+                                    <Link to="/login">
                                         Cerrar sesión
                                     </Link>
                                 </div>
