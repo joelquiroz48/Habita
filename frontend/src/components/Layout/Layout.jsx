@@ -73,27 +73,53 @@ function Layout({ children }) {
 
     // Estado del Chat Flotante
     const [chatAbierto, setChatAbierto] = useState(false);
+    const [cargandoRespuesta, setCargandoRespuesta] = useState(false);
     const [mensajes, setMensajes] = useState([
         { id: 1, emisor: "bot", texto: "¡Hola! Soy tu asistente Habita 🤖. ¿En qué te puedo ayudar hoy?" }
     ]);
     const [inputTexto, setInputTexto] = useState("");
 
-    const enviarMensaje = (e) => {
+    const enviarMensaje = async (e) => {
         e.preventDefault();
-        if (!inputTexto.trim()) return;
+        const textoAEnviar = inputTexto.trim();
+        if (!textoAEnviar || cargandoRespuesta) return;
 
-        const nuevoMensajeUsr = { id: Date.now(), emisor: "usr", texto: inputTexto };
+        const nuevoMensajeUsr = { id: Date.now(), emisor: "usr", texto: textoAEnviar };
         setMensajes((prev) => [...prev, nuevoMensajeUsr]);
         setInputTexto("");
+        setCargandoRespuesta(true);
 
-        setTimeout(() => {
+        try {
+            const res = await fetch("http://localhost:3000/api/chat", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ mensaje: textoAEnviar }),
+            });
+
+            if (!res.ok) {
+                throw new Error("Respuesta no satisfactoria del servidor");
+            }
+
+            const data = await res.json();
             const respuestaBot = {
                 id: Date.now() + 1,
                 emisor: "bot",
-                texto: "Entendido, estoy procesando tu consulta..."
+                texto: data.respuesta || "No pude obtener una respuesta en este momento.",
             };
             setMensajes((prev) => [...prev, respuestaBot]);
-        }, 800);
+        } catch (error) {
+            console.error("Error al comunicarse con el asistente Habita:", error);
+            const mensajeError = {
+                id: Date.now() + 1,
+                emisor: "bot",
+                texto: "Disculpá, hubo un problema al comunicarme con el servidor. Verificá que el backend esté en ejecución.",
+            };
+            setMensajes((prev) => [...prev, mensajeError]);
+        } finally {
+            setCargandoRespuesta(false);
+        }
     };
 
     return (
@@ -229,6 +255,7 @@ function Layout({ children }) {
                 inputTexto={inputTexto}
                 setInputTexto={setInputTexto}
                 onEnviarMensaje={enviarMensaje}
+                cargando={cargandoRespuesta}
             />
         </div>
     );

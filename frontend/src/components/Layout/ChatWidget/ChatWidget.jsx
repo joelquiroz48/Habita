@@ -15,7 +15,8 @@ function ChatWidget({
     mensajes = [],
     onEnviarMensaje = () => { },
     inputTexto = "",
-    setInputTexto = () => { }
+    setInputTexto = () => { },
+    cargando = false
 }) {
     // Estado para detectar si el mouse está sobre la imagen
     const [isHovered, setIsHovered] = useState(false);
@@ -64,16 +65,22 @@ function ChatWidget({
                         {msg.texto}
                     </div>
                 ))}
+                {cargando && (
+                    <div className="mensaje msj-chat escribiendo">
+                        <span>Habita está escribiendo...</span>
+                    </div>
+                )}
             </div>
 
             <form className="chat-input-area" onSubmit={onEnviarMensaje}>
                 <input
                     type="text"
-                    placeholder="Escribe tu mensaje..."
+                    placeholder={cargando ? "Esperando respuesta..." : "Escribe tu mensaje..."}
                     value={inputTexto}
+                    disabled={cargando}
                     onChange={(e) => setInputTexto(e.target.value)}
                 />
-                <button type="submit" className="btn-enviar">
+                <button type="submit" className="btn-enviar" disabled={cargando || !inputTexto.trim()}>
                     <Send size={16} />
                 </button>
             </form>

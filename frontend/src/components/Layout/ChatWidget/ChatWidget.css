@@ -95,6 +95,17 @@
     border-bottom-right-radius: 2px;
 }
 
+.escribiendo {
+    font-style: italic;
+    opacity: 0.8;
+    animation: pulsarTexto 1.5s infinite ease-in-out;
+}
+
+@keyframes pulsarTexto {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
 /* Input y botón enviar */
 .chat-input-area {
     display: flex;
