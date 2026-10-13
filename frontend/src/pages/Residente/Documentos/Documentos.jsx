@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Download, Eye, Info } from "lucide-react";
 
+import ChatWidget from "../../../components/Layout/ChatWidget/ChatWidget";
 import "./Documentos.css";
 import Panel from "../../../components/Panel/Panel";
 import Tabla from "../../../components/Tabla/Tabla";
@@ -83,7 +84,7 @@ const filtros = [
     },
 ];
 
-function Documentos() {
+function Documentos({ onAbrirChat }) {
 
     useEffect(() => {
         document.title = "Habita | Documentos";
@@ -118,15 +119,22 @@ function Documentos() {
                         )}
             </Navegador>
             
-            {/* INFORMACIÓN IMPORTANTE */}
+            <section className="documentos-paneles-inferiores">
+                <Panel titulo="Información importante" icono={<Info />} className="informacion-documentos">
+                    <ul>
+                        <li>Los documentos se actualizan periódicamente.</li>
+                        <li>Podés descargar o visualizar cada archivo.</li>
+                        <li>Ante cualquier duda, podés contactar con la administración.</li>
+                    </ul>
+                </Panel>
 
-            <Panel titulo="Información importante" icono={<Info />} className="informacion-documentos">
-                <ul>
-                    <li>Los documentos se actualizan periódicamente.</li>
-                    <li>Podés descargar o visualizar cada archivo.</li>
-                    <li>Ante cualquier duda, podés contactar con la administración.</li>
-                </ul>
-            </Panel>
+                <Panel titulo="Asistente Habita" className="asistente-documentos">
+                    <ChatWidget
+                        onAbrir={onAbrirChat}
+                        mensajeContextual="¿Buscás un documento? Te ayudo a encontrarlo"
+                    />
+                </Panel>
+            </section>
         </main>
     );
 }

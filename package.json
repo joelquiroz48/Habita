@@ -1,0 +1,31 @@
+{
+  "name": "habita",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "server": "node --watch server.js",
+    "client": "npm --prefix frontend run dev",
+    "dev": "npx concurrently -n \"server,client\" -c \"blue,green\" \"npm run server\" \"npm run client\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joelquiroz48/Habita.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/joelquiroz48/Habita/issues"
+  },
+  "homepage": "https://github.com/joelquiroz48/Habita#readme",
+  "dependencies": {
+    "@google/genai": "^2.18.0",
+    "@google/generative-ai": "^0.24.1",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1"
+  }
+}

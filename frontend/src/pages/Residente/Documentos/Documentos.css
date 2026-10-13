@@ -36,8 +36,32 @@
     INFORMACIÓN IMPORTANTE
 ========================= */
 .informacion-documentos {
+    margin-top: 0;
+}
+
+.documentos-paneles-inferiores {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 14px;
     margin-top: 14px;
 }
+
+.asistente-documentos {
+    display: flex;
+    flex-direction: column;
+}
+
+.asistente-documentos .panel-contenido {
+    display: flex;
+    flex: 1;
+}
+
+.asistente-documentos .tarjeta-inicial-asistente {
+    flex: 1;
+    justify-content: space-between;
+}
+
 .informacion-documentos ul {
     padding-left: 16px;
 }
@@ -47,4 +71,65 @@
     line-height: 1.6;
     color: var(--texto-secundario);
     margin-bottom: 3px;
+}
+
+
+/* =========================
+        RESPONSIVE
+========================= */
+
+@media (max-width: 1200px) {
+    .explorar-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .documentos-contenido {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+@media (max-width: 800px) {
+    .documentos-paneles-inferiores {
+        grid-template-columns: 1fr;
+    }
+
+    .documentos {
+        padding: 20px;
+    }
+
+    .explorar-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .tabla-documentos-header,
+    .tabla-documento-fila {
+        grid-template-columns: minmax(150px, 2fr) 1fr 70px;
+    }
+
+    .tabla-documentos-header span:nth-child(3),
+    .tabla-documento-fila > .fecha-documento {
+        display: none;
+    }
+}
+
+
+@media (max-width: 550px) {
+    .explorar-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .tabla-documentos-header,
+    .tabla-documento-fila {
+        grid-template-columns: minmax(130px, 1fr) 60px;
+    }
+
+    .tabla-documentos-header span:nth-child(2),
+    .tabla-documento-fila > span:nth-child(2) {
+        display: none;
+    }
+
+    .acciones-documento {
+        justify-content: flex-end;
+    }
 }

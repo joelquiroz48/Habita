@@ -1,3 +1,5 @@
+import ChatWidget from "../../../components/Layout/ChatWidget/ChatWidget";
+
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -209,7 +211,7 @@ const resumenTarjetas = [
 ];
 
 
-function Inicio() {
+function Inicio({ onAbrirChat }) {
 
     useEffect(() => {
         document.title = "Habita | Inicio";
@@ -394,22 +396,14 @@ function Inicio() {
                 </Panel>
 
                 {/* ASISTENTE */}
-
-                <Panel titulo="Asistente Habita" className="asistente-card">
-                    <p>Tu asistente inteligente siempre <br /> disponible para ayudarte.</p>
-
-                    <div className="preguntas">
-                        <button>¿Cómo reservo el SUM?</button>
-                        <button>¿Dónde veo mis expensas?</button>
-                        <button>Quiero reportar un problema</button>
+                <article className="panel-card asistente-card">
+                    <div className="panel-header">
+                        <h2>Asistente Habita</h2>
                     </div>
 
-                    <button className="btn-asistente">
-                        <MessageCircle  />
-                        Chatear con Habita
-                    </button>
-                </Panel>
-
+                    {/* Al hacer clic en el botón, abre el Chat Flotante del Layout */}
+                    <ChatWidget onAbrir={onAbrirChat} />
+                </article>
             </section>
         </main>
     );
