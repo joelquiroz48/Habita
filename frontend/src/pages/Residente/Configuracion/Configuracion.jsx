@@ -1,19 +1,8 @@
 import { useEffect, useState } from "react";
-import {
-    Bell,
-    HelpCircle,
-    MessageCircle,
-    FileText,
-    LogOut,
-    ChevronRight,
-} from "lucide-react";
+import { Bell, Bug, ChevronRight, FileText } from "lucide-react";
 
 import "./Configuracion.css";
 import Panel from "../../../components/Panel/Panel";
-
-{/* =========================
-       DATOS EJEMPLOS
-========================== */}
 
 const preferencias = [
     {
@@ -32,142 +21,123 @@ const preferencias = [
         descripcion: "Confirmaciones y recordatorios de reservas",
     },
 ];
-    
 
 function Configuracion() {
-    useEffect(() => {
-        document.title = "Habita | Configuración";
-    }, []);
-
     const [notificaciones, setNotificaciones] = useState({
         avisos: false,
         expensas: false,
         reservas: false,
     });
 
-   const cambiarNotificacion = (tipo) => {
-        setNotificaciones({
-            ...notificaciones,
-            [tipo]: !notificaciones[tipo],
-        });
-    };
+    useEffect(() => {
+        document.title = "Habita | Configuración";
+    }, []);
+
+    function cambiarNotificacion(tipo) {
+        setNotificaciones((actuales) => ({
+            ...actuales,
+            [tipo]: !actuales[tipo],
+        }));
+    }
 
     return (
-        <main className="configuracion">
+        <main className="configuracion-residente">
+            <div className="configuracion-residente-contenido">
+                <Panel
+                    titulo="Reportar un problema"
+                    descripcion="Contanos si encontraste un error o algo que podamos mejorar en Habita."
+                    icono={<Bug />}
+                    className="configuracion-residente-reporte"
+                >
+                    <form className="configuracion-residente-formulario">
+                        <label className="configuracion-residente-campo">
+                            <span>Asunto</span>
+                            <input
+                                name="asunto"
+                                type="text"
+                                placeholder="Ej.: No puedo ver mis expensas"
+                            />
+                        </label>
 
-            {/* ===========================
-                  CONTENIDO PRINCIPAL
-            ============================= */}
+                        <label className="configuracion-residente-campo">
+                            <span>Tipo de reporte</span>
+                            <select name="tipo" defaultValue="">
+                                <option value="" disabled>Seleccioná una opción</option>
+                                <option value="error">Reportar un error</option>
+                                <option value="visual">Problema visual</option>
+                                <option value="sugerencia">Sugerencia</option>
+                                <option value="otro">Otro</option>
+                            </select>
+                        </label>
 
-            <div className="configuracion-contenido">
+                        <label className="configuracion-residente-campo configuracion-residente-descripcion">
+                            <span>Descripción</span>
+                            <textarea
+                                name="descripcion"
+                                placeholder="Describí qué ocurrió y qué esperabas que sucediera."
+                                rows={6}
+                            />
+                        </label>
 
-                {/* =========================
-                    COLUMNA IZQUIERDA
-                ========================= */}
+                        <div className="configuracion-residente-acciones">
+                            <button type="button" className="configuracion-residente-enviar">
+                                Enviar reporte
+                            </button>
+                        </div>
+                    </form>
+                </Panel>
 
-                <section className="configuracion-columna">
-
-                    {/* PREFERENCIAS */}
-
+                <section className="configuracion-residente-lateral">
                     <Panel
                         titulo="Preferencias de notificación"
                         icono={<Bell />}
-                        className="preferencias-card"
+                        className="configuracion-residente-preferencias"
                     >
-                        <div className="preferencias-lista">
-                            {preferencias.map((preferencia) => (
-                                <div className="preferencia" key={preferencia.clave}>
-                                    <div>
-                                        <strong>{preferencia.titulo}</strong>
-                                        <span>{preferencia.descripcion}</span>
+                        <div className="configuracion-residente-lista">
+                            {preferencias.map((preferencia) => {
+                                const activa = notificaciones[preferencia.clave];
+
+                                return (
+                                    <div className="configuracion-residente-preferencia" key={preferencia.clave}>
+                                        <div className="configuracion-residente-preferencia-texto">
+                                            <strong>{preferencia.titulo}</strong>
+                                            <span>{preferencia.descripcion}</span>
+                                        </div>
+                                        <button
+                                            type="button"
+                                            className={`configuracion-residente-switch ${activa ? "activo" : ""}`}
+                                            role="switch"
+                                            aria-checked={activa}
+                                            aria-label={preferencia.titulo}
+                                            onClick={() => cambiarNotificacion(preferencia.clave)}
+                                        >
+                                            <span />
+                                        </button>
                                     </div>
-
-                                    <button className={`switch ${
-                                            notificaciones[preferencia.clave] ? "activo" : ""
-                                        }`}
-                                        onClick={() => cambiarNotificacion(preferencia.clave)}
-                                    >
-                                        <span></span>
-                                    </button>
-                                </div>
-                            ))}
+                                );
+                            })}
                         </div>
                     </Panel>
 
-
-                {/* CONFIGURACIONES */}
-                    {/* RESERVAS */}
-
-
-                </section>
-
-                {/* =========================
-                    COLUMNA DERECHA
-                ========================= */}
-
-                <section className="configuracion-columna">
-
-                    {/* AYUDA */}
-
-                    <Panel className="ayuda-card" icono={<HelpCircle />} titulo="Ayuda y soporte" descripcion="¿Necesitás ayuda con Habita?">
-                        <div className="ayuda-lista">
-                            <button className="config-link">
-                                <div className="config-item-icon"><HelpCircle /></div>
-
-                                <div className="config-item-content">
-                                    <strong>Centro de ayuda</strong>
-                                    <span>Consultá preguntas frecuentes.</span>
-                                </div>
-
-                                <ChevronRight />
-                            </button>
-
-                            <button className="config-link">
-                                <div className="config-item-icon"><MessageCircle /></div>
-
-                                <div className="config-item-content">
-                                    <strong>Reportar un problema</strong>
-                                    <span>Contanos si encontraste un error.</span>
-                                </div>
-
-                                <ChevronRight />
-                            </button>
-                        </div>
-                    </Panel>
-
-                    {/* INFORMACIÓN */}
-
-                    <Panel titulo="Cuenta" icono={<FileText />} descripcion="Información legal de Habita.">
-
-                        <div className="info-links">
-
-                            <button className="config-simple-link">
+                    <Panel
+                        titulo="Información legal"
+                        icono={<FileText />}
+                        descripcion="Información sobre el uso de Habita."
+                        className="configuracion-residente-legal"
+                    >
+                        <div className="configuracion-residente-enlaces">
+                            <button type="button" className="configuracion-residente-enlace">
                                 Términos y condiciones
-                                <ChevronRight />
+                                <ChevronRight aria-hidden="true" />
                             </button>
-
-                            <button className="config-simple-link">
+                            <button type="button" className="configuracion-residente-enlace">
                                 Política de privacidad
-                                <ChevronRight />
+                                <ChevronRight aria-hidden="true" />
                             </button>
-
                         </div>
-
-                        <div className="version-habita">Habita · Versión 1.0.0</div>
-
+                        <p className="configuracion-residente-version">Habita · Versión 1.0.0</p>
                     </Panel>
-
-                    {/* ZONA DE CUENTA */}
-
-                    <Panel titulo="Cuenta" className="cuenta-card">
-                        <button className="btn-logout">
-                            <LogOut />
-                            Cerrar sesión
-                        </button>
-                    </Panel>
-
                 </section>
-
             </div>
         </main>
     );

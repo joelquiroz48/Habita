@@ -1,14 +1,11 @@
 import { useEffect } from "react";
-import {
-    Download,
-    Eye,
-    Info,
-} from "lucide-react";
+import { Download, Eye, Info } from "lucide-react";
 
 import "./Documentos.css";
 import Panel from "../../../components/Panel/Panel";
 import Tabla from "../../../components/Tabla/Tabla";
 import Navegador from "../../../components/Navegador/Navegador";
+import { obtenerOpcionesPeriodo, obtenerPeriodoFecha } from "../../../utils/periodos";
 
 /* =========================
         DATOS DE EJEMPLO
@@ -40,18 +37,21 @@ const documentos = [
         categoria: "Otros",
         fecha: "31/07/2026",
     },
-];
+].map((documento) => ({
+    ...documento,
+    periodoFecha: obtenerPeriodoFecha(documento.fecha),
+}));
 
 const columnasDocumentos = [
     {
         clave: "nombre",
         titulo: "Documento",
-        ancho: "2fr",
+        ancho: "1.5fr",
     },
     {
         clave: "categoria",
         titulo: "Categoría",
-        ancho: "1.1fr",
+        ancho: "1fr",
         render: (documento) => (
             <small
                 className={`categoria-badge ${documento.categoria
@@ -65,16 +65,21 @@ const columnasDocumentos = [
     {
         clave: "fecha",
         titulo: "Fecha",
-        ancho: "0.8fr",
+        ancho: "1fr",
         clase: "fecha-documento",
     },
 ];
 
-const filtros=[
+const filtros = [
     {
         key: "categoria",
         label: "Todas las categorías",
-        options: ["Asambleas","Obras y mejoras","Reglamentos","Otros"],
+        options: ["Asambleas", "Obras y mejoras", "Reglamentos", "Otros"],
+    },
+    {
+        key: "periodoFecha",
+        label: "Todos los períodos",
+        options: obtenerOpcionesPeriodo(documentos),
     },
 ];
 
@@ -90,17 +95,6 @@ function Documentos() {
             {/* =========================
                 CONTENIDO PRINCIPAL
             ========================= */}
-
-
-            {/* INFORMACIÓN IMPORTANTE */}
-
-            <Panel titulo="Información importante" icono={<Info />} className="informacion-documentos">
-                <ul>
-                    <li>Los documentos se actualizan periódicamente.</li>
-                    <li>Podés descargar o visualizar cada archivo.</li>
-                    <li>Ante cualquier duda, podés contactar con la administración.</li>
-                </ul>
-            </Panel>
 
             {/* DOCUMENTOS */}
             <Navegador
@@ -123,7 +117,16 @@ function Documentos() {
                     />
                         )}
             </Navegador>
+            
+            {/* INFORMACIÓN IMPORTANTE */}
 
+            <Panel titulo="Información importante" icono={<Info />} className="informacion-documentos">
+                <ul>
+                    <li>Los documentos se actualizan periódicamente.</li>
+                    <li>Podés descargar o visualizar cada archivo.</li>
+                    <li>Ante cualquier duda, podés contactar con la administración.</li>
+                </ul>
+            </Panel>
         </main>
     );
 }

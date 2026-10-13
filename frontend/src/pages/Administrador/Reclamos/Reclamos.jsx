@@ -35,10 +35,10 @@ const kpis = {
 };
 
 const reclamos = [
-    { fecha: "01/09/2026", residente: "Nicolás Paz", unidad: "5B", categoria: "Mantenimiento", asunto: "Fuga de agua en cocina", estado: "Pendiente", prioridad: "Alta", descripcion: "Holaaa", adjunto: { nombre: "foto1.png", tamano: "245 KB" }, },
+    { fecha: "01/09/2026", residente: "Nicolás Paz", unidad: "5B", categoria: "Mantenimiento", asunto: "Fuga de agua en cocina", estado: "Pendiente", prioridad: "Alta", descripcion: "Holaaa", adjunto: { nombre: "foto1.png", tamano: "245 KB" } },
     { fecha: "01/09/2026", residente: "María Gómez", unidad: "3A", categoria: "Limpieza", asunto: "Suciedad en pasillos", estado: "En proceso", prioridad: "Media", descripcion: "Holaaa" },
     { fecha: "31/08/2026", residente: "Juan López", unidad: "7C", categoria: "Ascensores", asunto: "Ascensor se detiene entre pisos", estado: "En proceso", prioridad: "Alta", descripcion: "Holaaa" },
-    { fecha: "31/08/2026", residente: "Carla Romero", unidad: "1B", categoria: "Iluminación", asunto: "Luz quemada en garage", estado: "Resuelto", prioridad: "Baja", descripcion: "Holaaa", adjunto: { nombre: "1234.jpg", tamano: "245 KB" }, },
+    { fecha: "31/08/2026", residente: "Carla Romero", unidad: "1B", categoria: "Iluminación", asunto: "Luz quemada en garage", estado: "Resuelto", prioridad: "Baja", descripcion: "Holaaa", adjunto: { nombre: "1234.jpg", tamano: "245 KB" } },
     { fecha: "30/08/2026", residente: "Pedro Martínez", unidad: "2D", categoria: "Espacios comunes", asunto: "Mesa rota en SUM", estado: "Resuelto", prioridad: "Media", descripcion: "Holaaa" },
     { fecha: "29/08/2026", residente: "Laura Sánchez", unidad: "4A", categoria: "Seguridad", asunto: "Puerta del edificio sin traba", estado: "Pendiente", prioridad: "Alta", descripcion: "Holaaa" },
     { fecha: "28/08/2026", residente: "Diego Fernández", unidad: "6E", categoria: "Mantenimiento", asunto: "Aire acondicionado no enfría", estado: "En proceso", prioridad: "Media", descripcion: "Holaaa" },

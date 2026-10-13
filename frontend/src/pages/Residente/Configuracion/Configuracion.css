@@ -1,244 +1,220 @@
-/* =========================
-       CONFIGURACIÓN
-========================= */
-
-.configuracion {
-    width: 100%;
-    padding: 24px;
-}
-
-/* =========================
-          GRID
-========================= */
-
-.configuracion-contenido {
+.configuracion-residente-contenido {
     display: grid;
-    grid-template-columns: minmax(0, 1.7fr) minmax(250px, 0.8fr);
-    gap: 14px;
+    grid-template-columns: minmax(0, 1.6fr) minmax(280px, 0.9fr);
     align-items: start;
+    gap: 14px;
 }
 
-.configuracion-columna {
+.configuracion-residente-lateral {
     display: flex;
+    min-width: 0;
     flex-direction: column;
     gap: 14px;
 }
 
-.config-item-icon {
-    width: 31px;
-    height: 31px;
-    min-width: 31px;
-    border-radius: 7px;
-    background: var(--fondo-icono);
-    color: var(--texto-icono);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.configuracion-residente-formulario {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
 }
 
-.config-item-content {
-    flex: 1;
+.configuracion-residente-campo {
+    display: flex;
     min-width: 0;
-    display: flex;
     flex-direction: column;
-}
-
-.config-item-content strong {
-    font-size: 14px;
+    gap: 6px;
+    font-size: 12px;
     font-weight: 600;
 }
 
-.config-item-content span {
-    font-size: 12px;
-    color: var(--texto-secundario);
-    margin-top: 2px;
-}
-
-
-/* =========================
-          SWITCH
-========================= */
-
-.configuracion .switch {
-    position: relative;
-    width: 34px;
-    height: 19px;
-    flex-shrink: 0;
-}
-
-.configuracion .switch span {
-    position: absolute;
-    inset: 0;
-    width: auto;
-    height: auto;
-    left: 0;
-    border-radius: 20px;
-    background: var(--borde-secundario);
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.configuracion .switch span::before {
-    content: "";
-    position: absolute;
-    width: 13px;
-    height: 13px;
-    top: 3px;
-    left: 3px;
-    border-radius: 50%;
+.configuracion-residente-campo input,
+.configuracion-residente-campo select,
+.configuracion-residente-campo textarea {
+    box-sizing: border-box;
+    width: 100%;
+    border: 1px solid var(--borde-input);
+    border-radius: 6px;
+    outline: none;
     background: var(--blanco);
-    transition: 0.2s;
+    color: var(--texto-principal);
+    font: 400 13px "Open Sans", sans-serif;
 }
 
-.configuracion .switch.activo span {
-    left: 0;
+.configuracion-residente-campo input,
+.configuracion-residente-campo select {
+    height: 40px;
+    padding: 0 11px;
+}
+
+.configuracion-residente-campo textarea {
+    min-height: 140px;
+    padding: 10px 11px;
+    line-height: 1.5;
+    resize: vertical;
+}
+
+.configuracion-residente-campo input::placeholder,
+.configuracion-residente-campo textarea::placeholder,
+.configuracion-residente-campo select:invalid {
+    color: #7a858a;
+}
+
+.configuracion-residente-campo input:focus,
+.configuracion-residente-campo select:focus,
+.configuracion-residente-campo textarea:focus {
+    border-color: var(--verde);
+    box-shadow: 0 0 0 2px rgb(39 155 151 / 12%);
+}
+
+.configuracion-residente-descripcion,
+.configuracion-residente-acciones {
+    grid-column: 1 / -1;
+}
+
+.configuracion-residente-acciones {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.configuracion-residente-enviar {
+    min-height: 40px;
+    padding: 0 14px;
+    border: 1px solid var(--verde);
+    border-radius: 6px;
     background: var(--verde);
+    color: var(--blanco);
+    font: 600 13px "Open Sans", sans-serif;
+    cursor: pointer;
 }
 
-.configuracion .switch.activo span::before {
-    transform: translateX(15px);
+.configuracion-residente-enviar:hover {
+    border-color: var(--verde-hover);
+    background: var(--verde-hover);
 }
 
-
-/* =========================
-        BOTONES / LINKS
-========================= */
-
-.config-link {
-    width: 100%;
-    min-height: 57px;
-    padding: 7px 0;
-    border-bottom: 1px solid var(--separador);
-    background: transparent;
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    text-align: left;
-}
-
-.config-link:last-child {
-    border-bottom: none;
-}
-
-.config-link:hover .config-item-content strong {
-    color: var(--verde-hover);
-}
-
-.config-link > svg:last-child {
-    color: var(--texto-icono);
-    flex-shrink: 0;
-}
-
-
-/* =========================
-            AYUDA
-========================= */
-
-.ayuda-card {
-    background: linear-gradient(
-        145deg,
-        var(--blanco),
-        var(--celeste-claro)
-    );
-}
-
-.ayuda-lista {
+.configuracion-residente-lista,
+.configuracion-residente-enlaces {
     display: flex;
     flex-direction: column;
 }
 
-.ayuda-lista strong {
-    font-weight: 500;
-}
-
-
-/* =========================
-         INFORMACIÓN
-========================= */
-
-.info-links {
-    display: flex;
-    flex-direction: column;
-}
-
-.config-simple-link {
-    width: 100%;
-    min-height: 37px;
-    border-bottom: 1px solid var(--separador);
-    background: transparent;
+.configuracion-residente-preferencia {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 14px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--separador);
+}
+
+.configuracion-residente-preferencia:last-child {
+    border-bottom: 0;
+}
+
+.configuracion-residente-preferencia-texto {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+}
+
+.configuracion-residente-preferencia-texto strong {
+    color: var(--texto-principal);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.configuracion-residente-preferencia-texto span {
+    margin-top: 2px;
+    color: var(--texto-secundario);
+    font-size: 12px;
+}
+
+.configuracion-residente-switch {
+    position: relative;
+    width: 34px;
+    height: 19px;
+    flex: 0 0 auto;
+    padding: 0;
+    border: 0;
+    border-radius: 20px;
+    background: var(--borde-secundario);
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.configuracion-residente-switch::before {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: var(--blanco);
+    content: "";
+    transition: transform 0.2s;
+}
+
+.configuracion-residente-switch.activo {
+    background: var(--verde);
+}
+
+.configuracion-residente-switch.activo::before {
+    transform: translateX(15px);
+}
+
+.configuracion-residente-enlace {
+    display: flex;
+    width: 100%;
+    min-height: 38px;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--separador);
+    background: transparent;
     color: var(--texto-secundario);
     font-size: 13px;
     text-align: left;
 }
 
-.config-simple-link:hover {
+.configuracion-residente-enlace:last-child {
+    border-bottom: 0;
+}
+
+.configuracion-residente-enlace:hover {
     color: var(--verde-hover);
 }
 
-.config-simple-link svg {
+.configuracion-residente-enlace svg {
+    flex: 0 0 auto;
     color: var(--texto-icono);
 }
 
-.version-habita {
+.configuracion-residente-version {
+    margin: 10px 0 0;
+    color: var(--texto-secundario);
     font-size: 12px;
-    color: var(--texto-secundario);
-    margin-top: 11px;
 }
 
-
-/* =========================
-          CUENTA
-========================= */
-
-.cuenta-card h2 {
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 12px;
-}
-
-.btn-logout {
-    width: 100%;
-    height: 31px;
-    border: 1px solid var(--borde-secundario);
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    color: var(--texto-secundario);
-    font-size: 13px;
-}
-
-.btn-logout:hover {
-    border-color: var(--verde);
-    color: var(--verde-hover);
-}
-
-/* =========================
-        RESPONSIVE
-========================= */
-
-@media (max-width: 1000px) {
-    .configuracion-contenido {
-        grid-template-columns: 1fr;
+@media (max-width: 900px) {
+    .configuracion-residente-contenido {
+        grid-template-columns: minmax(0, 1fr);
     }
-
 }
 
-
-@media (max-width: 700px) {
-    .configuracion {
+@media (max-width: 560px) {
+    .configuracion-residente {
         padding: 20px;
     }
 
-}
+    .configuracion-residente-formulario {
+        grid-template-columns: minmax(0, 1fr);
+    }
 
+    .configuracion-residente-descripcion,
+    .configuracion-residente-acciones {
+        grid-column: auto;
+    }
 
-@media (max-width: 500px) {
-    .config-item-content {
-        min-width: calc(100% - 45px);
+    .configuracion-residente-enviar {
+        width: 100%;
     }
 }

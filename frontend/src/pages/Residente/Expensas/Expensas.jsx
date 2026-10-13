@@ -1,34 +1,15 @@
-import { useEffect } from "react";
-import {
-    WalletCards,
-    CalendarDays,
-    Tag,
-    CreditCard,
-    Download,
-    Eye,
-    ChevronRight,
-    CircleHelp,
-    FileText,
-    Plus,
-} from "lucide-react";
+import { useEffect, useState } from "react";
+import { WalletCards, CalendarDays, Tag, Download, BanknoteArrowDown, ChevronRight, CircleHelp, FileText, X } from "lucide-react";
 
 import "./Expensas.css";
 import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
 import Panel from "../../../components/Panel/Panel";
 import Tabla from "../../../components/Tabla/Tabla";
+import Navegador from "../../../components/Navegador/Navegador";
 
 /* =========================
     DATOS DE EJEMPLO
 ========================= */
-
-const expensaActual = {
-    monto: "$ 45.230",
-    periodo: "Agosto 2026",
-    vencimiento: "10/09/2026",
-    estado: "Pendiente de pago",
-    medioPago: "Tarjeta de crédito",
-    terminacion: "**** 4242",
-};
 
 const detalleExpensa = [
     {
@@ -57,36 +38,42 @@ const historialExpensas = [
     {
         periodo: "Agosto 2026",
         importe: "$ 45.230",
+        fecha: "--",
         vencimiento: "10/09/2026",
-        estado: "Pendiente de pago",
+        estado: "Pendiente",
     },
     {
         periodo: "Julio 2026",
         importe: "$ 43.980",
+        fecha: "09/04/2026",
         vencimiento: "10/08/2026",
         estado: "Pagada",
     },
     {
         periodo: "Junio 2026",
         importe: "$ 43.500",
+        fecha: "09/04/2026",
         vencimiento: "10/07/2026",
         estado: "Pagada",
     },
     {
         periodo: "Mayo 2026",
         importe: "$ 42.830",
+        fecha: "09/04/2026",
         vencimiento: "10/06/2026",
         estado: "Pagada",
     },
     {
         periodo: "Abril 2026",
         importe: "$ 42.100",
+        fecha: "09/04/2026",
         vencimiento: "10/05/2026",
         estado: "Pagada",
     },
     {
         periodo: "Marzo 2026",
         importe: "$ 41.650",
+        fecha: "09/04/2026",
         vencimiento: "10/04/2026",
         estado: "Pagada",
     },
@@ -98,71 +85,40 @@ const columnasHistorialExpensas = [
         clave: "importe",
         titulo: "Importe",
         ancho: "1fr",
-        render: (expensa) => <strong>{expensa.importe}</strong>,
+    },
+    {
+        clave: "fecha",
+        titulo: "Pagado el",
+        ancho: "1fr",
     },
     { clave: "vencimiento", titulo: "Vencimiento", ancho: "1.2fr" },
     {
         clave: "estado",
         titulo: "Estado",
-        ancho: "1.3fr",
+        ancho: "1fr",
         render: (expensa) => (
-            <small className={
-                expensa.estado === "Pagada"
-                    ? "estado-pagada"
-                    : "estado-pendiente-expensa"
-            }>
+            <small className={`badge-expensa ${estadoBadgeClase(expensa.estado)}`}>
                 {expensa.estado}
             </small>
         ),
     },
-    {
-        clave: "acciones",
-        titulo: "Acciones",
-        ancho: "2.3fr",
-        render: () => (
-            <span className="acciones-expensa">
-                <button title="Descargar" aria-label="Descargar">
-                    <Download />
-                    Descargar
-                </button>
-                <button title="Ver detalle" aria-label="Ver detalle">
-                    <Eye />
-                    Ver detalle
-                </button>
-                <button
-                    className="accion-menu"
-                    title="Más opciones"
-                    aria-label="Más opciones"
-                >
-                    ⋮
-                </button>
-            </span>
-        ),
-    },
 ];
 
-{/* =========================
+/* =========================
        TARJETAS RESUMEN
-========================== */}
+========================== */
 
 const resumenExpensas = [
     {
         icono: WalletCards,
         titulo: "Expensa actual",
-        valor: expensaActual.monto,
-        contenido: (
-            <>
-                <small>{expensaActual.periodo}</small>
-                {/* <em className="badge-expensa">
-                    Pendiente de pago
-                </em> */}
-            </>
-        ),
+        valor: historialExpensas[0].importe,
+        contenido: <small>{historialExpensas[0].periodo}</small>,
     },
     {
         icono: CalendarDays,
         titulo: "Vencimiento",
-        valor: expensaActual.vencimiento,
+        valor: historialExpensas[0].vencimiento,
         contenido: (
             <small>En 7 días</small>
         ),
@@ -170,42 +126,45 @@ const resumenExpensas = [
     {
         icono: Tag,
         titulo: "Estado",
-        valor: "",
         contenido: (
             <>
-                <em className="badge-expensa">
+                <em className="badge-expensa expensas-badge-pendiente">
                     Pendiente
                 </em>
-                <small className="estado-descripcion">
-                    Tu expensa aún <br /> no fue pagada.
+                <small>
+                    Tu expensa aún no fue pagada.
                 </small>
             </>
         ),
     },
-    // {
-    //     icono: CreditCard,
-    //     titulo: "Medio de pago preferido",
-    //     valor: "",
-    //     contenido: (
-    //         <>
-    //             <strong className="medio-preferido">
-    //                 Tarjeta de crédito
-    //             </strong>
-    //             <small>Terminada en 4242</small>
-    //             <button className="link-verde">
-    //                 Cambiar medio de pago
-    //             </button>
-    //         </>
-    //     ),
-    // },
 ];
 
+const filtros = [
+    {
+        key: "estado",
+        label: "Todos los estados",
+        options: ["Pagada", "Pendiente", "Rechazada"],
+    },
+];
+
+function estadoBadgeClase(estado) {
+    if (estado === "Pagada") return "expensas-badge-pagado";
+    return "expensas-badge-pendiente";
+}
 
 function Expensas() {
+
+    const [expensaSeleccionada, setExpensaSeleccionada] = useState(historialExpensas[0]);
+    const [detalleAbierto, setDetalleAbierto] = useState(false);
 
     useEffect(() => {
         document.title = "Habita | Mis expensas";
     }, []);
+
+    function abrirDetalle(expensa) {
+        setExpensaSeleccionada(expensa);
+        setDetalleAbierto(true);
+    }
 
     return (
         <main className="expensas">
@@ -215,11 +174,11 @@ function Expensas() {
             ========================= */}
 
             <section className="expensas-resumen">
-                {resumenExpensas.map((item, index) => {
+                {resumenExpensas.map((item) => {
                     const Icono = item.icono;
                     return (
                         <TarjetaResumen
-                            key={index}
+                            key={item.titulo}
                             icono={<Icono />}
                             titulo={item.titulo}
                             valor={item.valor}
@@ -233,42 +192,79 @@ function Expensas() {
                 CONTENIDO PRINCIPAL
             ========================= */}
 
-            <section className="expensas-contenido">
+            {/* HISTORIAL */}
+            <Navegador
+                data={historialExpensas}
+                searchKey="periodo"
+                searchPlaceholder="Buscar periodo..."
+                filters={filtros}
+            >
+                {(historialExpensasFiltradas) => (
+                    <Tabla
+                        columnas={columnasHistorialExpensas}
+                        datos={historialExpensasFiltradas}
+                        filasPorPagina={5}
+                        etiqueta="expensas"
+                        onFilaClick={abrirDetalle}
+                        seleccionable
+                        filaSeleccionada={detalleAbierto ? expensaSeleccionada : null}
+                    />
+                )}
+            </Navegador>
 
-                {/* =========================
-                      COLUMNA IZQUIERDA
-                ========================= */}
-
-                <section className="expensas-columna">
-
-                    {/* EXPENSAS */}
-
-                    <Panel className="detalle-expensa">
-
-                        <div className="detalle-info">
-                            <h2>Expensa de Agosto 2026</h2>
-
-                            <strong>{expensaActual.monto}</strong>
-
-                            {/* <span>Período: 01/08/2026 al 31/08/2026</span> */}
-
-                            <small>Vence el 10/09/2026</small>
-
-                            <em className="badge-expensa">Pendiente de pago</em>
-
-                            <button className="btn-pagar">Pagar ahora</button>
-
-                            <button className="btn-descargar">
-                                <Download />
-                                Descargar boleta
-                            </button>
+            {detalleAbierto && (
+                <Panel
+                    className="expensas-residente-detalle"
+                    titulo="Detalle de expensa"
+                    tituloComplemento={
+                        <div className={`badge-expensa ${estadoBadgeClase(expensaSeleccionada.estado)}`}>
+                            {expensaSeleccionada.estado}
                         </div>
+                    }
+                    accion={
+                        <button
+                            type="button"
+                            onClick={() => setDetalleAbierto(false)}
+                            aria-label="Cerrar detalle"
+                        >
+                            <X size={18} />
+                        </button>
+                    }
+                >
 
-                        <div className="detalle-lista">
+                    {/* =========== COLUMNAS =========== */}
+
+                    <div className="expensas-residente-detalle-columnas">
+
+                        {/* =========== FILAS =========== */}
+
+                        <section className="expensas-residente-detalle-seccion">
+                            <h3>Resumen</h3>
+                            <div className="expensas-residente-detalle-fila">
+                                <span>Importe total</span>
+                                <span>{expensaSeleccionada.importe}</span>
+                            </div>
+                            <div className="expensas-residente-detalle-fila">
+                                <span>Periodo</span>
+                                <span>{expensaSeleccionada.periodo}</span>
+                            </div>
+                            <div className="expensas-residente-detalle-fila">
+                                <span>Vencimiento</span>
+                                <span>{expensaSeleccionada.vencimiento}</span>
+                            </div>
+                            <div className="expensas-residente-detalle-fila">
+                                <span>Pagado el</span>
+                                <span>{expensaSeleccionada.fecha}</span>
+                            </div>
+                        </section>
+
+                        {/* =========== FILAS =========== */}
+
+                        <section className="expensas-residente-detalle-seccion">
                             <h3>Detalle de la expensa</h3>
 
                             {detalleExpensa.map((item) => (
-                                <div className="detalle-item" key={item.id}>
+                                <div className="detalle-item" key={item.concepto}>
                                     <div>
                                         <CircleHelp />
                                         <span>{item.concepto}</span>
@@ -281,117 +277,63 @@ function Expensas() {
                             <div className="detalle-total">
                                 <strong>Total</strong>
 
-                                <strong>{expensaActual.monto}</strong>
+                                <strong>{expensaSeleccionada.importe}</strong>
                             </div>
-                        </div>
+                        </section>
+                    </div>
 
-                    </Panel>
+                    {/* =========== COMPROBANTE =========== */}
 
-                    {/* HISTORIAL */}
-
-                    <Tabla
-                        columnas={columnasHistorialExpensas}
-                        datos={historialExpensas}
-                        filasPorPagina={5}
-                        etiqueta="expensas"
-                        className="historial-tabla"
-                    />
-
-                </section>
-
-                {/* =========================
-                      COLUMNA DERECHA
-                ========================= */}
-
-                <section className="expensas-columna">
-
-                    {/* MEDIOS DE PAGO */}
-
-                    {/* <Panel titulo="Medios de pago" descripcion="Elegí cómo querés pagar tu expensa" className="medios-pago">
-                        <div className="metodos-tabs">
-                            <button className="activo">Tarjeta</button>
-
-                            <button>Transferencia</button>
-
-                            <button>QR</button>
-                        </div>
-
-                        <div className="tarjeta-guardada">
-                            <span>Tarjeta de crédito</span>
-
-                            <div>
-                                <strong>VISA</strong>
-
-                                <span>Visa terminada en 4242</span>
-
-                                <em>Predeterminada</em>
-                            </div>
-                        </div>
-
-                        <div className="tarjeta-guardada">
-                            <span>Otra tarjeta</span>
-
-                            <div>
-                                <strong>VISA</strong>
-
-                                <span>Visa terminada en 1234</span>
-
-                                <input type="radio" name="tarjeta"/>
-                            </div>
-                        </div>
-
-                        <button className="nueva-tarjeta">
-                            <Plus />
-                            Agregar nueva tarjeta
-                            <ChevronRight />
+                    <div className="expensas-residente-detalle-acciones">
+                        <button type="button" className="expensas-residente-detalle-boton expensas-residente-detalle-boton-principal">
+                            <BanknoteArrowDown size={16} />
+                            Pagar ahora
                         </button>
-
-                        <button className="ver-medios">
-                            Ver mis medios de pago
-                            <ChevronRight />
+                        <button type="button" className="expensas-residente-detalle-boton">
+                            <Download size={16} />
+                            Descargar boleta
                         </button>
-                    </Panel> */}
+                    </div>
+                </Panel>
+            )}
 
-                    {/* AYUDA */}
+            {/* AYUDA */}
 
-                    <Panel titulo="Ayuda sobre expensas" className="ayuda-expensas">
-                        <div className="ayuda-item">
-                            <div className="ayuda-icon"><CircleHelp  /></div>
+            <Panel titulo="Ayuda sobre expensas" className="ayuda-expensas">
+                <div className="ayuda-item">
+                    <div className="ayuda-icon"><CircleHelp  /></div>
 
-                            <div>
-                                <strong>¿Cómo se calculan las expensas?</strong>
-                                <span>Entendé qué incluye tu expensa mensual.</span>
-                            </div>
+                    <div>
+                        <strong>¿Cómo se calculan las expensas?</strong>
+                        <span>Entendé qué incluye tu expensa mensual.</span>
+                    </div>
 
-                            <ChevronRight />
-                        </div>
+                    <ChevronRight />
+                </div>
 
-                        <div className="ayuda-item">
-                            <div className="ayuda-icon"><WalletCards /></div>
+                <div className="ayuda-item">
+                    <div className="ayuda-icon"><WalletCards /></div>
 
-                            <div>
-                                <strong>Medios de pago y promociones</strong>
-                                <span>Conocé las opciones disponibles.</span>
-                            </div>
+                    <div>
+                        <strong>Medios de pago y promociones</strong>
+                        <span>Conocé las opciones disponibles.</span>
+                    </div>
 
-                            <ChevronRight />
-                        </div>
+                    <ChevronRight />
+                </div>
 
-                        <div className="ayuda-item">
-                            <div className="ayuda-icon"><FileText /></div>
+                <div className="ayuda-item">
+                    <div className="ayuda-icon"><FileText /></div>
 
-                            <div>
-                                <strong>¿Tenés un problema con tu pago?</strong>
-                                <span>Te ayudamos a resolverlo.</span>
-                            </div>
+                    <div>
+                        <strong>¿Tenés un problema con tu pago?</strong>
+                        <span>Te ayudamos a resolverlo.</span>
+                    </div>
 
-                            <ChevronRight />
-                        </div>
-                    </Panel>
+                    <ChevronRight />
+                </div>
+            </Panel>
 
-                </section>
-
-            </section>
 
         </main>
     );

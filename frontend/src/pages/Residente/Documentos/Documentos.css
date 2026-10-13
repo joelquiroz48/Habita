@@ -1,14 +1,4 @@
 /* =========================
-        DOCUMENTOS
-========================= */
-
-.documentos {
-    width: 100%;
-    padding: 24px;
-}
-
-
-/* =========================
       BADGES CATEGORÍA
 ========================= */
 
@@ -17,8 +7,8 @@
     display: inline-block;
     padding: 3px 6px;
     border-radius: 4px;
-    font-size: 10px;
-    font-weight: 500;
+    font-size: 11px;
+    font-weight: 600;
 }
 
 .categoria-badge.asambleas {
@@ -46,7 +36,7 @@
     INFORMACIÓN IMPORTANTE
 ========================= */
 .informacion-documentos {
-    margin-bottom: 14px;
+    margin-top: 14px;
 }
 .informacion-documentos ul {
     padding-left: 16px;
