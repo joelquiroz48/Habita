@@ -5,6 +5,7 @@ import "./Documentos.css";
 import Panel from "../../../components/Panel/Panel";
 import Tabla from "../../../components/Tabla/Tabla";
 import Navegador from "../../../components/Navegador/Navegador";
+import { obtenerOpcionesPeriodo, obtenerPeriodoFecha } from "../../../utils/periodos";
 
 /* =========================
         DATOS DE EJEMPLO
@@ -36,7 +37,10 @@ const documentos = [
         categoria: "Otros",
         fecha: "31/07/2026",
     },
-];
+].map((documento) => ({
+    ...documento,
+    periodoFecha: obtenerPeriodoFecha(documento.fecha),
+}));
 
 const columnasDocumentos = [
     {
@@ -66,11 +70,16 @@ const columnasDocumentos = [
     },
 ];
 
-const filtros=[
+const filtros = [
     {
         key: "categoria",
         label: "Todas las categorías",
-        options: ["Asambleas","Obras y mejoras","Reglamentos","Otros"],
+        options: ["Asambleas", "Obras y mejoras", "Reglamentos", "Otros"],
+    },
+    {
+        key: "periodoFecha",
+        label: "Todos los períodos",
+        options: obtenerOpcionesPeriodo(documentos),
     },
 ];
 

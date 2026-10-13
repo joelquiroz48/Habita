@@ -112,7 +112,7 @@ const resumenExpensas = [
     {
         icono: WalletCards,
         titulo: "Expensa actual",
-        valor: historialExpensas[0].monto,
+        valor: historialExpensas[0].importe,
         contenido: <small>{historialExpensas[0].periodo}</small>,
     },
     {
