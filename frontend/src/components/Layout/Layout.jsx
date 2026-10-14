@@ -213,9 +213,9 @@ function Layout({ children }) {
                                     <Link to="/configuracion">
                                         Configuración
                                     </Link>
-
+                                    
                                     <Link
-                                        to="/"
+                                        to="/login"
                                         onClick={() => sessionStorage.removeItem(CHAT_SESSION_STORAGE_KEY)}
                                     >
                                         Cerrar sesión

@@ -82,7 +82,7 @@ function Login() {
                         {/* -------- Marca -------- */}
                         <header className="encabezado">
 
-                            <Link to="/inicio" className="marca" aria-label="Habita - Inicio">
+                            <Link to="/" className="marca" aria-label="Habita - Inicio">
                                 <img src={logo} alt="Logo de Habita" />
                                 <h1>Habita</h1>
                             </Link>

@@ -52,7 +52,7 @@ function Register() {
 
             setLoading(false);
             // redirect to login
-            navigate('/');
+            navigate('/login');
         } catch (err) {
             setError('Error de red');
             setLoading(false);
@@ -74,14 +74,10 @@ function Register() {
                         {/* -------- Marca -------- */}
                         <header className="encabezado">
 
-                            <a href="/" className="marca" aria-label="Habita - Inicio">
-
-                                <Link to="/inicio" className="marca" aria-label="Habita - Inicio">
+                            <Link to="/" className="marca" aria-label="Habita - Inicio">
                                 <img src={logo} alt="Logo de Habita" />
                                 <h1>Habita</h1>
-                                </Link>
-
-                            </a>
+                            </Link>
 
                             <p>
                                 Gestión inteligente para consorcios y edificios.
@@ -360,7 +356,7 @@ function Register() {
 
                             <div className="iniciar-sesion">
                                 <span>¿Ya tenés una cuenta? </span>
-                                <Link to="/">Iniciar sesión</Link>
+                                <Link to="/login">Iniciar sesión</Link>
                             </div>
 
                         </div>
