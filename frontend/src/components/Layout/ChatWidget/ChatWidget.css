@@ -273,10 +273,12 @@
 
 .chat-window-flotante {
     position: fixed;
-    bottom: 25px;
-    right: 25px;
+    bottom: 104px;
+    right: 20px;
     width: 340px;
     height: 440px;
+    max-width: calc(100vw - 40px);
+    max-height: calc(100vh - 124px);
     background: var(--blanco);
     border-radius: 12px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
@@ -298,4 +300,64 @@
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+
+/* =========================
+   BOTÓN FLOTANTE DEL ASISTENTE
+   (siempre en la esquina inferior izquierda)
+========================= */
+
+.chat-boton-flotante {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 9998;
+    width: 72px;
+    height: 72px;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    filter: drop-shadow(0 4px 8px rgba(8, 54, 60, 0.28));
+    transition: transform 0.2s ease;
+}
+
+.chat-boton-flotante:hover {
+    transform: scale(1.1);
+}
+
+.chat-boton-flotante:active {
+    transform: scale(0.96);
+}
+
+.chat-boton-flotante:focus-visible {
+    outline: 3px solid var(--verde);
+    outline-offset: 3px;
+}
+
+/* Las dos caritas están apiladas; al pasar el mouse se cambia de una a otra */
+.chat-boton-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    pointer-events: none;
+    transition: opacity 0.12s ease;
+}
+
+.chat-boton-img.ojos-cerrados {
+    opacity: 0;
+}
+
+.chat-boton-flotante:hover .chat-boton-img.normal,
+.chat-boton-flotante:focus-visible .chat-boton-img.normal {
+    opacity: 0;
+}
+
+.chat-boton-flotante:hover .chat-boton-img.ojos-cerrados,
+.chat-boton-flotante:focus-visible .chat-boton-img.ojos-cerrados {
+    opacity: 1;
 }

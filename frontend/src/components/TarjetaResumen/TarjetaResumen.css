@@ -21,6 +21,8 @@
 }
 
 .resumen-contenido {
+    flex: 1;
+    align-self: stretch;
     display: flex;
     flex-direction: column;
     font-size: 14px;
@@ -40,4 +42,18 @@
     color: var(--texto-secundario);
     font-size: 12px;
     line-height: 1.6;
+}
+
+/* Enlace inferior ("Ver expensas", "Ver reservas"...) */
+.resumen-enlace {
+    margin-top: auto;
+    padding-top: 6px;
+    width: fit-content;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--verde-hover);
+}
+
+.resumen-enlace:hover {
+    text-decoration: underline;
 }

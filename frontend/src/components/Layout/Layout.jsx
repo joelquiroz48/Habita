@@ -5,6 +5,8 @@ import "./Layout.css";
 import iconPerfil from "../../assets/img/foto-perfil.png";
 import iconLogo from "../../assets/img/icon.png";
 import imagenEdificio from "../../assets/img/imagen-predeterminada.png";
+import habitaImg from "../../assets/img/interfaz-chat/habita-asistente.png";
+import habitaImgOjosCerrados from "../../assets/img/interfaz-chat/habita-asistente-2.png";
 
 import {
     ChevronDown,
@@ -296,6 +298,18 @@ function Layout({ children }) {
                 onEnviarMensaje={enviarMensaje}
                 cargando={cargandoRespuesta}
             />
+
+            {/* ----- BOTÓN FLOTANTE DEL ASISTENTE (esquina inferior izquierda) ----- */}
+            <button
+                type="button"
+                className="chat-boton-flotante"
+                onClick={() => setChatAbierto((abierto) => !abierto)}
+                aria-label={chatAbierto ? "Cerrar el asistente Habita" : "Hablar con el asistente Habita"}
+                title="Hablar con Habita"
+            >
+                <img className="chat-boton-img normal" src={habitaImg} alt="" />
+                <img className="chat-boton-img ojos-cerrados" src={habitaImgOjosCerrados} alt="" />
+            </button>
         </div>
     );
 }

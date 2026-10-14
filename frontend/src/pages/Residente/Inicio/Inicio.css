@@ -32,7 +32,7 @@
 
 .inicio-contenido {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 14px;
 }
 
@@ -400,9 +400,6 @@
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .inicio-contenido {
-    grid-template-columns: repeat(2, 1fr);
-  }
 }
 
 @media (max-width: 800px) {
@@ -410,8 +407,7 @@
     padding: 20px;
   }
 
-  .inicio-resumen,
-  .inicio-contenido {
+  .inicio-resumen {
     grid-template-columns: 1fr;
   }
 }

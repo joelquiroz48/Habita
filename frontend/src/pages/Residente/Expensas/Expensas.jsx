@@ -6,7 +6,6 @@ import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
 import Panel from "../../../components/Panel/Panel";
 import Tabla from "../../../components/Tabla/Tabla";
 import Navegador from "../../../components/Navegador/Navegador";
-import ChatWidget from "../../../components/Layout/ChatWidget/ChatWidget";
 
 /* =========================
     DATOS DE EJEMPLO
@@ -153,7 +152,7 @@ function estadoBadgeClase(estado) {
     return "expensas-badge-pendiente";
 }
 
-function Expensas({ onAbrirChat }) {
+function Expensas() {
 
     const [expensaSeleccionada, setExpensaSeleccionada] = useState(historialExpensas[0]);
     const [detalleAbierto, setDetalleAbierto] = useState(false);
@@ -333,13 +332,6 @@ function Expensas({ onAbrirChat }) {
 
                         <ChevronRight />
                     </div>
-                </Panel>
-
-                <Panel titulo="Asistente Habita" className="asistente-expensas">
-                    <ChatWidget
-                        onAbrir={onAbrirChat}
-                        mensajeContextual="¿Dudas con tus expensas? Te ayudo a entenderlas"
-                    />
                 </Panel>
             </section>
 

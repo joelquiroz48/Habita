@@ -20,7 +20,6 @@ import imagenPredeterminada from "../../../assets/img/imagen-predeterminada.png"
 import "./Reservas.css";
 import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
 import Panel from "../../../components/Panel/Panel";
-import ChatWidget from "../../../components/Layout/ChatWidget/ChatWidget";
 import {
     ModalCancelarReserva,
     ModalDetalleReserva,
@@ -93,7 +92,7 @@ const PREGUNTAS = [
     },
 ];
 
-function Reservas({ onAbrirChat }) {
+function Reservas() {
 
     const navigate = useNavigate();
     const [preguntaAbierta, setPreguntaAbierta] = useState(null);
@@ -706,13 +705,6 @@ function Reservas({ onAbrirChat }) {
                             Ver calendario completo
                             <ChevronRight />
                         </button>
-                    </Panel>
-
-                    <Panel titulo="Asistente Habita" className="asistente-reservas">
-                        <ChatWidget
-                            onAbrir={onAbrirChat}
-                            mensajeContextual="¿Querés reservar un espacio? Te guío"
-                        />
                     </Panel>
 
                 </section>
