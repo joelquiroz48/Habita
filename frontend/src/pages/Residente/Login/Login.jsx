@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "./Login.css";
 
 import logo from "../../../assets/img/icon.png";
+import { supabase } from "../../../supabase";
 import {Users, ShieldUser, FileText, ChartNoAxesColumnIncreasing, LockKeyhole, Mail, Eye, EyeOff } from "lucide-react";
 
 function Login() {
@@ -50,6 +51,18 @@ function Login() {
             // store token (simple approach)
             if (body.access_token) {
                 localStorage.setItem('access_token', body.access_token);
+            }
+
+            // Le damos la sesión al cliente de Supabase: sin esto las consultas
+            // salen como "anónimas" y la base (RLS) no devuelve datos del usuario.
+            if (body.access_token && body.refresh_token) {
+                const { error: errorSesion } = await supabase.auth.setSession({
+                    access_token: body.access_token,
+                    refresh_token: body.refresh_token,
+                });
+                if (errorSesion) {
+                    console.error('No se pudo guardar la sesión:', errorSesion);
+                }
             }
 
             setLoading(false);

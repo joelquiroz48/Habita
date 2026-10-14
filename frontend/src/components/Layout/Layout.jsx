@@ -5,6 +5,8 @@ import "./Layout.css";
 import iconPerfil from "../../assets/img/foto-perfil.png";
 import iconLogo from "../../assets/img/icon.png";
 import imagenEdificio from "../../assets/img/imagen-predeterminada.png";
+import { supabase } from "../../supabase";
+import { obtenerPerfilResidente } from "../../services/perfilService";
 import habitaImg from "../../assets/img/interfaz-chat/habita-asistente.png";
 import habitaImgOjosCerrados from "../../assets/img/interfaz-chat/habita-asistente-2.png";
 
@@ -94,6 +96,23 @@ function Layout({ children }) {
 
     const location = useLocation();
     const infoHeader = informacionHeader[location.pathname];
+
+    // Datos reales del residente logueado (nombre, unidad y edificio)
+    const [perfil, setPerfil] = useState(null);
+
+    useEffect(() => {
+        let activo = true;
+        obtenerPerfilResidente()
+            .then((datos) => { if (activo) setPerfil(datos); })
+            .catch((error) => console.error("No pudimos cargar tu perfil:", error));
+        return () => { activo = false; };
+    }, []);
+
+    const cerrarSesion = async () => {
+        sessionStorage.removeItem(CHAT_SESSION_STORAGE_KEY);
+        localStorage.removeItem("access_token");
+        await supabase.auth.signOut();
+    };
 
     // Estado del Chat Flotante
     const [chatAbierto, setChatAbierto] = useState(false);
@@ -200,7 +219,7 @@ function Layout({ children }) {
                             onClick={() => setMenuAbierto(!menuAbierto)}
                         >
                             <div className="menu-usuario-texto">
-                                <strong>Usuario_nombre</strong>
+                                <strong>{perfil?.nombre ?? "Cargando..."}</strong>
                                 <span>Residente</span>
                             </div>
 
@@ -218,7 +237,7 @@ function Layout({ children }) {
                                     
                                     <Link
                                         to="/login"
-                                        onClick={() => sessionStorage.removeItem(CHAT_SESSION_STORAGE_KEY)}
+                                        onClick={cerrarSesion}
                                     >
                                         Cerrar sesión
                                     </Link>
@@ -270,8 +289,11 @@ function Layout({ children }) {
                                 />
 
                                 <div className="sidebar-edificio-info">
-                                    <strong>Torre Los Álamos</strong>
-                                    <span>Av. Siempre Viva 742</span>
+                                    <strong>{perfil?.edificio?.nombre ?? "Tu edificio"}</strong>
+                                    <span>
+                                        {perfil?.edificio?.direccion ?? ""}
+                                        {perfil?.unidad ? ` · Unidad ${perfil.unidad.numero}` : ""}
+                                    </span>
                                 </div>
                             </div>
                         </nav>
