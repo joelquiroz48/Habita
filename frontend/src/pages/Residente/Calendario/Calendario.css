@@ -1,0 +1,62 @@
+/* =========================
+   CALENDARIO DEL EDIFICIO
+   (usa la grilla de CalendarioReservas.css; acá van solo los
+    colores por tipo y los filtros)
+========================= */
+
+.cal-tipo-reunion { background: var(--fondo-azul-suave); color: var(--color-aviso-azul); }
+.cal-tipo-mantenimiento { background: var(--fondo-aviso-amarillo); color: var(--color-vencimiento); }
+.cal-tipo-social { background: var(--fondo-verde-suave); color: var(--color-aviso-verde); }
+.cal-tipo-otro { background: var(--fondo-icono); color: var(--texto-secundario); }
+.cal-tipo-vencimiento { background: var(--fondo-documento-pdf); color: var(--color-aviso-rojo); }
+
+.calendario-filtros {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 10px;
+}
+
+.calendario-filtros button {
+    height: 28px;
+    padding: 0 12px;
+    border: 1px solid var(--borde-input);
+    border-radius: 999px;
+    background: var(--blanco);
+    color: var(--texto-secundario);
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.calendario-filtros button:hover {
+    border-color: var(--verde);
+    color: var(--verde-hover);
+}
+
+.calendario-filtros button.activo {
+    border-color: var(--verde);
+    background: var(--verde);
+    color: var(--blanco);
+}
+
+.detalle-reserva dd.calendario-descripcion {
+    font-weight: 400;
+    line-height: 1.5;
+    white-space: pre-line;
+}
+
+.calendario-enlace {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    margin-top: 14px;
+    color: var(--verde-hover);
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.calendario-enlace svg {
+    width: 16px;
+    height: 16px;
+}

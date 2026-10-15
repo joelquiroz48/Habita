@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { ChevronDown, Info, MousePointer2, Paperclip, Plus, X } from "lucide-react";
+import { ChevronDown, Info, MousePointer2, Paperclip, Pencil, Plus, Save, X } from "lucide-react";
 
 import "./Reclamos.css";
 import Tabla from "../../../components/Tabla/Tabla";
@@ -11,6 +11,7 @@ import {
     CATEGORIAS_RECLAMO,
     ESTADOS_RECLAMO,
     crearReclamo,
+    editarReclamo,
     listarReclamosResidente,
     validarAdjunto,
 } from "../../../services/reclamosService";
@@ -46,6 +47,104 @@ const columnasReclamos = [
 
 const FORMULARIO_VACIO = { titulo: "", categoria: "", descripcion: "" };
 
+/* ---------------------------------------------------------
+   Campos del formulario (los usan "Nuevo reclamo" y "Editar reclamo").
+   Esta afuera de Reclamos() para que React no lo vuelva a crear en
+   cada tecla (si no, el campo perderia el foco al escribir).
+
+   adjuntoActual: adjunto que el reclamo ya tiene (solo al editar).
+--------------------------------------------------------- */
+function CamposReclamo({
+    prefijo, formulario, onCambio, archivo, onElegirArchivo, onQuitarArchivo,
+    inputArchivoRef, adjuntoActual, onQuitarActual, error,
+}) {
+    return (
+        <>
+            <div className="campo-reclamo">
+                <label htmlFor={`${prefijo}-asunto`}>Asunto</label>
+                <input
+                    id={`${prefijo}-asunto`}
+                    type="text"
+                    placeholder="Escribí un asunto breve"
+                    maxLength={100}
+                    value={formulario.titulo}
+                    onChange={(e) => onCambio("titulo", e.target.value)}
+                    autoFocus
+                />
+            </div>
+
+            <div className="campo-reclamo">
+                <label htmlFor={`${prefijo}-categoria`}>Categoría</label>
+                <span className="select-reclamo-wrap">
+                    <select
+                        id={`${prefijo}-categoria`}
+                        value={formulario.categoria}
+                        onChange={(e) => onCambio("categoria", e.target.value)}
+                    >
+                        <option value="" disabled>Seleccioná una categoría</option>
+                        {CATEGORIAS_RECLAMO.map((categoria) => (
+                            <option key={categoria} value={categoria}>{categoria}</option>
+                        ))}
+                    </select>
+                    <ChevronDown aria-hidden="true" />
+                </span>
+            </div>
+
+            <div className="campo-reclamo">
+                <label htmlFor={`${prefijo}-descripcion`}>Descripción</label>
+                <textarea
+                    id={`${prefijo}-descripcion`}
+                    placeholder="Contanos con detalle cuál es el inconveniente"
+                    rows={5}
+                    maxLength={1000}
+                    value={formulario.descripcion}
+                    onChange={(e) => onCambio("descripcion", e.target.value)}
+                />
+            </div>
+
+            <div className="campo-reclamo">
+                <span className="campo-reclamo-etiqueta">Archivo adjunto (opcional)</span>
+
+                {archivo ? (
+                    <div className="reclamo-archivo-elegido">
+                        <Paperclip aria-hidden="true" />
+                        <span>{archivo.name}</span>
+                        <button type="button" onClick={onQuitarArchivo} aria-label="Quitar archivo">
+                            <X aria-hidden="true" />
+                        </button>
+                    </div>
+                ) : adjuntoActual ? (
+                    <div className="reclamo-archivo-elegido">
+                        <Paperclip aria-hidden="true" />
+                        <span>
+                            {adjuntoActual.nombre}
+                            {adjuntoActual.tamano ? ` · ${adjuntoActual.tamano}` : ""}
+                        </span>
+                        <button type="button" onClick={onQuitarActual} aria-label="Quitar archivo actual">
+                            <X aria-hidden="true" />
+                        </button>
+                    </div>
+                ) : (
+                    <label className="adjuntar-archivo" htmlFor={`${prefijo}-archivo`}>
+                        <Plus aria-hidden="true" />
+                        <span>Adjuntar archivo</span>
+                        <input
+                            ref={inputArchivoRef}
+                            id={`${prefijo}-archivo`}
+                            type="file"
+                            accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
+                            onChange={onElegirArchivo}
+                        />
+                    </label>
+                )}
+                <small className="reclamo-ayuda-archivo">PDF, imagen o Word. Hasta 5 MB.</small>
+            </div>
+
+            {error && <p className="reclamos-aviso reclamos-aviso-error" role="alert">{error}</p>}
+        </>
+    );
+}
+
 function Reclamos() {
     const { perfil } = usePerfil();
     const unidadId = perfil?.unidad?.id ?? null;
@@ -64,6 +163,15 @@ function Reclamos() {
     const [errorFormulario, setErrorFormulario] = useState("");
     const [enviando, setEnviando] = useState(false);
     const inputArchivoRef = useRef(null);
+
+    /* ---------- Edicion (solo reclamos Pendientes) ---------- */
+    const [editando, setEditando] = useState(false);
+    const [formEdicion, setFormEdicion] = useState(FORMULARIO_VACIO);
+    const [archivoEdicion, setArchivoEdicion] = useState(null);   // archivo nuevo elegido
+    const [quitarActual, setQuitarActual] = useState(false);       // sacar el adjunto que ya tenia
+    const [errorEdicion, setErrorEdicion] = useState("");
+    const [guardando, setGuardando] = useState(false);
+    const inputArchivoEdicionRef = useRef(null);
 
     useEffect(() => {
         document.title = "Habita | Reclamos";
@@ -116,17 +224,21 @@ function Reclamos() {
         setFormulario((actual) => ({ ...actual, [campo]: valor }));
     }
 
-    function elegirArchivo(evento) {
+    function procesarArchivo(evento, guardarArchivo, guardarError) {
         const elegido = evento.target.files[0] ?? null;
         const problema = validarAdjunto(elegido);
         if (problema) {
-            setErrorFormulario(problema);
-            setArchivo(null);
+            guardarError(problema);
+            guardarArchivo(null);
             evento.target.value = "";
             return;
         }
-        setErrorFormulario("");
-        setArchivo(elegido);
+        guardarError("");
+        guardarArchivo(elegido);
+    }
+
+    function elegirArchivo(evento) {
+        procesarArchivo(evento, setArchivo, setErrorFormulario);
     }
 
     function quitarArchivo() {
@@ -158,6 +270,80 @@ function Reclamos() {
         } catch (err) {
             setErrorFormulario(err.message);
             setEnviando(false);
+        }
+    }
+
+    /* =========================
+          EDITAR RECLAMO
+    ========================= */
+
+    function cerrarDetalle() {
+        setDetalle(null);
+        setEditando(false);
+    }
+
+    function abrirEdicion() {
+        setFormEdicion({
+            titulo: detalle.titulo,
+            categoria: detalle.categoria,
+            descripcion: detalle.descripcion,
+        });
+        setArchivoEdicion(null);
+        setQuitarActual(false);
+        setErrorEdicion("");
+        setGuardando(false);
+        setEditando(true);
+    }
+
+    function cancelarEdicion() {
+        setEditando(false);
+        setErrorEdicion("");
+    }
+
+    function cambiarCampoEdicion(campo, valor) {
+        setFormEdicion((actual) => ({ ...actual, [campo]: valor }));
+    }
+
+    function elegirArchivoEdicion(evento) {
+        procesarArchivo(evento, setArchivoEdicion, setErrorEdicion);
+    }
+
+    function quitarArchivoEdicion() {
+        setArchivoEdicion(null);
+        if (inputArchivoEdicionRef.current) inputArchivoEdicionRef.current.value = "";
+    }
+
+    async function guardarEdicion(evento) {
+        evento.preventDefault();
+        setErrorEdicion("");
+
+        if (!formEdicion.titulo.trim() || !formEdicion.categoria || !formEdicion.descripcion.trim()) {
+            setErrorEdicion("Completá el asunto, la categoría y la descripción.");
+            return;
+        }
+
+        setGuardando(true);
+        try {
+            const actualizado = await editarReclamo({
+                id: detalle.id,
+                titulo: formEdicion.titulo,
+                categoria: formEdicion.categoria,
+                descripcion: formEdicion.descripcion,
+                archivo: archivoEdicion,
+                quitarAdjunto: quitarActual,
+                adjuntoActual: detalle.adjunto,
+            });
+            setReclamos((actuales) => actuales.map((r) => (r.id === actualizado.id ? actualizado : r)));
+            setDetalle(actualizado);
+            setEditando(false);
+            setAviso("Guardamos los cambios de tu reclamo.");
+        } catch (err) {
+            setErrorEdicion(err.message);
+            setGuardando(false);
+            // Si ya no estaba pendiente, se vuelve a cargar la lista para mostrar el estado real
+            if (err.codigo === "NO_EDITABLE") {
+                listarReclamosResidente().then(setReclamos).catch(() => {});
+            }
         }
     }
 
@@ -210,7 +396,7 @@ function Reclamos() {
                             columnas={columnasReclamos}
                             datos={reclamosFiltrados}
                             etiqueta="reclamos"
-                            onFilaClick={setDetalle}
+                            onFilaClick={(reclamo) => { setEditando(false); setDetalle(reclamo); }}
                             seleccionable
                             filaSeleccionada={detalle}
                         />
@@ -228,15 +414,23 @@ function Reclamos() {
                  MODAL: DETALLE
             ========================= */}
 
-            {detalle && (
+            {detalle && !editando && (
                 <Modal
                     titulo="Detalle del reclamo"
-                    onClose={() => setDetalle(null)}
+                    onClose={cerrarDetalle}
                     ancho={560}
                     pie={
-                        <button type="button" className="modal-boton principal" onClick={() => setDetalle(null)}>
-                            Cerrar
-                        </button>
+                        <>
+                            {detalle.estado === "Pendiente" && (
+                                <button type="button" className="modal-boton reclamo-boton-icono" onClick={abrirEdicion}>
+                                    <Pencil aria-hidden="true" />
+                                    Editar reclamo
+                                </button>
+                            )}
+                            <button type="button" className="modal-boton principal" onClick={cerrarDetalle}>
+                                Cerrar
+                            </button>
+                        </>
                     }
                 >
                     <div className="reclamo-detalle">
@@ -271,7 +465,57 @@ function Reclamos() {
                         ) : (
                             <p className="reclamo-sin-adjunto">No adjuntaste archivos.</p>
                         )}
+
+                        {detalle.estado !== "Pendiente" && (
+                            <p className="reclamo-detalle-nota">
+                                Este reclamo ya fue tomado por la administración, por eso no se puede editar.
+                                Si necesitás agregar algo, podés cargar un reclamo nuevo.
+                            </p>
+                        )}
                     </div>
+                </Modal>
+            )}
+
+            {/* =========================
+               MODAL: EDITAR RECLAMO
+            ========================= */}
+
+            {detalle && editando && (
+                <Modal
+                    titulo="Editar reclamo"
+                    onClose={cerrarDetalle}
+                    ancho={560}
+                    pie={
+                        <>
+                            <button type="button" className="modal-boton" onClick={cancelarEdicion} disabled={guardando}>
+                                Cancelar
+                            </button>
+                            <button
+                                type="submit"
+                                form="form-editar-reclamo"
+                                className="modal-boton principal reclamo-boton-icono"
+                                disabled={guardando}
+                            >
+                                <Save aria-hidden="true" />
+                                {guardando ? "Guardando..." : "Guardar cambios"}
+                            </button>
+                        </>
+                    }
+                >
+                    <form id="form-editar-reclamo" className="form-reclamo" onSubmit={guardarEdicion}>
+                        <CamposReclamo
+                            prefijo="editar"
+                            formulario={formEdicion}
+                            onCambio={cambiarCampoEdicion}
+                            archivo={archivoEdicion}
+                            onElegirArchivo={elegirArchivoEdicion}
+                            onQuitarArchivo={quitarArchivoEdicion}
+                            inputArchivoRef={inputArchivoEdicionRef}
+                            adjuntoActual={quitarActual ? null : detalle.adjunto}
+                            onQuitarActual={() => setQuitarActual(true)}
+                            error={errorEdicion}
+                        />
+                    </form>
                 </Modal>
             )}
 
@@ -308,76 +552,16 @@ function Reclamos() {
                             </p>
                         )}
 
-                        <div className="campo-reclamo">
-                            <label htmlFor="reclamo-asunto">Asunto</label>
-                            <input
-                                id="reclamo-asunto"
-                                type="text"
-                                placeholder="Escribí un asunto breve"
-                                maxLength={100}
-                                value={formulario.titulo}
-                                onChange={(e) => cambiarCampo("titulo", e.target.value)}
-                                autoFocus
-                            />
-                        </div>
-
-                        <div className="campo-reclamo">
-                            <label htmlFor="reclamo-categoria">Categoría</label>
-                            <span className="select-reclamo-wrap">
-                                <select
-                                    id="reclamo-categoria"
-                                    value={formulario.categoria}
-                                    onChange={(e) => cambiarCampo("categoria", e.target.value)}
-                                >
-                                    <option value="" disabled>Seleccioná una categoría</option>
-                                    {CATEGORIAS_RECLAMO.map((categoria) => (
-                                        <option key={categoria} value={categoria}>{categoria}</option>
-                                    ))}
-                                </select>
-                                <ChevronDown aria-hidden="true" />
-                            </span>
-                        </div>
-
-                        <div className="campo-reclamo">
-                            <label htmlFor="reclamo-descripcion">Descripción</label>
-                            <textarea
-                                id="reclamo-descripcion"
-                                placeholder="Contanos con detalle cuál es el inconveniente"
-                                rows={5}
-                                maxLength={1000}
-                                value={formulario.descripcion}
-                                onChange={(e) => cambiarCampo("descripcion", e.target.value)}
-                            />
-                        </div>
-
-                        <div className="campo-reclamo">
-                            <span className="campo-reclamo-etiqueta">Archivo adjunto (opcional)</span>
-
-                            {archivo ? (
-                                <div className="reclamo-archivo-elegido">
-                                    <Paperclip aria-hidden="true" />
-                                    <span>{archivo.name}</span>
-                                    <button type="button" onClick={quitarArchivo} aria-label="Quitar archivo">
-                                        <X aria-hidden="true" />
-                                    </button>
-                                </div>
-                            ) : (
-                                <label className="adjuntar-archivo" htmlFor="archivo-reclamo">
-                                    <Plus aria-hidden="true" />
-                                    <span>Adjuntar archivo</span>
-                                    <input
-                                        ref={inputArchivoRef}
-                                        id="archivo-reclamo"
-                                        type="file"
-                                        accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
-                                        onChange={elegirArchivo}
-                                    />
-                                </label>
-                            )}
-                            <small className="reclamo-ayuda-archivo">PDF, imagen o Word. Hasta 5 MB.</small>
-                        </div>
-
-                        {errorFormulario && <p className="reclamos-aviso reclamos-aviso-error" role="alert">{errorFormulario}</p>}
+                        <CamposReclamo
+                            prefijo="nuevo"
+                            formulario={formulario}
+                            onCambio={cambiarCampo}
+                            archivo={archivo}
+                            onElegirArchivo={elegirArchivo}
+                            onQuitarArchivo={quitarArchivo}
+                            inputArchivoRef={inputArchivoRef}
+                            error={errorFormulario}
+                        />
                     </form>
                 </Modal>
             )}

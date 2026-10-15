@@ -413,3 +413,27 @@
         grid-template-columns: 1fr;
     }
 }
+
+/* ---------- Editar reclamo (el modal se dibuja fuera de .reclamos-residente) ---------- */
+
+.reclamo-boton-icono {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.reclamo-boton-icono svg {
+    width: 16px;
+    height: 16px;
+}
+
+.reclamo-detalle-nota {
+    margin: 18px 0 0;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: var(--celeste-claro);
+    color: var(--texto-secundario);
+    font-size: 12px;
+    line-height: 1.5;
+}
