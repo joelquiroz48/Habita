@@ -17,7 +17,7 @@ const ANCHO_NEGRITA = [278,333,474,556,556,889,722,238,333,333,389,584,278,333,2
 
 const SIN_ACENTO = { á:"a", é:"e", í:"i", ó:"o", ú:"u", ñ:"n", ü:"u", Á:"A", É:"E", Í:"I", Ó:"O", Ú:"U", Ñ:"N", Ü:"U" };
 
-function anchoTexto(texto, tamano, negrita) {
+export function anchoTexto(texto, tamano, negrita) {
     const tabla = negrita ? ANCHO_NEGRITA : ANCHO_NORMAL;
     let total = 0;
     for (const letra of String(texto)) {
@@ -52,10 +52,10 @@ function color(hex) {
 }
 
 /* ---------- Mini constructor de paginas ---------- */
-const ANCHO_PAGINA = 595.28;
-const ALTO_PAGINA = 841.89;
+export const ANCHO_PAGINA = 595.28;
+export const ALTO_PAGINA = 841.89;
 
-class Pagina {
+export class Pagina {
     constructor() { this.comandos = []; }
 
     // y se mide desde ARRIBA de la hoja (mas natural que el PDF, que cuenta desde abajo)
@@ -78,7 +78,7 @@ class Pagina {
     }
 }
 
-function construirPdf(pagina, titulo) {
+export function construirPdf(pagina, titulo) {
     const contenido = pagina.comandos.join("\n");
     const objetos = [
         "<< /Type /Catalog /Pages 2 0 R >>",

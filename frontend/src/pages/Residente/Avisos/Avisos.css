@@ -1,4 +1,25 @@
+/* =========================
+        AVISOS (residente)
+========================= */
+
+.avisos {
+    width: 100%;
+}
+
+.avisos-estado {
+    margin: 0 0 14px;
+    font-size: 13px;
+    color: var(--texto-secundario);
+}
+
+.avisos-estado-error {
+    color: var(--color-aviso-rojo);
+}
+
+/* ---------- Insignias (tabla y modal) ---------- */
+
 .avisos .aviso-tabla-importancia,
+.aviso-detalle .aviso-tabla-importancia,
 .avisos .aviso-tabla-estado {
     display: inline-flex;
     align-items: center;
@@ -11,12 +32,14 @@
     white-space: nowrap;
 }
 
-.avisos .aviso-tabla-importancia.importante {
+.avisos .aviso-tabla-importancia.importante,
+.aviso-detalle .aviso-tabla-importancia.importante {
     background: var(--fondo-documento-pdf);
     color: var(--color-aviso-rojo);
 }
 
-.avisos .aviso-tabla-importancia.normal {
+.avisos .aviso-tabla-importancia.normal,
+.aviso-detalle .aviso-tabla-importancia.normal {
     background: var(--fondo-icono);
     color: var(--texto-secundario);
 }
@@ -31,85 +54,110 @@
     color: var(--color-aviso-verde);
 }
 
-.avisos .aviso-detalle {
-    margin-top: 14px;
-}
+/* ---------- Modal de detalle ---------- */
 
-.avisos .aviso-detalle-fila {
+.aviso-detalle-cabecera {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 9px 0;
-    border-bottom: 1px solid var(--separador);
-    font-size: 13px;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 14px;
 }
 
-.avisos .aviso-detalle-fila span {
-    color: var(--texto-secundario);
-}
-
-.avisos .aviso-detalle-fila strong {
-    color: var(--texto-principal);
-    font-weight: 600;
-    text-align: right;
-}
-
-.avisos .aviso-detalle-subtitulo {
-    margin: 16px 0 8px;
-    color: var(--texto-secundario);
-    font-size: 13px;
-    font-weight: 600;
-}
-
-.avisos .aviso-detalle-descripcion {
+.aviso-detalle-cabecera h3 {
     margin: 0;
+    font-size: 16px;
+    font-weight: 600;
     color: var(--texto-principal);
+}
+
+.aviso-detalle-datos {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin: 0 0 16px;
+}
+
+.aviso-detalle-datos > div {
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: var(--fondo-icono);
+}
+
+.aviso-detalle-datos dt {
+    font-size: 11px;
+    color: var(--texto-secundario);
+}
+
+.aviso-detalle-datos dd {
+    margin: 3px 0 0;
     font-size: 13px;
-    line-height: 1.5;
+    font-weight: 600;
+    color: var(--texto-principal);
+}
+
+.aviso-detalle h4 {
+    margin: 0 0 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--texto-principal);
+}
+
+.aviso-detalle-texto {
+    margin: 0 0 16px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--texto-secundario);
+    white-space: pre-line;
 }
 
 .avisos-sin-adjunto {
-  font-size: 12px;
-  color: var(--texto-secundario);
+    margin: 0;
+    font-size: 12px;
+    color: var(--texto-secundario);
 }
 
 .avisos-adjunto {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  border: 1px solid var(--borde-tarjeta);
-  border-radius: 8px;
-  padding: 8px 10px;
-  color: var(--texto-icono);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid var(--borde-tarjeta);
+    border-radius: 8px;
+    padding: 8px 10px;
+    color: var(--texto-icono);
 }
 
 .avisos-adjunto-info {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
 }
 
 .avisos-adjunto-info strong {
-  font-size: 12px;
-  color: var(--texto-principal);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+    font-size: 12px;
+    color: var(--texto-principal);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .avisos-adjunto-info span {
-  font-size: 11px;
-  color: var(--texto-secundario);
+    font-size: 11px;
+    color: var(--texto-secundario);
 }
 
 .avisos-adjunto button {
-  border: none;
-  background: transparent;
-  color: var(--texto-icono);
-  cursor: pointer;
-  display: flex;
+    border: none;
+    background: transparent;
+    color: var(--texto-icono);
+    cursor: pointer;
+    display: flex;
+}
+
+.avisos-adjunto button:disabled {
+    opacity: 0.5;
+    cursor: wait;
 }
 
 @media (max-width: 600px) {
@@ -117,7 +165,7 @@
         padding: 20px;
     }
 
-    .avisos .aviso-detalle-datos {
+    .aviso-detalle-datos {
         grid-template-columns: minmax(0, 1fr);
     }
 }
