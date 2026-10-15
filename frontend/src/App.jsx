@@ -27,6 +27,8 @@ import ComunicadosAdmin from "./pages/Administrador/Comunicados/Comunicados";
 import ReservasAdmin from "./pages/Administrador/Reservas/Reservas";
 import DocumentosAdmin from "./pages/Administrador/Documentos/Documentos";
 import ConfiguracionAdmin from "./pages/Administrador/Configuracion/Configuracion";
+import Legal from "./pages/Legal/Legal";
+
 
 function App() {
     return (
@@ -179,6 +181,9 @@ function App() {
                         </LayoutAdministrador>
                     }
                 />
+
+                <Route path="/terminos" element={<Legal tipo="terminos" />} />
+                <Route path="/privacidad" element={<Legal tipo="privacidad" />} />
 
             </Routes>
         </BrowserRouter>

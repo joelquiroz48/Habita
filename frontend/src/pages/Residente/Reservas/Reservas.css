@@ -193,38 +193,77 @@
 
 .reserva-card-acciones {
     display: flex;
-    flex-direction: column;
-    gap: 5px;
-    width: 82px;
+    align-items: center;
+    gap: 8px;
     flex-shrink: 0;
 }
 
-.reserva-card-acciones button {
-    height: 25px;
-    border: 1px solid var(--borde-input);
-    border-radius: 5px;
-    background: var(--blanco);
-    color: var(--texto-secundario);
-    display: flex;
+/* Botones de las reservas: mismo lenguaje visual que el resto de la app */
+
+.btn-reserva {
+    height: 32px;
+    padding: 0 13px;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 4px;
-    font-size: 11px;
+    gap: 6px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
 }
 
-.reserva-card-acciones button:hover {
+.btn-reserva svg {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+}
+
+.btn-reserva:focus-visible {
+    outline: 2px solid var(--verde);
+    outline-offset: 2px;
+}
+
+/* Ver detalle: neutro */
+.btn-reserva-detalle {
+    border-color: var(--borde-input);
+    background: var(--blanco);
+    color: var(--texto-secundario);
+}
+
+.btn-reserva-detalle:hover {
     border-color: var(--verde);
-    color: var(--verde-hover);
+    background: var(--celeste-claro);
+    color: var(--texto-verde);
 }
 
-.reserva-card-acciones .btn-cancelar {
-    border-color: #ffaaaa;
-    color: #e54848;
+/* Modificar: accion principal (verde de la marca) */
+.btn-reserva-modificar {
+    border-color: var(--verde);
+    background: var(--verde);
+    color: var(--blanco);
 }
 
-.reserva-card-acciones .btn-cancelar:hover {
-    border-color: var(--color-aviso-rojo);
+.btn-reserva-modificar:hover {
+    border-color: var(--verde-hover);
+    background: var(--verde-hover);
+}
+
+/* Cancelar: accion destructiva, en rojo suave */
+.btn-reserva-cancelar {
+    border-color: #f3c4c4;
+    background: #fdecec;
     color: var(--color-aviso-rojo);
+}
+
+.btn-reserva-cancelar:hover {
+    border-color: var(--color-aviso-rojo);
+    background: #fbdcdc;
 }
 
 /* =========================
@@ -292,6 +331,15 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 9px;
+}
+
+.fila-doble.fila-unica {
+    grid-template-columns: 1fr;
+}
+
+.texto-turno {
+    font-size: 12px;
+    color: var(--texto-secundario);
 }
 
 .btn-solicitar {
@@ -381,6 +429,21 @@
 }
 
 
+.reglas-uso .reglas-lista {
+    margin: 0;
+    padding-left: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.reglas-uso .reglas-lista li {
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--texto-secundario);
+}
+
+
 /* =========================
     ESPACIOS DISPONIBLES
 ========================= */
@@ -403,7 +466,7 @@
 
 .espacio-imagen {
     width: 100%;
-    height: 75px;
+    height: 120px;
     overflow: hidden;
 }
 
@@ -425,12 +488,16 @@
 }
 
 .espacio-info button {
-    height: 23px;
+    height: 32px;
     border: 1px solid var(--verde);
-    border-radius: 5px;
+    border-radius: 8px;
     background: var(--blanco);
     color: var(--verde-hover);
-    font-size: 11px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s ease;
 }
 
 .espacio-info button:hover {
@@ -765,7 +832,8 @@
     }
 
     .reserva-card-acciones {
-        width: 75px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
     }
 
 }
@@ -787,10 +855,9 @@
 
     .reserva-card-acciones {
         width: 100%;
-        flex-direction: row;
     }
 
-    .reserva-card-acciones button {
+    .reserva-card-acciones .btn-reserva {
         flex: 1;
     }
 

@@ -210,6 +210,11 @@ export function ModalModificarSolicitud({ reserva, onClose, onGuardada, onCancel
     const opcionesInicio = opcionesDesde(espacio);
     const opcionesFin = opcionesHasta(espacio, desde);
 
+    // Espacios por turnos (ej: Laundry): igual que al reservar, no se pide
+    // asunto ni horario de fin. El fin se calcula solo: inicio + duración del turno.
+    const esPorTurnos = Boolean(espacio.duracion_turno_min);
+    const horaFin = esPorTurnos ? (opcionesFin[0] ?? "") : hasta;
+
     function cambiarDesde(nuevoDesde) {
         setDesde(nuevoDesde);
         const nuevasOpciones = opcionesHasta(espacio, nuevoDesde);
@@ -220,18 +225,22 @@ export function ModalModificarSolicitud({ reserva, onClose, onGuardada, onCancel
         evento.preventDefault();
         setError("");
 
-        if (!fecha || !desde || !hasta) {
-            setError("Completá la fecha y el horario.");
+        if (!fecha || !desde || !horaFin) {
+            setError(
+                esPorTurnos
+                    ? "Completá el día y el horario de tu turno."
+                    : "Completá la fecha y el horario."
+            );
             return;
         }
 
         setEnviando(true);
         try {
             await modificarSolicitud(reserva.id, {
-                asunto,
+                asunto: esPorTurnos ? `Uso de ${espacio.nombre}` : asunto,
                 fecha,
                 horaInicio: desde,
-                horaFin: hasta,
+                horaFin,
             });
             onGuardada();
         } catch (e) {
@@ -305,17 +314,19 @@ export function ModalModificarSolicitud({ reserva, onClose, onGuardada, onCancel
             }
         >
             <form id="form-modificar-solicitud" className="form-reserva" onSubmit={guardar}>
-                <div className="campo-reserva">
-                    <label htmlFor="mod-asunto">Asunto</label>
-                    <input
-                        id="mod-asunto"
-                        type="text"
-                        maxLength={120}
-                        value={asunto}
-                        onChange={(e) => setAsunto(e.target.value)}
-                        placeholder="Ej: Cumpleaños, reunión..."
-                    />
-                </div>
+                {!esPorTurnos && (
+                    <div className="campo-reserva">
+                        <label htmlFor="mod-asunto">Asunto</label>
+                        <input
+                            id="mod-asunto"
+                            type="text"
+                            maxLength={120}
+                            value={asunto}
+                            onChange={(e) => setAsunto(e.target.value)}
+                            placeholder="Ej: Cumpleaños, reunión..."
+                        />
+                    </div>
+                )}
 
                 <div className="campo-reserva">
                     <label htmlFor="mod-fecha">Fecha</label>
@@ -328,7 +339,7 @@ export function ModalModificarSolicitud({ reserva, onClose, onGuardada, onCancel
                     />
                 </div>
 
-                <div className="fila-doble">
+                <div className={esPorTurnos ? "fila-doble fila-unica" : "fila-doble"}>
                     <div className="campo-reserva">
                         <label htmlFor="mod-desde">Desde</label>
                         <select
@@ -342,19 +353,30 @@ export function ModalModificarSolicitud({ reserva, onClose, onGuardada, onCancel
                         </select>
                     </div>
 
-                    <div className="campo-reserva">
-                        <label htmlFor="mod-hasta">Hasta</label>
-                        <select
-                            id="mod-hasta"
-                            value={hasta}
-                            onChange={(e) => setHasta(e.target.value)}
-                        >
-                            {opcionesFin.map((hora) => (
-                                <option key={hora} value={hora}>{hora}</option>
-                            ))}
-                        </select>
-                    </div>
+                    {!esPorTurnos && (
+                        <div className="campo-reserva">
+                            <label htmlFor="mod-hasta">Hasta</label>
+                            <select
+                                id="mod-hasta"
+                                value={hasta}
+                                onChange={(e) => setHasta(e.target.value)}
+                            >
+                                {opcionesFin.map((hora) => (
+                                    <option key={hora} value={hora}>{hora}</option>
+                                ))}
+                            </select>
+                        </div>
+                    )}
                 </div>
+
+                {esPorTurnos && (
+                    <p className="texto-turno">
+                        Cada turno dura {espacio.duracion_turno_min >= 60 && espacio.duracion_turno_min % 60 === 0
+                            ? `${espacio.duracion_turno_min / 60} h`
+                            : `${espacio.duracion_turno_min} min`}
+                        {desde && horaFin ? ` · Tu turno: ${desde} a ${horaFin}` : ""}
+                    </p>
+                )}
 
                 <p className="texto-ayuda">
                     {espacio.nombre} está disponible de{" "}

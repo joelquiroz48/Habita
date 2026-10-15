@@ -7,6 +7,47 @@
 import { supabase } from "../supabase";
 import { limitesDeMes } from "../pages/Residente/Reservas/reservasUtils";
 
+import fotoLaundry from "../assets/img/espacios/laundry.jpg";
+import fotoParrilla from "../assets/img/espacios/parrilla.jpg";
+import fotoSala from "../assets/img/espacios/sala-de-reuniones.jpg";
+import fotoSum from "../assets/img/espacios/sum.jpg";
+
+/* ---------------------------------------------------------
+   FOTOS DE LOS ESPACIOS
+   Las imágenes viven en src/assets/img/espacios (Vite las
+   empaqueta con la app, así no dependen de ninguna carpeta
+   ni de la base). Se asignan por nombre del espacio y pasan
+   a ser su foto principal; las fotos que tenga cargadas en
+   la base (tabla espacio_fotos) quedan como secundarias.
+--------------------------------------------------------- */
+const FOTOS_POR_NOMBRE = {
+    laundry: fotoLaundry,
+    sum: fotoSum,
+    "sala de reuniones": fotoSala,
+    "parrilla 2": fotoParrilla,
+};
+
+function claveDeNombre(nombre) {
+    return String(nombre ?? "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .trim()
+        .toLowerCase();
+}
+
+function conFotoLocal(espacio) {
+    if (!espacio) return espacio;
+    const local = FOTOS_POR_NOMBRE[claveDeNombre(espacio.nombre)];
+    if (!local) return espacio;
+
+    const otras = (espacio.fotos ?? []).filter((f) => !String(f.url).startsWith("/espacios/"));
+    return { ...espacio, fotos: [{ url: local, orden: -1 }, ...otras] };
+}
+
+function reservasConFotos(reservas) {
+    return (reservas ?? []).map((r) => ({ ...r, espacio: conFotoLocal(r.espacio) }));
+}
+
 /* Datos del espacio que se traen junto con cada reserva */
 const CAMPOS_RESERVA = `
     id, numero, asunto, fecha, hora_inicio, hora_fin, estado, motivo_cancelacion,
@@ -78,7 +119,7 @@ export async function listarEspaciosDisponibles({ fecha, desde, hasta, capacidad
         .order("orden");
     if (errorFotos) throw aError(errorFotos, "No pudimos cargar las fotos de los espacios.");
 
-    return data.map((espacio) => ({
+    return data.map((espacio) => conFotoLocal({
         ...espacio,
         fotos: fotos.filter((f) => f.espacio_id === espacio.id),
     }));
@@ -92,7 +133,7 @@ export async function obtenerEspacio(id) {
         .eq("id", id)
         .maybeSingle();
     if (error) throw aError(error, "No pudimos cargar el espacio.");
-    return data;
+    return conFotoLocal(data);
 }
 
 /** Reservas ya confirmadas de un espacio (solo fecha y horario). */
@@ -119,7 +160,7 @@ export async function listarReservasActivas(usuarioId, hoy) {
         .order("fecha")
         .order("hora_inicio");
     if (error) throw aError(error, "No pudimos cargar tus reservas.");
-    return data;
+    return reservasConFotos(data);
 }
 
 /** Cantidad de reservas confirmadas del mes en curso que ya se realizaron. */
@@ -151,7 +192,7 @@ export async function listarReservasDelMes(usuarioId, anio, mes) {
         .order("fecha")
         .order("hora_inicio");
     if (error) throw aError(error, "No pudimos cargar el calendario.");
-    return data;
+    return reservasConFotos(data);
 }
 
 /* ---------------------------------------------------------

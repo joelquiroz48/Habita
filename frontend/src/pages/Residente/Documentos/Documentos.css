@@ -35,44 +35,87 @@
 /* =========================
     INFORMACIÓN IMPORTANTE
 ========================= */
-.informacion-documentos {
-    margin-top: 0;
+
+.documentos-info {
+    margin-bottom: 18px;
+    padding: 14px 18px;
+    border: 1px solid var(--borde-input);
+    border-radius: 12px;
+    background: var(--celeste-claro);
 }
 
-.documentos-paneles-inferiores {
+.documentos-info-encabezado {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.documentos-info-icono {
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--blanco);
+    color: var(--verde);
+}
+
+.documentos-info-icono svg {
+    width: 18px;
+    height: 18px;
+}
+
+.documentos-info-encabezado h2 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--texto-principal);
+}
+
+.documentos-info-lista {
+    margin: 0;
+    padding: 0;
+    list-style: none;
     display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    align-items: stretch;
-    gap: 14px;
-    margin-top: 14px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
 }
 
-.asistente-documentos {
-    display: flex;
-    flex-direction: column;
-}
-
-.asistente-documentos .panel-contenido {
-    display: flex;
-    flex: 1;
-}
-
-.asistente-documentos .tarjeta-inicial-asistente {
-    flex: 1;
-    justify-content: space-between;
-}
-
-.informacion-documentos ul {
-    padding-left: 16px;
-}
-
-.informacion-documentos li {
-    font-size: 11px;
-    line-height: 1.6;
+.documentos-info-lista li {
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: var(--blanco);
+    font-size: 12px;
+    line-height: 1.45;
     color: var(--texto-secundario);
-    margin-bottom: 3px;
 }
 
+/* =========================
+     BOTÓN DESCARGAR
+========================= */
+
+.documento-descargar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border: 1px solid var(--borde-input);
+    border-radius: 8px;
+    background: var(--blanco);
+    color: var(--verde);
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+}
+
+.documento-descargar:hover,
+.documento-descargar:focus-visible {
+    background: var(--verde);
+    color: var(--blanco);
+}
 
 /* =========================
         RESPONSIVE
@@ -90,7 +133,7 @@
 
 
 @media (max-width: 800px) {
-    .documentos-paneles-inferiores {
+    .documentos-info-lista {
         grid-template-columns: 1fr;
     }
 

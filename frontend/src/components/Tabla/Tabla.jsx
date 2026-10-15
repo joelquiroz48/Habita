@@ -87,8 +87,8 @@ const Tabla = ({
     opcionesAcciones = [],
     seleccionable = false,
     filaSeleccionada,
+    filasPorPagina = 10,
 }) => {
-    const filasPorPagina = 5;
 
     const [paginaActiva, setPaginaActiva] = useState(1);
     const [seleccionInterna, setSeleccionInterna] = useState(null);
