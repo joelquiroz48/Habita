@@ -43,6 +43,31 @@
     background: var(--fondo-aviso-amarillo);
 }
 
+.expensas .expensas-badge-vencida {
+    color: var(--color-aviso-rojo);
+    background: #fdecec;
+}
+
+/* =========================
+        AVISOS (cargando / error)
+========================= */
+
+.expensas .expensas-aviso {
+    margin: 12px 0;
+    font-size: 13px;
+    color: var(--texto-secundario);
+}
+
+.expensas .expensas-aviso-error {
+    color: var(--color-aviso-rojo);
+}
+
+.expensas .expensas-sin-detalle {
+    margin: 0 0 8px;
+    font-size: 12px;
+    color: var(--texto-secundario);
+}
+
 /* =========================
         DETALLE EXPENSA
 ========================= */
@@ -192,16 +217,23 @@
 }
 
 .ayuda-item {
-    height: 64.5px;
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    padding: 8px 0;
     border-bottom: 1px solid var(--separador);
 }
 
 .ayuda-item:last-child {
     border-bottom: none;
+}
+
+.ayuda-item-cabecera {
+    width: 100%;
+    min-height: 64.5px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 0;
+    background: transparent;
+    text-align: left;
+    cursor: pointer;
 }
 
 .ayuda-icon {
@@ -216,27 +248,76 @@
     color: var(--verde);
 }
 
-.ayuda-item > div:nth-child(2) {
+.ayuda-item-textos {
     display: flex;
     flex-direction: column;
     flex: 1;
+    min-width: 0;
 }
 
-.ayuda-item strong {
+.ayuda-item-textos strong {
     font-size: 12px;
     font-weight: 600;
+    color: var(--texto-principal);
 }
 
-.ayuda-item span {
+.ayuda-item-textos span {
     font-size: 11px;
     color: var(--texto-secundario);
     margin-top: 3px;
 }
 
-.ayuda-item > svg {
+.ayuda-item-cabecera:hover strong {
+    color: var(--verde-hover);
+}
+
+.ayuda-item-flecha {
     width: 22px;
     height: 22px;
+    flex-shrink: 0;
     color: var(--texto-icono);
+    transition: transform 0.2s ease;
+}
+
+.ayuda-item.abierta .ayuda-item-flecha {
+    transform: rotate(90deg);
+}
+
+.ayuda-item-respuesta {
+    margin: 0 0 12px 33px;
+    padding: 10px 12px;
+    border-radius: 7px;
+    background: var(--celeste-claro);
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--texto-secundario);
+    animation: ayuda-expensas-aparecer 0.18s ease;
+}
+
+.ayuda-item-respuesta p {
+    margin: 0 0 8px;
+}
+
+.ayuda-item-respuesta p:last-child,
+.ayuda-item-respuesta ul:last-child {
+    margin-bottom: 0;
+}
+
+.ayuda-item-respuesta ul {
+    margin: 0;
+    padding-left: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.ayuda-item-respuesta strong {
+    color: var(--texto-principal);
+}
+
+@keyframes ayuda-expensas-aparecer {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 
 /* =========================

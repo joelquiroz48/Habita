@@ -29,45 +29,99 @@
     outline: none;
 }
 
+.navegador--derecha {
+    justify-content: flex-end;
+}
+
+.navegador--derecha .navegador-buscador {
+    flex: 0 1 340px;
+}
+
+/* ---------- Filtro desplegable ---------- */
+
 .navegador-filtro {
     position: relative;
+}
+
+.navegador-filtro-boton {
+    min-width: 190px;
     display: flex;
     align-items: center;
-    gap: 8px;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 9px 12px;
     border: 1px solid var(--borde-input);
     border-radius: 8px;
     background: var(--blanco);
     color: var(--texto-secundario);
-    font-size: 13px;
-    padding: 0 12px;
-    white-space: nowrap;
-}
-
-.navegador-filtro-etiqueta {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    clip-path: inset(50%);
-}
-
-.navegador-filtro select {
-    min-width: 0;
-    padding: 9px 0;
-    border: 0;
-    outline: 0;
-    background: transparent;
-    color: inherit;
     font: inherit;
+    font-size: 13px;
+    white-space: nowrap;
+    text-align: left;
     cursor: pointer;
-    appearance: none;
 }
 
-.navegador-filtro svg {
+.navegador-filtro-boton:hover {
+    border-color: var(--verde);
+}
+
+.navegador-filtro-boton svg {
     flex: 0 0 auto;
-    pointer-events: none;
+    transition: transform 0.18s ease;
+}
+
+.navegador-filtro.abierto .navegador-filtro-boton {
+    border-color: var(--verde);
+}
+
+.navegador-filtro.abierto .navegador-filtro-boton svg {
+    transform: rotate(180deg);
+}
+
+.navegador-filtro-lista {
+    position: fixed;      /* la posicion exacta la calcula Navegador.jsx */
+    z-index: 1100;
+    overflow-y: auto;
+    margin: 0;
+    padding: 6px;
+    list-style: none;
+    border: 1px solid var(--borde-input);
+    border-radius: 14px;
+    background: var(--blanco);
+    box-shadow: 0 10px 28px rgba(8, 54, 60, 0.14);
+    animation: navegador-lista-aparecer 0.14s ease;
+}
+
+.navegador-filtro-opcion {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 9px 12px;
+    border-radius: 9px;
+    color: var(--texto-secundario);
+    font-size: 13px;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.navegador-filtro-opcion.activa {
+    background: var(--celeste-claro);
+    color: var(--texto-principal);
+}
+
+.navegador-filtro-opcion.seleccionada {
+    color: var(--texto-verde);
+    font-weight: 600;
+}
+
+.navegador-filtro-opcion svg {
+    color: var(--verde);
+}
+
+@keyframes navegador-lista-aparecer {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 
 .navegador-btn-nuevo {
@@ -91,7 +145,7 @@
 }
 
 .navegador-btn-nuevo:focus-visible,
-.navegador-filtro:focus-within,
+.navegador-filtro-boton:focus-visible,
 .navegador-buscador:focus-within {
     outline: 2px solid var(--verde);
     outline-offset: 2px;
@@ -109,5 +163,13 @@
 
     .navegador-btn-nuevo {
         margin-left: auto;
+    }
+
+    .navegador--derecha .navegador-buscador {
+        flex-basis: 100%;
+    }
+
+    .navegador-filtro-boton {
+        min-width: 0;
     }
 }

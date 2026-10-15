@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { WalletCards, CalendarDays, Tag, Download, BanknoteArrowDown, ChevronRight, CircleHelp, FileText, X } from "lucide-react";
 
 import "./Expensas.css";
@@ -6,91 +6,25 @@ import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
 import Panel from "../../../components/Panel/Panel";
 import Tabla from "../../../components/Tabla/Tabla";
 import Navegador from "../../../components/Navegador/Navegador";
+import { usePerfil } from "../../../context/PerfilContext";
+import { obtenerExpensasResidente, ESTADOS_EXPENSA } from "../../../services/expensasService";
+import { descargarBoleta } from "../../../utils/boletaPdf";
+import { diasHasta } from "../../../utils/formatos";
 
 /* =========================
-    DATOS DE EJEMPLO
+        TABLA Y FILTROS
 ========================= */
 
-const detalleExpensa = [
-    {
-        concepto: "Mantenimiento del edificio",
-        monto: "$ 18.500",
-    },
-    {
-        concepto: "Limpieza",
-        monto: "$ 8.200",
-    },
-    {
-        concepto: "Seguridad",
-        monto: "$ 7.600",
-    },
-    {
-        concepto: "Servicios (luz, agua, gas)",
-        monto: "$ 6.200",
-    },
-    {
-        concepto: "Fondo de reserva",
-        monto: "$ 4.730",
-    },
-];
-
-const historialExpensas = [
-    {
-        periodo: "Agosto 2026",
-        importe: "$ 45.230",
-        fecha: "--",
-        vencimiento: "10/09/2026",
-        estado: "Pendiente",
-    },
-    {
-        periodo: "Julio 2026",
-        importe: "$ 43.980",
-        fecha: "09/04/2026",
-        vencimiento: "10/08/2026",
-        estado: "Pagada",
-    },
-    {
-        periodo: "Junio 2026",
-        importe: "$ 43.500",
-        fecha: "09/04/2026",
-        vencimiento: "10/07/2026",
-        estado: "Pagada",
-    },
-    {
-        periodo: "Mayo 2026",
-        importe: "$ 42.830",
-        fecha: "09/04/2026",
-        vencimiento: "10/06/2026",
-        estado: "Pagada",
-    },
-    {
-        periodo: "Abril 2026",
-        importe: "$ 42.100",
-        fecha: "09/04/2026",
-        vencimiento: "10/05/2026",
-        estado: "Pagada",
-    },
-    {
-        periodo: "Marzo 2026",
-        importe: "$ 41.650",
-        fecha: "09/04/2026",
-        vencimiento: "10/04/2026",
-        estado: "Pagada",
-    },
-];
+function estadoBadgeClase(estado) {
+    if (estado === "Pagada") return "expensas-badge-pagado";
+    if (estado === "Vencida") return "expensas-badge-vencida";
+    return "expensas-badge-pendiente";
+}
 
 const columnasHistorialExpensas = [
     { clave: "periodo", titulo: "Período", ancho: "1.2fr" },
-    {
-        clave: "importe",
-        titulo: "Importe",
-        ancho: "1fr",
-    },
-    {
-        clave: "fecha",
-        titulo: "Pagado el",
-        ancho: "1fr",
-    },
+    { clave: "importe", titulo: "Importe", ancho: "1fr" },
+    { clave: "fecha", titulo: "Pagado el", ancho: "1fr" },
     { clave: "vencimiento", titulo: "Vencimiento", ancho: "1.2fr" },
     {
         clave: "estado",
@@ -104,67 +38,168 @@ const columnasHistorialExpensas = [
     },
 ];
 
-/* =========================
-       TARJETAS RESUMEN
-========================== */
-
-const resumenExpensas = [
+const filtros = [
     {
-        icono: WalletCards,
-        titulo: "Expensa actual",
-        valor: historialExpensas[0].importe,
-        contenido: <small>{historialExpensas[0].periodo}</small>,
+        key: "estado",
+        label: "Todos los estados",
+        options: ESTADOS_EXPENSA,
     },
+];
+
+/* =========================
+        PREGUNTAS DE AYUDA
+========================= */
+
+const preguntasAyuda = [
     {
-        icono: CalendarDays,
-        titulo: "Vencimiento",
-        valor: historialExpensas[0].vencimiento,
-        contenido: (
-            <small>En 7 días</small>
+        id: "calculo",
+        icono: CircleHelp,
+        pregunta: "¿Cómo se calculan las expensas?",
+        resumen: "Entendé qué incluye tu expensa mensual.",
+        respuesta: (
+            <>
+                <p>
+                    Tu expensa es la suma de los gastos comunes del edificio que define la
+                    administración: por ejemplo mantenimiento, limpieza, seguridad, servicios
+                    (luz, agua, gas) y fondo de reserva.
+                </p>
+                <p>
+                    Para ver cuánto corresponde a cada concepto, tocá un período en la tabla
+                    de arriba y se abre el detalle. La expensa de cada mes se emite
+                    automáticamente el día 1 y la fecha de vencimiento figura en la boleta.
+                </p>
+            </>
         ),
     },
     {
-        icono: Tag,
-        titulo: "Estado",
-        contenido: (
+        id: "problema",
+        icono: FileText,
+        pregunta: "¿Tenés un problema con tu pago?",
+        resumen: "Te ayudamos a resolverlo.",
+        respuesta: (
             <>
-                <em className="badge-expensa expensas-badge-pendiente">
-                    Pendiente
-                </em>
-                <small>
-                    Tu expensa aún no fue pagada.
-                </small>
+                <p>El pago se hace con Mercado Pago y puede tardar unos minutos en reflejarse. Si ya pagaste:</p>
+                <ul>
+                    <li>Esperá unos minutos y volvé a cargar esta página.</li>
+                    <li>Si sigue figurando como pendiente, guardá el comprobante de Mercado Pago.</li>
+                    <li>
+                        Cargá un reclamo desde la sección <strong>Reclamos</strong> adjuntando
+                        el comprobante, o comunicate con la administración del edificio.
+                    </li>
+                </ul>
             </>
         ),
     },
 ];
 
-const filtros = [
-    {
-        key: "estado",
-        label: "Todos los estados",
-        options: ["Pagada", "Pendiente", "Rechazada"],
-    },
-];
-
-function estadoBadgeClase(estado) {
-    if (estado === "Pagada") return "expensas-badge-pagado";
-    return "expensas-badge-pendiente";
-}
-
 function Expensas() {
+    const { perfil } = usePerfil();
 
-    const [expensaSeleccionada, setExpensaSeleccionada] = useState(historialExpensas[0]);
+    const [expensas, setExpensas] = useState([]);
+    const [cargando, setCargando] = useState(true);
+    const [error, setError] = useState("");
+    const [seleccionadaId, setSeleccionadaId] = useState(null);
     const [detalleAbierto, setDetalleAbierto] = useState(false);
+    const [descargaError, setDescargaError] = useState("");
+    const [preguntaAbierta, setPreguntaAbierta] = useState(null);
 
     useEffect(() => {
         document.title = "Habita | Mis expensas";
     }, []);
 
+    useEffect(() => {
+        let cancelado = false;
+
+        obtenerExpensasResidente()
+            .then((lista) => { if (!cancelado) setExpensas(lista); })
+            .catch((err) => {
+                console.error("No se pudieron cargar las expensas", err);
+                if (!cancelado) setError("No pudimos cargar tus expensas. Probá de nuevo en unos minutos.");
+            })
+            .finally(() => { if (!cancelado) setCargando(false); });
+
+        return () => { cancelado = true; };
+    }, []);
+
+    const seleccionada = useMemo(
+        () => expensas.find((e) => e.id === seleccionadaId) ?? null,
+        [expensas, seleccionadaId]
+    );
+
+    // La expensa "actual" es la impaga mas antigua (la mas urgente);
+    // si esta todo pagado, la mas reciente.
+    const actual = useMemo(() => {
+        const impagas = expensas.filter((e) => e.estado !== "Pagada");
+        return impagas[impagas.length - 1] ?? expensas[0] ?? null;
+    }, [expensas]);
+
     function abrirDetalle(expensa) {
-        setExpensaSeleccionada(expensa);
+        setSeleccionadaId(expensa.id);
         setDetalleAbierto(true);
+        setDescargaError("");
     }
+
+    function bajarBoleta() {
+        if (!seleccionada) return;
+        try {
+            setDescargaError("");
+            descargarBoleta(seleccionada, { residente: perfil?.nombre ?? "" });
+        } catch (err) {
+            console.error("No se pudo generar la boleta", err);
+            setDescargaError("No pudimos generar la boleta. Probá de nuevo.");
+        }
+    }
+
+    /* =========================
+           TARJETAS RESUMEN
+    ========================= */
+
+    function textoVencimiento(expensa) {
+        if (!expensa) return "";
+        if (expensa.estado === "Pagada") return expensa.fecha === "--" ? "Pagada" : `Pagada el ${expensa.fecha}`;
+        const dias = diasHasta(expensa.vencimientoISO);
+        if (dias === null) return "";
+        if (dias < 0) return `Venció hace ${-dias} ${-dias === 1 ? "día" : "días"}`;
+        if (dias === 0) return "Vence hoy";
+        return `En ${dias} ${dias === 1 ? "día" : "días"}`;
+    }
+
+    const mensajeEstado = {
+        Pagada: "Tu expensa ya está paga. ¡Gracias!",
+        Pendiente: "Tu expensa aún no fue pagada.",
+        Vencida: "Tu expensa está vencida.",
+    };
+
+    const sinDatos = !cargando && !error && expensas.length === 0;
+
+    const resumenExpensas = [
+        {
+            icono: WalletCards,
+            titulo: "Expensa actual",
+            valor: actual?.importe ?? "--",
+            contenido: <small>{actual?.periodo ?? (sinDatos ? "Sin expensas" : "")}</small>,
+        },
+        {
+            icono: CalendarDays,
+            titulo: "Vencimiento",
+            valor: actual?.vencimiento ?? "--",
+            contenido: <small>{textoVencimiento(actual)}</small>,
+        },
+        {
+            icono: Tag,
+            titulo: "Estado",
+            contenido: actual ? (
+                <>
+                    <em className={`badge-expensa ${estadoBadgeClase(actual.estado)}`}>
+                        {actual.estado}
+                    </em>
+                    <small>{mensajeEstado[actual.estado]}</small>
+                </>
+            ) : (
+                <small>{sinDatos ? "Todavía no hay expensas para tu unidad." : ""}</small>
+            ),
+        },
+    ];
 
     return (
         <main className="expensas">
@@ -192,33 +227,45 @@ function Expensas() {
                 CONTENIDO PRINCIPAL
             ========================= */}
 
-            {/* HISTORIAL */}
-            <Navegador
-                data={historialExpensas}
-                searchKey="periodo"
-                searchPlaceholder="Buscar periodo..."
-                filters={filtros}
-            >
-                {(historialExpensasFiltradas) => (
-                    <Tabla
-                        columnas={columnasHistorialExpensas}
-                        datos={historialExpensasFiltradas}
-                        filasPorPagina={5}
-                        etiqueta="expensas"
-                        onFilaClick={abrirDetalle}
-                        seleccionable
-                        filaSeleccionada={detalleAbierto ? expensaSeleccionada : null}
-                    />
-                )}
-            </Navegador>
+            {cargando && <p className="expensas-aviso" role="status">Cargando tus expensas...</p>}
+            {error && <p className="expensas-aviso expensas-aviso-error" role="alert">{error}</p>}
 
-            {detalleAbierto && (
+            {/* HISTORIAL */}
+            {!cargando && !error && (
+                <Navegador
+                    data={expensas}
+                    searchKey="periodo"
+                    searchPlaceholder="Buscar periodo..."
+                    filters={filtros}
+                    alinear="derecha"
+                >
+                    {(historialExpensasFiltradas) => (
+                        <Tabla
+                            columnas={columnasHistorialExpensas}
+                            datos={historialExpensasFiltradas}
+                            filasPorPagina={5}
+                            etiqueta="expensas"
+                            onFilaClick={abrirDetalle}
+                            seleccionable
+                            filaSeleccionada={detalleAbierto ? seleccionada : null}
+                        />
+                    )}
+                </Navegador>
+            )}
+
+            {!cargando && !error && expensas.length === 0 && (
+                <p className="expensas-aviso">
+                    Todavía no se generó ninguna expensa para tu unidad. Se crean automáticamente el día 1 de cada mes.
+                </p>
+            )}
+
+            {detalleAbierto && seleccionada && (
                 <Panel
                     className="expensas-residente-detalle"
                     titulo="Detalle de expensa"
                     tituloComplemento={
-                        <div className={`badge-expensa ${estadoBadgeClase(expensaSeleccionada.estado)}`}>
-                            {expensaSeleccionada.estado}
+                        <div className={`badge-expensa ${estadoBadgeClase(seleccionada.estado)}`}>
+                            {seleccionada.estado}
                         </div>
                     }
                     accion={
@@ -242,19 +289,19 @@ function Expensas() {
                             <h3>Resumen</h3>
                             <div className="expensas-residente-detalle-fila">
                                 <span>Importe total</span>
-                                <span>{expensaSeleccionada.importe}</span>
+                                <span>{seleccionada.importe}</span>
                             </div>
                             <div className="expensas-residente-detalle-fila">
                                 <span>Periodo</span>
-                                <span>{expensaSeleccionada.periodo}</span>
+                                <span>{seleccionada.periodo}</span>
                             </div>
                             <div className="expensas-residente-detalle-fila">
                                 <span>Vencimiento</span>
-                                <span>{expensaSeleccionada.vencimiento}</span>
+                                <span>{seleccionada.vencimiento}</span>
                             </div>
                             <div className="expensas-residente-detalle-fila">
                                 <span>Pagado el</span>
-                                <span>{expensaSeleccionada.fecha}</span>
+                                <span>{seleccionada.fecha}</span>
                             </div>
                         </section>
 
@@ -263,21 +310,27 @@ function Expensas() {
                         <section className="expensas-residente-detalle-seccion">
                             <h3>Detalle de la expensa</h3>
 
-                            {detalleExpensa.map((item) => (
+                            {seleccionada.conceptos.length === 0 && (
+                                <p className="expensas-sin-detalle">
+                                    Esta expensa no tiene el detalle por concepto cargado.
+                                </p>
+                            )}
+
+                            {seleccionada.conceptos.map((item) => (
                                 <div className="detalle-item" key={item.concepto}>
                                     <div>
                                         <CircleHelp />
                                         <span>{item.concepto}</span>
                                     </div>
 
-                                    <strong>{item.monto}</strong>
+                                    <strong>{item.montoTexto}</strong>
                                 </div>
                             ))}
 
                             <div className="detalle-total">
                                 <strong>Total</strong>
 
-                                <strong>{expensaSeleccionada.importe}</strong>
+                                <strong>{seleccionada.importe}</strong>
                             </div>
                         </section>
                     </div>
@@ -289,52 +342,57 @@ function Expensas() {
                             <BanknoteArrowDown size={16} />
                             Pagar ahora
                         </button>
-                        <button type="button" className="expensas-residente-detalle-boton">
+                        <button
+                            type="button"
+                            className="expensas-residente-detalle-boton"
+                            onClick={bajarBoleta}
+                        >
                             <Download size={16} />
                             Descargar boleta
                         </button>
                     </div>
+                    {descargaError && (
+                        <p className="expensas-aviso expensas-aviso-error" role="alert">{descargaError}</p>
+                    )}
                 </Panel>
             )}
 
-            {/* AYUDA Y ASISTENTE */}
+            {/* AYUDA */}
             <section className="expensas-ayuda-grid">
                 <Panel titulo="Ayuda sobre expensas" className="ayuda-expensas">
-                    <div className="ayuda-item">
-                        <div className="ayuda-icon"><CircleHelp /></div>
+                    {preguntasAyuda.map((item) => {
+                        const Icono = item.icono;
+                        const abierta = preguntaAbierta === item.id;
 
-                        <div>
-                            <strong>¿Cómo se calculan las expensas?</strong>
-                            <span>Entendé qué incluye tu expensa mensual.</span>
-                        </div>
+                        return (
+                            <div className={`ayuda-item ${abierta ? "abierta" : ""}`} key={item.id}>
+                                <button
+                                    type="button"
+                                    className="ayuda-item-cabecera"
+                                    aria-expanded={abierta}
+                                    aria-controls={`ayuda-expensas-${item.id}`}
+                                    onClick={() => setPreguntaAbierta(abierta ? null : item.id)}
+                                >
+                                    <span className="ayuda-icon"><Icono /></span>
 
-                        <ChevronRight />
-                    </div>
+                                    <span className="ayuda-item-textos">
+                                        <strong>{item.pregunta}</strong>
+                                        <span>{item.resumen}</span>
+                                    </span>
 
-                    <div className="ayuda-item">
-                        <div className="ayuda-icon"><WalletCards /></div>
+                                    <ChevronRight className="ayuda-item-flecha" />
+                                </button>
 
-                        <div>
-                            <strong>Medios de pago y promociones</strong>
-                            <span>Conocé las opciones disponibles.</span>
-                        </div>
-
-                        <ChevronRight />
-                    </div>
-
-                    <div className="ayuda-item">
-                        <div className="ayuda-icon"><FileText /></div>
-
-                        <div>
-                            <strong>¿Tenés un problema con tu pago?</strong>
-                            <span>Te ayudamos a resolverlo.</span>
-                        </div>
-
-                        <ChevronRight />
-                    </div>
+                                {abierta && (
+                                    <div className="ayuda-item-respuesta" id={`ayuda-expensas-${item.id}`}>
+                                        {item.respuesta}
+                                    </div>
+                                )}
+                            </div>
+                        );
+                    })}
                 </Panel>
             </section>
-
 
         </main>
     );

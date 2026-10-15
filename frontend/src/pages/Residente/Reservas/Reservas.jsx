@@ -12,7 +12,6 @@ import {
     ChevronLeft,
     CircleHelp,
     Info,
-    Search,
 } from "lucide-react";
 
 import imagenPredeterminada from "../../../assets/img/imagen-predeterminada.png";
@@ -35,7 +34,6 @@ import {
     horasHastaInicio,
     moverMes,
     nombreDeMes,
-    opcionesDeHorario,
     partesDeFecha,
 } from "./reservasUtils";
 import {
@@ -46,9 +44,6 @@ import {
     obtenerUsuarioId,
 } from "../../../services/reservasService";
 
-const FILTRO_VACIO = { fecha: "", desde: "", hasta: "", capacidad: "" };
-const HORARIOS = opcionesDeHorario("06:00", "23:30");
-
 /* Preguntas frecuentes del panel "Ayuda sobre reservas" */
 const PREGUNTAS = [
     {
@@ -57,7 +52,7 @@ const PREGUNTAS = [
         icono: CircleHelp,
         respuesta: (
             <ol>
-                <li>Buscá el espacio en <strong>"Espacios disponibles"</strong> (podés filtrar por fecha, horario y capacidad) y tocá <strong>Reservar</strong>.</li>
+                <li>Elegí el espacio en <strong>"Espacios comunes disponibles"</strong> y tocá <strong>Reservar</strong>.</li>
                 <li>Completá el asunto, la fecha y el horario, y revisá las reservas ya registradas para no elegir un horario ocupado.</li>
                 <li>Marcá la casilla de confirmación y enviá la solicitud.</li>
                 <li>La administración la revisa y las acepta por orden de llegada. Mientras tanto la vas a ver como <strong>Pendiente</strong> en tus reservas.</li>
@@ -103,11 +98,6 @@ function Reservas() {
     const [espaciosHoy, setEspaciosHoy] = useState(0);
     const [espacios, setEspacios] = useState([]);
     const [reservasDelMes, setReservasDelMes] = useState([]);
-
-    /* ---------- Filtro de espacios ---------- */
-    const [filtro, setFiltro] = useState(FILTRO_VACIO);
-    const [filtroAplicado, setFiltroAplicado] = useState(FILTRO_VACIO);
-    const [errorFiltro, setErrorFiltro] = useState("");
 
     /* ---------- Calendario resumido ---------- */
     const [mesVisible, setMesVisible] = useState(() => {
@@ -192,11 +182,11 @@ function Reservas() {
         return () => { activo = false; };
     }, [cargarCalendario]);
 
-    // Espacios comunes (se recarga al aplicar el filtro)
+    // Espacios comunes
     useEffect(() => {
         let activo = true;
 
-        listarEspaciosDisponibles(filtroAplicado)
+        listarEspaciosDisponibles()
             .then((lista) => {
                 if (activo) {
                     setEspacios(lista);
@@ -208,46 +198,7 @@ function Reservas() {
             });
 
         return () => { activo = false; };
-    }, [filtroAplicado]);
-
-
-    /* =========================
-        FILTRO DE ESPACIOS
-    ========================= */
-
-    function cambiarFiltro(campo, valor) {
-        setFiltro((actual) => ({ ...actual, [campo]: valor }));
-    }
-
-    function aplicarFiltro(evento) {
-        evento.preventDefault();
-        setErrorFiltro("");
-
-        const { fecha, desde, hasta } = filtro;
-
-        if ((desde && !hasta) || (!desde && hasta)) {
-            setErrorFiltro("Elegí el horario completo: desde y hasta.");
-            return;
-        }
-        if (desde && hasta && hasta <= desde) {
-            setErrorFiltro("El horario final tiene que ser posterior al inicial.");
-            return;
-        }
-        if (desde && !fecha) {
-            setErrorFiltro("Para filtrar por horario elegí también una fecha.");
-            return;
-        }
-
-        setFiltroAplicado(filtro);
-    }
-
-    function limpiarFiltro() {
-        setFiltro(FILTRO_VACIO);
-        setFiltroAplicado(FILTRO_VACIO);
-        setErrorFiltro("");
-    }
-
-    const hayFiltro = Object.values(filtroAplicado).some(Boolean);
+    }, []);
 
 
     /* =========================
@@ -268,13 +219,7 @@ function Reservas() {
     }
 
     function irAlEspacio(espacio) {
-        navigate(`/reservas/espacio/${espacio.id}`, {
-            state: {
-                fecha: filtroAplicado.fecha,
-                desde: filtroAplicado.desde,
-                hasta: filtroAplicado.hasta,
-            },
-        });
+        navigate(`/reservas/espacio/${espacio.id}`);
     }
 
     function irAlCalendario(reserva) {
@@ -427,6 +372,7 @@ function Reservas() {
                                         <div className="reserva-card-acciones">
                                             <button
                                                 type="button"
+                                                className="btn-reserva btn-reserva-detalle"
                                                 onClick={() => setVentana({ tipo: "detalle", reserva })}
                                             >
                                                 <Eye />
@@ -437,7 +383,7 @@ function Reservas() {
                                             {reserva.estado === "confirmada" && (
                                                 <button
                                                     type="button"
-                                                    className="btn-cancelar"
+                                                    className="btn-reserva btn-reserva-cancelar"
                                                     onClick={() => setVentana({ tipo: "cancelar", reserva })}
                                                 >
                                                     <X />
@@ -449,6 +395,7 @@ function Reservas() {
                                             {reserva.estado === "pendiente" && (
                                                 <button
                                                     type="button"
+                                                    className="btn-reserva btn-reserva-modificar"
                                                     onClick={() => setVentana({ tipo: "modificar", reserva })}
                                                 >
                                                     <Pencil />
@@ -466,20 +413,14 @@ function Reservas() {
 
                     <Panel
                         titulo="Espacios comunes disponibles"
-                        descripcion={
-                            hayFiltro
-                                ? "Espacios que cumplen con tu búsqueda"
-                                : "Elegí un espacio para realizar una reserva"
-                        }
+                        descripcion="Elegí un espacio para realizar una reserva"
                         className="espacios-disponibles"
                     >
                         {errorEspacios && <p className="mensaje-error">{errorEspacios}</p>}
 
                         {!errorEspacios && espacios.length === 0 && (
                             <p className="reservas-vacio">
-                                {hayFiltro
-                                    ? "No hay espacios disponibles con esos filtros. Probá con otra fecha u horario."
-                                    : "Por ahora no hay espacios comunes cargados."}
+                                Por ahora no hay espacios comunes cargados.
                             </p>
                         )}
 
@@ -547,94 +488,6 @@ function Reservas() {
                 ========================= */}
 
                 <section className="reservas-columna">
-
-                    {/* FILTRO DE ESPACIOS */}
-
-                    <Panel
-                        titulo="Buscar espacio"
-                        descripcion="Filtrá por fecha, horario y capacidad"
-                        className="nueva-reserva"
-                    >
-                        <form className="form-reserva" onSubmit={aplicarFiltro}>
-                            <div className="campo-reserva">
-                                <label htmlFor="filtro-fecha">Fecha</label>
-                                <input
-                                    id="filtro-fecha"
-                                    type="date"
-                                    min={hoyISO()}
-                                    value={filtro.fecha}
-                                    onChange={(e) => cambiarFiltro("fecha", e.target.value)}
-                                />
-                            </div>
-
-                            <div className="fila-doble">
-                                <div className="campo-reserva">
-                                    <label htmlFor="filtro-desde">Desde</label>
-                                    <select
-                                        id="filtro-desde"
-                                        value={filtro.desde}
-                                        onChange={(e) => cambiarFiltro("desde", e.target.value)}
-                                    >
-                                        <option value="">Cualquiera</option>
-                                        {HORARIOS.map((hora) => (
-                                            <option key={hora} value={hora}>{hora}</option>
-                                        ))}
-                                    </select>
-                                </div>
-
-                                <div className="campo-reserva">
-                                    <label htmlFor="filtro-hasta">Hasta</label>
-                                    <select
-                                        id="filtro-hasta"
-                                        value={filtro.hasta}
-                                        onChange={(e) => cambiarFiltro("hasta", e.target.value)}
-                                    >
-                                        <option value="">Cualquiera</option>
-                                        {HORARIOS.map((hora) => (
-                                            <option key={hora} value={hora}>{hora}</option>
-                                        ))}
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div className="campo-reserva">
-                                <label htmlFor="filtro-capacidad">Capacidad (personas)</label>
-                                <input
-                                    id="filtro-capacidad"
-                                    type="number"
-                                    min="1"
-                                    placeholder="Cualquiera"
-                                    value={filtro.capacidad}
-                                    onChange={(e) => cambiarFiltro("capacidad", e.target.value)}
-                                />
-                            </div>
-
-                            {errorFiltro && <p className="mensaje-error">{errorFiltro}</p>}
-
-                            <button type="submit" className="btn-solicitar">
-                                <Search />
-                                Buscar espacios
-                            </button>
-
-                            <button type="button" className="btn-limpiar" onClick={limpiarFiltro}>
-                                Limpiar filtros
-                            </button>
-                        </form>
-
-                        <div className="reglas-reserva">
-                            <div className="reglas-icono"><Info /></div>
-
-                            <div>
-                                <strong>Reglas de uso</strong>
-
-                                <ul>
-                                    <li>Respetar los horarios asignados.</li>
-                                    <li>Dejar el espacio en condiciones.</li>
-                                    <li>Las reservas se cancelan con 24 h de anticipación.</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </Panel>
 
                     {/* CALENDARIO */}
 
@@ -705,6 +558,16 @@ function Reservas() {
                             Ver calendario completo
                             <ChevronRight />
                         </button>
+                    </Panel>
+
+                    {/* REGLAS DE USO */}
+
+                    <Panel titulo="Reglas de uso" descripcion="Para que todos podamos disfrutar los espacios" className="reglas-uso">
+                        <ul className="reglas-lista">
+                            <li>Respetar los horarios asignados.</li>
+                            <li>Dejar el espacio en condiciones.</li>
+                            <li>Las reservas se cancelan con 24 h de anticipación.</li>
+                        </ul>
                     </Panel>
 
                 </section>
