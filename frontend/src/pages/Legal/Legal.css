@@ -1,0 +1,127 @@
+/* =========================
+      PÁGINAS LEGALES
+========================= */
+
+.legal {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: var(--fondo);
+    color: var(--texto-principal);
+}
+
+.legal-cabecera {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 16px 32px;
+    border-bottom: 1px solid var(--separador);
+    background: var(--blanco);
+}
+
+.legal-logo {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--texto-principal);
+}
+
+.legal-nav {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.legal-nav a {
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--texto-secundario);
+    text-decoration: none;
+}
+
+.legal-nav a:hover {
+    background: var(--hover-nav);
+}
+
+.legal-nav a.activo {
+    background: var(--fondo-verde-suave);
+    color: var(--texto-verde);
+}
+
+.legal-contenido {
+    flex: 1;
+    width: 100%;
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 32px 24px 48px;
+}
+
+.legal-contenido h1 {
+    margin: 0 0 6px;
+    font-size: 28px;
+}
+
+.legal-resumen {
+    margin: 0 0 4px;
+    font-size: 15px;
+    color: var(--texto-secundario);
+}
+
+.legal-fecha {
+    margin: 0 0 28px;
+    font-size: 12px;
+    color: var(--texto-icono);
+}
+
+.legal-contenido section {
+    margin-bottom: 24px;
+    padding: 18px 20px;
+    border: 1px solid var(--borde-tarjeta);
+    border-radius: 12px;
+    background: var(--blanco);
+}
+
+.legal-contenido h2 {
+    margin: 0 0 10px;
+    font-size: 16px;
+}
+
+.legal-contenido p,
+.legal-contenido li {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--texto-secundario);
+}
+
+.legal-contenido p {
+    margin: 0 0 10px;
+}
+
+.legal-contenido p:last-child {
+    margin-bottom: 0;
+}
+
+.legal-contenido ul {
+    margin: 0 0 10px;
+    padding-left: 20px;
+}
+
+.legal-pie {
+    padding: 16px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--texto-icono);
+}
+
+@media (max-width: 600px) {
+    .legal-cabecera {
+        padding: 14px 16px;
+    }
+
+    .legal-contenido {
+        padding: 24px 16px 40px;
+    }
+}

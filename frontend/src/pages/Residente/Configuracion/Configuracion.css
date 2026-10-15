@@ -1,220 +1,426 @@
-.configuracion-residente-contenido {
+/* =========================
+     CONFIGURACIÓN (residente)
+========================= */
+
+.configuracion {
     display: grid;
-    grid-template-columns: minmax(0, 1.6fr) minmax(280px, 0.9fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     align-items: start;
     gap: 14px;
 }
 
-.configuracion-residente-lateral {
+.configuracion-columna {
     display: flex;
-    min-width: 0;
     flex-direction: column;
     gap: 14px;
-}
-
-.configuracion-residente-formulario {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 14px;
-}
-
-.configuracion-residente-campo {
-    display: flex;
     min-width: 0;
+}
+
+/* ---------- Filas de opciones ---------- */
+
+.config-fila {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--separador);
+}
+
+.config-fila:last-of-type {
+    border-bottom: none;
+}
+
+.config-fila > div,
+.config-notificaciones li > div {
+    display: flex;
     flex-direction: column;
-    gap: 6px;
-    font-size: 12px;
+    gap: 2px;
+    min-width: 0;
+}
+
+.config-fila strong,
+.config-notificaciones strong {
+    font-size: 13px;
     font-weight: 600;
-}
-
-.configuracion-residente-campo input,
-.configuracion-residente-campo select,
-.configuracion-residente-campo textarea {
-    box-sizing: border-box;
-    width: 100%;
-    border: 1px solid var(--borde-input);
-    border-radius: 6px;
-    outline: none;
-    background: var(--blanco);
     color: var(--texto-principal);
-    font: 400 13px "Open Sans", sans-serif;
 }
 
-.configuracion-residente-campo input,
-.configuracion-residente-campo select {
-    height: 40px;
-    padding: 0 11px;
+.config-fila span,
+.config-notificaciones span {
+    font-size: 12px;
+    color: var(--texto-secundario);
+    overflow-wrap: anywhere;
 }
 
-.configuracion-residente-campo textarea {
-    min-height: 140px;
-    padding: 10px 11px;
-    line-height: 1.5;
-    resize: vertical;
+/* ---------- Botones ---------- */
+
+.config-boton-principal,
+.config-boton-secundario {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-shrink: 0;
+    padding: 9px 14px;
+    border-radius: 8px;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
 }
 
-.configuracion-residente-campo input::placeholder,
-.configuracion-residente-campo textarea::placeholder,
-.configuracion-residente-campo select:invalid {
-    color: #7a858a;
-}
-
-.configuracion-residente-campo input:focus,
-.configuracion-residente-campo select:focus,
-.configuracion-residente-campo textarea:focus {
-    border-color: var(--verde);
-    box-shadow: 0 0 0 2px rgb(39 155 151 / 12%);
-}
-
-.configuracion-residente-descripcion,
-.configuracion-residente-acciones {
-    grid-column: 1 / -1;
-}
-
-.configuracion-residente-acciones {
-    display: flex;
-    justify-content: flex-end;
-}
-
-.configuracion-residente-enviar {
-    min-height: 40px;
-    padding: 0 14px;
+.config-boton-principal {
     border: 1px solid var(--verde);
-    border-radius: 6px;
     background: var(--verde);
     color: var(--blanco);
-    font: 600 13px "Open Sans", sans-serif;
-    cursor: pointer;
 }
 
-.configuracion-residente-enviar:hover {
-    border-color: var(--verde-hover);
+.config-boton-principal:hover {
     background: var(--verde-hover);
 }
 
-.configuracion-residente-lista,
-.configuracion-residente-enlaces {
-    display: flex;
-    flex-direction: column;
+.config-boton-secundario {
+    border: 1px solid var(--borde-input);
+    background: var(--blanco);
+    color: var(--texto-principal);
 }
 
-.configuracion-residente-preferencia {
+.config-boton-secundario:hover:not(:disabled) {
+    background: var(--hover-nav);
+}
+
+.config-boton-peligro {
+    color: var(--color-aviso-rojo);
+}
+
+.config-boton-secundario:disabled {
+    opacity: 0.6;
+    cursor: wait;
+}
+
+.config-boton-principal svg,
+.config-boton-secundario svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* ---------- Notificaciones ---------- */
+
+.config-notificaciones {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.config-notificaciones li {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 14px;
-    padding: 10px 0;
+    gap: 16px;
+    padding: 11px 0;
     border-bottom: 1px solid var(--separador);
 }
 
-.configuracion-residente-preferencia:last-child {
-    border-bottom: 0;
-}
-
-.configuracion-residente-preferencia-texto {
-    display: flex;
-    min-width: 0;
-    flex-direction: column;
-}
-
-.configuracion-residente-preferencia-texto strong {
-    color: var(--texto-principal);
-    font-size: 13px;
-    font-weight: 600;
-}
-
-.configuracion-residente-preferencia-texto span {
-    margin-top: 2px;
-    color: var(--texto-secundario);
-    font-size: 12px;
-}
-
-.configuracion-residente-switch {
+.config-switch {
     position: relative;
-    width: 34px;
-    height: 19px;
-    flex: 0 0 auto;
-    padding: 0;
-    border: 0;
-    border-radius: 20px;
-    background: var(--borde-secundario);
+    flex-shrink: 0;
+    width: 40px;
+    height: 22px;
     cursor: pointer;
-    transition: background 0.2s;
 }
 
-.configuracion-residente-switch::before {
+.config-switch input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.config-switch span {
+    position: absolute;
+    inset: 0;
+    border-radius: 999px;
+    background: var(--borde-input);
+    transition: background 0.2s;
+    pointer-events: none;
+}
+
+.config-switch span::after {
+    content: "";
     position: absolute;
     top: 3px;
     left: 3px;
-    width: 13px;
-    height: 13px;
+    width: 16px;
+    height: 16px;
     border-radius: 50%;
     background: var(--blanco);
-    content: "";
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
     transition: transform 0.2s;
 }
 
-.configuracion-residente-switch.activo {
+.config-switch input:checked + span {
     background: var(--verde);
 }
 
-.configuracion-residente-switch.activo::before {
-    transform: translateX(15px);
+.config-switch input:checked + span::after {
+    transform: translateX(18px);
 }
 
-.configuracion-residente-enlace {
-    display: flex;
+.config-switch input:focus-visible + span {
+    outline: 2px solid var(--verde);
+    outline-offset: 2px;
+}
+
+.config-switch input:disabled {
+    cursor: wait;
+}
+
+.config-fila-dias {
+    border-bottom: none;
+    padding-bottom: 4px;
+}
+
+/* ---------- Select ---------- */
+
+.config-select {
+    position: relative;
+    display: block;
+    flex-shrink: 0;
+}
+
+.config-select select {
     width: 100%;
-    min-height: 38px;
+    appearance: none;
+    padding: 9px 34px 9px 12px;
+    border: 1px solid var(--borde-input);
+    border-radius: 8px;
+    background: var(--blanco);
+    color: var(--texto-principal);
+    font: inherit;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.config-select select:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+.config-select svg {
+    position: absolute;
+    top: 50%;
+    right: 11px;
+    width: 16px;
+    height: 16px;
+    transform: translateY(-50%);
+    color: var(--texto-icono);
+    pointer-events: none;
+}
+
+/* ---------- Preguntas frecuentes ---------- */
+
+.config-subtitulo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 14px 0 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--texto-principal);
+}
+
+.config-subtitulo svg {
+    width: 16px;
+    height: 16px;
+    color: var(--verde);
+}
+
+.config-preguntas details {
+    border-bottom: 1px solid var(--separador);
+}
+
+.config-preguntas details:last-child {
+    border-bottom: none;
+}
+
+.config-preguntas summary {
+    display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid var(--separador);
-    background: transparent;
-    color: var(--texto-secundario);
+    gap: 12px;
+    padding: 11px 0;
     font-size: 13px;
-    text-align: left;
+    color: var(--texto-principal);
+    cursor: pointer;
+    list-style: none;
 }
 
-.configuracion-residente-enlace:last-child {
-    border-bottom: 0;
+.config-preguntas summary::-webkit-details-marker {
+    display: none;
 }
 
-.configuracion-residente-enlace:hover {
-    color: var(--verde-hover);
+.config-preguntas summary svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    color: var(--texto-icono);
+    transition: transform 0.2s;
 }
 
-.configuracion-residente-enlace svg {
-    flex: 0 0 auto;
+.config-preguntas details[open] summary svg {
+    transform: rotate(180deg);
+}
+
+.config-preguntas details p {
+    margin: 0 0 12px;
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--texto-secundario);
+}
+
+/* ---------- Legal ---------- */
+
+.config-enlaces {
+    display: flex;
+    flex-direction: column;
+}
+
+.config-enlaces a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--separador);
+    font-size: 13px;
+    color: var(--texto-principal);
+    text-decoration: none;
+}
+
+.config-enlaces a:hover {
+    color: var(--verde);
+}
+
+.config-enlaces svg {
+    width: 18px;
+    height: 18px;
     color: var(--texto-icono);
 }
 
-.configuracion-residente-version {
-    margin: 10px 0 0;
-    color: var(--texto-secundario);
+.config-version {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 12px 0 0;
     font-size: 12px;
+    color: var(--texto-verde);
 }
 
-@media (max-width: 900px) {
-    .configuracion-residente-contenido {
+.config-version svg {
+    width: 14px;
+    height: 14px;
+}
+
+/* ---------- Mensajes ---------- */
+
+.config-mensaje {
+    margin: 8px 0 0;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.config-mensaje.ok {
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: var(--fondo-verde-suave);
+    color: var(--texto-verde);
+}
+
+.config-mensaje.error {
+    color: var(--color-aviso-rojo);
+}
+
+.config-nota {
+    margin: 10px 0 0;
+    font-size: 11px;
+    line-height: 1.5;
+    color: var(--texto-secundario);
+}
+
+/* ---------- Modal: reportar un problema ---------- */
+
+.config-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.config-form-intro {
+    margin: 0;
+    font-size: 13px;
+    color: var(--texto-secundario);
+}
+
+.config-campo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.config-campo label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--texto-principal);
+}
+
+.config-campo input[type="text"],
+.config-campo textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--borde-input);
+    border-radius: 8px;
+    background: var(--blanco);
+    color: var(--texto-principal);
+    font: inherit;
+    font-size: 13px;
+}
+
+.config-campo textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.config-campo select {
+    width: 100%;
+}
+
+.config-campo input:focus,
+.config-campo select:focus,
+.config-campo textarea:focus {
+    outline: 2px solid var(--verde);
+    outline-offset: 1px;
+}
+
+.config-btn-enviar svg {
+    width: 16px;
+    height: 16px;
+    margin-right: 6px;
+}
+
+@media (max-width: 1000px) {
+    .configuracion {
         grid-template-columns: minmax(0, 1fr);
     }
 }
 
-@media (max-width: 560px) {
-    .configuracion-residente {
-        padding: 20px;
-    }
-
-    .configuracion-residente-formulario {
-        grid-template-columns: minmax(0, 1fr);
-    }
-
-    .configuracion-residente-descripcion,
-    .configuracion-residente-acciones {
-        grid-column: auto;
-    }
-
-    .configuracion-residente-enviar {
-        width: 100%;
+@media (max-width: 600px) {
+    .config-fila {
+        flex-direction: column;
+        align-items: flex-start;
     }
 }
