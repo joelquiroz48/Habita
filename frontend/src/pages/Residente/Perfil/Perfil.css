@@ -422,3 +422,107 @@
         padding: 18px;
     }
 }
+
+/* =========================================================
+   SELECTOR DE FOTO (botón con el estilo de la app)
+========================================================= */
+
+/* El input nativo se oculta: lo abre el botón "Elegir foto" */
+.perfil-archivo-oculto {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.perfil-foto-acciones {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.perfil-foto-acciones .btn-editar,
+.perfil-foto-acciones .perfil-modal-cancelar {
+    padding: 7px 12px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.perfil-foto-acciones .btn-editar svg {
+    width: 15px;
+    height: 15px;
+}
+
+.perfil-foto-ayuda {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--texto-icono);
+    font-size: 12px;
+}
+
+/* Botones de los modales mientras se guarda */
+.perfil-modal button:disabled,
+.contacto-acciones button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.perfil-modal .perfil-modal-nombre .perfil-foto-ayuda {
+    white-space: normal;
+}
+
+/* =========================================================
+   CAMPO DE CONTRASEÑA (con ojo para mostrar / ocultar)
+========================================================= */
+
+.campo-contrasena {
+    position: relative;
+}
+
+.perfil-modal .campo-contrasena input {
+    padding-right: 40px;
+}
+
+.campo-contrasena-ojo {
+    position: absolute;
+    top: 50%;
+    right: 6px;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border: 0;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--texto-secundario);
+    cursor: pointer;
+}
+
+.campo-contrasena-ojo:hover {
+    background: var(--fondo-icono);
+    color: var(--verde);
+}
+
+.campo-contrasena-ojo svg {
+    width: 17px;
+    height: 17px;
+}
+
+/* Borde rojo cuando el campo tiene un problema */
+.perfil-modal .campo-contrasena input[aria-invalid="true"] {
+    border-color: var(--color-aviso-rojo);
+}
+
+.perfil-modal .perfil-modal-nombre .contacto-error,
+.perfil-modal .perfil-modal-nombre .contacto-exito {
+    margin: 4px 0 0;
+    font-size: 12px;
+}

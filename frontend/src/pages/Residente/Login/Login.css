@@ -342,3 +342,17 @@
     }
 
 }
+
+/* Mensaje de error del formulario (credenciales incorrectas, etc.) */
+.login-error {
+    margin: 12px 0 0;
+    padding: 10px 12px;
+    border: 1px solid var(--color-aviso-rojo);
+    border-radius: 8px;
+    background: #fdecec;
+    color: var(--color-aviso-rojo);
+    font-size: 13px;
+    line-height: 1.4;
+    text-align: center;
+    overflow-wrap: anywhere;
+}

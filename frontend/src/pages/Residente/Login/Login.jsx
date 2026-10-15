@@ -6,6 +6,32 @@ import logo from "../../../assets/img/icon.png";
 import { supabase } from "../../../supabase";
 import {Users, ShieldUser, FileText, ChartNoAxesColumnIncreasing, LockKeyhole, Mail, Eye, EyeOff } from "lucide-react";
 
+/* Convierte la respuesta de error del servidor en un mensaje claro para la persona */
+function mensajeErrorLogin(status, body) {
+    const detalle = body?.detail ?? body;
+    const codigo =
+        detalle && typeof detalle === "object" && !Array.isArray(detalle)
+            ? detalle.error_code || detalle.code
+            : null;
+
+    if (codigo === "email_not_confirmed") {
+        return "Tenés que confirmar tu correo electrónico antes de iniciar sesión.";
+    }
+    if (status === 429 || codigo === "over_request_rate_limit") {
+        return "Hiciste demasiados intentos. Esperá unos minutos y probá de nuevo.";
+    }
+    if (codigo === "invalid_credentials" || status === 400 || status === 401) {
+        return "El correo o la contraseña son incorrectos. Revisá tus datos e intentá de nuevo.";
+    }
+    if (status === 422 || Array.isArray(detalle)) {
+        return "Ingresá un correo electrónico válido (por ejemplo, nombre@correo.com).";
+    }
+    if (status >= 500) {
+        return "Tuvimos un problema para iniciar sesión. Probá de nuevo en unos minutos.";
+    }
+    return "No pudimos iniciar sesión. Probá de nuevo.";
+}
+
 function Login() {
     
     useEffect(() => {
@@ -36,13 +62,7 @@ function Login() {
 
             const body = await res.json().catch(() => ({}));
             if (!res.ok) {
-                const detalle = body.detail || body.msg || 'Error en el login';
-
-                setError(
-                    typeof detalle === "string"
-                        ? detalle
-                        : JSON.stringify(detalle)
-                );
+                setError(mensajeErrorLogin(res.status, body));
 
                 setLoading(false);
                 return;
@@ -75,7 +95,7 @@ function Login() {
                 setError('Tipo de usuario no reconocido');
             }
         } catch (err) {
-            setError('Error de red');
+            setError('No pudimos conectarnos con el servidor. Revisá tu conexión e intentá de nuevo.');
             setLoading(false);
         }
     };
@@ -312,7 +332,7 @@ function Login() {
                                 {loading ? 'Ingresando...' : 'Iniciar sesión'}
                             </button>
 
-                            {error && <p style={{ color: 'var(--texto-verde)', marginTop: 12 }}>{error}</p>}
+                            {error && <p className="login-error" role="alert">{error}</p>}
 
                         </form>
 

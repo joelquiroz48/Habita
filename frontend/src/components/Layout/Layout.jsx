@@ -6,7 +6,7 @@ import iconPerfil from "../../assets/img/foto-perfil.png";
 import iconLogo from "../../assets/img/icon.png";
 import imagenEdificio from "../../assets/img/imagen-predeterminada.png";
 import { supabase } from "../../supabase";
-import { obtenerPerfilResidente } from "../../services/perfilService";
+import { PerfilProvider, usePerfil } from "../../context/PerfilContext";
 import habitaImg from "../../assets/img/interfaz-chat/habita-asistente.png";
 import habitaImgOjosCerrados from "../../assets/img/interfaz-chat/habita-asistente-2.png";
 
@@ -90,23 +90,15 @@ function cargarMensajesChat() {
 
 import ChatWidget from "./ChatWidget/ChatWidget";
 
-function Layout({ children }) {
+function LayoutInterno({ children }) {
     const [sidebarAbierto, setSidebarAbierto] = useState(true);
     const [menuAbierto, setMenuAbierto] = useState(false);
 
     const location = useLocation();
     const infoHeader = informacionHeader[location.pathname];
 
-    // Datos reales del residente logueado (nombre, unidad y edificio)
-    const [perfil, setPerfil] = useState(null);
-
-    useEffect(() => {
-        let activo = true;
-        obtenerPerfilResidente()
-            .then((datos) => { if (activo) setPerfil(datos); })
-            .catch((error) => console.error("No pudimos cargar tu perfil:", error));
-        return () => { activo = false; };
-    }, []);
+    // Datos reales del residente logueado (nombre, foto, unidad y edificio)
+    const { perfil } = usePerfil();
 
     const cerrarSesion = async () => {
         sessionStorage.removeItem(CHAT_SESSION_STORAGE_KEY);
@@ -210,8 +202,9 @@ function Layout({ children }) {
                         </div>
 
                         <img
-                            src={iconPerfil}
+                            src={perfil?.fotoUrl || iconPerfil}
                             alt="Imagen de perfil"
+                            className="header-foto-perfil"
                         />
 
                         <div
@@ -333,6 +326,15 @@ function Layout({ children }) {
                 <img className="chat-boton-img ojos-cerrados" src={habitaImgOjosCerrados} alt="" />
             </button>
         </div>
+    );
+}
+
+/* El perfil se comparte con todas las pantallas (Mi perfil lo actualiza desde ahí) */
+function Layout({ children }) {
+    return (
+        <PerfilProvider>
+            <LayoutInterno>{children}</LayoutInterno>
+        </PerfilProvider>
     );
 }
 
