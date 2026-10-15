@@ -1,0 +1,344 @@
+/* =========================
+     INICIO: BIENVENIDA
+========================= */
+
+.ini-saludo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: 14px;
+    padding: 18px 22px;
+    border: 1px solid var(--borde-input);
+    border-radius: 12px;
+    background: var(--celeste-claro);
+}
+
+.ini-saludo h2 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--texto-principal);
+}
+
+.ini-saludo p {
+    margin: 4px 0 0;
+    font-size: 13px;
+    color: var(--texto-secundario);
+}
+
+.ini-saludo-edificio {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: var(--blanco);
+}
+
+.ini-saludo-edificio svg {
+    width: 22px;
+    height: 22px;
+    color: var(--verde);
+    flex-shrink: 0;
+}
+
+.ini-saludo-edificio div {
+    display: flex;
+    flex-direction: column;
+}
+
+.ini-saludo-edificio strong {
+    font-size: 13px;
+    color: var(--texto-principal);
+}
+
+.ini-saludo-edificio span {
+    font-size: 12px;
+    color: var(--texto-secundario);
+}
+
+/* =========================
+         ALERTAS
+========================= */
+
+.ini-alertas {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 14px;
+}
+
+.ini-alerta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-size: 13px;
+}
+
+.ini-alerta svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+.ini-alerta span {
+    flex: 1;
+}
+
+.ini-alerta a {
+    font-weight: 600;
+    white-space: nowrap;
+    text-decoration: underline;
+    color: inherit;
+}
+
+.ini-alerta-rojo {
+    background: var(--fondo-documento-pdf);
+    color: var(--color-aviso-rojo);
+}
+
+.ini-alerta-amarillo {
+    background: var(--fondo-aviso-amarillo);
+    color: var(--color-vencimiento);
+}
+
+.ini-alerta-azul {
+    background: var(--fondo-azul-suave);
+    color: var(--color-aviso-azul);
+}
+
+/* =========================
+       TARJETAS: ESTADOS
+========================= */
+
+.ini-vencida {
+    color: var(--color-aviso-rojo);
+}
+
+.ini-estado {
+    width: fit-content;
+    padding: 3px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.ini-estado-verde {
+    background: var(--fondo-verde-suave);
+    color: var(--color-aviso-verde);
+}
+
+.ini-estado-amarillo {
+    background: var(--fondo-aviso-amarillo);
+    color: var(--color-vencimiento);
+}
+
+.ini-estado-rojo {
+    background: var(--fondo-documento-pdf);
+    color: var(--color-aviso-rojo);
+}
+
+.ini-estado-azul {
+    background: var(--fondo-azul-suave);
+    color: var(--color-aviso-azul);
+}
+
+/* =========================
+     CONTENIDO PRINCIPAL
+========================= */
+
+.ini-contenido {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    align-items: start;
+}
+
+.ini-columna {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-width: 0;
+}
+
+.ini-mensaje {
+    margin: 0;
+    padding: 6px 0;
+    font-size: 12px;
+    color: var(--texto-secundario);
+}
+
+.ini-mensaje a {
+    color: var(--verde-hover);
+    font-weight: 600;
+}
+
+.ini-mensaje-error {
+    color: var(--color-aviso-rojo);
+}
+
+.ini-resumen-linea {
+    margin: 0 0 6px;
+    font-size: 12px;
+    color: var(--texto-secundario);
+}
+
+.ini-resumen-linea strong {
+    font-size: 18px;
+    color: var(--texto-principal);
+}
+
+/* ----- Listas (avisos y reclamos) ----- */
+
+.ini-lista {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.ini-lista li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--separador);
+}
+
+.ini-lista li:last-child {
+    border-bottom: none;
+}
+
+.ini-lista-texto {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.ini-lista-texto strong {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--texto-principal);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ini-lista-texto > span {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px;
+    font-size: 11px;
+    color: var(--texto-secundario);
+}
+
+.ini-lista-texto svg {
+    width: 12px;
+    height: 12px;
+}
+
+.ini-punto {
+    width: 8px;
+    height: 8px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--borde-input);
+}
+
+.ini-punto.sin-leer {
+    background: var(--verde);
+}
+
+/* ----- Eventos ----- */
+
+.ini-eventos {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.ini-eventos li {
+    border-bottom: 1px solid var(--separador);
+}
+
+.ini-eventos li:last-child {
+    border-bottom: none;
+}
+
+.ini-eventos a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    color: inherit;
+    text-decoration: none;
+}
+
+.ini-eventos a:hover {
+    background: var(--celeste-claro);
+}
+
+.ini-evento-fecha {
+    width: 38px;
+    height: 42px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    background: var(--fondo-icono);
+}
+
+.ini-evento-fecha span {
+    font-size: 10px;
+    color: var(--texto-secundario);
+}
+
+.ini-evento-fecha strong {
+    font-size: 15px;
+    color: var(--texto-principal);
+}
+
+.ini-tipo {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.ini-tipo svg {
+    width: 12px;
+    height: 12px;
+}
+
+.ini-tipo.cal-tipo-reunion { background: var(--fondo-azul-suave); color: var(--color-aviso-azul); }
+.ini-tipo.cal-tipo-mantenimiento { background: var(--fondo-aviso-amarillo); color: var(--color-vencimiento); }
+.ini-tipo.cal-tipo-social { background: var(--fondo-verde-suave); color: var(--color-aviso-verde); }
+.ini-tipo.cal-tipo-otro { background: var(--fondo-icono); color: var(--texto-secundario); }
+
+/* =========================
+        RESPONSIVE
+========================= */
+
+@media (max-width: 900px) {
+    .ini-contenido {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .ini-alerta {
+        flex-wrap: wrap;
+    }
+}

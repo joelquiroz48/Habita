@@ -8,7 +8,7 @@
              (carpeta propia: reclamos/<id del usuario>/...)
 
    La seguridad (RLS) hace que el residente solo vea y cree
-   SUS reclamos.
+   SUS reclamos, y solo pueda editarlos mientras estan Pendientes.
 ========================================================= */
 
 import { supabase } from "../supabase";
@@ -90,12 +90,12 @@ function convertirReclamo(fila) {
         fecha: `${dia}/${mes}/${anio.slice(-2)}`,
         periodoFecha: obtenerPeriodoFecha(`${dia}/${mes}/${anio}`),
         adjunto: fila.adjunto_nombre
-            ? { nombre: fila.adjunto_nombre, tamano: formatearTamano(fila.adjunto_tamano) }
+            ? { nombre: fila.adjunto_nombre, tamano: formatearTamano(fila.adjunto_tamano), ruta: fila.adjunto_ruta ?? null }
             : null,
     };
 }
 
-const CAMPOS = "id, titulo, categoria, descripcion, estado, fecha_creacion, adjunto_nombre, adjunto_tamano";
+const CAMPOS = "id, titulo, categoria, descripcion, estado, fecha_creacion, adjunto_nombre, adjunto_tamano, adjunto_ruta";
 
 async function exigirSesion() {
     const { data } = await supabase.auth.getSession();
@@ -175,4 +175,72 @@ export async function crearReclamo({ unidadId, titulo, categoria, descripcion, a
     }
 
     return convertirReclamo(data);
+}
+
+/**
+ * Edita un reclamo PENDIENTE (asunto, categoria, descripcion y adjunto).
+ *
+ *  - archivo:        archivo nuevo (reemplaza al adjunto actual), o null
+ *  - quitarAdjunto:  true para dejar el reclamo sin adjunto
+ *  - adjuntoActual:  el adjunto que tiene hoy ({ ruta, ... }) o null
+ *
+ * Orden: sube el archivo nuevo -> actualiza la fila -> borra el archivo
+ * viejo. Si la actualizacion falla, borra el archivo nuevo para no dejar
+ * basura. Si la base no deja editar (el reclamo ya cambio de estado), el
+ * error trae codigo "NO_EDITABLE".
+ */
+export async function editarReclamo({ id, titulo, categoria, descripcion, archivo, quitarAdjunto, adjuntoActual }) {
+    const usuario = await exigirSesion();
+
+    const errorArchivo = validarAdjunto(archivo);
+    if (errorArchivo) throw new Error(errorArchivo);
+
+    const cambios = {
+        titulo: titulo.trim(),
+        categoria,
+        descripcion: descripcion.trim(),
+    };
+
+    let rutaNueva = null;
+    if (archivo) {
+        rutaNueva = `${usuario.id}/${Date.now()}-${nombreSeguro(archivo.name)}`;
+        const { error: errorSubida } = await supabase.storage
+            .from(BUCKET)
+            .upload(rutaNueva, archivo, { contentType: archivo.type });
+        if (errorSubida) throw new Error("No pudimos subir el archivo. Probá de nuevo.");
+        cambios.adjunto_nombre = archivo.name;
+        cambios.adjunto_tamano = archivo.size;
+        cambios.adjunto_ruta = rutaNueva;
+    } else if (quitarAdjunto) {
+        cambios.adjunto_nombre = null;
+        cambios.adjunto_tamano = null;
+        cambios.adjunto_ruta = null;
+    }
+
+    // .eq("estado", "ABIERTO") es una segunda barrera ademas de la seguridad de la base
+    const { data, error } = await supabase
+        .from("reclamo")
+        .update(cambios)
+        .eq("id", id)
+        .eq("usuario_id", usuario.id)
+        .eq("estado", "ABIERTO")
+        .select(CAMPOS);
+
+    if (error || !data || data.length === 0) {
+        if (rutaNueva) await supabase.storage.from(BUCKET).remove([rutaNueva]);
+        if (error) {
+            console.error("No se pudo editar el reclamo", error);
+            throw new Error("No pudimos guardar los cambios. Probá de nuevo en unos minutos.");
+        }
+        const noEditable = new Error("Este reclamo ya no se puede editar porque la administración empezó a atenderlo.");
+        noEditable.codigo = "NO_EDITABLE";
+        throw noEditable;
+    }
+
+    // Si cambio o se quito el adjunto, se borra el archivo viejo
+    if ((archivo || quitarAdjunto) && adjuntoActual?.ruta) {
+        await supabase.storage.from(BUCKET).remove([adjuntoActual.ruta]);
+    }
+
+    return convertirReclamo(data[0]);
 }

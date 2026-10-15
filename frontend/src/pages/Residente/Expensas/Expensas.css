@@ -69,119 +69,36 @@
 }
 
 /* =========================
-        DETALLE EXPENSA
+        HISTORIAL (buscador + filtro)
 ========================= */
 
-.expensas .expensas-residente-detalle {
-    margin: 14px 0;
+.expensas .expensas-historial {
+    margin-top: 14px;
 }
 
-.expensas .expensas-residente-detalle-columnas {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    align-items: start;
-    gap: 24px;
+/* Buscador a lo ancho y filtro al costado, alineados con la tabla */
+.expensas .expensas-historial .navegador {
+    margin-bottom: 14px;
 }
 
-.expensas .expensas-residente-detalle-seccion {
-    min-width: 0;
+.expensas .expensas-historial .navegador-buscador {
+    flex: 1;
+    max-width: none;
 }
 
-.expensas .expensas-residente-detalle-seccion h3 {
-    margin: 0 0 10px;
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--texto-principal);
+.expensas .expensas-historial .navegador-filtro-boton {
+    min-width: 200px;
 }
 
-.expensas .expensas-residente-detalle-fila {
-    display: flex;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 8px 0;
-    border-bottom: 1px solid var(--separador);
-    font-size: 13px;
-}
+@media (max-width: 640px) {
+    .expensas .expensas-historial .navegador {
+        flex-direction: column;
+        align-items: stretch;
+    }
 
-.expensas .expensas-residente-detalle-fila span:first-child {
-    color: var(--texto-secundario);
-}
-
-.expensas .expensas-residente-detalle-acciones {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
-    margin-top: 18px;
-}
-
-.expensas .expensas-residente-detalle-boton {
-    min-height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 8px 12px;
-    border: 1px solid var(--verde);
-    border-radius: 8px;
-    background: var(--blanco);
-    color: var(--verde);
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-}
-
-.expensas .expensas-residente-detalle-boton:hover {
-    background: var(--celeste-claro);
-}
-
-.expensas .expensas-residente-detalle-boton-principal {
-    background: var(--verde);
-    color: var(--blanco);
-}
-
-.expensas .expensas-residente-detalle-boton-principal:hover {
-    background: var(--verde-hover);
-}
-
-.expensas .expensas-residente-detalle .detalle-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 6px 0;
-    border-bottom: 1px solid var(--separador);
-}
-
-.expensas .expensas-residente-detalle .detalle-item > div {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.expensas .expensas-residente-detalle .detalle-item svg {
-    width: 22px;
-    height: 22px;
-    color: var(--texto-icono);
-}
-
-.expensas .expensas-residente-detalle .detalle-item span {
-    font-size: 12px;
-    color: var(--texto-secundario);
-}
-
-.expensas .expensas-residente-detalle .detalle-item strong {
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--texto-secundario);
-}
-
-.expensas .expensas-residente-detalle .detalle-total {
-    display: flex;
-    justify-content: space-between;
-    padding-top: 10px;
-}
-
-.expensas .expensas-residente-detalle .detalle-total strong {
-    font-size: 14px;
+    .expensas .expensas-historial .navegador-filtro-boton {
+        width: 100%;
+    }
 }
 
 /* =========================
@@ -337,13 +254,109 @@
         grid-template-columns: 1fr;
     }
 
-    .expensas .expensas-residente-detalle-columnas,
-    .expensas .expensas-residente-detalle-acciones {
-        grid-template-columns: 1fr;
-    }
-
     .expensas-ayuda-grid {
         grid-template-columns: 1fr;
     }
 
+}
+
+/* =========================
+        MODAL DETALLE EXPENSA
+        (el modal se dibuja fuera de .expensas, por eso no lleva ese prefijo)
+========================= */
+
+.exp-detalle-cabecera {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.exp-detalle-cabecera h3 {
+    margin: 0;
+    font-size: 18px;
+    color: var(--texto-principal);
+}
+
+.exp-detalle .badge-expensa {
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.exp-detalle .expensas-badge-pagado { background: var(--verde-claro, #e3f6ec); color: #1b7a4b; }
+.exp-detalle .expensas-badge-pendiente { background: #fff4d6; color: #8a6200; }
+.exp-detalle .expensas-badge-vencida { background: #fde4e4; color: #b3261e; }
+
+.exp-detalle-columnas {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+    gap: 28px;
+}
+
+.exp-detalle-seccion {
+    min-width: 0;
+}
+
+.exp-detalle-seccion h4 {
+    margin: 0 0 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--texto-principal);
+}
+
+.exp-detalle-fila {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--separador);
+    font-size: 13px;
+}
+
+.exp-detalle-fila span {
+    color: var(--texto-secundario);
+}
+
+.exp-detalle-fila strong {
+    font-weight: 600;
+    color: var(--texto-principal);
+    text-align: right;
+}
+
+.exp-detalle-total {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 12px;
+    font-size: 15px;
+    color: var(--texto-principal);
+}
+
+.exp-detalle-vacio {
+    margin: 0 0 8px;
+    font-size: 12px;
+    color: var(--texto-secundario);
+}
+
+.exp-detalle-error {
+    margin: 14px 0 0;
+    font-size: 13px;
+    color: var(--color-aviso-rojo);
+}
+
+@media (max-width: 640px) {
+    .exp-detalle-columnas {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 20px;
+    }
+}
+
+.exp-boton-icono {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
 }

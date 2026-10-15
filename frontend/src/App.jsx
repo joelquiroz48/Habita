@@ -28,7 +28,7 @@ import ReservasAdmin from "./pages/Administrador/Reservas/Reservas";
 import DocumentosAdmin from "./pages/Administrador/Documentos/Documentos";
 import ConfiguracionAdmin from "./pages/Administrador/Configuracion/Configuracion";
 import Legal from "./pages/Legal/Legal";
-
+import Calendario from "./pages/Residente/Calendario/Calendario";
 
 function App() {
     return (
@@ -184,6 +184,9 @@ function App() {
 
                 <Route path="/terminos" element={<Legal tipo="terminos" />} />
                 <Route path="/privacidad" element={<Legal tipo="privacidad" />} />
+
+                <Route path="/calendario" element={<Layout><Calendario /></Layout>} />
+
 
             </Routes>
         </BrowserRouter>

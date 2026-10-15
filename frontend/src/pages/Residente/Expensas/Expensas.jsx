@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
-import { WalletCards, CalendarDays, Tag, Download, BanknoteArrowDown, ChevronRight, CircleHelp, FileText, X } from "lucide-react";
+import { WalletCards, CalendarDays, Tag, Download, BanknoteArrowDown, ChevronRight, CircleHelp, FileText } from "lucide-react";
 
 import "./Expensas.css";
 import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
 import Panel from "../../../components/Panel/Panel";
+import Modal from "../../../components/Modal/Modal";
 import Tabla from "../../../components/Tabla/Tabla";
 import Navegador from "../../../components/Navegador/Navegador";
 import { usePerfil } from "../../../context/PerfilContext";
@@ -139,6 +140,11 @@ function Expensas() {
         setDescargaError("");
     }
 
+    function cerrarDetalle() {
+        setDetalleAbierto(false);
+        setDescargaError("");
+    }
+
     function bajarBoleta() {
         if (!seleccionada) return;
         try {
@@ -232,25 +238,27 @@ function Expensas() {
 
             {/* HISTORIAL */}
             {!cargando && !error && (
-                <Navegador
-                    data={expensas}
-                    searchKey="periodo"
-                    searchPlaceholder="Buscar periodo..."
-                    filters={filtros}
-                    alinear="derecha"
+                <Panel
+                    className="expensas-historial"
+                    titulo="Historial de expensas"
+                    descripcion="Tocá un período para ver su detalle."
                 >
-                    {(historialExpensasFiltradas) => (
-                        <Tabla
-                            columnas={columnasHistorialExpensas}
-                            datos={historialExpensasFiltradas}
-                            filasPorPagina={5}
-                            etiqueta="expensas"
-                            onFilaClick={abrirDetalle}
-                            seleccionable
-                            filaSeleccionada={detalleAbierto ? seleccionada : null}
-                        />
-                    )}
-                </Navegador>
+                    <Navegador
+                        data={expensas}
+                        searchKey="periodo"
+                        searchPlaceholder="Buscar período..."
+                        filters={filtros}
+                    >
+                        {(historialExpensasFiltradas) => (
+                            <Tabla
+                                columnas={columnasHistorialExpensas}
+                                datos={historialExpensasFiltradas}
+                                etiqueta="expensas"
+                                onFilaClick={abrirDetalle}
+                            />
+                        )}
+                    </Navegador>
+                </Panel>
             )}
 
             {!cargando && !error && expensas.length === 0 && (
@@ -260,101 +268,82 @@ function Expensas() {
             )}
 
             {detalleAbierto && seleccionada && (
-                <Panel
-                    className="expensas-residente-detalle"
+                <Modal
                     titulo="Detalle de expensa"
-                    tituloComplemento={
-                        <div className={`badge-expensa ${estadoBadgeClase(seleccionada.estado)}`}>
-                            {seleccionada.estado}
-                        </div>
-                    }
-                    accion={
-                        <button
-                            type="button"
-                            onClick={() => setDetalleAbierto(false)}
-                            aria-label="Cerrar detalle"
-                        >
-                            <X size={18} />
-                        </button>
+                    onClose={cerrarDetalle}
+                    ancho={720}
+                    pie={
+                        <>
+                            <button type="button" className="modal-boton exp-boton-icono" onClick={bajarBoleta}>
+                                <Download size={16} aria-hidden="true" />
+                                Descargar boleta
+                            </button>
+                            {seleccionada.estado !== "Pagada" && (
+                                <button type="button" className="modal-boton principal exp-boton-icono">
+                                    <BanknoteArrowDown size={16} aria-hidden="true" />
+                                    Pagar ahora
+                                </button>
+                            )}
+                        </>
                     }
                 >
+                    <div className="exp-detalle">
+                        <div className="exp-detalle-cabecera">
+                            <h3>{seleccionada.periodo}</h3>
+                            <span className={`badge-expensa ${estadoBadgeClase(seleccionada.estado)}`}>
+                                {seleccionada.estado}
+                            </span>
+                        </div>
 
-                    {/* =========== COLUMNAS =========== */}
-
-                    <div className="expensas-residente-detalle-columnas">
-
-                        {/* =========== FILAS =========== */}
-
-                        <section className="expensas-residente-detalle-seccion">
-                            <h3>Resumen</h3>
-                            <div className="expensas-residente-detalle-fila">
-                                <span>Importe total</span>
-                                <span>{seleccionada.importe}</span>
-                            </div>
-                            <div className="expensas-residente-detalle-fila">
-                                <span>Periodo</span>
-                                <span>{seleccionada.periodo}</span>
-                            </div>
-                            <div className="expensas-residente-detalle-fila">
-                                <span>Vencimiento</span>
-                                <span>{seleccionada.vencimiento}</span>
-                            </div>
-                            <div className="expensas-residente-detalle-fila">
-                                <span>Pagado el</span>
-                                <span>{seleccionada.fecha}</span>
-                            </div>
-                        </section>
-
-                        {/* =========== FILAS =========== */}
-
-                        <section className="expensas-residente-detalle-seccion">
-                            <h3>Detalle de la expensa</h3>
-
-                            {seleccionada.conceptos.length === 0 && (
-                                <p className="expensas-sin-detalle">
-                                    Esta expensa no tiene el detalle por concepto cargado.
-                                </p>
-                            )}
-
-                            {seleccionada.conceptos.map((item) => (
-                                <div className="detalle-item" key={item.concepto}>
-                                    <div>
-                                        <CircleHelp />
-                                        <span>{item.concepto}</span>
-                                    </div>
-
-                                    <strong>{item.montoTexto}</strong>
+                        <div className="exp-detalle-columnas">
+                            <section className="exp-detalle-seccion">
+                                <h4>Resumen</h4>
+                                <div className="exp-detalle-fila">
+                                    <span>Importe total</span>
+                                    <strong>{seleccionada.importe}</strong>
                                 </div>
-                            ))}
+                                <div className="exp-detalle-fila">
+                                    <span>Período</span>
+                                    <strong>{seleccionada.periodo}</strong>
+                                </div>
+                                <div className="exp-detalle-fila">
+                                    <span>Vencimiento</span>
+                                    <strong>{seleccionada.vencimiento}</strong>
+                                </div>
+                                <div className="exp-detalle-fila">
+                                    <span>Pagado el</span>
+                                    <strong>{seleccionada.fecha}</strong>
+                                </div>
+                            </section>
 
-                            <div className="detalle-total">
-                                <strong>Total</strong>
+                            <section className="exp-detalle-seccion">
+                                <h4>Detalle de la expensa</h4>
 
-                                <strong>{seleccionada.importe}</strong>
-                            </div>
-                        </section>
+                                {seleccionada.conceptos.length === 0 && (
+                                    <p className="exp-detalle-vacio">
+                                        Esta expensa no tiene el detalle por concepto cargado.
+                                    </p>
+                                )}
+
+                                {seleccionada.conceptos.map((item) => (
+                                    <div className="exp-detalle-fila" key={item.concepto}>
+                                        <span>{item.concepto}</span>
+                                        <strong>{item.montoTexto}</strong>
+                                    </div>
+                                ))}
+
+                                <div className="exp-detalle-total">
+                                    <strong>Total</strong>
+                                    <strong>{seleccionada.importe}</strong>
+                                </div>
+                            </section>
+                        </div>
+
+                        {descargaError && (
+                            <p className="exp-detalle-error" role="alert">{descargaError}</p>
+                        )}
                     </div>
-
-                    {/* =========== COMPROBANTE =========== */}
-
-                    <div className="expensas-residente-detalle-acciones">
-                        <button type="button" className="expensas-residente-detalle-boton expensas-residente-detalle-boton-principal">
-                            <BanknoteArrowDown size={16} />
-                            Pagar ahora
-                        </button>
-                        <button
-                            type="button"
-                            className="expensas-residente-detalle-boton"
-                            onClick={bajarBoleta}
-                        >
-                            <Download size={16} />
-                            Descargar boleta
-                        </button>
-                    </div>
-                    {descargaError && (
-                        <p className="expensas-aviso expensas-aviso-error" role="alert">{descargaError}</p>
-                    )}
-                </Panel>
+                </Modal>
             )}
 
             {/* AYUDA */}
