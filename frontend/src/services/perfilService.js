@@ -21,6 +21,18 @@ async function exigirSesion() {
     return usuario;
 }
 
+/** Enlace temporal (24 h) a la foto del edificio que sube el administrador. Si no hay, null. */
+async function urlFotoEdificio(edificioId) {
+    try {
+        const { data } = await supabase.from("edificio").select("foto_ruta").eq("id", edificioId).maybeSingle();
+        if (!data?.foto_ruta) return null;
+        const { data: firmada } = await supabase.storage.from("edificios").createSignedUrl(data.foto_ruta, 86400);
+        return firmada?.signedUrl ?? null;
+    } catch {
+        return null;
+    }
+}
+
 /* ---------------------------------------------------------
    LECTURA
 --------------------------------------------------------- */
@@ -29,7 +41,7 @@ async function exigirSesion() {
  * Devuelve:
  * { id, email, nombre, tipo, telefono, fotoUrl, rol,
  *   unidad: { id, numero, piso } | null,
- *   edificio: { id, nombre, direccion } | null }
+ *   edificio: { id, nombre, direccion, fotoUrl } | null }
  * o null si no hay sesión iniciada.
  */
 export async function obtenerPerfilResidente() {
@@ -63,6 +75,9 @@ export async function obtenerPerfilResidente() {
 
     const vinculo = vinculos?.[0] ?? null;
     const unidad = vinculo?.unidad ?? null;
+    const edificio = unidad?.edificio
+        ? { ...unidad.edificio, fotoUrl: await urlFotoEdificio(unidad.edificio.id) }
+        : null;
 
     return {
         id: usuario.id,
@@ -73,7 +88,7 @@ export async function obtenerPerfilResidente() {
         fotoUrl: usuario.foto_url ?? null,
         rol: vinculo?.rol ?? null,
         unidad: unidad ? { id: unidad.id, numero: unidad.numero, piso: unidad.piso } : null,
-        edificio: unidad?.edificio ?? null,
+        edificio,
     };
 }
 

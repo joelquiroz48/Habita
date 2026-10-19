@@ -6,6 +6,8 @@ import os
 from dotenv import load_dotenv
 import requests
 
+from invitaciones import router as invitaciones_router, validar_codigo, canjear_codigo
+
 load_dotenv('.env')
 
 SUPABASE_URL = os.getenv("SUPABASE_URL")
@@ -17,6 +19,8 @@ if not SUPABASE_URL:
     pass
 
 app = FastAPI(title="Habita Auth Proxy")
+
+app.include_router(invitaciones_router)
 
 app.add_middleware(
     CORSMiddleware,
@@ -31,6 +35,7 @@ class RegisterIn(BaseModel):
     email: EmailStr
     password: str
     user_metadata: dict | None = None
+    codigo_invitacion: str | None = None
 
 
 class LoginIn(BaseModel):
@@ -55,6 +60,13 @@ def register(payload: RegisterIn):
     if not SUPABASE_URL or not SUPABASE_SERVICE_ROLE:
         raise HTTPException(status_code=500, detail="SUPABASE_URL or SUPABASE_SERVICE_ROLE not set")
 
+    codigo = (payload.codigo_invitacion or "").strip()
+    if codigo:
+        # El codigo tiene que existir, estar vigente y ser para este email
+        validar_codigo(codigo, payload.email)
+    elif os.getenv("REGISTRO_REQUIERE_CODIGO", "").lower() in ("1", "true", "si"):
+        raise HTTPException(status_code=400, detail="Necesitás un código de invitación para registrarte.")
+
     url = f"{SUPABASE_URL.rstrip('/')}/auth/v1/admin/users"
     # Mark email as confirmed to allow immediate login when creating via service role
     body = {"email": payload.email, "password": payload.password, "email_confirm": True}
@@ -66,7 +78,17 @@ def register(payload: RegisterIn):
     if resp.status_code >= 400:
         raise HTTPException(status_code=resp.status_code, detail=resp.json())
 
-    return {"user": resp.json()}
+    usuario = resp.json()
+
+    if codigo:
+        try:
+            canjear_codigo(codigo, usuario["id"])
+        except HTTPException:
+            # Si no se pudo vincular la unidad, no dejamos una cuenta a medias
+            requests.delete(f"{url}/{usuario['id']}", headers=headers)
+            raise
+
+    return {"user": usuario}
 
 
 @app.post("/api/auth/login")

@@ -1,4 +1,5 @@
-.reclamos {
+/* Variables en :root porque el modal se dibuja fuera de .reclamos */
+:root {
 
   /* Colores propios de esta pantalla */
   --reclamos-color-pendiente: var(--color-aviso-amarillo);
@@ -69,57 +70,6 @@
 .reclamos-badge-proceso { color: var(--reclamos-color-proceso); background: var(--reclamos-fondo-proceso); }
 .reclamos-badge-resuelto { color: var(--reclamos-color-resuelto); background: var(--reclamos-fondo-resuelto); }
 
-/* ---------------------------- */
-
-.reclamos-detalle {
-  margin-top: 15px;
-}
-
-.reclamos-detalle-titulo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 12px 0 14px;
-}
-
-.reclamos-detalle-titulo strong {
-  font-size: 15px;
-  color: var(--texto-principal);
-}
-
-.reclamos-detalle-fila {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  font-size: 13px;
-  padding: 8px 0;
-  border-bottom: 1px solid var(--separador);
-}
-
-.reclamos-detalle-fila > .reclamos-cat-badge {
-  margin-left: auto;
-}
-
-.reclamos-detalle-fila strong {
-  color: var(--texto-principal);
-  font-weight: 600;
-}
-
-.reclamos-detalle h3 {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--texto-secundario);
-  margin-top: 16px;
-  margin-bottom: 8px;
-}
-
-.reclamos-resumen-texto {
-  font-size: 13px;
-  line-height: 1.5;
-  color: var(--texto-principal);
-}
-
 .reclamos-sin-adjunto {
   font-size: 12px;
   color: var(--texto-secundario);
@@ -163,27 +113,6 @@
   display: flex;
 }
 
-.reclamos-btn-editar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  width: 100%;
-  border: 1px solid var(--verde);
-  border-radius: 8px;
-  background: var(--blanco);
-  color: var(--verde);
-  font-size: 13px;
-  font-weight: 600;
-  padding: 10px;
-  margin-top: 18px;
-  cursor: pointer;
-}
-
-.reclamos-btn-editar:hover {
-  background: var(--celeste-claro);
-}
-
 /* =========================
         RESUMEN
 ========================= */
@@ -210,13 +139,6 @@
   align-items: center;
   justify-content: center;
   gap: 14px;
-}
-
-.reclamos-donut-chart {
-  position: relative;
-  width: 170px;
-  height: 170px;
-  min-width: 170px;
 }
 
 .reclamos-donut-leyenda {
@@ -252,44 +174,6 @@
   font-weight: 600;
 }
 
-.reclamos-categorias-lista {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.reclamos-categoria-fila {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 14px;
-}
-
-.reclamos-categoria-icon {
-  width: 34px;
-  height: 34px;
-  min-width: 34px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.reclamos-categoria-icon.mantenimiento { background: var(--reclamos-fondo-mantenimiento); color: var(--reclamos-color-mantenimiento); }
-.reclamos-categoria-icon.limpieza { background: var(--reclamos-fondo-limpieza); color: var(--reclamos-color-limpieza); }
-.reclamos-categoria-icon.ascensores { background: var(--reclamos-fondo-ascensores); color: var(--reclamos-color-ascensores); }
-.reclamos-categoria-icon.iluminacion { background: var(--reclamos-fondo-iluminacion); color: var(--reclamos-color-iluminacion); }
-.reclamos-categoria-icon.otros { background: var(--reclamos-fondo-otros); color: var(--reclamos-color-otros); }
-
-.reclamos-categoria-nombre {
-  flex: 1;
-}
-
-.reclamos-categoria-valor {
-  padding-right: 15px;
-  font-weight: 600;
-}
-
 /* =========================
         RESPONSIVE
 ========================= */
@@ -315,10 +199,78 @@
   }
 }
 
+.reclamos-categorias-lista { display: flex; flex-direction: column; gap: 12px; }
+.reclamos-categoria-fila { display: flex; align-items: center; gap: 10px; }
+.reclamos-categoria-icon { width: 34px; height: 34px; min-width: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.reclamos-categoria-icon.mantenimiento { background: var(--reclamos-fondo-mantenimiento); color: var(--reclamos-color-mantenimiento); }
+.reclamos-categoria-icon.limpieza { background: var(--reclamos-fondo-limpieza); color: var(--reclamos-color-limpieza); }
+.reclamos-categoria-icon.ascensores { background: var(--reclamos-fondo-ascensores); color: var(--reclamos-color-ascensores); }
+.reclamos-categoria-icon.iluminacion { background: var(--reclamos-fondo-iluminacion); color: var(--reclamos-color-iluminacion); }
+.reclamos-categoria-icon.comunes { background: var(--reclamos-fondo-comunes); color: var(--reclamos-color-comunes); }
+.reclamos-categoria-icon.seguridad { background: var(--reclamos-fondo-seguridad); color: var(--reclamos-color-seguridad); }
+.reclamos-categoria-icon.otros { background: var(--reclamos-fondo-otros); color: var(--reclamos-color-otros); }
+.reclamos-categoria-barra { flex: 1; min-width: 0; }
+.reclamos-categoria-texto { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 4px; }
+.reclamos-categoria-texto strong { font-weight: 600; }
+.reclamos-barra { height: 6px; border-radius: 4px; background: var(--borde-input); overflow: hidden; }
+.reclamos-barra-relleno { height: 100%; border-radius: 4px; background: var(--reclamos-color-otros); }
+.reclamos-barra-relleno.mantenimiento { background: var(--reclamos-color-mantenimiento); }
+.reclamos-barra-relleno.limpieza { background: var(--reclamos-color-limpieza); }
+.reclamos-barra-relleno.ascensores { background: var(--reclamos-color-ascensores); }
+.reclamos-barra-relleno.iluminacion { background: var(--reclamos-color-iluminacion); }
+.reclamos-barra-relleno.comunes { background: var(--reclamos-color-comunes); }
+.reclamos-barra-relleno.seguridad { background: var(--reclamos-color-seguridad); }
+
+/* Dona SVG */
+.reclamos-dona { width: 170px; height: 170px; min-width: 170px; }
+.reclamos-dona-total { font-size: 26px; font-weight: 700; fill: var(--texto-principal); }
+.reclamos-dona-sub { font-size: 10px; fill: var(--texto-secundario); }
+
+/* Carga / error */
+.reclamos-cargando { padding: 40px; text-align: center; color: var(--texto-secundario); }
+.reclamos-vacio { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 50px 20px; text-align: center; color: var(--texto-secundario); }
+.reclamos-vacio h2 { font-size: 15px; font-weight: 600; color: var(--texto-principal); }
+
+/* =========================
+   MODAL (en portal: sin depender de .reclamos)
+========================= */
+.rcl-cabecera { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; padding: 4px 0 10px; }
+.rcl-cabecera h3 { font-size: 16px; font-weight: 700; color: var(--texto-principal); margin: 0; overflow-wrap: anywhere; }
+.rcl-fila { display: flex; justify-content: space-between; align-items: center; gap: 12px; font-size: 13px; padding: 8px 0; border-bottom: 1px solid var(--separador); }
+.rcl-fila span { color: var(--texto-secundario); }
+.rcl-fila strong { color: var(--texto-principal); font-weight: 600; text-align: right; display: inline-flex; align-items: center; gap: 4px; }
+.rcl-titulo-seccion { font-size: 12px; font-weight: 600; color: var(--texto-secundario); margin: 18px 0 8px; }
+.rcl-texto { font-size: 13px; line-height: 1.5; color: var(--texto-principal); white-space: pre-wrap; overflow-wrap: anywhere; }
+
+.rcl-linea { list-style: none; margin: 0; padding: 0 0 0 4px; }
+.rcl-hito { position: relative; padding: 0 0 14px 20px; border-left: 2px solid var(--borde-input); margin-left: 5px; }
+.rcl-hito:last-child { padding-bottom: 2px; }
+.rcl-hito::before { content: ""; position: absolute; left: -7px; top: 2px; width: 12px; height: 12px; border-radius: 50%; background: var(--texto-secundario); border: 2px solid var(--blanco); }
+.rcl-hito-pendiente::before { background: var(--reclamos-color-pendiente); }
+.rcl-hito-proceso::before { background: var(--reclamos-color-proceso); }
+.rcl-hito-resuelto::before { background: var(--reclamos-color-resuelto); }
+.rcl-hito-alta::before { background: var(--verde); }
+.rcl-hito-titulo { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; font-size: 13px; }
+.rcl-hito-titulo strong { color: var(--texto-principal); }
+.rcl-hito-titulo span, .rcl-hito small { font-size: 11px; color: var(--texto-secundario); }
+.rcl-hito p { font-size: 13px; margin: 4px 0 2px; color: var(--texto-principal); overflow-wrap: anywhere; }
+
+.rcl-form { margin-top: 6px; padding-top: 2px; border-top: 1px solid var(--separador); }
+.rcl-estados { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+.rcl-estado { padding: 8px 14px; border-radius: 10px; border: 1px solid var(--borde-input); background: var(--blanco); color: var(--texto-secundario); font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; }
+.rcl-estado.activo.rcl-estado-pendiente { background: var(--reclamos-fondo-pendiente); color: var(--reclamos-color-pendiente); border-color: var(--reclamos-color-pendiente); }
+.rcl-estado.activo.rcl-estado-proceso { background: var(--reclamos-fondo-proceso); color: var(--reclamos-color-proceso); border-color: var(--reclamos-color-proceso); }
+.rcl-estado.activo.rcl-estado-resuelto { background: var(--reclamos-fondo-resuelto); color: var(--reclamos-color-resuelto); border-color: var(--reclamos-color-resuelto); }
+.rcl-label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--texto-principal); }
+.rcl-form textarea { width: 100%; padding: 9px 12px; border: 1px solid var(--borde-input); border-radius: 8px; font: inherit; font-size: 13px; resize: vertical; background: var(--blanco); color: var(--texto-principal); }
+.rcl-form textarea:focus { outline: 2px solid var(--verde); outline-offset: 1px; }
+
+.rcl-aviso { display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-radius: 10px; font-size: 13px; margin-top: 10px; }
+.rcl-aviso-error { background: var(--fondo-documento-pdf); color: var(--color-documento-pdf); }
+.rcl-aviso-ok { background: var(--fondo-verde-suave); color: var(--color-aviso-verde); }
+.rcl-aviso-flotante { position: fixed; top: 16px; left: 50%; z-index: 1200; max-width: min(520px, calc(100vw - 32px)); transform: translateX(-50%); box-shadow: 0 6px 24px rgba(0, 0, 0, 0.14); margin: 0; }
+
 @media (max-width: 480px) {
-  .reclamos-donut-chart {
-    width: 140px;
-    height: 140px;
-    min-width: 140px;
-  }
+  .reclamos-dona { width: 140px; height: 140px; min-width: 140px; }
+  .reclamos-donut-wrap { flex-direction: column; }
 }

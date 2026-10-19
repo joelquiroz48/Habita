@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./Layoutadministrador.css";
 
 import iconPerfil from "../../assets/img/foto-perfil.png";
 import iconLogo from "../../assets/img/icon.png";
+import { supabase } from "../../supabase";
 
 import {
     ChevronDown,
@@ -120,8 +121,34 @@ function LayoutAdministrador({ children }) {
     const [sidebarAbierto, setSidebarAbierto] = useState(true);
     const [menuAbierto, setMenuAbierto] = useState(false);
 
+    const [cuenta, setCuenta] = useState({ nombre: "", fotoUrl: null });
+
     const location = useLocation();
     const infoHeader = informacionHeader[location.pathname];
+
+    // Nombre y foto del administrador (y se actualizan cuando los cambia en Configuración)
+    useEffect(() => {
+        let activo = true;
+        async function cargarCuenta() {
+            const { data: sesion } = await supabase.auth.getSession();
+            const id = sesion?.session?.user?.id;
+            if (!id) return;
+            const { data } = await supabase.from("usuario").select("nombre, foto_url").eq("id", id).maybeSingle();
+            if (activo && data) setCuenta({ nombre: data.nombre ?? "", fotoUrl: data.foto_url ?? null });
+        }
+        cargarCuenta();
+        const alActualizar = (evento) => setCuenta((c) => ({ ...c, nombre: evento.detail?.nombre ?? c.nombre }));
+        window.addEventListener("habita:cuenta-actualizada", alActualizar);
+        return () => {
+            activo = false;
+            window.removeEventListener("habita:cuenta-actualizada", alActualizar);
+        };
+    }, []);
+
+    const primerNombre = cuenta.nombre.trim().split(" ")[0];
+    const tituloHeader = location.pathname === "/administrador/inicio" && primerNombre
+        ? `Bienvenido, ${primerNombre}`
+        : infoHeader?.titulo;
 
     return (
         <div className="layout">
@@ -154,7 +181,7 @@ function LayoutAdministrador({ children }) {
                     </div>
 
                     <div className="header-info">
-                        <h1>{infoHeader?.titulo}</h1>
+                        <h1>{tituloHeader}</h1>
                         <p>{infoHeader?.descripcion}</p>
                     </div>
 
@@ -165,7 +192,7 @@ function LayoutAdministrador({ children }) {
                         </div>
 
                         <img
-                            src={iconPerfil}
+                            src={cuenta.fotoUrl || iconPerfil}
                             alt="Imagen de perfil"
                         />
 
@@ -174,7 +201,7 @@ function LayoutAdministrador({ children }) {
                             onClick={() => setMenuAbierto(!menuAbierto)}
                         >
                             <div className="menu-admin-usuario-texto">
-                                <strong>Administrador</strong>
+                                <strong>{cuenta.nombre || "Administrador"}</strong>
                                 <span>Admin</span>
                             </div>
 
@@ -243,4 +270,4 @@ function LayoutAdministrador({ children }) {
     );
 }
 
-export default LayoutAdministrador;
+export default LayoutAdministrador;

@@ -176,3 +176,9 @@
         justify-content: flex-end;
     }
 }
+
+.documentos-error { margin: 0 0 14px; padding: 10px 12px; border-radius: 10px; font-size: 13px; background: var(--fondo-documento-pdf); color: var(--color-documento-pdf); }
+.documentos-cargando { padding: 30px; text-align: center; color: var(--texto-secundario); }
+.categoria-badge.contratos, .categoria-badge.seguros { background: var(--fondo-azul-suave); color: var(--color-aviso-azul); }
+.categoria-badge.actas { background: var(--fondo-azul-suave); color: var(--color-aviso-azul); }
+.categoria-badge.estados-contables, .categoria-badge.finanzas { background: var(--fondo-aviso-amarillo); color: var(--color-aviso-amarillo); }

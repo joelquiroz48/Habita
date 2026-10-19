@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "./Register.css";
 
 import logo from "../../../assets/img/icon.png";
-import {User, UserRoundPlus, IdCard, Phone, LockKeyhole, Mail, Eye, EyeOff } from "lucide-react";
+import {User, UserRoundPlus, IdCard, Phone, LockKeyhole, Mail, Eye, EyeOff, KeyRound } from "lucide-react";
 
 function Register() {
     
@@ -26,6 +26,7 @@ function Register() {
         const dni = fd.get('dni');
         const telefono = fd.get('telefono');
         const email = fd.get('email');
+        const codigoInvitacion = (fd.get('codigo') || '').toString().trim();
         const password = fd.get('password');
         const confirm = fd.get('confirm-password');
 
@@ -40,12 +41,17 @@ function Register() {
             const res = await fetch(`${apiUrl.replace(/\/$/, '')}/api/auth/register`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, password, user_metadata: { nombre: username, dni, telefono } }),
+                body: JSON.stringify({
+                    email,
+                    password,
+                    user_metadata: { nombre: username, dni, telefono },
+                    codigo_invitacion: codigoInvitacion || null,
+                }),
             });
 
             const body = await res.json().catch(() => ({}));
             if (!res.ok) {
-                setError(body.detail || body.msg || 'Error en el registro');
+                setError(typeof body.detail === 'string' ? body.detail : (body.detail?.msg || body.msg || 'Error en el registro'));
                 setLoading(false);
                 return;
             }
@@ -104,7 +110,7 @@ function Register() {
                                 <Mail />
                             </span>
                             <p>
-                                Después de crear tu cuenta, podrás unirte a tu edificio con un {" "} <strong>código de invitación</strong> que te proporcionará la administración.
+                                Para unirte a tu edificio necesitás el {" "} <strong>código de invitación</strong> que te envió la administración por mail. Registrate con ese mismo email.
                             </p>
                         </section>
 
@@ -226,6 +232,33 @@ function Register() {
                                         placeholder="ejemplo@correo.com"
                                         autoComplete="email"
                                         required
+                                    />
+
+                                </div>
+
+                            </div>
+
+                            {/* -------- Código de invitación -------- */}
+                            <div className="campo">
+
+                                <label htmlFor="codigo">
+                                    Código de invitación
+                                </label>
+
+                                <div className="input-contenedor" >
+
+                                    <span className="input-icono" aria-hidden="true">
+                                        <KeyRound />
+                                    </span>
+
+                                    <input
+                                        type="text"
+                                        id="codigo"
+                                        name="codigo"
+                                        placeholder="Ej: ABCD-2345"
+                                        autoComplete="off"
+                                        autoCapitalize="characters"
+                                        spellCheck="false"
                                     />
 
                                 </div>

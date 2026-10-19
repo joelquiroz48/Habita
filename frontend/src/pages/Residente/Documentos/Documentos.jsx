@@ -1,81 +1,34 @@
-import { useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Download, Info } from "lucide-react";
 
 import "./Documentos.css";
 import Tabla from "../../../components/Tabla/Tabla";
 import Navegador from "../../../components/Navegador/Navegador";
-import { usePerfil } from "../../../context/PerfilContext";
-import { obtenerOpcionesPeriodo, obtenerPeriodoFecha } from "../../../utils/periodos";
-import { descargarDocumento } from "../../../utils/documentoPdf";
-
-/* =========================
-        DATOS DE EJEMPLO
-   (cuando la administración cargue documentos reales,
-    esta lista pasa a venir de la base de datos)
-========================= */
-
-const documentos = [
-    {
-        nombre: "Reglamento de Copropiedad",
-        categoria: "Reglamentos",
-        fecha: "12/08/2026",
-        descripcion: "Normas de convivencia y uso de las áreas comunes, derechos y obligaciones de los propietarios y residentes del edificio.",
-    },
-    {
-        nombre: "Acta Asamblea Ordinaria 08/2026",
-        categoria: "Asambleas",
-        fecha: "10/08/2026",
-        descripcion: "Registro de los temas tratados y las decisiones votadas en la asamblea ordinaria de agosto de 2026.",
-    },
-    {
-        nombre: "Recibo expensas 08/2026",
-        categoria: "Otros",
-        fecha: "10/08/2026",
-        descripcion: "Comprobante informativo de las expensas ordinarias correspondientes al período agosto de 2026.",
-    },
-    {
-        nombre: "Plan de Obras 2026",
-        categoria: "Obras y mejoras",
-        fecha: "05/08/2026",
-        descripcion: "Cronograma de obras y mejoras previstas para el edificio durante 2026, con prioridades y plazos estimados.",
-    },
-    {
-        nombre: "Informe de Mantenimiento - Julio 2026",
-        categoria: "Otros",
-        fecha: "31/07/2026",
-        descripcion: "Resumen de las tareas de mantenimiento realizadas durante julio de 2026 en ascensores, bombas y espacios comunes.",
-    },
-].map((documento, indice) => ({
-    ...documento,
-    id: indice + 1,
-    periodoFecha: obtenerPeriodoFecha(documento.fecha),
-}));
-
-const filtros = [
-    {
-        key: "categoria",
-        label: "Todas las categorías",
-        options: ["Asambleas", "Obras y mejoras", "Reglamentos", "Otros"],
-    },
-    {
-        key: "periodoFecha",
-        label: "Todos los períodos",
-        options: obtenerOpcionesPeriodo(documentos),
-    },
-];
+import { obtenerOpcionesPeriodo } from "../../../utils/periodos";
+import { listarDocumentos, descargarDocumentoArchivo } from "../../../services/documentosService";
 
 const informacion = [
     "Los documentos se actualizan periódicamente.",
-    "Podés descargar cada archivo en formato PDF.",
+    "Podés descargar cada archivo con el botón de la derecha.",
     "Ante cualquier duda, podés contactar con la administración.",
 ];
 
 function Documentos() {
-    const { perfil } = usePerfil();
+    const [documentos, setDocumentos] = useState(null);
+    const [error, setError] = useState("");
 
     useEffect(() => {
         document.title = "Habita | Documentos";
+        listarDocumentos().then(setDocumentos).catch((e) => {
+            console.error("No pudimos cargar los documentos", e);
+            setError("No pudimos cargar los documentos. Probá de nuevo en unos minutos.");
+        });
     }, []);
+
+    const filtros = useMemo(() => [
+        { key: "categoria", label: "Todas las categorías", options: [...new Set((documentos ?? []).map((d) => d.categoria))] },
+        { key: "periodoFecha", label: "Todos los períodos", options: obtenerOpcionesPeriodo(documentos ?? []) },
+    ], [documentos]);
 
     const columnasDocumentos = [
         { clave: "nombre", titulo: "Documento", ancho: "1.5fr" },
@@ -98,14 +51,11 @@ function Documentos() {
                 <button
                     type="button"
                     className="documento-descargar"
-                    aria-label={`Descargar ${documento.nombre} en PDF`}
-                    title="Descargar PDF"
+                    aria-label={`Descargar ${documento.nombre}`}
+                    title="Descargar"
                     onClick={(evento) => {
                         evento.stopPropagation();
-                        descargarDocumento(documento, {
-                            residente: perfil?.nombre ?? "",
-                            edificio: perfil?.edificio?.nombre ?? "",
-                        });
+                        descargarDocumentoArchivo(documento).catch((e) => setError(e.message));
                     }}
                 >
                     <Download size={18} aria-hidden="true" />
@@ -131,8 +81,11 @@ function Documentos() {
                 </ul>
             </section>
 
+            {error && <p role="alert" className="documentos-error">{error}</p>}
+            {!documentos && !error && <p className="documentos-cargando">Cargando documentos...</p>}
+
             {/* DOCUMENTOS */}
-            <Navegador
+            {documentos && <Navegador
                 data={documentos}
                 searchKey="nombre"
                 searchPlaceholder="Buscar documento..."
@@ -146,7 +99,7 @@ function Documentos() {
                         className="documentos-tabla"
                     />
                 )}
-            </Navegador>
+            </Navegador>}
         </main>
     );
 }
