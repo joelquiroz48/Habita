@@ -1,6 +1,4 @@
-import { useEffect, useState } from "react";
-import "chart.js/auto";
-import { Bar, Doughnut } from "react-chartjs-2";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import {
     Users,
@@ -8,319 +6,592 @@ import {
     DollarSign,
     MessageSquare,
     ChevronDown,
-    ArrowUp,
     CheckCircle2,
     AlertCircle,
     Calendar,
     Megaphone,
     Download,
+    FileText,
+    FileSpreadsheet,
+    BellRing,
+    Wallet,
+    CalendarDays,
+    ArrowUp,
     ArrowDown,
+    RefreshCw,
 } from "lucide-react";
 
-import "./Inicio.css";
-import estadisticasMensuales from "../../../data/estadisticasMensuales.json";
-import reclamosEstadosData from "../../../data/reclamosEstadosData.json";
-import reclamosCategoriasData from "../../../data/reclamosCategoriasData.json";
+import "./inicio.css";
 import Panel from "../../../components/Panel/Panel";
 import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
-import Tabla from "../../../components/Tabla/Tabla";
+import { GraficoColumnas, BarraApilada, BarrasHorizontales } from "./graficos";
+import { obtenerDashboardAdmin, CODIGO_SIN_EDIFICIO } from "../../../services/dashboardAdminService";
+import { descargarReportePdf, descargarReporteCsv } from "../../../utils/reporteAdmin";
+import { formatearMoneda } from "../../../utils/formatos";
 
-{/* =========================
-        DATOS EJEMPLO
-========================== */}
+/* =========================
+        CONFIGURACION
+========================== */
 
-const kpis = {
-    residentes: {
-        valor: 128,
-        label: "Residentes",
-        info: "Activos",
-        tendencia: "+5 este mes",
-        direccion: "up",
+// Metricas que se pueden ver en el grafico mensual
+const METRICAS = [
+    {
+        clave: "recaudacion",
+        pestana: "Cobranza",
+        titulo: "Cobranza",
+        descripcion: "Pagos recibidos en el mes",
+        valorDe: (fila) => fila.recaudacion,
+        formatear: (n) => formatearMoneda(n),
+        lineasCartel: (fila) => [`${fila.pagos} ${fila.pagos === 1 ? "pago" : "pagos"}`],
     },
-    unidades: {
-        valor: 96,
-        label: "Unidades",
-        info: "Registradas",
-        tendencia: "—",
-        direccion: null,
+    {
+        clave: "pagos",
+        pestana: "Pagos",
+        titulo: "Pagos recibidos",
+        descripcion: "Cantidad de pagos confirmados",
+        valorDe: (fila) => fila.pagos,
+        formatear: (n) => `${n} ${n === 1 ? "pago" : "pagos"}`,
     },
-    expensas: {
-        valor: "$ 5.450.230",
-        label: "Expensas del mes",
-        info: "Recaudado",
-        progreso: 78,
+    {
+        clave: "reclamos",
+        pestana: "Reclamos",
+        titulo: "Reclamos recibidos",
+        descripcion: "Reclamos cargados por los residentes",
+        valorDe: (fila) => fila.reclamos,
+        formatear: (n) => `${n} ${n === 1 ? "reclamo" : "reclamos"}`,
+        lineasCartel: (fila) => [`${fila.resueltos} resueltos`],
     },
-    reclamos: {
-        valor: 12,
-        label: "Reclamos abiertos",
-        info: "Pendientes",
-        tendencia: "-3 vs mes anterior",
-        direccion: "down",
+    {
+        clave: "reservas",
+        pestana: "Reservas",
+        titulo: "Reservas confirmadas",
+        descripcion: "Espacios comunes reservados",
+        valorDe: (fila) => fila.reservas,
+        formatear: (n) => `${n} ${n === 1 ? "reserva" : "reservas"}`,
     },
+];
+
+const RANGOS = [
+    { meses: 6, texto: "6 meses" },
+    { meses: 12, texto: "12 meses" },
+];
+
+const ICONOS_ACTIVIDAD = {
+    pago: { icono: CheckCircle2, clase: "verde" },
+    reclamo: { icono: AlertCircle, clase: "amarillo" },
+    comunicado: { icono: Megaphone, clase: "azul" },
+    reserva: { icono: Calendar, clase: "teal" },
 };
 
-const actividadReciente = [
-    {
-        icon: CheckCircle2,
-        clase: "verde",
-        titulo: "Pago recibido de Nicolás Paz - Unidad 5B",
-        subtitulo: "Expensa Agosto 2026",
-        fecha: "01/09/2026 10:24",
-        seccion: "Pagos",
-        ruta: "/administrador/pagos",
-    },
-    {
-        icon: AlertCircle,
-        clase: "amarillo",
-        titulo: "Nuevo reclamo de Nicolás Paz - Unidad 5B",
-        subtitulo: "Fuga de agua en cocina",
-        fecha: "01/09/2026 10:30",
-        seccion: "Reclamos",
-        ruta: "/administrador/reclamos",
-    },
-    {
-        icon: Megaphone,
-        clase: "azul",
-        titulo: "Comunicado publicado: Corte de luz programado",
-        subtitulo: "Publicado por Administrador",
-        fecha: "01/09/2026 10:30",
-        seccion: "Comunicados",
-        ruta: "/administrador/comunicados",
-    },
-    {
-        icon: Calendar,
-        clase: "teal",
-        titulo: "Nueva reserva en SUM",
-        subtitulo: "Reservado por María Gómez - Unidad 3A",
-        fecha: "01/09/2026 10:15",
-        seccion: "Reservas",
-        ruta: "/administrador/reservas",
-    },
-    {
-        icon: CheckCircle2,
-        clase: "verde",
-        titulo: "Pago recibido de Camila Duarte - Unidad 2C",
-        subtitulo: "Expensa Septiembre 2026",
-        fecha: "01/09/2026 09:52",
-        seccion: "Pagos",
-        ruta: "/administrador/pagos",
-    },
-    {
-        icon: AlertCircle,
-        clase: "amarillo",
-        titulo: "Nuevo reclamo de Jorge Acosta - Unidad 8A",
-        subtitulo: "Portón de acceso no cierra",
-        fecha: "31/08/2026 18:42",
-        seccion: "Reclamos",
-        ruta: "/administrador/reclamos",
-    },
-    {
-        icon: Megaphone,
-        clase: "azul",
-        titulo: "Comunicado publicado: Mantenimiento del ascensor",
-        subtitulo: "Publicado por Administrador",
-        fecha: "31/08/2026 16:20",
-        seccion: "Comunicados",
-        ruta: "/administrador/comunicados",
-    },
-    {
-        icon: Calendar,
-        clase: "teal",
-        titulo: "Nueva reserva en terraza",
-        subtitulo: "Reservada por Lucía Fernández - Unidad 6D",
-        fecha: "31/08/2026 14:08",
-        seccion: "Reservas",
-        ruta: "/administrador/reservas",
-    },
-    {
-        icon: CheckCircle2,
-        clase: "verde",
-        titulo: "Pago recibido de Martín Suárez - Unidad 4A",
-        subtitulo: "Expensa Septiembre 2026",
-        fecha: "31/08/2026 12:36",
-        seccion: "Pagos",
-        ruta: "/administrador/pagos",
-    },
-    {
-        icon: AlertCircle,
-        clase: "amarillo",
-        titulo: "Mantenimiento preventivo de bombas",
-        subtitulo: "Trabajo programado para el 02/09/2026",
-        fecha: "31/08/2026 11:20",
-        seccion: "Comunicados",
-        ruta: "/administrador/comunicados",
-    },
-];
+/** "hace 5 min", "hace 3 h", "ayer" o la fecha */
+function haceCuanto(iso) {
+    const fecha = new Date(iso);
+    if (Number.isNaN(fecha.getTime())) return "";
+    const minutos = Math.round((Date.now() - fecha.getTime()) / 60000);
+    if (minutos < 1) return "Recién";
+    if (minutos < 60) return `Hace ${minutos} min`;
+    const horas = Math.round(minutos / 60);
+    if (horas < 24) return `Hace ${horas} h`;
+    const dias = Math.round(horas / 24);
+    if (dias === 1) return "Ayer";
+    if (dias < 7) return `Hace ${dias} días`;
+    return new Intl.DateTimeFormat("es-AR", { day: "2-digit", month: "2-digit", year: "numeric", timeZone: "America/Argentina/Buenos_Aires" }).format(fecha);
+}
 
-const definicionesMetricas = [
-    { metrica: "Recaudación total", campo: "recaudacion", moneda: true },
-    { metrica: "Pagos realizados", campo: "pagosRealizados" },
-    { metrica: "Reclamos totales", campo: "reclamosTotales" },
-    { metrica: "Reclamos resueltos", campo: "reclamosResueltos" },
-    { metrica: "Reservas realizadas", campo: "reservas" },
-];
+function fechaCompleta(iso) {
+    const fecha = new Date(iso);
+    if (Number.isNaN(fecha.getTime())) return "";
+    return new Intl.DateTimeFormat("es-AR", { dateStyle: "short", timeStyle: "short", timeZone: "America/Argentina/Buenos_Aires" }).format(fecha);
+}
 
-const ultimoMes = estadisticasMensuales.at(-1);
-const mesAnterior = estadisticasMensuales.at(-2);
-const formatoMoneda = new Intl.NumberFormat("es-AR", {
-    style: "currency",
-    currency: "ARS",
-    maximumFractionDigits: 0,
-});
+/** Variacion entre el ultimo mes y el anterior (null si no hay base para comparar). */
+function variacion(serie, valorDe) {
+    if (serie.length < 2) return null;
+    const actual = valorDe(serie.at(-1));
+    const anterior = valorDe(serie.at(-2));
+    if (anterior === 0) return null;
+    const porcentaje = ((actual - anterior) / anterior) * 100;
+    return { porcentaje: Math.abs(porcentaje), sube: porcentaje >= 0, igual: Math.round(porcentaje) === 0 };
+}
 
-const resumenGeneral = definicionesMetricas.map((definicion) => {
-    const total = estadisticasMensuales.reduce(
-        (acumulado, mes) => acumulado + mes[definicion.campo],
-        0
-    );
-    const valorActual = ultimoMes[definicion.campo];
-    const valorAnterior = mesAnterior[definicion.campo];
-    const porcentajeCambio = ((valorActual - valorAnterior) / valorAnterior) * 100;
+/* =========================
+     MENU EXPORTAR REPORTE
+========================== */
 
-    return {
-        ...definicion,
-        valor: definicion.moneda
-            ? formatoMoneda.format(total)
-            : total.toLocaleString("es-AR"),
-        variacion: `${Math.abs(porcentajeCambio).toFixed(1)}%`,
-        positivo: porcentajeCambio >= 0,
-    };
-});
+function MenuExportar({ datos }) {
+    const [abierto, setAbierto] = useState(false);
+    const [error, setError] = useState("");
+    const contenedorRef = useRef(null);
 
-const columnasResumen = [
-    {
-        clave: "metrica",
-        titulo: "Métrica",
-        ancho: "minmax(0, 1fr)",
-    },
-    {
-        clave: "valor",
-        titulo: "Valor",
-        ancho: "minmax(40px, 1fr)",
-        clase: "reportes-tabla-resumen-valor",
-    },
-    {
-        clave: "variacion",
-        titulo: "Vs. mes anterior",
-        ancho: "minmax(50px, 1fr)",
-        render: (fila) => {
-            const IconoTendencia = fila.positivo ? ArrowUp : ArrowDown;
+    useEffect(() => {
+        if (!abierto) return undefined;
+        const alHacerClick = (evento) => {
+            if (!contenedorRef.current?.contains(evento.target)) setAbierto(false);
+        };
+        const alPresionar = (evento) => { if (evento.key === "Escape") setAbierto(false); };
+        document.addEventListener("pointerdown", alHacerClick);
+        document.addEventListener("keydown", alPresionar);
+        return () => {
+            document.removeEventListener("pointerdown", alHacerClick);
+            document.removeEventListener("keydown", alPresionar);
+        };
+    }, [abierto]);
 
-            return (
-                <span
-                    className={`reportes-tendencia ${
-                        fila.positivo ? "positiva" : "negativa"
-                    }`}
-                >
-                    <IconoTendencia size={12} />
-                    {fila.variacion}
-                </span>
-            );
-        },
-    },
-];
+    function exportar(accion) {
+        try {
+            setError("");
+            accion(datos);
+            setAbierto(false);
+        } catch (err) {
+            console.error("No se pudo generar el reporte", err);
+            setError("No pudimos generar el reporte. Probá de nuevo.");
+        }
+    }
 
-{/* =========================
-       TARJETAS RESUMEN
-========================== */}
+    return (
+        <div className="adm-exportar" ref={contenedorRef}>
+            <button
+                type="button"
+                className="reportes-btn-exportar"
+                aria-haspopup="menu"
+                aria-expanded={abierto}
+                disabled={!datos}
+                onClick={() => setAbierto((v) => !v)}
+            >
+                <Download size={15} aria-hidden="true" />
+                Exportar reporte
+                <ChevronDown size={14} aria-hidden="true" />
+            </button>
 
-const resumenTarjetas = [
-    {
-        icono: Users,
-        titulo: kpis.residentes.label,
-        valor: kpis.residentes.valor,
-        contenido: (
-            <>
-                <span className="admin-info">
-                    {kpis.residentes.info}
-                </span>
-                <span className="admin-tendencia positiva">
-                    <ArrowUp size={12} />
-                    {kpis.residentes.tendencia}
-                </span>
-            </>
-        ),
-    },
-    {
-        icono: Building2,
-        titulo: kpis.unidades.label,
-        valor: kpis.unidades.valor,
-        contenido: (
-            <>
-                <span className="admin-info">
-                    {kpis.unidades.info}
-                </span>
-                <span className="admin-tendencia">
-                    {kpis.unidades.tendencia}
-                </span>
-            </>
-        ),
-    },
-    {
-        icono: DollarSign,
-        titulo: kpis.expensas.label,
-        valor: kpis.expensas.valor,
-        contenido: (
-            <>
-                <span className="admin-info">
-                    {kpis.expensas.info}
-                </span>
-
-                <div className="admin-progreso">
-                    <div
-                        className="admin-progreso-relleno"
-                        style={{ width: `${kpis.expensas.progreso}%` }}
-                    />
+            {abierto && (
+                <div className="adm-exportar-menu" role="menu">
+                    <button type="button" role="menuitem" onClick={() => exportar(descargarReportePdf)}>
+                        <FileText size={18} aria-hidden="true" />
+                        <span>
+                            <strong>PDF</strong>
+                            <small>Resumen de una página para imprimir o enviar</small>
+                        </span>
+                    </button>
+                    <button type="button" role="menuitem" onClick={() => exportar(descargarReporteCsv)}>
+                        <FileSpreadsheet size={18} aria-hidden="true" />
+                        <span>
+                            <strong>Excel (CSV)</strong>
+                            <small>Todas las tablas para trabajar los datos</small>
+                        </span>
+                    </button>
+                    {error && <p className="adm-exportar-error" role="alert">{error}</p>}
                 </div>
+            )}
+        </div>
+    );
+}
 
-                <span className="admin-info">
-                    {kpis.expensas.progreso}% del total
-                </span>
-            </>
-        ),
-    },
-    {
-        icono: MessageSquare,
-        titulo: kpis.reclamos.label,
-        valor: kpis.reclamos.valor,
-        contenido: (
-            <>
-                <span className="admin-info">
-                    {kpis.reclamos.info}
-                </span>
-                <span className="admin-tendencia positiva">
-                    <ArrowUp size={12} />
-                    {kpis.reclamos.tendencia}
-                </span>
-            </>
-        ),
-    },
-];
+/* =========================
+      EVOLUCION MENSUAL
+========================== */
+
+function PanelEvolucion({ serie }) {
+    const [claveMetrica, setClaveMetrica] = useState("recaudacion");
+    const [meses, setMeses] = useState(12);
+    const [verTabla, setVerTabla] = useState(false);
+
+    const metrica = METRICAS.find((m) => m.clave === claveMetrica);
+    const datos = serie.slice(-meses);
+    const actual = serie.at(-1);
+    const cambio = variacion(serie, metrica.valorDe);
+
+    return (
+        <Panel
+            className="adm-evolucion"
+            titulo={metrica.titulo}
+            descripcion={metrica.descripcion}
+            accion={
+                <div className="adm-controles">
+                    <div className="adm-segmentado" role="group" aria-label="Rango de meses">
+                        {RANGOS.map((r) => (
+                            <button
+                                key={r.meses}
+                                type="button"
+                                className={meses === r.meses ? "activo" : ""}
+                                aria-pressed={meses === r.meses}
+                                onClick={() => setMeses(r.meses)}
+                            >
+                                {r.texto}
+                            </button>
+                        ))}
+                    </div>
+                    <button type="button" className="adm-boton-texto" onClick={() => setVerTabla((v) => !v)}>
+                        {verTabla ? "Ver gráfico" : "Ver tabla"}
+                    </button>
+                </div>
+            }
+        >
+            <div className="adm-pestanas" role="tablist" aria-label="Métrica del gráfico">
+                {METRICAS.map((m) => (
+                    <button
+                        key={m.clave}
+                        type="button"
+                        role="tab"
+                        aria-selected={claveMetrica === m.clave}
+                        className={claveMetrica === m.clave ? "activa" : ""}
+                        onClick={() => setClaveMetrica(m.clave)}
+                    >
+                        {m.pestana}
+                    </button>
+                ))}
+            </div>
+
+            {actual && (
+                <div className="adm-destacado">
+                    <strong>{metrica.formatear(metrica.valorDe(actual))}</strong>
+                    <span>en {actual.mesLargo}</span>
+                    {cambio && (
+                        <em className={`adm-variacion ${cambio.igual ? "" : cambio.sube ? "sube" : "baja"}`}>
+                            {cambio.igual ? null : cambio.sube ? <ArrowUp size={12} aria-hidden="true" /> : <ArrowDown size={12} aria-hidden="true" />}
+                            {cambio.igual ? "Igual que el mes anterior" : `${cambio.porcentaje.toFixed(1).replace(".", ",")}% vs. mes anterior`}
+                        </em>
+                    )}
+                </div>
+            )}
+
+            {verTabla ? (
+                <div className="adm-tabla-envoltorio">
+                    <table className="adm-tabla">
+                        <thead>
+                            <tr>
+                                <th scope="col">Mes</th>
+                                <th scope="col">Cobranza</th>
+                                <th scope="col">Pagos</th>
+                                <th scope="col">Reclamos</th>
+                                <th scope="col">Resueltos</th>
+                                <th scope="col">Reservas</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {[...datos].reverse().map((fila) => (
+                                <tr key={fila.periodo}>
+                                    <th scope="row">{fila.mesLargo}</th>
+                                    <td>{formatearMoneda(fila.recaudacion)}</td>
+                                    <td>{fila.pagos}</td>
+                                    <td>{fila.reclamos}</td>
+                                    <td>{fila.resueltos}</td>
+                                    <td>{fila.reservas}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            ) : (
+                <GraficoColumnas
+                    datos={datos}
+                    valorDe={metrica.valorDe}
+                    formatear={metrica.formatear}
+                    formatearEje={claveMetrica === "recaudacion" ? undefined : (n) => String(n)}
+                    entero={claveMetrica !== "recaudacion"}
+                    lineasCartel={metrica.lineasCartel}
+                    descripcion={`${metrica.titulo} de los últimos ${meses} meses`}
+                />
+            )}
+        </Panel>
+    );
+}
+
+/* =========================
+     REQUIERE TU ATENCION
+========================== */
+
+function PanelAtencion({ atencion }) {
+    const filas = [
+        {
+            clave: "sin-atender",
+            icono: BellRing,
+            cantidad: atencion.reclamosSinAtender,
+            titulo: atencion.reclamosSinAtender === 1 ? "Reclamo sin atender" : "Reclamos sin atender",
+            detalle: atencion.reclamosSinAtender > 0
+                ? `El más antiguo lleva ${atencion.reclamosSinAtenderDias} ${atencion.reclamosSinAtenderDias === 1 ? "día" : "días"} esperando`
+                : "No hay reclamos esperando respuesta",
+            ruta: "/administrador/reclamos",
+            urgente: atencion.reclamosSinAtender > 0,
+        },
+        {
+            clave: "en-proceso",
+            icono: MessageSquare,
+            cantidad: atencion.reclamosEnProceso,
+            titulo: "Reclamos en proceso",
+            detalle: atencion.reclamosEnProceso > 0 ? "Pendientes de resolver" : "Ninguno en curso",
+            ruta: "/administrador/reclamos",
+        },
+        {
+            clave: "vencidas",
+            icono: Wallet,
+            cantidad: atencion.expensasVencidas,
+            titulo: atencion.expensasVencidas === 1 ? "Expensa vencida" : "Expensas vencidas",
+            detalle: atencion.expensasVencidas > 0
+                ? `${formatearMoneda(atencion.expensasVencidasMonto)} sin cobrar`
+                : "Todas las expensas están al día",
+            ruta: "/administrador/expensas",
+            urgente: atencion.expensasVencidas > 0,
+        },
+        {
+            clave: "reservas",
+            icono: CalendarDays,
+            cantidad: atencion.reservasPendientes,
+            titulo: atencion.reservasPendientes === 1 ? "Reserva por aprobar" : "Reservas por aprobar",
+            detalle: atencion.reservasPendientes > 0 ? "Esperan tu confirmación" : "No hay solicitudes pendientes",
+            ruta: "/administrador/reservas",
+        },
+    ];
+
+    return (
+        <Panel className="adm-atencion" titulo="Requiere tu atención" descripcion="Lo que hoy espera una respuesta tuya">
+            <ul className="adm-atencion-lista">
+                {filas.map((fila) => {
+                    const Icono = fila.icono;
+                    const alDia = fila.cantidad === 0;
+                    return (
+                        <li key={fila.clave}>
+                            <Link to={fila.ruta} className={`adm-atencion-fila ${fila.urgente ? "urgente" : ""} ${alDia ? "al-dia" : ""}`}>
+                                <span className="adm-atencion-icono"><Icono size={18} aria-hidden="true" /></span>
+                                <span className="adm-atencion-texto">
+                                    <strong>{fila.titulo}</strong>
+                                    <small>{fila.detalle}</small>
+                                </span>
+                                <span className="adm-atencion-cantidad" aria-label={`${fila.cantidad}`}>
+                                    {alDia ? <CheckCircle2 size={18} aria-label="Al día" /> : fila.cantidad}
+                                </span>
+                            </Link>
+                        </li>
+                    );
+                })}
+            </ul>
+        </Panel>
+    );
+}
+
+/* =========================
+          RECLAMOS
+========================== */
+
+const COLOR_ESTADO = {
+    Pendiente: "var(--color-aviso-amarillo)",
+    "En proceso": "var(--color-aviso-azul)",
+    Resuelto: "var(--color-aviso-verde)",
+};
+
+function PanelReclamos({ porEstado, porCategoria }) {
+    const segmentos = ["Pendiente", "En proceso", "Resuelto"].map((nombre) => ({
+        nombre,
+        cantidad: porEstado.find((e) => e.nombre === nombre)?.cantidad ?? 0,
+        color: COLOR_ESTADO[nombre],
+    }));
+    const total = segmentos.reduce((suma, s) => suma + s.cantidad, 0);
+
+    return (
+        <Panel className="adm-reclamos" titulo="Reclamos" descripcion="Últimos 12 meses">
+            {total === 0 ? (
+                <p className="adm-vacio">Todavía no se cargaron reclamos en este edificio.</p>
+            ) : (
+                <>
+                    <div className="adm-reclamos-total">
+                        <strong>{total}</strong>
+                        <span>{total === 1 ? "reclamo en total" : "reclamos en total"}</span>
+                    </div>
+                    <BarraApilada segmentos={segmentos} etiqueta="Reclamos por estado" />
+
+                    <h3 className="adm-subtitulo">Por categoría</h3>
+                    <BarrasHorizontales datos={porCategoria} etiqueta="Reclamos por categoría" />
+                </>
+            )}
+        </Panel>
+    );
+}
+
+/* =========================
+      ACTIVIDAD RECIENTE
+========================== */
+
+function PanelActividad({ actividad }) {
+    return (
+        <Panel className="adm-actividad" titulo="Actividad reciente" descripcion="Lo último que pasó en el edificio">
+            {actividad.length === 0 ? (
+                <p className="adm-vacio">Todavía no hay movimientos para mostrar.</p>
+            ) : (
+                <ul className="adm-actividad-lista">
+                    {actividad.slice(0, 8).map((item) => {
+                        const { icono: Icono, clase } = ICONOS_ACTIVIDAD[item.tipo] ?? ICONOS_ACTIVIDAD.reserva;
+                        return (
+                            <li key={item.id} className="adm-actividad-item">
+                                <span className={`adm-actividad-icono ${clase}`}><Icono size={16} aria-hidden="true" /></span>
+                                <span className="adm-actividad-texto">
+                                    <strong>{item.titulo}</strong>
+                                    <small>{item.detalle}</small>
+                                </span>
+                                <span className="adm-actividad-meta">
+                                    <time dateTime={item.fecha} title={fechaCompleta(item.fecha)}>{haceCuanto(item.fecha)}</time>
+                                    <Link to={item.ruta}>Ir a {item.seccion.toLowerCase()}</Link>
+                                </span>
+                            </li>
+                        );
+                    })}
+                </ul>
+            )}
+        </Panel>
+    );
+}
+
+/* =========================
+         PANTALLA
+========================== */
 
 function Dashboard() {
-    const [campoSeleccionado, setCampoSeleccionado] = useState("recaudacion");
-    const metricaSeleccionada = resumenGeneral.find(
-        (fila) => fila.campo === campoSeleccionado
-    );
+    const [datos, setDatos] = useState(null);
+    const [cargando, setCargando] = useState(true);
+    const [error, setError] = useState("");
 
     useEffect(() => {
         document.title = "Habita | Dashboard";
     }, []);
 
+    const cargar = useCallback(async () => {
+        setCargando(true);
+        setError("");
+        try {
+            setDatos(await obtenerDashboardAdmin());
+        } catch (err) {
+            console.error("No se pudo cargar el dashboard", err);
+            setError(
+                err?.code === CODIGO_SIN_EDIFICIO
+                    ? "Tu cuenta todavía no administra ningún edificio, por eso no hay datos para mostrar."
+                    : "No pudimos cargar el panel. Probá de nuevo en unos minutos."
+            );
+        } finally {
+            setCargando(false);
+        }
+    }, []);
+
+    useEffect(() => {
+        let cancelado = false;
+        Promise.resolve().then(() => { if (!cancelado) cargar(); });
+        return () => { cancelado = true; };
+    }, [cargar]);
+
+    if (cargando && !datos) {
+        return (
+            <main className="admin-dashboard">
+                <p className="adm-estado" role="status">Cargando el resumen del consorcio...</p>
+            </main>
+        );
+    }
+
+    if (error && !datos) {
+        return (
+            <main className="admin-dashboard">
+                <div className="adm-estado adm-estado-error" role="alert">
+                    <p>{error}</p>
+                    <button type="button" className="adm-boton-texto" onClick={cargar}>
+                        <RefreshCw size={14} aria-hidden="true" /> Reintentar
+                    </button>
+                </div>
+            </main>
+        );
+    }
+
+    const k = datos.kpis;
+    const ocupacion = k.unidadesTotal > 0 ? Math.round((k.unidadesOcupadas / k.unidadesTotal) * 100) : 0;
+    const diferenciaReclamos = k.reclamosNuevosMes - k.reclamosNuevosMesAnterior;
+
+    const tarjetas = [
+        {
+            icono: Users,
+            titulo: "Residentes",
+            valor: k.residentesActivos,
+            contenido: (
+                <>
+                    <span className="admin-info">Activos</span>
+                    <span className={`admin-tendencia ${k.residentesNuevosMes > 0 ? "positiva" : ""}`}>
+                        {k.residentesNuevosMes > 0 ? `+${k.residentesNuevosMes} este mes` : "Sin altas este mes"}
+                    </span>
+                </>
+            ),
+        },
+        {
+            icono: Building2,
+            titulo: "Unidades",
+            valor: k.unidadesTotal,
+            contenido: (
+                <>
+                    <span className="admin-info">Registradas</span>
+                    <span className="admin-tendencia">{k.unidadesOcupadas} ocupadas ({ocupacion}%)</span>
+                </>
+            ),
+        },
+        {
+            icono: DollarSign,
+            titulo: `Expensas de ${datos.periodoNombre}`,
+            valor: formatearMoneda(k.importeCobrado),
+            contenido: (
+                <>
+                    <span className="admin-info">Cobrado de {formatearMoneda(k.importeEmitido)}</span>
+                    <div
+                        className="admin-progreso"
+                        role="progressbar"
+                        aria-valuenow={k.porcentajeCobrado}
+                        aria-valuemin={0}
+                        aria-valuemax={100}
+                        aria-label="Porcentaje cobrado"
+                    >
+                        <div className="admin-progreso-relleno" style={{ width: `${k.porcentajeCobrado}%` }} />
+                    </div>
+                    <span className="admin-info">
+                        {k.porcentajeCobrado}% · {k.expensasPagadas} de {k.expensasEmitidas} pagadas
+                    </span>
+                </>
+            ),
+        },
+        {
+            icono: MessageSquare,
+            titulo: "Reclamos abiertos",
+            valor: k.reclamosAbiertos,
+            contenido: (
+                <>
+                    <span className="admin-info">Pendientes o en proceso</span>
+                    <span className="admin-tendencia">
+                        {k.reclamosNuevosMes} {k.reclamosNuevosMes === 1 ? "nuevo" : "nuevos"} este mes
+                        {diferenciaReclamos !== 0 && ` (${diferenciaReclamos > 0 ? "+" : ""}${diferenciaReclamos} vs. mes anterior)`}
+                    </span>
+                </>
+            ),
+        },
+    ];
+
     return (
         <main className="admin-dashboard">
+
+            {/* =========================
+                 EDIFICIO + EXPORTAR
+            ========================= */}
+
+            <div className="adm-barra-superior">
+                <p className="adm-edificio">
+                    <Building2 size={16} aria-hidden="true" />
+                    <strong>{datos.edificio?.nombre}</strong>
+                    {datos.edificio?.direccion && <span>{datos.edificio.direccion}</span>}
+                </p>
+                <MenuExportar datos={datos} />
+            </div>
+
+            {error && <p className="adm-estado-error-linea" role="alert">{error}</p>}
 
             {/* =========================
                   RESUMEN SUPERIOR
             ========================= */}
 
-            <section className="admin-resumen">
-                {resumenTarjetas.map((item, index) => {
+            <section className="admin-resumen" aria-label="Resumen del consorcio">
+                {tarjetas.map((item) => {
                     const Icono = item.icono;
-
                     return (
                         <TarjetaResumen
-                            key={index}
+                            key={item.titulo}
                             icono={<Icono />}
                             titulo={item.titulo}
                             valor={item.valor}
@@ -331,126 +602,21 @@ function Dashboard() {
             </section>
 
             {/* =========================
-                CONTENIDO PRINCIPAL
+                 GRAFICO + ATENCION
             ========================= */}
-                
-            <button className="reportes-btn-exportar">
-                <Download size={15} />
-                Exportar reporte
-            </button>
 
-            {/* GRAFICOS */}
+            <section className="adm-fila-principal">
+                <PanelEvolucion serie={datos.serie} />
+                <PanelAtencion atencion={datos.atencion} />
+            </section>
 
-            <section className="graficos-inferiores">
-                <div className="graficos-metricos">
-                     <Panel
-                        titulo={`${metricaSeleccionada.metrica} por mes`}
-                        className="grafico-barra"
-                        accion={
-                            <button className="admin-selector-anio">
-                                Este año
-                                <ChevronDown size={15} />
-                            </button>
-                        }
-                    >
-                        <Bar
-                            data={{
-                                labels: estadisticasMensuales.map((data) => data.mes),
-                                datasets: [
-                                    {
-                                        label: metricaSeleccionada.metrica,
-                                        data: estadisticasMensuales.map(
-                                            (data) => data[campoSeleccionado]
-                                        ),
-                                        backgroundColor: "#5ba6a8",
-                                    }
-                                ],
-                            }}
-                            options={{
-                                responsive: true,
-                                maintainAspectRatio: false,
-                                plugins: { legend: { display: false } },
-                            }}
-                        />
-                    </Panel>
+            {/* =========================
+                RECLAMOS + ACTIVIDAD
+            ========================= */}
 
-                    <Tabla
-                        columnas={columnasResumen}
-                        datos={resumenGeneral}
-                        onFilaClick={(fila) => setCampoSeleccionado(fila.campo)}
-                        filaSeleccionada={metricaSeleccionada}
-                        seleccionable
-                    />
-
-                </div>
-
-                <div className="contenido inferior">
-                    <div className="graficos-dona-columna">
-                        <Panel titulo="Reclamos por estado" className="grafico-dona">
-                            <Doughnut
-                                data={{
-                                    labels: reclamosEstadosData.map((data) => data.nombre),
-                                    datasets: [
-                                        {
-                                            label: "Reclamos por estado",
-                                            data: reclamosEstadosData.map((data) => data.cantidad)
-                                        }
-                                    ],
-                                }}
-                                options={{
-                                    responsive: true,
-                                    maintainAspectRatio: false,
-                                    plugins: { legend: { display: false } },
-                                }}
-                            />
-                        </Panel>
-
-                        <Panel titulo="Reclamos por categoría" className="grafico-dona">
-                            <Doughnut
-                                data={{
-                                    labels: reclamosCategoriasData.map((data) => data.nombre),
-                                    datasets: [
-                                        {
-                                            label: "Reclamos por categoría",
-                                            data: reclamosCategoriasData.map((data) => data.cantidad)
-                                        }
-                                    ]
-                                }}
-                                options={{
-                                    responsive: true,
-                                    maintainAspectRatio: false,
-                                    plugins: { legend: { display: false } },
-                                }}
-                            />
-                        </Panel>
-                    </div>
-
-                    <Panel titulo="Actividad reciente">
-                        <ul className="reportes-actividad-lista">
-                            {actividadReciente.map((item) => (
-                                <li
-                                    className="reportes-actividad-item"
-                                    key={`${item.titulo}-${item.fecha}`}
-                                >
-                                    <span className="reportes-actividad-texto">
-                                            <strong>{item.titulo}</strong>
-                                            <small>{item.subtitulo}</small>
-                                    </span>
-                                    <div className="reportes-actividad-meta">
-                                        <time className="reportes-actividad-fecha">{item.fecha}</time>
-                                        <Link
-                                            className="reportes-actividad-link"
-                                            to={item.ruta}
-                                        >
-                                            Ir a {item.seccion.toLowerCase()}
-                                        </Link>
-                                    </div>
-                                </li>
-                            ))}
-                        </ul>
-                    </Panel>
-
-                </div>
+            <section className="adm-fila-secundaria">
+                <PanelReclamos porEstado={datos.reclamosPorEstado} porCategoria={datos.reclamosPorCategoria} />
+                <PanelActividad actividad={datos.actividad} />
             </section>
         </main>
     );

@@ -1,4 +1,5 @@
-.comunicados {
+/* Variables en :root porque los modales se dibujan fuera de .comunicados */
+:root {
   --comunicados-color-aviso: var(--color-aviso-azul);
   --comunicados-fondo-aviso: var(--fondo-azul-suave);
   --comunicados-color-mantenimiento: var(--color-aviso-verde);
@@ -55,54 +56,6 @@
 .comunicados-badge-programado { color: var(--comunicados-color-programado); background: var(--comunicados-fondo-programado); }
 .comunicados-badge-borrador { color: var(--comunicados-color-borrador); background: var(--comunicados-fondo-borrador); }
 
-/* =========================
-      PANEL DE DETALLE
-========================= */
-
-.comunicados-detalle-titulo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 12px 0 14px;
-}
-
-.comunicados-detalle-titulo strong {
-  font-size: 15px;
-  color: var(--texto-principal);
-}
-
-.comunicados-detalle-fila {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 13px;
-  padding: 8px 0;
-  border-bottom: 1px solid var(--separador);
-}
-
-.comunicados-detalle-fila span:first-child {
-  color: var(--texto-secundario);
-}
-
-.comunicados-detalle-fila strong {
-  color: var(--texto-principal);
-  font-weight: 600;
-}
-
-.comunicados-detalle h3 {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--texto-secundario);
-  margin-top: 16px;
-  margin-bottom: 8px;
-}
-
-.comunicados-resumen-texto {
-  font-size: 13px;
-  line-height: 1.5;
-  color: var(--texto-principal);
-}
-
 .comunicados-sin-adjunto {
   font-size: 12px;
   color: var(--texto-secundario);
@@ -146,33 +99,55 @@
   display: flex;
 }
 
-.comunicados-btn-editar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  width: 100%;
-  border: 1px solid var(--verde);
-  border-radius: 8px;
-  background: var(--blanco);
-  color: var(--verde);
-  font-size: 13px;
-  font-weight: 600;
-  padding: 10px;
-  margin-top: 18px;
-  cursor: pointer;
-}
+.comunicados-tipo-badge.general { background: var(--fondo-icono); color: var(--texto-secundario); }
+.comunicados-adjunto button { padding: 0; }
 
-.comunicados-btn-editar:hover {
-  background: var(--celeste-claro);
-}
+.comunicados-resumen { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 18px; }
+.com-asunto-celda { display: inline-flex; align-items: center; gap: 6px; min-width: 0; }
+.com-estrella { color: var(--color-aviso-amarillo); fill: currentColor; flex-shrink: 0; }
+.com-cargando { padding: 40px; text-align: center; color: var(--texto-secundario); }
+.com-vacio { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 50px 20px; text-align: center; color: var(--texto-secundario); }
+.com-vacio h2 { font-size: 15px; font-weight: 600; color: var(--texto-principal); }
 
-/* =========================
-        RESPONSIVE
-========================= */
+/* Modales (portal) */
+.com-cabecera { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; padding: 4px 0 10px; }
+.com-cabecera h3 { font-size: 16px; font-weight: 700; color: var(--texto-principal); margin: 0; display: flex; align-items: center; gap: 6px; overflow-wrap: anywhere; }
+.com-fila { display: flex; justify-content: space-between; align-items: center; gap: 12px; font-size: 13px; padding: 8px 0; border-bottom: 1px solid var(--separador); }
+.com-fila span { color: var(--texto-secundario); }
+.com-fila strong { color: var(--texto-principal); font-weight: 600; text-align: right; }
+.com-titulo-seccion { font-size: 12px; font-weight: 600; color: var(--texto-secundario); margin: 18px 0 8px; }
+.com-texto { font-size: 13px; line-height: 1.5; color: var(--texto-principal); white-space: pre-wrap; overflow-wrap: anywhere; }
 
-@media (max-width: 800px) {
-  .comunicados {
-    padding: 20px;
-  }
+.com-lectura { margin-top: 14px; padding: 12px 14px; border-radius: 12px; background: var(--fondo-verde-suave); }
+.com-lectura-texto { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--texto-principal); margin-bottom: 8px; flex-wrap: wrap; }
+.com-lectura-texto span { color: var(--texto-secundario); }
+.com-barra { height: 6px; border-radius: 4px; background: var(--borde-input); overflow: hidden; }
+.com-barra div { height: 100%; background: var(--verde); border-radius: 4px; }
+
+.com-form { display: flex; flex-direction: column; gap: 14px; }
+.com-grilla { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.com-campo { display: flex; flex-direction: column; gap: 6px; }
+.com-campo label { font-size: 13px; font-weight: 600; color: var(--texto-principal); display: flex; justify-content: space-between; }
+.com-contador { font-weight: 400; color: var(--texto-secundario); font-size: 11px; }
+.com-campo small, .com-cuando small { font-size: 11px; color: var(--texto-secundario); }
+.com-campo input:not([type="file"]), .com-campo select, .com-campo textarea, .com-fecha {
+  width: 100%; padding: 9px 12px; border: 1px solid var(--borde-input); border-radius: 8px; background: var(--blanco);
+  color: var(--texto-principal); font: inherit; font-size: 13px;
 }
+.com-campo textarea { resize: vertical; }
+.com-campo input:focus, .com-campo select:focus, .com-campo textarea:focus, .com-fecha:focus { outline: 2px solid var(--verde); outline-offset: 1px; }
+.com-check { display: flex; align-items: center; gap: 8px; font-size: 13px; cursor: pointer; }
+.com-check span { display: inline-flex; align-items: center; gap: 5px; }
+.com-quitar { color: var(--color-documento-pdf); font-size: 12px; font-weight: 600; cursor: pointer; }
+.com-cuando { border: 1px solid var(--borde-input); border-radius: 10px; padding: 10px 14px 12px; display: flex; flex-direction: column; gap: 8px; }
+.com-cuando legend { font-size: 13px; font-weight: 600; padding: 0 6px; color: var(--texto-principal); }
+.com-radio { display: flex; align-items: center; gap: 8px; font-size: 13px; cursor: pointer; }
+.com-fecha { max-width: 260px; }
+
+.com-aviso { display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-radius: 10px; font-size: 13px; margin-top: 10px; }
+.com-aviso-error { background: var(--fondo-documento-pdf); color: var(--color-documento-pdf); }
+.com-aviso-ok { background: var(--fondo-verde-suave); color: var(--color-aviso-verde); }
+.com-aviso-flotante { position: fixed; top: 16px; left: 50%; z-index: 1200; max-width: min(520px, calc(100vw - 32px)); transform: translateX(-50%); box-shadow: 0 6px 24px rgba(0, 0, 0, 0.14); margin: 0; }
+
+@media (max-width: 1100px) { .comunicados-resumen { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .comunicados-resumen { grid-template-columns: 1fr; } .com-grilla { grid-template-columns: 1fr; } }

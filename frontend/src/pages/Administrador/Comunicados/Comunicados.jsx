@@ -1,285 +1,321 @@
-import { useEffect, useState } from "react";
-import { Pencil, X, Paperclip, Download, Trash } from "lucide-react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import {
+    Megaphone, CalendarClock, FileText, Eye, Paperclip, Download, Pencil, Trash2, Send,
+    AlertCircle, CheckCircle2, RefreshCw, Star,
+} from "lucide-react";
 
 import "./Comunicados.css";
-import Panel from "../../../components/Panel/Panel";
+import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
 import Tabla from "../../../components/Tabla/Tabla";
 import Navegador from "../../../components/Navegador/Navegador";
-import { obtenerOpcionesPeriodo, obtenerPeriodoFecha } from "../../../utils/periodos";
+import Modal from "../../../components/Modal/Modal";
+import { obtenerOpcionesPeriodo } from "../../../utils/periodos";
+import {
+    CATEGORIAS, AUDIENCIAS, obtenerComunicadosAdmin, guardarComunicado, eliminarComunicado, urlAdjunto, validarAdjunto, aInputFecha,
+} from "../../../services/comunicadosAdminService";
 
-{/* =========================
-       DATOS EJEMPLOS
-========================== */}
+const CLASE_CAT = { "Aviso": "aviso", "Mantenimiento": "mantenimiento", "Reunión": "reunion", "Obra": "obra", "Recordatorio": "recordatorio", "Novedad": "novedad" };
+const claseEstado = (e) => (e === "Publicado" ? "publicado" : e === "Programado" ? "programado" : "borrador");
 
-const comunicados = [
-    {
-        asunto: "Corte de luz programado",
-        resumenCorto: "El próximo martes 22/09 habrá un corte...",
-        categoria: "Aviso",
-        claseColor: "aviso",
-        fecha: "01/09/2026 10:30",
-        audiencia: "Todos los residentes",
-        estado: "Publicado",
-        resumen:
-            "El próximo martes 22 de septiembre se realizará un corte de luz en todo el edificio desde las 09:00 hasta las 13:00 hs por tareas de EDENOR.",
-        adjunto: { nombre: "Comunicado_corte_luz.pdf", tamano: "245 KB" },
-    },
-    {
-        asunto: "Mantenimiento de ascensores",
-        resumenCorto: "Se realizará el mantenimiento preventivo...",
-        categoria: "Mantenimiento",
-        claseColor: "mantenimiento",
-        fecha: "29/08/2026 09:15",
-        audiencia: "Todos los residentes",
-        estado: "Publicado",
-        resumen:
-            "Se realizará el mantenimiento preventivo de los ascensores del edificio. Durante ese lapso el servicio podría verse interrumpido.",
-        adjunto: null,
-    },
-    {
-        asunto: "Asamblea ordinaria",
-        resumenCorto: "Se convoca a todos los propietarios a la...",
-        categoria: "Reunión",
-        claseColor: "reunion",
-        fecha: "28/08/2026 16:45",
-        audiencia: "Propietarios",
-        estado: "Publicado",
-        resumen:
-            "Se convoca a todos los propietarios a la asamblea ordinaria del consorcio, que se realizará el 15 de septiembre de 2026 a las 20:00 hs en el Salón de Usos Múltiples.",
-        adjunto: { nombre: "Orden_del_dia.pdf", tamano: "180 KB" },
-    },
-    {
-        asunto: "Trabajos en espacios comunes",
-        resumenCorto: "Durante la próxima semana se realizarán...",
-        categoria: "Obra",
-        claseColor: "obra",
-        fecha: "26/08/2026 11:20",
-        audiencia: "Todos los residentes",
-        estado: "Publicado",
-        resumen:
-            "Durante los próximos días se realizarán trabajos de pintura y mantenimiento en los espacios comunes del edificio.",
-        adjunto: null,
-    },
-    {
-        asunto: "Recordatorio: Estacionamiento",
-        resumenCorto: "Por favor recordar las normas de...",
-        categoria: "Recordatorio",
-        claseColor: "recordatorio",
-        fecha: "--",
-        audiencia: "Todos los residentes",
-        estado: "Borrador",
-        resumen:
-            "Por favor recordar las normas de uso del estacionamiento: respetar las cocheras asignadas y no obstruir la circulación.",
-        adjunto: null,
-    },
-    {
-        asunto: "Nuevas mejoras en el edificio",
-        resumenCorto: "Nos complace informarles sobre las...",
-        categoria: "Novedad",
-        claseColor: "novedad",
-        fecha: "18/08/2026 12:30",
-        audiencia: "Todos los residentes",
-        estado: "Programado",
-        resumen:
-            "Nos complace informarles sobre las nuevas mejoras que se incorporarán próximamente al edificio y sus espacios comunes.",
-        adjunto: null,
-    },
-].map((comunicado) => ({
-    ...comunicado,
-    periodoFecha: obtenerPeriodoFecha(comunicado.fecha) || "Sin fecha",
-}));
+const BadgeCat = ({ categoria }) => <span className={`comunicados-tipo-badge ${CLASE_CAT[categoria] ?? "general"}`}>{categoria}</span>;
+const BadgeEstado = ({ estado }) => <span className={`comunicados-badge comunicados-badge-${claseEstado(estado)}`}>{estado}</span>;
 
-const filtros=[
-    {
-        key: "categoria",
-        label: "Todas las categorias",
-        options: ["Novedad", "Recordatorio", "Obras", "Reunión"],
-    },
-    {
-        key: "estado",
-        label: "Todos los estados",
-        options: ["Publicado", "Programado", "Borrador"],
-    },
-    {
-        key: "periodoFecha",
-        label: "Todos los periodos",
-        options: obtenerOpcionesPeriodo(comunicados),
-    },
-];
+/* ---------- Crear / editar ---------- */
+function ModalFormulario({ comunicado, edificios, onClose, onGuardado }) {
+    const editando = Boolean(comunicado);
+    const [asunto, setAsunto] = useState(comunicado?.asunto ?? "");
+    const [contenido, setContenido] = useState(comunicado?.contenido ?? "");
+    const [categoria, setCategoria] = useState(comunicado?.categoria ?? "Aviso");
+    const [audiencia, setAudiencia] = useState(comunicado?.audienciaClave ?? "TODOS");
+    const [importante, setImportante] = useState(comunicado?.importante ?? false);
+    const [edificioId, setEdificioId] = useState(comunicado?.edificioId ?? edificios[0]?.id);
+    const [cuando, setCuando] = useState(comunicado?.estado === "Programado" ? "PROGRAMAR" : comunicado?.estado === "Borrador" ? "BORRADOR" : "PUBLICAR");
+    const [fecha, setFecha] = useState(comunicado?.estado === "Programado" ? comunicado.fechaInput : "");
+    const [archivo, setArchivo] = useState(null);
+    const [quitar, setQuitar] = useState(false);
+    const [error, setError] = useState("");
+    const [guardando, setGuardando] = useState(false);
 
-function estadoBadgeClase(estado) {
-    if (estado === "Publicado") return "comunicados-badge-publicado";
-    if (estado === "Programado") return "comunicados-badge-programado";
-    return "comunicados-badge-borrador";
-}
+    const categorias = CATEGORIAS.includes(categoria) ? CATEGORIAS : [categoria, ...CATEGORIAS];
+    const adjuntoActual = !quitar && !archivo ? comunicado?.adjunto : null;
+    const etiquetaBoton = cuando === "PUBLICAR" ? (editando && comunicado.estado === "Publicado" ? "Guardar cambios" : "Publicar") : cuando === "PROGRAMAR" ? "Programar" : "Guardar borrador";
 
-function Comunicados() {
-
-    const [seleccionado, setSeleccionado] = useState(comunicados[0]);
-    const [detalleAbierto, setDetalleAbierto] = useState(false);
-
-    useEffect(() => {
-        document.title = "Habita | Comunicados";
-    }, []);
-
-    function abrirDetalle(comunicado) {
-        setSeleccionado(comunicado);
-        setDetalleAbierto(true);
+    function elegirArchivo(evento) {
+        const f = evento.target.files?.[0] ?? null;
+        const mensaje = validarAdjunto(f);
+        if (mensaje) { setError(mensaje); evento.target.value = ""; return; }
+        setError(""); setArchivo(f); setQuitar(false);
     }
 
-    const columnas = [
-        {
-            clave: "asunto",
-            titulo: "Asunto",
-            ancho: "1.2fr",
-        },
+    async function enviar(evento) {
+        evento.preventDefault();
+        setError("");
+        if (asunto.trim().length < 3) return setError("Escribí un asunto de al menos 3 caracteres.");
+        if (!contenido.trim()) return setError("Escribí el mensaje del comunicado.");
+        if (cuando === "PROGRAMAR" && (!fecha || new Date(`${fecha}:00-03:00`) <= new Date())) return setError("Elegí una fecha y hora futuras para programar.");
+        setGuardando(true);
+        try {
+            await guardarComunicado({ actual: comunicado, edificioId, asunto, contenido, categoria, importante, audiencia, modo: cuando, fechaInput: fecha, archivo, quitarAdjunto: quitar });
+            await onGuardado(cuando === "PUBLICAR" ? "Comunicado publicado." : cuando === "PROGRAMAR" ? "Comunicado programado." : "Borrador guardado.");
+        } catch (e) { setError(e.message); setGuardando(false); }
+    }
+
+    return (
+        <Modal
+            titulo={editando ? "Editar comunicado" : "Crear comunicado"}
+            onClose={onClose}
+            ancho={600}
+            pie={
+                <>
+                    <button type="button" className="modal-boton" onClick={onClose}>Cancelar</button>
+                    <button type="submit" form="form-comunicado" className="modal-boton principal" disabled={guardando}>{guardando ? "Guardando..." : etiquetaBoton}</button>
+                </>
+            }
+        >
+            <form id="form-comunicado" className="com-form" onSubmit={enviar} noValidate>
+                <div className="com-campo">
+                    <label htmlFor="com-asunto">Asunto</label>
+                    <input id="com-asunto" value={asunto} maxLength={120} onChange={(e) => setAsunto(e.target.value)} placeholder="Ej: Corte de luz programado" />
+                </div>
+
+                <div className="com-grilla">
+                    <div className="com-campo">
+                        <label htmlFor="com-categoria">Categoría</label>
+                        <select id="com-categoria" value={categoria} onChange={(e) => setCategoria(e.target.value)}>
+                            {categorias.map((c) => <option key={c}>{c}</option>)}
+                        </select>
+                    </div>
+                    <div className="com-campo">
+                        <label htmlFor="com-audiencia">Dirigido a</label>
+                        <select id="com-audiencia" value={audiencia} onChange={(e) => setAudiencia(e.target.value)}>
+                            {AUDIENCIAS.map((a) => <option key={a.valor} value={a.valor}>{a.texto}</option>)}
+                        </select>
+                    </div>
+                </div>
+
+                {!editando && edificios.length > 1 && (
+                    <div className="com-campo">
+                        <label htmlFor="com-edificio">Edificio</label>
+                        <select id="com-edificio" value={edificioId} onChange={(e) => setEdificioId(Number(e.target.value))}>
+                            {edificios.map((e) => <option key={e.id} value={e.id}>{e.nombre}</option>)}
+                        </select>
+                    </div>
+                )}
+
+                <div className="com-campo">
+                    <label htmlFor="com-mensaje">Mensaje <span className="com-contador">{contenido.length}/2000</span></label>
+                    <textarea id="com-mensaje" rows={5} maxLength={2000} value={contenido} onChange={(e) => setContenido(e.target.value)} placeholder="Escribí el comunicado para los residentes..." />
+                </div>
+
+                <label className="com-check">
+                    <input type="checkbox" checked={importante} onChange={(e) => setImportante(e.target.checked)} />
+                    <span><Star size={13} /> Marcar como importante</span>
+                </label>
+
+                <div className="com-campo">
+                    <label>Adjunto (opcional)</label>
+                    {adjuntoActual && (
+                        <div className="comunicados-adjunto">
+                            <Paperclip size={16} />
+                            <div className="comunicados-adjunto-info"><strong>{adjuntoActual.nombre}</strong><span>{adjuntoActual.tamano}</span></div>
+                            <button type="button" className="com-quitar" onClick={() => setQuitar(true)}>Quitar</button>
+                        </div>
+                    )}
+                    {archivo && (
+                        <div className="comunicados-adjunto">
+                            <Paperclip size={16} />
+                            <div className="comunicados-adjunto-info"><strong>{archivo.name}</strong><span>Nuevo archivo</span></div>
+                            <button type="button" className="com-quitar" onClick={() => setArchivo(null)}>Quitar</button>
+                        </div>
+                    )}
+                    {!adjuntoActual && !archivo && (
+                        <input id="com-archivo" type="file" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" onChange={elegirArchivo} />
+                    )}
+                    <small>PDF, imagen o Word. Máximo 5 MB.</small>
+                </div>
+
+                <fieldset className="com-cuando">
+                    <legend>¿Cuándo se publica?</legend>
+                    {[["PUBLICAR", "Publicar ahora"], ["PROGRAMAR", "Programar"], ["BORRADOR", "Guardar como borrador"]].map(([valor, texto]) => (
+                        <label key={valor} className="com-radio">
+                            <input type="radio" name="cuando" value={valor} checked={cuando === valor} onChange={() => setCuando(valor)} /> {texto}
+                        </label>
+                    ))}
+                    {cuando === "PROGRAMAR" && (
+                        <input id="com-fecha" type="datetime-local" className="com-fecha" value={fecha} min={aInputFecha(new Date())} onChange={(e) => { setFecha(e.target.value); setError(""); }} aria-label="Fecha y hora de publicación" />
+                    )}
+                    {cuando === "BORRADOR" && <small>Los residentes no lo ven hasta que lo publiques.</small>}
+                </fieldset>
+
+                {error && <p className="com-aviso com-aviso-error" role="alert"><AlertCircle size={15} /><span>{error}</span></p>}
+            </form>
+        </Modal>
+    );
+}
+
+/* ---------- Detalle ---------- */
+function Fila({ etiqueta, children }) {
+    return <div className="com-fila"><span>{etiqueta}</span><strong>{children}</strong></div>;
+}
+
+function ModalDetalle({ comunicado: c, onClose, onEditar, onEliminar, onPublicar, ocupado }) {
+    const [error, setError] = useState("");
+    async function abrirAdjunto() {
+        try { window.open(await urlAdjunto(c.adjunto.ruta), "_blank", "noopener"); } catch (e) { setError(e.message); }
+    }
+    return (
+        <Modal
+            titulo="Detalle del comunicado"
+            onClose={onClose}
+            ancho={600}
+            pie={
+                <>
+                    <button type="button" className="modal-boton contorno-peligro" onClick={onEliminar} disabled={ocupado}><Trash2 size={14} /> Eliminar</button>
+                    <button type="button" className="modal-boton" onClick={onEditar} disabled={ocupado}><Pencil size={14} /> Editar</button>
+                    {c.estado !== "Publicado" && (
+                        <button type="button" className="modal-boton principal" onClick={onPublicar} disabled={ocupado}><Send size={14} /> Publicar ahora</button>
+                    )}
+                </>
+            }
+        >
+            <div className="com-cabecera">
+                <h3>{c.importante && <Star size={15} className="com-estrella" aria-label="Importante" />}{c.asunto}</h3>
+                <BadgeEstado estado={c.estado} />
+            </div>
+            <Fila etiqueta="Categoría"><BadgeCat categoria={c.categoria} /></Fila>
+            <Fila etiqueta={c.estado === "Programado" ? "Se publica el" : "Fecha de publicación"}>{c.fecha}</Fila>
+            <Fila etiqueta="Audiencia">{c.audiencia}</Fila>
+            <Fila etiqueta="Edificio">{c.edificio}</Fila>
+
+            {c.estado === "Publicado" && (
+                <div className="com-lectura">
+                    <div className="com-lectura-texto"><Eye size={14} /> <strong>{c.lecturas} de {c.destinatarios}</strong> residentes lo leyeron <span>({c.porcentajeLectura}%)</span></div>
+                    <div className="com-barra"><div style={{ width: `${c.porcentajeLectura}%` }} /></div>
+                </div>
+            )}
+
+            <h4 className="com-titulo-seccion">Mensaje</h4>
+            <p className="com-texto">{c.contenido}</p>
+
+            <h4 className="com-titulo-seccion">Adjuntos</h4>
+            {c.adjunto ? (
+                <div className="comunicados-adjunto">
+                    <Paperclip size={16} />
+                    <div className="comunicados-adjunto-info"><strong>{c.adjunto.nombre}</strong><span>{c.adjunto.tamano}</span></div>
+                    <button type="button" aria-label="Descargar adjunto" onClick={abrirAdjunto}><Download size={16} /></button>
+                </div>
+            ) : <p className="comunicados-sin-adjunto">Sin archivos adjuntos.</p>}
+            {error && <p className="com-aviso com-aviso-error"><AlertCircle size={15} /><span>{error}</span></p>}
+        </Modal>
+    );
+}
+
+/* ---------- Pantalla ---------- */
+function Comunicados() {
+    const [datos, setDatos] = useState(null);
+    const [error, setError] = useState("");
+    const [vista, setVista] = useState(null); // { tipo: "detalle"|"form"|"eliminar", id? }
+    const [avisoObj, setAvisoObj] = useState(null);
+    const aviso = avisoObj?.texto;
+    const setAviso = (texto, esError = false) => setAvisoObj(texto ? { texto, esError } : null);
+    const [ocupado, setOcupado] = useState(false);
+
+    const cargar = useCallback(async () => {
+        try { setDatos(await obtenerComunicadosAdmin()); setError(""); } catch (e) { setError(e.message); }
+    }, []);
+
+    useEffect(() => { document.title = "Habita | Comunicados"; cargar(); }, [cargar]);
+    useEffect(() => {
+        if (!aviso) return undefined;
+        const t = setTimeout(() => setAviso(""), 3500);
+        return () => clearTimeout(t);
+    }, [aviso]);
+
+    const lista = datos?.comunicados ?? [];
+    const edificios = datos?.edificios ?? [];
+
+    const resumen = useMemo(() => {
+        const pub = lista.filter((c) => c.estado === "Publicado");
+        const dest = pub.reduce((s, c) => s + c.destinatarios, 0);
+        const lect = pub.reduce((s, c) => s + c.lecturas, 0);
+        return { publicados: pub.length, programados: lista.filter((c) => c.estado === "Programado").length, borradores: lista.filter((c) => c.estado === "Borrador").length, lectura: dest ? Math.round((lect / dest) * 100) : 0 };
+    }, [lista]);
+
+    const filtros = useMemo(() => [
+        { key: "categoria", label: "Todas las categorías", options: [...new Set([...CATEGORIAS, ...lista.map((c) => c.categoria)])] },
+        { key: "estado", label: "Todos los estados", options: ["Publicado", "Programado", "Borrador"] },
+        { key: "periodoFecha", label: "Todos los períodos", options: obtenerOpcionesPeriodo(lista) },
+    ], [lista]);
+
+    const columnas = useMemo(() => [
+        { clave: "asunto", titulo: "Asunto", ancho: "1.3fr", render: (c) => <span className="com-asunto-celda">{c.importante && <Star size={12} className="com-estrella" />}{c.asunto}</span> },
         { clave: "audiencia", titulo: "Audiencia", ancho: "0.9fr" },
-        {
-            clave: "categoria",
-            titulo: "Categoria",
-            ancho: "1fr",
-            render: (item) => (
-                <span className={`comunicados-tipo-badge ${item.claseColor}`}>
-                    {item.categoria}
-                </span>
-            ),
-        },
-        {
-            clave: "estado",
-            titulo: "Estado",
-            ancho: "0.9fr",
-            render: (item) => (
-                <span className={`comunicados-badge ${estadoBadgeClase(item.estado)}`}>
-                    {item.estado}
-                </span>
-            ),
-        },
-        {
-            clave: "fecha",
-            titulo: (
-                <span className="comunicados-th-fecha">
-                    Fecha de publicación
-                </span>
-            ),
-            ancho: "1.1fr",
-            render: (item) => (
-                <span className="comunicados-fecha-celda">
-                    <span>{item.fecha}</span>
-                </span>
-            ),
-        },
-    ];
+        { clave: "categoria", titulo: "Categoría", ancho: "1fr", render: (c) => <BadgeCat categoria={c.categoria} /> },
+        { clave: "estado", titulo: "Estado", ancho: "0.9fr", render: (c) => <BadgeEstado estado={c.estado} /> },
+        { clave: "fecha", titulo: "Fecha de publicación", ancho: "1.1fr" },
+    ], []);
+
+    const seleccionado = vista?.id ? lista.find((c) => c.id === vista.id) ?? null : null;
+
+    async function tras(mensaje) { await cargar(); setVista(null); setAviso(mensaje); }
+
+    async function publicarAhora() {
+        setOcupado(true);
+        try {
+            await guardarComunicado({ actual: seleccionado, asunto: seleccionado.asunto, contenido: seleccionado.contenido, categoria: seleccionado.categoria, importante: seleccionado.importante, audiencia: seleccionado.audienciaClave, modo: "PUBLICAR" });
+            await tras("Comunicado publicado.");
+        } catch (e) { setAviso(e.message, true); } finally { setOcupado(false); }
+    }
+    async function borrar() {
+        setOcupado(true);
+        try { await eliminarComunicado(seleccionado.id); await tras("Comunicado eliminado."); }
+        catch (e) { setAviso(e.message, true); } finally { setOcupado(false); }
+    }
+
+    if (error && !datos) {
+        return (
+            <main className="comunicados">
+                <div className="com-vacio"><AlertCircle size={28} /><h2>{error}</h2>
+                    <button type="button" className="modal-boton principal" onClick={cargar}><RefreshCw size={13} /> Reintentar</button></div>
+            </main>
+        );
+    }
+    if (!datos) return <main className="comunicados"><p className="com-cargando">Cargando comunicados...</p></main>;
 
     return (
         <main className="comunicados">
+            <section className="comunicados-resumen">
+                <TarjetaResumen icono={<Megaphone />} titulo="Publicados" valor={resumen.publicados} contenido={<span>Visibles para residentes</span>} />
+                <TarjetaResumen icono={<CalendarClock />} titulo="Programados" valor={resumen.programados} contenido={<span>Se publican solos</span>} />
+                <TarjetaResumen icono={<FileText />} titulo="Borradores" valor={resumen.borradores} contenido={<span>Sin publicar</span>} />
+                <TarjetaResumen icono={<Eye />} titulo="Lectura" valor={`${resumen.lectura}%`} contenido={<span>De los comunicados publicados</span>} />
+            </section>
 
-            <Navegador
-                data={comunicados}
-                searchKey="titulo"
-                searchPlaceholder="Buscar comunicado..."
-                filters={filtros}
-                onNew={() => {}}
-                newButtonText="Crear comunicado"
-            >
-                {(ComunicadosFiltrados) => (
-                    <Tabla
-                        columnas={columnas}
-                        datos={ComunicadosFiltrados}
-                        etiqueta="comunicados"
-                        className="comunicados-tabla"
-                        onFilaClick={abrirDetalle}
-                        seleccionable
-                        filaSeleccionada={detalleAbierto ? seleccionado : null}
-                    />
-                        )}
+            <Navegador data={lista} searchKey="busqueda" searchPlaceholder="Buscar comunicado..." filters={filtros} onNew={() => setVista({ tipo: "form" })} newButtonText="Crear comunicado">
+                {(filtrados) => (
+                    <Tabla columnas={columnas} datos={filtrados} etiqueta="comunicados" className="comunicados-tabla" onFilaClick={(c) => setVista({ tipo: "detalle", id: c.id })} />
+                )}
             </Navegador>
 
-            {/* DETALLE */}
-
-            {detalleAbierto && (
-                <Panel
-                    className="comunicados-detalle"
-                    titulo={seleccionado.asunto}
-                    tituloComplemento={
-                        <div className={`comunicados-badge ${estadoBadgeClase(seleccionado.estado)}`}>
-                            {seleccionado.estado}
-                        </div>
-                    }
-                    accion={
-                        <button
-                            className="comunicados-detalle-cerrar"
-                            onClick={() => setDetalleAbierto(false)}
-                            aria-label="Cerrar detalle"
-                        >
-                            <X size={18} />
-                        </button>
-                    }
-                >
-                    
-                    {/* =========== FILAS =========== */}
-
-                    <div className="comunicados-detalle-fila">
-                        <span>Categoría</span>
-                        <span className={`comunicados-tipo-badge ${seleccionado.claseColor}`}>
-                            {seleccionado.categoria}
-                        </span>
-                    </div>
-
-                    <div className="comunicados-detalle-fila">
-                        <span>Fecha de publicación</span>
-                        <strong>{seleccionado.fecha}</strong>
-                    </div>
-
-                    <div className="comunicados-detalle-fila">
-                        <span>Audiencia</span>
-                        <strong>{seleccionado.audiencia}</strong>
-                    </div>
-                    
-                    {/* =========== RESUMEN =========== */}
-
-                    <h3>Resumen</h3>
-
-                    <p className="comunicados-resumen-texto">
-                        {seleccionado.resumen}
-                    </p>
-
-                    {/* =========== ADJUNTOS =========== */}
-
-                    <h3>Adjuntos</h3>
-
-                    {seleccionado.adjunto ? (
-                        <div className="comunicados-adjunto">
-                            <Paperclip size={16} />
-
-                            <div className="comunicados-adjunto-info">
-                                <strong>{seleccionado.adjunto.nombre}</strong>
-                                <span>PDF - {seleccionado.adjunto.tamano}</span>
-                            </div>
-
-                            <button aria-label="Descargar adjunto">
-                                <Download size={16} />
-                            </button>
-                        </div>
-                    ) : (
-                        <p className="comunicados-sin-adjunto">
-                            Sin archivos adjuntos.
-                        </p>
-                    )}
-
-                    {/* =========== OPCIONES =========== */}
-
-                    <button className="comunicados-btn-editar">
-                        <Pencil size={15} />
-                        Editar comunicado
-                    </button>
-
-                    <button className="comunicados-btn-editar">
-                        <Trash size={15} />
-                        Eliminar comunicado
-                    </button>
-                </Panel>
+            {vista?.tipo === "detalle" && seleccionado && (
+                <ModalDetalle comunicado={seleccionado} ocupado={ocupado} onClose={() => setVista(null)}
+                    onEditar={() => setVista({ tipo: "form", id: seleccionado.id })}
+                    onEliminar={() => setVista({ tipo: "eliminar", id: seleccionado.id })} onPublicar={publicarAhora} />
+            )}
+            {vista?.tipo === "form" && (
+                <ModalFormulario key={vista.id ?? "nuevo"} comunicado={seleccionado} edificios={edificios} onClose={() => setVista(vista.id ? { tipo: "detalle", id: vista.id } : null)} onGuardado={tras} />
+            )}
+            {vista?.tipo === "eliminar" && seleccionado && (
+                <Modal titulo="Eliminar comunicado" onClose={() => setVista({ tipo: "detalle", id: seleccionado.id })} ancho={460}
+                    pie={<>
+                        <button type="button" className="modal-boton" onClick={() => setVista({ tipo: "detalle", id: seleccionado.id })}>Cancelar</button>
+                        <button type="button" className="modal-boton peligro" onClick={borrar} disabled={ocupado}>{ocupado ? "Eliminando..." : "Eliminar"}</button>
+                    </>}>
+                    <p className="com-texto">¿Seguro que querés eliminar <strong>{seleccionado.asunto}</strong>? Los residentes dejarán de verlo y no se puede deshacer.</p>
+                </Modal>
             )}
 
+            {aviso && <p className={`com-aviso ${avisoObj.esError ? "com-aviso-error" : "com-aviso-ok"} com-aviso-flotante`} role="status"><CheckCircle2 size={16} /><span>{aviso}</span></p>}
         </main>
     );
 }

@@ -277,8 +277,12 @@ function LayoutInterno({ children }) {
                             {/* ----- INFORMACIÓN DEL EDIFICIO ----- */}
                             <div className="sidebar-edificio">
                                 <img
-                                    src={imagenEdificio}
+                                    src={perfil?.edificio?.fotoUrl || imagenEdificio}
                                     alt="Imagen del edificio"
+                                    onError={(evento) => {
+                                        evento.currentTarget.onerror = null;
+                                        evento.currentTarget.src = imagenEdificio;
+                                    }}
                                 />
 
                                 <div className="sidebar-edificio-info">

@@ -1,19 +1,7 @@
-import { useEffect, useState } from "react";
-import "chart.js/auto";
-import { Doughnut } from "react-chartjs-2";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
-    ClipboardList,
-    Clock,
-    Settings2,
-    CheckCircle2,
-    Wrench,
-    Sparkles,
-    ArrowUpDown,
-    Lightbulb,
-    MoreHorizontal,
-    Image,
-    X,
-    Eye,
+    ClipboardList, Clock, Settings2, CheckCircle2, Wrench, Sparkles, ArrowUpDown, Lightbulb,
+    MoreHorizontal, Image, Eye, AlertCircle, RefreshCw, ShieldAlert, Users, Phone,
 } from "lucide-react";
 
 import "./Reclamos.css";
@@ -21,368 +9,280 @@ import Panel from "../../../components/Panel/Panel";
 import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
 import Tabla from "../../../components/Tabla/Tabla";
 import Navegador from "../../../components/Navegador/Navegador";
-import { obtenerOpcionesPeriodo, obtenerPeriodoFecha } from "../../../utils/periodos";
+import Modal from "../../../components/Modal/Modal";
+import { obtenerOpcionesPeriodo } from "../../../utils/periodos";
+import { ESTADOS, obtenerReclamosAdmin, actualizarReclamo, urlAdjunto } from "../../../services/reclamosAdminService";
 
-{/* =========================
-       DATOS EJEMPLOS
-========================== */}
-
-const kpis = {
-    total: 64,
-    pendientes: 18,
-    enProceso: 26,
-    resueltos: 20,
+const CATEGORIAS = ["Mantenimiento", "Limpieza", "Ascensores", "Iluminación", "Seguridad", "Espacios comunes", "Otros"];
+const CAT_CLASE = {
+    "Mantenimiento": "mantenimiento", "Limpieza": "limpieza", "Ascensores": "ascensores", "Iluminación": "iluminacion",
+    "Espacios comunes": "comunes", "Seguridad": "seguridad", "Otros": "otros",
 };
+const CAT_ICONO = {
+    "Mantenimiento": Wrench, "Limpieza": Sparkles, "Ascensores": ArrowUpDown, "Iluminación": Lightbulb,
+    "Espacios comunes": Users, "Seguridad": ShieldAlert, "Otros": MoreHorizontal,
+};
+const ESTADO_CLASE = { "Pendiente": "pendiente", "En proceso": "proceso", "Resuelto": "resuelto" };
 
-const reclamos = [
-    { fecha: "01/09/2026", residente: "Nicolás Paz", unidad: "5B", categoria: "Mantenimiento", asunto: "Fuga de agua en cocina", estado: "Pendiente", prioridad: "Alta", descripcion: "Holaaa", adjunto: { nombre: "foto1.png", tamano: "245 KB" } },
-    { fecha: "01/09/2026", residente: "María Gómez", unidad: "3A", categoria: "Limpieza", asunto: "Suciedad en pasillos", estado: "En proceso", prioridad: "Media", descripcion: "Holaaa" },
-    { fecha: "31/08/2026", residente: "Juan López", unidad: "7C", categoria: "Ascensores", asunto: "Ascensor se detiene entre pisos", estado: "En proceso", prioridad: "Alta", descripcion: "Holaaa" },
-    { fecha: "31/08/2026", residente: "Carla Romero", unidad: "1B", categoria: "Iluminación", asunto: "Luz quemada en garage", estado: "Resuelto", prioridad: "Baja", descripcion: "Holaaa", adjunto: { nombre: "1234.jpg", tamano: "245 KB" } },
-    { fecha: "30/08/2026", residente: "Pedro Martínez", unidad: "2D", categoria: "Espacios comunes", asunto: "Mesa rota en SUM", estado: "Resuelto", prioridad: "Media", descripcion: "Holaaa" },
-    { fecha: "29/08/2026", residente: "Laura Sánchez", unidad: "4A", categoria: "Seguridad", asunto: "Puerta del edificio sin traba", estado: "Pendiente", prioridad: "Alta", descripcion: "Holaaa" },
-    { fecha: "28/08/2026", residente: "Diego Fernández", unidad: "6E", categoria: "Mantenimiento", asunto: "Aire acondicionado no enfría", estado: "En proceso", prioridad: "Media", descripcion: "Holaaa" },
-].map((reclamo) => ({
-    ...reclamo,
-    periodoFecha: obtenerPeriodoFecha(reclamo.fecha),
-}));
+const claseCategoria = (c) => `reclamos-cat-${CAT_CLASE[c] ?? "otros"}`;
 
-const totalReclamos = 64;
-
-const resumenEstados = [
-    { estado: "Pendientes", cantidad: 18, claseColor: "pendiente" },
-    { estado: "En proceso", cantidad: 26, claseColor: "proceso" },
-    { estado: "Resueltos", cantidad: 20, claseColor: "resuelto" },
-];
-
-const categoriasFrecuentes = [
-    { nombre: "Mantenimiento", cantidad: 22, icon: Wrench, claseColor: "mantenimiento" },
-    { nombre: "Limpieza", cantidad: 14, icon: Sparkles, claseColor: "limpieza" },
-    { nombre: "Ascensores", cantidad: 10, icon: ArrowUpDown, claseColor: "ascensores" },
-    { nombre: "Iluminación", cantidad: 8, icon: Lightbulb, claseColor: "iluminacion" },
-    { nombre: "Otros", cantidad: 10, icon: MoreHorizontal, claseColor: "otros" },
-];
-
-{/* =========================
-       TARJETAS RESUMEN
-========================== */}
-
-const resumenTarjetas = [
-    {
-        icono: ClipboardList,
-        titulo: "Total de reclamos",
-        valor: kpis.total,
-        contenido: <span>Este mes</span>,
-        claseIcono: "verde",
-    },
-    {
-        icono: Clock,
-        titulo: "Pendientes",
-        valor: kpis.pendientes,
-        contenido: <span>Esperando respuesta</span>,
-        claseIcono: "amarillo",
-    },
-    {
-        icono: Settings2,
-        titulo: "En proceso",
-        valor: kpis.enProceso,
-        contenido: <span>En tratamiento</span>,
-        claseIcono: "azul",
-    },
-    {
-        icono: CheckCircle2,
-        titulo: "Resueltos",
-        valor: kpis.resueltos,
-        contenido: <span>Este mes</span>,
-        claseIcono: "verde",
-    },
-];
-
-
-function categoriaBadgeClase(categoria) {
-    const mapa = {
-        "Mantenimiento": "reclamos-cat-mantenimiento",
-        "Limpieza": "reclamos-cat-limpieza",
-        "Ascensores": "reclamos-cat-ascensores",
-        "Iluminación": "reclamos-cat-iluminacion",
-        "Espacios comunes": "reclamos-cat-comunes",
-        "Seguridad": "reclamos-cat-seguridad",
-        "Otros": "reclamos-cat-otros",
-    };
-    return mapa[categoria] || "";
+function BadgeEstado({ estado }) {
+    return <span className={`reclamos-badge reclamos-badge-${ESTADO_CLASE[estado] ?? "pendiente"}`}>{estado}</span>;
+}
+function BadgeCategoria({ categoria }) {
+    return <span className={`reclamos-cat-badge ${claseCategoria(categoria)}`}>{categoria}</span>;
 }
 
-function estadoBadgeClase(estado) {
-    if (estado === "Pendiente") return "reclamos-badge-pendiente";
-    if (estado === "En proceso") return "reclamos-badge-proceso";
-    return "reclamos-badge-resuelto";
+/* ---------- Gráfico de dona (SVG propio, sin librerías) ---------- */
+const COLOR_ESTADO = { "Pendiente": "var(--reclamos-color-pendiente)", "En proceso": "var(--reclamos-color-proceso)", "Resuelto": "var(--reclamos-color-resuelto)" };
+
+function Dona({ partes, total }) {
+    const R = 54, C = 2 * Math.PI * R;
+    let acumulado = 0;
+    return (
+        <svg className="reclamos-dona" viewBox="0 0 140 140" role="img" aria-label={`${total} reclamos por estado`}>
+            <circle cx="70" cy="70" r={R} fill="none" stroke="var(--borde-input)" strokeWidth="18" />
+            {total > 0 && partes.filter((p) => p.cantidad > 0).map((p) => {
+                const largo = (p.cantidad / total) * C;
+                const trozo = (
+                    <circle key={p.estado} cx="70" cy="70" r={R} fill="none" stroke={COLOR_ESTADO[p.estado]} strokeWidth="18"
+                        strokeDasharray={`${Math.max(largo - 2, 0)} ${C}`} strokeDashoffset={-acumulado} transform="rotate(-90 70 70)" />
+                );
+                acumulado += largo;
+                return trozo;
+            })}
+            <text x="70" y="68" textAnchor="middle" className="reclamos-dona-total">{total}</text>
+            <text x="70" y="86" textAnchor="middle" className="reclamos-dona-sub">reclamos</text>
+        </svg>
+    );
 }
 
-const columnas = [
-    { clave: "asunto", titulo: "Asunto", ancho: "1.3fr", clase: "reclamos-asunto" },
-    { clave: "residente", titulo: "Residente", ancho: "1fr", clase: "reclamos-residente" },
-    { clave: "unidad", titulo: "Unidad", ancho: "0.6fr" },
-    {
-        clave: "categoria",
-        titulo: "Categoría",
-        ancho: "1.1fr",
-        render: (reclamo) => (
-            <span className={`reclamos-cat-badge ${categoriaBadgeClase(reclamo.categoria)}`}>
-                {reclamo.categoria}
-            </span>
-        ),
-    },
-    {
-        clave: "estado",
-        titulo: "Estado",
-        ancho: "1fr",
-        render: (reclamo) => (
-            <span className={`reclamos-badge ${estadoBadgeClase(reclamo.estado)}`}>
-                {reclamo.estado}
-            </span>
-        ),
-    },
-    { clave: "fecha", titulo: "Fecha", ancho: "0.8fr" },
-];
+/* ---------- Modal de detalle + seguimiento + cambio de estado ---------- */
+function ModalReclamo({ reclamo, onClose, onGuardado }) {
+    const [estado, setEstado] = useState(reclamo.estado);
+    const [comentario, setComentario] = useState("");
+    const [guardando, setGuardando] = useState(false);
+    const [error, setError] = useState("");
 
-const filtros=[
-    {
-        key: "categoria",
-        label: "Todas las categorias",
-        options: ["Mantenimiento", "Limpieza", "Ascensores", "Iluminación", "Espacios comunes", "Seguridad", "Otros"],
-    },
-    {
-        key: "estado",
-        label: "Todos los estados",
-        options: ["Resuelto", "Pendiente", "En proceso"],
-    },
-    {
-        key: "periodoFecha",
-        label: "Todos los periodos",
-        options: obtenerOpcionesPeriodo(reclamos),
-    },
-];
+    const sinCambios = estado === reclamo.estado && !comentario.trim();
 
-function Reclamos() {
+    async function abrirAdjunto() {
+        try { window.open(await urlAdjunto(reclamo.adjunto.ruta), "_blank", "noopener"); }
+        catch (e) { setError(e.message); }
+    }
 
-    const [seleccionado, setSeleccionado] = useState(reclamos[0]);
-    const [detalleAbierto, setDetalleAbierto] = useState(false);
-
-    useEffect(() => {
-        document.title = "Habita | Reclamos";
-    }, []);
-
-    function abrirDetalle(comunicado) {
-        setSeleccionado(comunicado);
-        setDetalleAbierto(true);
+    async function guardar(evento) {
+        evento.preventDefault();
+        setGuardando(true); setError("");
+        try {
+            await actualizarReclamo({ id: reclamo.id, estado, comentario });
+            await onGuardado(estado === reclamo.estado ? "Nota agregada al seguimiento." : `Reclamo marcado como "${estado}".`);
+            setComentario("");
+        } catch (e) { setError(e.message); }
+        finally { setGuardando(false); }
     }
 
     return (
+        <Modal
+            titulo="Detalle del reclamo"
+            onClose={onClose}
+            ancho={640}
+            pie={
+                <>
+                    <button type="button" className="modal-boton" onClick={onClose}>Cerrar</button>
+                    <button type="submit" form="form-reclamo" className="modal-boton principal" disabled={guardando || sinCambios}>
+                        {guardando ? "Guardando..." : "Guardar cambios"}
+                    </button>
+                </>
+            }
+        >
+            <div className="rcl-cabecera">
+                <h3>{reclamo.asunto}</h3>
+                <BadgeEstado estado={reclamo.estado} />
+            </div>
+
+            <div className="rcl-fila"><span>Categoría</span><BadgeCategoria categoria={reclamo.categoria} /></div>
+            <div className="rcl-fila"><span>Fecha de publicación</span><strong>{reclamo.fechaHora}</strong></div>
+            <div className="rcl-fila"><span>Residente</span><strong>{reclamo.residente}</strong></div>
+            {reclamo.telefono && <div className="rcl-fila"><span>Teléfono</span><strong><Phone size={12} /> {reclamo.telefono}</strong></div>}
+            <div className="rcl-fila"><span>Unidad</span><strong>{reclamo.unidad}{reclamo.piso ? ` (piso ${reclamo.piso})` : ""} · {reclamo.edificio}</strong></div>
+
+            <h4 className="rcl-titulo-seccion">Descripción</h4>
+            <p className="rcl-texto">{reclamo.descripcion}</p>
+
+            <h4 className="rcl-titulo-seccion">Adjuntos</h4>
+            {reclamo.adjunto ? (
+                <div className="reclamos-adjunto">
+                    <Image size={16} />
+                    <div className="reclamos-adjunto-info">
+                        <strong>{reclamo.adjunto.nombre}</strong>
+                        <span>Tamaño - {reclamo.adjunto.tamano}</span>
+                    </div>
+                    <button type="button" aria-label="Abrir adjunto" onClick={abrirAdjunto}><Eye size={16} /></button>
+                </div>
+            ) : <p className="reclamos-sin-adjunto">Sin archivos adjuntos.</p>}
+
+            <h4 className="rcl-titulo-seccion">Seguimiento</h4>
+            <ol className="rcl-linea">
+                {[...reclamo.seguimiento].reverse().map((s) => (
+                    <li key={s.id} className={`rcl-hito rcl-hito-${s.tipo === "alta" || s.tipo === "nota" ? s.tipo : ESTADO_CLASE[s.tipo]}`}>
+                        <div className="rcl-hito-titulo"><strong>{s.titulo}</strong><span>{s.fecha}</span></div>
+                        {s.detalle && <p>{s.detalle}</p>}
+                        {s.autor && <small>{s.autor}</small>}
+                    </li>
+                ))}
+            </ol>
+
+            <form id="form-reclamo" className="rcl-form" onSubmit={guardar}>
+                <h4 className="rcl-titulo-seccion">Actualizar reclamo</h4>
+                <div className="rcl-estados" role="radiogroup" aria-label="Estado del reclamo">
+                    {ESTADOS.map((e) => (
+                        <button key={e.visible} type="button" role="radio" aria-checked={estado === e.visible}
+                            className={`rcl-estado rcl-estado-${ESTADO_CLASE[e.visible]} ${estado === e.visible ? "activo" : ""}`}
+                            onClick={() => setEstado(e.visible)} title={e.ayuda}>
+                            {e.visible}
+                        </button>
+                    ))}
+                </div>
+                <label htmlFor="rcl-comentario" className="rcl-label">Comentario para el seguimiento (opcional)</label>
+                <textarea id="rcl-comentario" rows={3} maxLength={500} value={comentario} onChange={(e) => setComentario(e.target.value)}
+                    placeholder="Ej: Ya avisamos al plomero, viene mañana." />
+                {error && <p className="rcl-aviso rcl-aviso-error"><AlertCircle size={15} /><span>{error}</span></p>}
+            </form>
+        </Modal>
+    );
+}
+
+/* ---------- Pantalla ---------- */
+function Reclamos() {
+    const [datos, setDatos] = useState(null);
+    const [error, setError] = useState("");
+    const [abierto, setAbierto] = useState(null);
+    const [aviso, setAviso] = useState("");
+
+    const cargar = useCallback(async () => {
+        try { setDatos(await obtenerReclamosAdmin()); setError(""); }
+        catch (e) { setError(e.message); }
+    }, []);
+
+    useEffect(() => { document.title = "Habita | Reclamos"; cargar(); }, [cargar]);
+    useEffect(() => {
+        if (!aviso) return undefined;
+        const t = setTimeout(() => setAviso(""), 3500);
+        return () => clearTimeout(t);
+    }, [aviso]);
+
+    const reclamos = datos?.reclamos ?? [];
+    const hayVarios = (datos?.edificios.length ?? 0) > 1;
+
+    const resumen = useMemo(() => {
+        const cuenta = (e) => reclamos.filter((r) => r.estado === e).length;
+        const delMes = reclamos.filter((r) => r.mesClave === datos?.periodoActual).length;
+        const categorias = CATEGORIAS.map((c) => ({ nombre: c, cantidad: reclamos.filter((r) => r.categoria === c).length }))
+            .filter((c) => c.cantidad > 0).sort((a, b) => b.cantidad - a.cantidad);
+        return { total: reclamos.length, delMes, pendientes: cuenta("Pendiente"), proceso: cuenta("En proceso"), resueltos: cuenta("Resuelto"), categorias };
+    }, [reclamos, datos]);
+
+    const filtros = useMemo(() => [
+        ...(hayVarios ? [{ key: "edificio", label: "Todos los edificios", options: datos.edificios.map((e) => e.nombre) }] : []),
+        { key: "categoria", label: "Todas las categorías", options: CATEGORIAS },
+        { key: "estado", label: "Todos los estados", options: ESTADOS.map((e) => e.visible) },
+        { key: "periodoFecha", label: "Todos los períodos", options: obtenerOpcionesPeriodo(reclamos) },
+    ], [reclamos, hayVarios, datos]);
+
+    const columnas = useMemo(() => [
+        { clave: "asunto", titulo: "Asunto", ancho: "1.3fr", clase: "reclamos-asunto" },
+        { clave: "residente", titulo: "Residente", ancho: "1fr", clase: "reclamos-residente" },
+        { clave: "unidad", titulo: "Unidad", ancho: "0.6fr" },
+        { clave: "categoria", titulo: "Categoría", ancho: "1.1fr", render: (r) => <BadgeCategoria categoria={r.categoria} /> },
+        { clave: "estado", titulo: "Estado", ancho: "1fr", render: (r) => <BadgeEstado estado={r.estado} /> },
+        { clave: "fecha", titulo: "Fecha", ancho: "0.8fr" },
+    ], []);
+
+    if (error && !datos) {
+        return (
+            <main className="reclamos">
+                <div className="reclamos-vacio">
+                    <AlertCircle size={28} /><h2>{error}</h2>
+                    <button type="button" className="modal-boton principal" onClick={cargar}><RefreshCw size={13} /> Reintentar</button>
+                </div>
+            </main>
+        );
+    }
+    if (!datos) return <main className="reclamos"><p className="reclamos-cargando">Cargando reclamos...</p></main>;
+
+    const seleccionado = reclamos.find((r) => r.id === abierto) ?? null;
+    const partesDona = [
+        { estado: "Pendiente", cantidad: resumen.pendientes },
+        { estado: "En proceso", cantidad: resumen.proceso },
+        { estado: "Resuelto", cantidad: resumen.resueltos },
+    ];
+    const maxCat = Math.max(1, ...resumen.categorias.map((c) => c.cantidad));
+    const pct = (n) => (resumen.total ? Math.round((n / resumen.total) * 100) : 0);
+
+    return (
         <main className="reclamos">
-
-            {/* =========================
-                  RESUMEN SUPERIOR
-            ========================= */}
-
             <section className="reclamos-resumen">
-                {resumenTarjetas.map((item, index) => {
-                    const Icono = item.icono;
-
-                    return (
-                        <TarjetaResumen
-                            key={index}
-                            icono={<Icono />}
-                            titulo={item.titulo}
-                            valor={item.valor}
-                            contenido={item.contenido}
-                        />
-                    );
-                })}
+                <TarjetaResumen icono={<ClipboardList />} titulo="Total de reclamos" valor={resumen.total} contenido={<span>{resumen.delMes} este mes</span>} />
+                <TarjetaResumen icono={<Clock />} titulo="Pendientes" valor={resumen.pendientes} contenido={<span>Esperando respuesta</span>} />
+                <TarjetaResumen icono={<Settings2 />} titulo="En proceso" valor={resumen.proceso} contenido={<span>En tratamiento</span>} />
+                <TarjetaResumen icono={<CheckCircle2 />} titulo="Resueltos" valor={resumen.resueltos} contenido={<span>Solucionados</span>} />
             </section>
 
-            {/* =========================
-                CONTENIDO PRINCIPAL
-            ========================= */}
-
-            <Navegador
-                data={reclamos}
-                searchKey="asunto"
-                searchPlaceholder="Buscar reclamo..."
-                filters={filtros}
-            >
-                {(ReclamosFiltrados) => (
-                    <Tabla
-                        columnas={columnas}
-                        datos={ReclamosFiltrados}
-                        etiqueta="reclamos"
-                        className="reclamos-tabla"
-                        onFilaClick={abrirDetalle}
-                        seleccionable
-                        filaSeleccionada={detalleAbierto ? seleccionado : null}
-                    />
-                        )}
+            <Navegador data={reclamos} searchKey="busqueda" searchPlaceholder="Buscar reclamo, residente o unidad..." filters={filtros}>
+                {(filtrados) => (
+                    <Tabla columnas={columnas} datos={filtrados} etiqueta="reclamos" className="reclamos-tabla" onFilaClick={(r) => setAbierto(r.id)} />
+                )}
             </Navegador>
 
-            {/* DETALLE */}
-
-            {detalleAbierto && (
-                <Panel
-                    className="reclamos-detalle"
-                    titulo={seleccionado.asunto}
-                    tituloComplemento={
-                        <div className={`reclamos-badge ${estadoBadgeClase(seleccionado.estado)}`}>
-                            {seleccionado.estado}
-                        </div>
-                    }
-                    accion={
-                        <button
-                            className="reclamos-detalle-cerrar"
-                            onClick={() => setDetalleAbierto(false)}
-                            aria-label="Cerrar detalle"
-                        >
-                            <X size={18} />
-                        </button>
-                    }
-                >
-                    
-                    {/* =========== FILAS =========== */}
-
-                    <div className="reclamos-detalle-fila">
-                        <span>Categoria</span>
-                        <span className={`reclamos-cat-badge ${categoriaBadgeClase(seleccionado.categoria)}`}>
-                            {seleccionado.categoria}
-                        </span>
-                    </div>
-
-                    <div className="reclamos-detalle-fila">
-                        <span>Fecha de publicación</span>
-                        <strong>{seleccionado.fecha}</strong>
-                    </div>
-
-                    <div className="reclamos-detalle-fila">
-                        <span>Residente</span>
-                        <strong>{seleccionado.residente}</strong>
-                    </div>
-
-                    <div className="reclamos-detalle-fila">
-                        <span>Unidad</span>
-                        <strong>{seleccionado.unidad}</strong>
-                    </div>
-                    
-                    {/* =========== DESCRIPCION =========== */}
-
-                    <h3>Descripción</h3>
-
-                    <p className="reclamos-resumen-texto">
-                        {seleccionado.descripcion}
-                    </p>
-
-                    {/* =========== ADJUNTOS =========== */}
-
-                    <h3>Adjuntos</h3>
-
-                    {seleccionado.adjunto ? (
-                        <div className="reclamos-adjunto">
-                            <Image size={16} />
-
-                            <div className="reclamos-adjunto-info">
-                                <strong>{seleccionado.adjunto.nombre}</strong>
-                                <span>Tamaño - {seleccionado.adjunto.tamano}</span>
-                            </div>
-
-                            <button aria-label="Descargar adjunto">
-                                <Eye size={16} />
-                            </button>
-                        </div>
-                    ) : (
-                        <p className="reclamos-sin-adjunto">
-                            Sin archivos adjuntos.
-                        </p>
-                    )}
-
-                    {/* =========== OPCIONES =========== */}
-
-                    <button className="reclamos-btn-editar">
-                        Seguimiento
-                    </button>
-                </Panel>
-            )}
-            
-            {/* RESUMEN */}
-
             <Panel className="reclamos-resumen-panel" titulo="Resumen de reclamos">
-                <div className="reclamos-resumen-contenido">
-                    <div className="reclamos-donut-wrap">
-                        <div className="reclamos-donut-chart">
-                            <Doughnut
-                                data={{
-                                    labels: resumenEstados.map((item) => item.estado),
-                                    datasets: [
-                                        {
-                                            data: resumenEstados.map((item) => item.cantidad),
-                                            backgroundColor: ["#ee9d25", "#328bc2", "#399665"],
-                                            borderWidth: 0,
-                                            hoverOffset: 4,
-                                        },
-                                    ],
-                                }}
-                                options={{
-                                    responsive: true,
-                                    maintainAspectRatio: false,
-                                    cutout: "66%",
-                                    plugins: { legend: { display: false } },
-                                }}
-                            />
+                {resumen.total === 0 ? (
+                    <p className="reclamos-sin-adjunto">Todavía no hay reclamos para mostrar.</p>
+                ) : (
+                    <div className="reclamos-resumen-contenido">
+                        <div className="reclamos-donut-wrap">
+                            <Dona partes={partesDona} total={resumen.total} />
+                            <ul className="reclamos-donut-leyenda">
+                                {partesDona.map((p) => (
+                                    <li key={p.estado}>
+                                        <span className={`reclamos-leyenda-punto ${ESTADO_CLASE[p.estado]}`} />
+                                        <span className="reclamos-leyenda-label">{p.estado}</span>
+                                        <span className="reclamos-leyenda-valor">{p.cantidad} ({pct(p.cantidad)}%)</span>
+                                    </li>
+                                ))}
+                            </ul>
                         </div>
 
-                        <ul className="reclamos-donut-leyenda">
-                            {resumenEstados.map((item) => (
-                                <li key={item.estado}>
-                                    <span className={`reclamos-leyenda-punto ${item.claseColor}`}/>
-
-                                    <span className="reclamos-leyenda-label">
-                                        {item.estado}
-                                    </span>
-
-                                    <span className="reclamos-leyenda-valor">
-                                        {item.cantidad} (
-                                        {Math.round(
-                                            (item.cantidad / totalReclamos) * 100
-                                        )}
-                                        %)
-                                    </span>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-
-                    <div className="reclamos-categorias">
-                        <h3>Categorías más frecuentes</h3>
-
-                        <div className="reclamos-categorias-lista">
-                            {categoriasFrecuentes.map((cat) => {
-                                const Icono = cat.icon;
-                                return (
-                                    <div className="reclamos-categoria-fila" key={cat.nombre}>
-                                        <span className={`reclamos-categoria-icon ${cat.claseColor}`}>
-                                            <Icono size={16} />
-                                        </span>
-
-                                        <span className="reclamos-categoria-nombre">
-                                            {cat.nombre}
-                                        </span>
-
-                                        <span className="reclamos-categoria-valor">
-                                            {cat.cantidad}
-                                        </span>
-                                    </div>
-                                );
-                            })}
+                        <div className="reclamos-categorias">
+                            <h3>Categorías más frecuentes</h3>
+                            <div className="reclamos-categorias-lista">
+                                {resumen.categorias.map((c) => {
+                                    const Icono = CAT_ICONO[c.nombre];
+                                    return (
+                                        <div className="reclamos-categoria-fila" key={c.nombre}>
+                                            <span className={`reclamos-categoria-icon ${CAT_CLASE[c.nombre]}`}><Icono size={16} /></span>
+                                            <div className="reclamos-categoria-barra">
+                                                <div className="reclamos-categoria-texto"><span>{c.nombre}</span><strong>{c.cantidad}</strong></div>
+                                                <div className="reclamos-barra"><div className={`reclamos-barra-relleno ${CAT_CLASE[c.nombre]}`} style={{ width: `${(c.cantidad / maxCat) * 100}%` }} /></div>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
                         </div>
                     </div>
-                </div>
+                )}
             </Panel>
 
+            {seleccionado && (
+                <ModalReclamo
+                    key={seleccionado.id}
+                    reclamo={seleccionado}
+                    onClose={() => setAbierto(null)}
+                    onGuardado={async (mensaje) => { await cargar(); setAviso(mensaje); }}
+                />
+            )}
+            {aviso && <p className="rcl-aviso rcl-aviso-ok rcl-aviso-flotante" role="status"><CheckCircle2 size={16} /><span>{aviso}</span></p>}
         </main>
     );
 }
