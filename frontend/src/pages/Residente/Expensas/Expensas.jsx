@@ -1,5 +1,6 @@
-import { useEffect, useMemo, useState } from "react";
-import { WalletCards, CalendarDays, Tag, Download, BanknoteArrowDown, ChevronRight, CircleHelp, FileText } from "lucide-react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import { WalletCards, CalendarDays, Tag, Download, BanknoteArrowDown, ChevronRight, CircleHelp, FileText, CheckCircle2, Clock, AlertCircle } from "lucide-react";
 
 import "./Expensas.css";
 import TarjetaResumen from "../../../components/TarjetaResumen/TarjetaResumen";
@@ -10,6 +11,28 @@ import Navegador from "../../../components/Navegador/Navegador";
 import { usePerfil } from "../../../context/PerfilContext";
 import { obtenerExpensasResidente, ESTADOS_EXPENSA } from "../../../services/expensasService";
 import { descargarBoleta } from "../../../utils/boletaPdf";
+import { iniciarPago, confirmarPago, sincronizarPago } from "../../../services/pagosService";
+
+/* Cuando el residente toca "Pagar ahora" anotamos qué expensa estaba pagando.
+   Así, cuando vuelve a Habita (por el botón de Mercado Pago o abriendo la página a mano),
+   buscamos ese pago en Mercado Pago y la expensa pasa a Pagada. */
+const CLAVE_PAGO = "habita:pago-en-curso";
+const VIGENCIA_PAGO_MS = 24 * 60 * 60 * 1000;
+
+function leerPagoEnCurso() {
+    try {
+        const dato = JSON.parse(localStorage.getItem(CLAVE_PAGO) || "null");
+        if (dato && Date.now() - dato.ts < VIGENCIA_PAGO_MS) return dato;
+        localStorage.removeItem(CLAVE_PAGO);
+    } catch { /* sin almacenamiento: no pasa nada */ }
+    return null;
+}
+function guardarPagoEnCurso(expensaId) {
+    try { localStorage.setItem(CLAVE_PAGO, JSON.stringify({ expensaId, ts: Date.now() })); } catch { /* idem */ }
+}
+function borrarPagoEnCurso() {
+    try { localStorage.removeItem(CLAVE_PAGO); } catch { /* idem */ }
+}
 import { diasHasta } from "../../../utils/formatos";
 
 /* =========================
@@ -103,24 +126,128 @@ function Expensas() {
     const [detalleAbierto, setDetalleAbierto] = useState(false);
     const [descargaError, setDescargaError] = useState("");
     const [preguntaAbierta, setPreguntaAbierta] = useState(null);
+    const [pagando, setPagando] = useState(false);
+    const [errorPago, setErrorPago] = useState("");
+    const [avisoPago, setAvisoPago] = useState(null); // { tipo: "ok" | "pendiente" | "error" | "cargando", texto }
+    const [parametros, setParametros] = useSearchParams();
+    const vueltaProcesada = useRef(false);
+    const [pagoEnCurso, setPagoEnCurso] = useState(() => leerPagoEnCurso());
 
     useEffect(() => {
         document.title = "Habita | Mis expensas";
     }, []);
 
-    useEffect(() => {
-        let cancelado = false;
-
-        obtenerExpensasResidente()
-            .then((lista) => { if (!cancelado) setExpensas(lista); })
-            .catch((err) => {
-                console.error("No se pudieron cargar las expensas", err);
-                if (!cancelado) setError("No pudimos cargar tus expensas. Probá de nuevo en unos minutos.");
-            })
-            .finally(() => { if (!cancelado) setCargando(false); });
-
-        return () => { cancelado = true; };
+    const cargarExpensas = useCallback(async () => {
+        try {
+            setExpensas(await obtenerExpensasResidente());
+            setError("");
+        } catch (err) {
+            console.error("No se pudieron cargar las expensas", err);
+            setError("No pudimos cargar tus expensas. Probá de nuevo en unos minutos.");
+        } finally {
+            setCargando(false);
+        }
     }, []);
+
+    useEffect(() => {
+        cargarExpensas();
+    }, [cargarExpensas]);
+
+    /* =========================
+       VUELTA DESDE MERCADO PAGO
+       Mercado Pago nos devuelve a /expensas?pago=exito&payment_id=123...
+       Le pedimos al backend que verifique ese pago y lo registre.
+    ========================= */
+    useEffect(() => {
+        const resultado = parametros.get("pago");
+        const pagoId = parametros.get("payment_id") || parametros.get("collection_id");
+        if ((!resultado && !pagoId) || vueltaProcesada.current) return;
+        vueltaProcesada.current = true;
+
+        // Limpiamos la dirección para que al recargar no se repita
+        setParametros({}, { replace: true });
+
+        if (!pagoId) {
+            if (resultado === "error") {
+                setAvisoPago({ tipo: "error", texto: "El pago no se completó. No se te cobró nada: podés intentarlo de nuevo cuando quieras." });
+            } else {
+                setAvisoPago({ tipo: "pendiente", texto: "Si ya pagaste, puede tardar unos minutos en reflejarse. Volvé a cargar la página en un rato." });
+                cargarExpensas();
+            }
+            return;
+        }
+
+        setAvisoPago({ tipo: "cargando", texto: "Estamos confirmando tu pago con Mercado Pago..." });
+        confirmarPago(pagoId)
+            .then((r) => {
+                if (r.estado_mp === "approved") {
+                    borrarPagoEnCurso();
+                    setPagoEnCurso(null);
+                    setAvisoPago({ tipo: "ok", texto: "¡Pago acreditado! Tu expensa figura como paga. Gracias." });
+                } else if (["pending", "in_process", "authorized", "in_mediation"].includes(r.estado_mp)) {
+                    setAvisoPago({ tipo: "pendiente", texto: "Tu pago está pendiente de acreditación. Cuando Mercado Pago lo confirme, la expensa pasa a Pagada automáticamente." });
+                } else {
+                    setAvisoPago({ tipo: "error", texto: "Mercado Pago no aprobó el pago. Podés intentarlo de nuevo con otro medio de pago." });
+                }
+            })
+            .catch((err) => setAvisoPago({
+                tipo: "error",
+                texto: `No pudimos confirmar tu pago ahora (${err.message}). Si pagaste, no te preocupes: se va a registrar solo en unos minutos.`,
+            }))
+            .finally(cargarExpensas);
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+    /* Busca en Mercado Pago el pago que el residente dejó en curso (sin depender del webhook). */
+    const verificarPago = useCallback(async (manual = false) => {
+        const enCurso = leerPagoEnCurso();
+        if (!enCurso) { setPagoEnCurso(null); return; }
+        if (manual) setAvisoPago({ tipo: "cargando", texto: "Buscando tu pago en Mercado Pago..." });
+        try {
+            const r = await sincronizarPago(enCurso.expensaId);
+            if (r.estado_mp === "approved") {
+                borrarPagoEnCurso();
+                setPagoEnCurso(null);
+                setAvisoPago({ tipo: "ok", texto: "¡Pago acreditado! Tu expensa figura como paga. Gracias." });
+                await cargarExpensas();
+            } else if (r.estado_mp === "pending") {
+                setAvisoPago({ tipo: "pendiente", texto: "Tu pago está pendiente de acreditación. Cuando Mercado Pago lo confirme, la expensa pasa a Pagada." });
+            } else if (r.estado_mp === "rejected") {
+                borrarPagoEnCurso();
+                setPagoEnCurso(null);
+                setAvisoPago({ tipo: "error", texto: "Mercado Pago no aprobó el pago. Podés intentarlo de nuevo con otro medio de pago." });
+            } else if (manual) {
+                setAvisoPago({ tipo: "pendiente", texto: "Todavía no vemos ningún pago. Si recién pagaste, esperá unos segundos y volvé a probar." });
+            } else {
+                setAvisoPago(null);
+            }
+        } catch (err) {
+            if (manual) setAvisoPago({ tipo: "error", texto: `No pudimos verificar tu pago ahora (${err.message}). Probá de nuevo en un momento.` });
+            else setAvisoPago((a) => (a?.tipo === "cargando" ? null : a));
+        }
+    }, [cargarExpensas]);
+
+    // Al abrir la página (sin venir de Mercado Pago) y cada vez que el residente vuelve a esta pestaña
+    useEffect(() => {
+        if (!vueltaProcesada.current && leerPagoEnCurso()) verificarPago(false);
+        const alVolver = () => { if (document.visibilityState === "visible" && leerPagoEnCurso()) verificarPago(false); };
+        document.addEventListener("visibilitychange", alVolver);
+        return () => document.removeEventListener("visibilitychange", alVolver);
+    }, [verificarPago]);
+
+    async function pagar(expensa) {
+        if (!expensa || pagando) return;
+        setPagando(true);
+        setErrorPago("");
+        try {
+            const { url } = await iniciarPago(expensa.id);
+            guardarPagoEnCurso(expensa.id);
+            window.location.assign(url); // nos vamos a Mercado Pago
+        } catch (err) {
+            console.error("No se pudo iniciar el pago", err);
+            setErrorPago(err.message);
+            setPagando(false);
+        }
+    }
 
     const seleccionada = useMemo(
         () => expensas.find((e) => e.id === seleccionadaId) ?? null,
@@ -138,6 +265,7 @@ function Expensas() {
         setSeleccionadaId(expensa.id);
         setDetalleAbierto(true);
         setDescargaError("");
+        setErrorPago("");
     }
 
     function cerrarDetalle() {
@@ -200,6 +328,12 @@ function Expensas() {
                         {actual.estado}
                     </em>
                     <small>{mensajeEstado[actual.estado]}</small>
+                    {actual.estado !== "Pagada" && (
+                        <button type="button" className="exp-pagar-rapido" onClick={() => pagar(actual)} disabled={pagando}>
+                            <BanknoteArrowDown size={15} aria-hidden="true" />
+                            {pagando ? "Abriendo Mercado Pago..." : "Pagar ahora"}
+                        </button>
+                    )}
                 </>
             ) : (
                 <small>{sinDatos ? "Todavía no hay expensas para tu unidad." : ""}</small>
@@ -213,6 +347,26 @@ function Expensas() {
             {/* =========================
                     RESUMEN SUPERIOR
             ========================= */}
+
+            {avisoPago && (
+                <p className={`expensas-pago-aviso expensas-pago-${avisoPago.tipo}`} role="status">
+                    {avisoPago.tipo === "ok" && <CheckCircle2 size={18} aria-hidden="true" />}
+                    {(avisoPago.tipo === "pendiente" || avisoPago.tipo === "cargando") && <Clock size={18} aria-hidden="true" />}
+                    {avisoPago.tipo === "error" && <AlertCircle size={18} aria-hidden="true" />}
+                    <span>{avisoPago.texto}</span>
+                    {avisoPago.tipo !== "cargando" && (
+                        <button type="button" onClick={() => setAvisoPago(null)} aria-label="Cerrar aviso">×</button>
+                    )}
+                </p>
+            )}
+            {pagoEnCurso && actual?.estado !== "Pagada" && avisoPago?.tipo !== "cargando" && (
+                <p className="expensas-pago-aviso expensas-pago-pendiente">
+                    <Clock size={18} aria-hidden="true" />
+                    <span>¿Ya pagaste en Mercado Pago y no ves el cambio?</span>
+                    <button type="button" className="exp-verificar" onClick={() => verificarPago(true)}>Verificar mi pago</button>
+                </p>
+            )}
+            {errorPago && !detalleAbierto && <p className="expensas-aviso expensas-aviso-error" role="alert">{errorPago}</p>}
 
             <section className="expensas-resumen">
                 {resumenExpensas.map((item) => {
@@ -279,15 +433,21 @@ function Expensas() {
                                 Descargar boleta
                             </button>
                             {seleccionada.estado !== "Pagada" && (
-                                <button type="button" className="modal-boton principal exp-boton-icono">
+                                <button
+                                    type="button"
+                                    className="modal-boton principal exp-boton-icono"
+                                    onClick={() => pagar(seleccionada)}
+                                    disabled={pagando}
+                                >
                                     <BanknoteArrowDown size={16} aria-hidden="true" />
-                                    Pagar ahora
+                                    {pagando ? "Abriendo Mercado Pago..." : "Pagar ahora"}
                                 </button>
                             )}
                         </>
                     }
                 >
                     <div className="exp-detalle">
+                        {errorPago && <p className="expensas-aviso expensas-aviso-error" role="alert">{errorPago}</p>}
                         <div className="exp-detalle-cabecera">
                             <h3>{seleccionada.periodo}</h3>
                             <span className={`badge-expensa ${estadoBadgeClase(seleccionada.estado)}`}>

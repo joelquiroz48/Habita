@@ -360,3 +360,64 @@
     justify-content: center;
     gap: 8px;
 }
+
+/* =========================
+      PAGO CON MERCADO PAGO
+========================= */
+
+.expensas .expensas-pago-aviso {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 14px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.expensas .expensas-pago-aviso span { flex: 1; }
+
+.expensas .expensas-pago-aviso button {
+    border: none;
+    background: none;
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+    color: inherit;
+}
+
+.expensas .expensas-pago-ok { background: var(--fondo-verde-suave); color: var(--color-aviso-verde); }
+.expensas .expensas-pago-pendiente,
+.expensas .expensas-pago-cargando { background: var(--fondo-aviso-amarillo); color: var(--color-vencimiento); }
+.expensas .expensas-pago-error { background: var(--fondo-documento-pdf); color: var(--color-documento-pdf); }
+
+.expensas .exp-pagar-rapido {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 8px;
+    padding: 7px 14px;
+    border: none;
+    border-radius: 8px;
+    background: var(--verde);
+    color: var(--blanco);
+    font: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.expensas .exp-pagar-rapido svg { color: var(--blanco); }
+.expensas .exp-pagar-rapido:hover:not(:disabled) { background: var(--verde-hover); }
+.expensas .exp-pagar-rapido:disabled { opacity: 0.65; cursor: wait; }
+
+.expensas .expensas-pago-aviso .exp-verificar {
+    flex-shrink: 0;
+    padding: 6px 12px;
+    border: 1px solid currentColor;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.2;
+}

@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 import requests
 
 from invitaciones import router as invitaciones_router, validar_codigo, canjear_codigo
+from pagos import router as pagos_router
 
 load_dotenv('.env')
 
@@ -21,10 +22,12 @@ if not SUPABASE_URL:
 app = FastAPI(title="Habita Auth Proxy")
 
 app.include_router(invitaciones_router)
+app.include_router(pagos_router)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000", "http://localhost:5173"],
+    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000", "http://localhost:5173", "http://127.0.0.1:5173"]
+    + ([os.getenv("FRONTEND_URL").rstrip("/")] if os.getenv("FRONTEND_URL") else []),
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -166,66 +169,3 @@ def login(payload: LoginIn):
 @app.get("/api/health")
 def health():
     return {"status": "ok"}
-
-import mercadopago
-
-MP_ACCESS_TOKEN = os.getenv("MP_ACCESS_TOKEN")
-MP_WEBHOOK_SECRET = os.getenv("MP_WEBHOOK_SECRET")
-PUBLIC_BASE_URL = os.getenv("PUBLIC_BASE_URL")
-
-
-def _supabase_url(path: str) -> str:
-    return f"{SUPABASE_URL.rstrip('/')}/rest/v1/{path}"
-
-
-def obtener_expensa(expensa_id: str) -> dict:
-    resp = requests.get(
-        _supabase_url(f"expensa?id=eq.{expensa_id}"),
-        headers=_supabase_headers(use_service_role=True),
-    )
-    if resp.status_code >= 400:
-        raise HTTPException(status_code=resp.status_code, detail=resp.json())
-    data = resp.json()
-    if not data:
-        raise HTTPException(status_code=404, detail="Expensa no encontrada")
-    return data[0]
-
-
-class CrearPreferenciaIn(BaseModel):
-    expensa_id: str
-
-
-@app.post("/api/pagos/crear-preferencia")
-def crear_preferencia(payload: CrearPreferenciaIn):
-    expensa = obtener_expensa(payload.expensa_id)
-
-    sdk = mercadopago.SDK(MP_ACCESS_TOKEN)
-    preference_data = {
-        "items": [
-            {
-                "title": f"Expensa {expensa['periodo']} - Unidad {expensa['unidad_id']}",
-                "quantity": 1,
-                "unit_price": float(expensa["importe_total"]),
-                "currency_id": "ARS",
-            }
-        ],
-        # Con esto identificamos, cuando llegue la notificacion, a que Expensa corresponde
-        "external_reference": str(expensa["id"]),
-        "back_urls": {
-            "success": "http://localhost:5173/pagos/exito",
-            "failure": "http://localhost:5173/pagos/error",
-            "pending": "http://localhost:5173/pagos/pendiente",
-        },
-        #"auto_return": "approved",
-        "notification_url": f"{PUBLIC_BASE_URL}/api/pagos/webhook",
-    }
-
-    resultado = sdk.preference().create(preference_data)
-    if resultado["status"] not in (200, 201):
-        raise HTTPException(status_code=500, detail=resultado["response"])
-    preferencia = resultado["response"]
-
-    return {
-        "init_point": preferencia["init_point"],
-        "sandbox_init_point": preferencia["sandbox_init_point"],
-    }
