@@ -5,11 +5,11 @@ import "./Layoutadministrador.css";
 import iconPerfil from "../../assets/img/foto-perfil.png";
 import iconLogo from "../../assets/img/icon.png";
 import { supabase } from "../../supabase";
+import Notificaciones from "../Notificaciones/Notificaciones";
 
 import {
     ChevronDown,
     Menu,
-    Bell,
     LayoutDashboard,
     Users,
     Building2,
@@ -187,9 +187,7 @@ function LayoutAdministrador({ children }) {
 
                     <div className="header-usuario">
 
-                        <div className="header-notificaciones">
-                            <Bell />
-                        </div>
+                        <Notificaciones />
 
                         <img
                             src={cuenta.fotoUrl || iconPerfil}

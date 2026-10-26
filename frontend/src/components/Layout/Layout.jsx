@@ -6,6 +6,7 @@ import iconPerfil from "../../assets/img/foto-perfil.png";
 import iconLogo from "../../assets/img/icon.png";
 import imagenEdificio from "../../assets/img/imagen-predeterminada.png";
 import { supabase } from "../../supabase";
+import Notificaciones from "../Notificaciones/Notificaciones";
 import { PerfilProvider, usePerfil } from "../../context/PerfilContext";
 import habitaImg from "../../assets/img/interfaz-chat/habita-asistente.png";
 import habitaImgOjosCerrados from "../../assets/img/interfaz-chat/habita-asistente-2.png";
@@ -13,7 +14,6 @@ const CHAT_URL = (import.meta.env.VITE_CHAT_URL || "http://localhost:3000").repl
 import {
     ChevronDown,
     Menu,
-    Bell,
     House,
     Wallet,
     Calendar,
@@ -197,9 +197,7 @@ function LayoutInterno({ children }) {
                     </div>
 
                     <div className="header-usuario">
-                        <div className="header-notificaciones">
-                            <Bell />
-                        </div>
+                        <Notificaciones />
 
                         <img
                             src={perfil?.fotoUrl || iconPerfil}
