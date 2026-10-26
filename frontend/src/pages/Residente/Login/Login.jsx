@@ -14,6 +14,9 @@ function mensajeErrorLogin(status, body) {
             ? detalle.error_code || detalle.code
             : null;
 
+    if (codigo === "cuenta_dada_de_baja") {
+        return "Tu acceso a Habita fue dado de baja. Si creés que es un error, comunicate con la administración de tu edificio.";
+    }
     if (codigo === "email_not_confirmed") {
         return "Tenés que confirmar tu correo electrónico antes de iniciar sesión.";
     }
@@ -40,7 +43,12 @@ function Login() {
 
     const [mostrarContrasena, setMostrarContrasena] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+    // Si nos sacaron de la sesión por una baja, avisamos acá
+    const [error, setError] = useState(() =>
+        new URLSearchParams(window.location.search).get("baja")
+            ? "Tu acceso a Habita fue dado de baja. Si creés que es un error, comunicate con la administración de tu edificio."
+            : null
+    );
     const navigate = useNavigate();
 
     const manejarSubmit = async (e) => {

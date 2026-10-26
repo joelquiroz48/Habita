@@ -9,7 +9,7 @@ import { supabase } from "../../supabase";
 import { PerfilProvider, usePerfil } from "../../context/PerfilContext";
 import habitaImg from "../../assets/img/interfaz-chat/habita-asistente.png";
 import habitaImgOjosCerrados from "../../assets/img/interfaz-chat/habita-asistente-2.png";
-
+const CHAT_URL = (import.meta.env.VITE_CHAT_URL || "http://localhost:3000").replace(/\/$/, "");
 import {
     ChevronDown,
     Menu,
@@ -133,7 +133,7 @@ function LayoutInterno({ children }) {
                 .filter((m) => m.emisor === "usr" || m.emisor === "bot")
                 .map((m) => ({ emisor: m.emisor, texto: m.texto }));
 
-            const res = await fetch("http://localhost:3000/api/chat", {
+            const res = await fetch(`${CHAT_URL}/api/chat`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

@@ -74,6 +74,18 @@ export async function obtenerPerfilResidente() {
     if (errorVinculo) throw errorVinculo;
 
     const vinculo = vinculos?.[0] ?? null;
+
+    // Si es residente, tuvo unidad y ya no tiene ninguna activa: lo dieron de baja
+    let dadoDeBaja = false;
+    if (!vinculo && usuario.tipo === "RESIDENTE") {
+        const { data: previas, error: errorPrevias } = await supabase
+            .from("vinculacion")
+            .select("id")
+            .eq("usuario_id", usuarioAuth.id)
+            .limit(1);
+        if (errorPrevias) throw errorPrevias;
+        dadoDeBaja = (previas?.length ?? 0) > 0;
+    }
     const unidad = vinculo?.unidad ?? null;
     const edificio = unidad?.edificio
         ? { ...unidad.edificio, fotoUrl: await urlFotoEdificio(unidad.edificio.id) }
@@ -87,6 +99,7 @@ export async function obtenerPerfilResidente() {
         telefono: usuario.telefono ?? "",
         fotoUrl: usuario.foto_url ?? null,
         rol: vinculo?.rol ?? null,
+        dadoDeBaja,
         unidad: unidad ? { id: unidad.id, numero: unidad.numero, piso: unidad.piso } : null,
         edificio,
     };

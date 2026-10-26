@@ -94,6 +94,20 @@ def register(payload: RegisterIn):
     return {"user": usuario}
 
 
+def _dado_de_baja(user_id: str) -> bool:
+    """True si el usuario tuvo una unidad pero ninguna sigue activa (el administrador lo dio de baja)."""
+    resp = requests.get(
+        f"{SUPABASE_URL.rstrip('/')}/rest/v1/vinculacion",
+        params={"usuario_id": f"eq.{user_id}", "select": "estado"},
+        headers=_supabase_headers(use_service_role=True),
+    )
+    if resp.status_code >= 400:
+        # Si no podemos leer, no cortamos el ingreso: la base (RLS) igual no le muestra datos
+        return False
+    estados = [fila.get("estado") for fila in resp.json()]
+    return bool(estados) and "ACTIVA" not in estados
+
+
 @app.post("/api/auth/login")
 def login(payload: LoginIn):
     if not SUPABASE_URL or not SUPABASE_ANON_KEY:
@@ -159,6 +173,16 @@ def login(payload: LoginIn):
 
     # 4. Obtener rol
     tipo = usuarios[0]["tipo"]
+
+    # 4b. Un residente dado de baja ya no puede ingresar
+    if tipo == "RESIDENTE" and _dado_de_baja(user_id):
+        raise HTTPException(
+            status_code=403,
+            detail={
+                "error_code": "cuenta_dada_de_baja",
+                "message": "Tu acceso a Habita fue dado de baja.",
+            },
+        )
 
     # 5. Agregar el rol a la respuesta del login
     auth_data["tipo"] = tipo

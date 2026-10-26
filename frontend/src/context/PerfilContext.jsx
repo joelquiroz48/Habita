@@ -7,6 +7,7 @@
 
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { obtenerPerfilResidente } from "../services/perfilService";
+import { supabase } from "../supabase";
 
 const PerfilContext = createContext({
     perfil: null,
@@ -23,7 +24,15 @@ export function PerfilProvider({ children }) {
     const recargarPerfil = useCallback(async () => {
         try {
             setError(null);
-            setPerfil(await obtenerPerfilResidente());
+            const datos = await obtenerPerfilResidente();
+            if (datos?.dadoDeBaja) {
+                // El administrador lo dio de baja: cerramos la sesión y lo mandamos al login
+                localStorage.removeItem("access_token");
+                await supabase.auth.signOut();
+                window.location.replace("/login?baja=1");
+                return;
+            }
+            setPerfil(datos);
         } catch (e) {
             console.error("No pudimos cargar tu perfil:", e);
             setError(e);
@@ -34,6 +43,15 @@ export function PerfilProvider({ children }) {
 
     useEffect(() => {
         recargarPerfil();
+    }, [recargarPerfil]);
+
+    // Si dan de baja al residente con la app abierta, lo detectamos cuando vuelve a esta pestaña
+    useEffect(() => {
+        const alVolver = () => {
+            if (document.visibilityState === "visible") recargarPerfil();
+        };
+        document.addEventListener("visibilitychange", alVolver);
+        return () => document.removeEventListener("visibilitychange", alVolver);
     }, [recargarPerfil]);
 
     return (
